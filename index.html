@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>وصل | Wasl</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Tahoma,sans-serif;background:#0f1d24;color:#fff}
+header{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:10px 14px;background:#13262F;border-bottom:3px solid #D97A2B;flex-wrap:wrap}
+h1{margin:0;font-size:22px}h1 span{color:#D97A2B}
+.ctr{display:flex;gap:6px;align-items:center}
+.wrap{max-width:720px;margin:auto;padding:10px}
+#cap{background:#000;border-radius:14px;padding:16px;min-height:120px;font-size:30px;line-height:1.5;color:#ffd7b0}
+#status{font-size:14px;color:#9bb;margin:6px 2px}
+.sit{display:flex;gap:6px;overflow-x:auto;padding:6px 0}
+.sit button{flex:0 0 auto;background:#2c4756}
+.sit button.on{background:#D97A2B}
+.sug{display:grid;grid-template-columns:1fr;gap:8px;margin-top:8px}
+.sug button{font-size:24px;padding:16px;text-align:right;background:#1f3a48;border:2px solid #D97A2B}
+button{background:#D97A2B;color:#fff;border:0;border-radius:12px;padding:12px 14px;font-size:17px;cursor:pointer}
+button.g{background:#2c4756}
+select{padding:10px;border-radius:10px;border:0;font-size:15px;background:#2c4756;color:#fff}
+.row{display:flex;gap:6px;margin-top:10px}
+.row input{flex:1;padding:14px;border-radius:12px;border:0;font-size:20px;min-width:0}
+#said{margin-top:10px;font-size:18px;color:#cfe}
+#flip{position:fixed;inset:0;background:#fff;color:#000;display:none;align-items:center;justify-content:center;font-size:44px;padding:30px;text-align:center;transform:rotate(180deg)}
+small{color:#9bb}
+#signPanel{display:none;background:#1a2f3a;border-radius:14px;padding:10px;margin-bottom:10px;border:2px solid #D97A2B}
+.cam{position:relative;border-radius:12px;overflow:hidden;background:#000;max-height:42vh}
+.cam video,.cam canvas{width:100%;display:block;transform:scaleX(-1);max-height:42vh;object-fit:cover}
+.cam canvas{position:absolute;top:0;left:0;height:100%}
+#slive{position:absolute;bottom:8px;right:8px;left:8px;background:#000b;padding:8px;border-radius:8px;font-size:22px;text-align:center}
+#sentence{font-size:26px;min-height:40px;margin:8px 0;color:#ffd7b0}
+details{margin-top:8px}summary{cursor:pointer;color:#ffd7b0;font-size:16px;padding:6px 0}
+.train{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.train input{flex:1;min-width:150px;padding:12px;border-radius:10px;border:0;font-size:16px}
+.tags span{display:inline-block;background:#2c4756;border-radius:8px;padding:4px 8px;margin:3px;font-size:14px}
+#signBtn.on{background:#fff;color:#13262F}
+</style></head><body>
+<header><h1>وصل <span>Wasl</span></h1>
+<div class="ctr">
+<select id="lang" title="لغة اللي قدامك"><option value="ar-EG">🇪🇬 مصري</option><option value="ar-SA">🇸🇦 سعودي</option><option value="ar-AE">🇦🇪 إماراتي</option><option value="ar-JO">🇯🇴 شامي</option><option value="en-US">🇬🇧 English</option></select>
+<button id="signBtn" class="g">🤟 إشارة</button>
+<button id="go">▶ ابدأ</button>
+</div></header>
+<div class="wrap">
+<div id="status">دوس "ابدأ" مرة واحدة، واسند الموبايل. التطبيق هيسمع لوحده. ولو عايز تتكلم بالإشارة، دوس 🤟</div>
+
+<div id="signPanel">
+<div class="cam"><video id="v" playsinline muted></video><canvas id="c"></canvas><div id="slive">بيشغّل الكاميرا...</div></div>
+<div id="sentence"></div>
+<div class="row" style="margin-top:0">
+<button id="sSpeak" style="flex:2">🔊 انطق الجملة</button>
+<button id="sClear" class="g" style="flex:1">✕ امسح</button>
+</div>
+<label style="display:block;margin-top:8px;font-size:15px"><input type="checkbox" id="auto" checked> انطق كل إشارة أول ما يتعرف عليها</label>
+<details><summary>➕ علّم وصل إشارة جديدة</summary>
+<div class="train"><input id="label" placeholder="معنى الإشارة، مثلاً: محتاج دكتور"><button id="rec">سجّل 3 ثواني</button></div>
+<div class="tags" id="tags"></div>
+<button class="g" id="sWipe" style="font-size:14px;padding:8px 10px">امسح كل الإشارات</button>
+<br><small>سجّل كل إشارة 3 مرات على الأقل. الإشارات بتتحفظ على الموبايل ده بس.</small>
+</details>
+</div>
+
+<div id="cap">كلام اللي قدامك هيظهر هنا...</div>
+
+<div class="sit" id="sits"></div>
+<div class="sug" id="sug"></div>
+
+<div class="row"><input id="txt" placeholder="أو اكتب كلامك هنا..."><button id="say">🔊</button></div>
+<div class="row"><button id="flipb" class="g" style="flex:1">↻ اعرض كلامي للي قدامي</button></div>
+<div id="said"></div>
+<br><small>نموذج أولي: الإشارات أشكال إيد ثابتة بس. الردود الذكية ✨ بتيجي من الذكاء الاصطناعي على حسب الكلام اللي اتقال. شغّال على Chrome.</small>
+</div>
+<div id="flip"></div>
+<script>
+const $=id=>document.getElementById(id);
+const S={
+ "عام":{w:[],r:["ممكن تتكلم أبطأ شوية؟","أنا أصم، اقرا كلامي من الشاشة","شكراً جزيلاً","أيوه","لا","ممكن تكتبلي؟"]},
+ "صيدلية":{w:["روشتة","دوا","علاج","صيدلية","حبوب","مسكن"],r:["أيوه، معايا روشتة اتفضل","عايز مسكن للصداع","بكام ده؟","فيه بديل أرخص؟","آخده إزاي وكام مرة في اليوم؟"]},
+ "مستشفى":{w:["دكتور","كشف","تعبان","بيوجعك","حجز","مستشفى","طوارئ"],r:["عايز أحجز كشف","عندي ألم هنا","محتاج مترجم إشارة لو موجود","عندي حساسية من دوا","الكشف بكام؟"]},
+ "مواصلات":{w:["رايح","فين","محطة","أجرة","تاكسي","نزل","شارع"],r:["رايح المحطة دي","نزلني هنا لو سمحت","الأجرة كام؟","ده الطريق الصح؟"]},
+ "دفع وبنك":{w:["فاتورة","دفع","فلوس","كارت","رصيد","تحويل","محفظة","شحن"],r:["عايز أدفع فاتورة الكهربا","عايز أشحن رصيد","عايز أحوّل فلوس","ممكن إيصال؟","الرسوم كام؟"]},
+ "مصلحة حكومية":{w:["ورق","بطاقة","استمارة","شباك","ختم","مصلحة"],r:["محتاج أطلع ورقة","أي ورق مطلوب؟","أروح أنهي شباك؟","ممكن تكتبلي الخطوات؟"]}
+};
+let cur="عام",listening=false,rec;
+let LANG=localStorage.getItem('wasl_lang')||'ar-EG';
+$('lang').value=LANG;
+$('lang').onchange=()=>{LANG=$('lang').value;localStorage.setItem('wasl_lang',LANG);$('status').textContent='اللغة اتغيرت: '+$('lang').selectedOptions[0].text;if(listening){rec&&rec.abort()}};
+function drawSits(){$('sits').innerHTML=Object.keys(S).map(k=>`<button class="${k===cur?'on':''}" onclick="setSit('${k}')">${k}</button>`).join('')}
+function setSit(k){cur=k;drawSits();drawSug()}
+function drawSug(){const r=[...S[cur].r];if(cur!=="عام")r.push(...S["عام"].r.slice(0,2));
+ $('sug').innerHTML=r.slice(0,5).map(t=>`<button onclick="speak(this.textContent)">${t}</button>`).join('')}
+const AI_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-replies';let aiT,aiN=0;
+async function smart(text){if(!text||text.trim().length<3)return;const n=++aiN;$('status').textContent='✨ بيجهّز ردود ذكية...';
+ try{const r=await fetch(AI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,situation:cur,lang:LANG})});const d=await r.json();if(n!==aiN)return;
+  if(d.situation&&S[d.situation]&&d.situation!==cur){cur=d.situation;drawSits()}
+  if(d.replies&&d.replies.length){$('sug').innerHTML=d.replies.map(t=>`<button onclick="speak(this.textContent)">✨ ${t.replace(/</g,'&lt;')}</button>`).join('');$('status').textContent='✨ ردود ذكية على حسب الكلام'}else throw 0}
+ catch(e){if(n===aiN){drawSug();$('status').textContent='🎤 بيسمع... (الردود الجاهزة)'}}}
+function detect(text){for(const k in S){if(S[k].w.some(w=>text.includes(w))){if(k!==cur)setSit(k);return}}}
+function speak(t){t=(t||'').replace('✨','').trim();if(!t)return;listening&&rec&&rec.abort();speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(t);u.lang=/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':(LANG.startsWith('ar')?LANG:'ar-EG');u.rate=.95;const bv=bestVoice(u.lang);if(bv)u.voice=bv;u.onend=()=>{if(listening)startRec()};speechSynthesis.speak(u);
+ $('said').textContent='اتقال: '+t}
+function startRec(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!R){$('status').textContent='التعرف على الكلام محتاج Chrome';return}
+ rec=new R();rec.lang=LANG;rec.continuous=false;rec.onstart=()=>{$('status').textContent='🎤 بيسمع دلوقتي... اتكلم'};rec.interimResults=true;
+ rec.onresult=e=>{let t='',fin=false;for(let i=e.resultIndex;i<e.results.length;i++){t+=e.results[i][0].transcript;if(e.results[i].isFinal)fin=true}$('cap').textContent=t;detect(t);if(fin){clearTimeout(aiT);aiT=setTimeout(()=>smart(t),700)}};
+ rec.onend=()=>{if(listening&&!speechSynthesis.speaking)setTimeout(startRec,300)};
+ rec.onerror=ev=>{const m={'not-allowed':'❌ المايك مقفول: اسمح للموقع يستخدم المايك من القفل اللي جنب الرابط','service-not-allowed':'❌ المتصفح مانع التعرف على الكلام. افتح الرابط في Chrome نفسه','network':'❌ التعرف على الكلام محتاج نت','audio-capture':'❌ مش لاقي مايك. ممكن تطبيق تاني بيستخدمه','language-not-supported':'❌ اللهجة دي مش مدعومة، جرب مصري'};if(ev.error==='no-speech'||ev.error==='aborted')return;$('status').textContent=m[ev.error]||('❌ مشكلة في السماع: '+ev.error);if(ev.error!=='network'){listening=false;$('go').textContent='▶ ابدأ'}};try{rec.start()}catch(e){}}
+$('go').onclick=()=>{listening=!listening;$('go').textContent=listening?'⏸ وقف':'▶ ابدأ';
+ $('status').textContent=listening?'🎤 بيسمع... الموقف بيتغير لوحده على حسب الكلام':'متوقف';if(listening)micCheck();else rec&&rec.abort()};
+async function micCheck(){$('status').textContent='بيجهّز المايك...';try{const s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(t=>t.stop());startRec()}catch(e){listening=false;$('go').textContent='▶ ابدأ';$('status').textContent='❌ الموقع مش قادر يوصل للمايك ('+e.name+'). اسمح بالمايك من إعدادات الموقع في Chrome'}}
+function bestVoice(lang){const vs=speechSynthesis.getVoices().filter(v=>v.lang.replace('_','-').toLowerCase().startsWith(lang.slice(0,2)));if(!vs.length)return null;const exact=vs.filter(v=>v.lang.replace('_','-')===lang);const pool=exact.length?exact:vs;return pool.find(v=>/natural|neural|online|google/i.test(v.name))||pool[0]}
+speechSynthesis.onvoiceschanged=()=>{};
+$('say').onclick=()=>{speak($('txt').value);$('txt').value=''};
+$('txt').onkeydown=e=>{if(e.key==='Enter')$('say').click()};
+$('flipb').onclick=()=>{const t=$('sentence').textContent||$('txt').value||$('said').textContent.replace('اتقال: ','');if(!t)return;$('flip').textContent=t;$('flip').style.display='flex'};
+$('flip').onclick=()=>$('flip').style.display='none';
+drawSits();drawSug();
+
+/* ===== الإشارة ===== */
+const v=$('v'),c=$('c'),ctx=c.getContext('2d');
+let hl=null,camOn=false,stream=null,data=JSON.parse(localStorage.getItem('signs')||'[]'),recording=null,last='',stable=0,cooldown=0;
+function tags(){const m={};data.forEach(d=>m[d.l]=(m[d.l]||0)+1);const e=Object.entries(m);$('tags').innerHTML=e.length?e.map(([k,n])=>`<span>${k} (${n})</span>`).join(''):'<small>لسه مفيش إشارات متسجلة</small>'}
+tags();
+function feat(res){
+ const f=new Array(126).fill(0);
+ (res.landmarks||[]).slice(0,2).forEach((lm,h)=>{
+  const w=lm[0],s=Math.hypot(lm[9].x-w.x,lm[9].y-w.y)||1;
+  const side=(res.handedness?.[h]?.[0]?.categoryName==='Left')?0:63;
+  lm.forEach((p,i)=>{f[side+i*3]=(p.x-w.x)/s;f[side+i*3+1]=(p.y-w.y)/s;f[side+i*3+2]=(p.z-w.z)/s});
+ });return f}
+function classify(f){
+ if(data.length<3)return null;
+ const d=data.map(x=>({l:x.l,d:Math.sqrt(x.f.reduce((a,val,i)=>a+(val-f[i])**2,0))})).sort((a,b)=>a.d-b.d).slice(0,5);
+ const votes={};d.forEach(x=>votes[x.l]=(votes[x.l]||0)+1);
+ const [l,n]=Object.entries(votes).sort((a,b)=>b[1]-a[1])[0];
+ return (n>=4&&d[0].d<2.5)?l:null}
+async function startCam(){
+ $('slive').textContent='بيحمّل الموديل...';
+ try{
+  if(!hl){const {FilesetResolver,HandLandmarker}=await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs");
+   const fs=await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm");
+   hl=await HandLandmarker.createFromOptions(fs,{baseOptions:{modelAssetPath:"https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",delegate:"GPU"},runningMode:"VIDEO",numHands:2});}
+  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"}});v.srcObject=stream;await v.play();
+  camOn=true;$('slive').textContent=data.length?'جاهز، اعمل إشارة':'علّم وصل أول إشارة من تحت ⬇';loop();
+ }catch(e){$('slive').textContent='الكاميرا ما اشتغلتش، اسمح بالكاميرا من المتصفح'}}
+function stopCam(){camOn=false;stream&&stream.getTracks().forEach(t=>t.stop())}
+function loop(){
+ if(!camOn)return;
+ if(v.videoWidth){c.width=v.videoWidth;c.height=v.videoHeight;
+ const res=hl.detectForVideo(v,performance.now());
+ ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#D97A2B';
+ (res.landmarks||[]).forEach(lm=>lm.forEach(p=>{ctx.beginPath();ctx.arc(p.x*c.width,p.y*c.height,4,0,7);ctx.fill()}));
+ if(res.landmarks?.length){
+  const f=feat(res);
+  if(recording){data.push({l:recording,f})}
+  else{const l=classify(f);
+   if(l&&l===last)stable++;else{stable=0;last=l}
+   if(cooldown>0)cooldown--;
+   $('slive').textContent=l?('« '+l+' »'):'مش متعرف عليها';
+   if(l&&stable===12&&cooldown===0){$('sentence').textContent+=(($('sentence').textContent?' ':'')+l);detect(l);if($('auto').checked)speak(l);cooldown=40}}
+ }else if(!recording){$('slive').textContent='مفيش إيد قدام الكاميرا';stable=0}}
+ requestAnimationFrame(loop)}
+$('signBtn').onclick=()=>{const p=$('signPanel'),open=p.style.display!=='block';
+ p.style.display=open?'block':'none';$('signBtn').classList.toggle('on',open);
+ if(open){startCam();window.scrollTo({top:0,behavior:'smooth'})}else stopCam()};
+$('sSpeak').onclick=()=>speak($('sentence').textContent);
+$('sClear').onclick=()=>$('sentence').textContent='';
+$('rec').onclick=()=>{const l=$('label').value.trim();if(!l)return alert('اكتب معنى الإشارة الأول');if(!camOn)return alert('الكاميرا لسه ما اشتغلتش');
+ let n=3;$('slive').textContent='استعد...';setTimeout(()=>{recording=l;const t=setInterval(()=>{$('slive').textContent='بيسجل: '+l+' ('+n--+')';if(n<0){clearInterval(t);recording=null;localStorage.setItem('signs',JSON.stringify(data));tags();$('slive').textContent='اتسجلت ✓ سجّلها مرتين كمان'}},1000)},1000)};
+$('sWipe').onclick=()=>{if(confirm('تمسح كل الإشارات؟')){data=[];localStorage.removeItem('signs');tags()}};
+</script></body></html>
