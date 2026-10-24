@@ -97,6 +97,10 @@ async function smart(text){if(!text||text.trim().length<3)return;const n=++aiN;$
  catch(e){if(n===aiN){drawSug();$('status').textContent='🎤 بيسمع... (الردود الجاهزة)'}}}
 function detect(text){for(const k in S){if(S[k].w.some(w=>text.includes(w))){if(k!==cur)setSit(k);return}}}
 const TTS_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-tts';let player=null;
+const AUD=new Audio();AUD.preload='auto';let audUnlocked=false;
+const SILENT=(()=>{const n=800,b=new ArrayBuffer(44+n*2),v=new DataView(b),w=(o,t)=>{for(let i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i))};w(0,'RIFF');v.setUint32(4,36+n*2,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,8000,true);v.setUint32(28,16000,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*2,true);return URL.createObjectURL(new Blob([b],{type:'audio/wav'}))})();
+function unlockAudio(){if(audUnlocked)return;audUnlocked=true;try{AUD.src=SILENT;const p=AUD.play();if(p)p.catch(()=>{audUnlocked=false})}catch(e){audUnlocked=false}}
+document.addEventListener('pointerdown',unlockAudio,{capture:true});document.addEventListener('touchstart',unlockAudio,{capture:true,passive:true});
 async function speak(t){t=(t||'').replace('✨','').trim();if(!t)return;listening&&rec&&rec.abort();speechSynthesis.cancel();if(player){player.pause();player=null}
  player={pause(){}};
  $('said').textContent='اتقال: '+t;
@@ -104,10 +108,10 @@ async function speak(t){t=(t||'').replace('✨','').trim();if(!t)return;listenin
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),6000);
   const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,lang:vl}),signal:ac.signal});clearTimeout(to);
   if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;
-  const url=URL.createObjectURL(await r.blob());player=new Audio(url);
-  player.onended=()=>{URL.revokeObjectURL(url);player=null;if(listening)startRec()};
-  await player.play();return}
- catch(e){}
+  const url=URL.createObjectURL(await r.blob());player=AUD;AUD.src=url;
+  AUD.onended=()=>{URL.revokeObjectURL(url);player=null;if(listening)startRec()};
+  await AUD.play();return}
+ catch(e){if(e&&e.name)$('status').textContent='🔈 صوت الموبايل اشتغل بدل الصوت المصري ('+e.name+')'}
  player=null;robotSpeak(t)}
 function robotSpeak(t){
  const u=new SpeechSynthesisUtterance(t);u.lang=/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':(LANG.startsWith('ar')?LANG:'ar-EG');u.rate=.95;const bv=bestVoice(u.lang);if(bv)u.voice=bv;u.onend=()=>{if(listening)startRec()};speechSynthesis.speak(u);
