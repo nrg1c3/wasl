@@ -105,6 +105,28 @@ nav svg{width:24px;height:24px}
 #flip{position:fixed;inset:0;background:#fff;color:#000;display:none;align-items:center;justify-content:center;font-size:44px;font-weight:800;padding:30px;text-align:center;transform:rotate(180deg);z-index:30}
 .note{font-size:13px;color:var(--mute);line-height:1.6}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* emergency */
+#sosBtn{position:fixed;left:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:15;width:72px;height:72px;border-radius:50%;border:4px solid #fff;background:#C0261A;color:#fff;font-weight:800;font-size:20px;line-height:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 6px 18px rgba(160,30,20,.45)}
+#sosBtn small{font-size:11px;font-weight:700}
+.sosgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sosgrid button{min-height:96px;border:2px solid #E7C3BE;border-radius:16px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:16px;font-weight:800;color:var(--ink);padding:8px}
+.sosgrid button span{font-size:34px}
+.sosact{display:flex;align-items:center;gap:14px;text-align:right;min-height:76px;border:0;border-radius:16px;background:#A3221A;color:#fff;padding:12px 16px}
+.sosact span{font-size:32px}.sosact b{display:block;font-size:18px}.sosact small{font-size:14px;opacity:.9}
+.sosact:nth-of-type(2){background:#13262F}.sosact:nth-of-type(4){background:#2E7D5B}
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.nums a{display:flex;justify-content:space-between;align-items:center;min-height:52px;border:1px solid var(--line);border-radius:12px;padding:0 14px;text-decoration:none;color:var(--ink);font-weight:700;background:var(--bg)}
+.nums a b{font-size:20px;color:#A3221A}
+#sosBoard{position:fixed;inset:0;z-index:45;display:none;flex-direction:column;background:#C0261A;color:#fff;padding:16px;gap:12px}
+#sosBoard.on{display:flex}
+#sosBoard.blink{animation:sbflash .7s infinite}
+@keyframes sbflash{50%{background:#fff;color:#C0261A}}
+.sb-top{display:flex;gap:8px}.sb-top button{flex:1;min-height:52px;border:2px solid currentColor;border-radius:14px;background:transparent;color:inherit;font-size:16px;font-weight:800}
+.sb-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px}
+.sb-big{font-size:clamp(40px,12vw,64px);font-weight:800;line-height:1.2}
+.sb-what{font-size:clamp(24px,7vw,34px);font-weight:700}
+.sb-call{font-size:clamp(22px,6vw,30px);font-weight:800;background:#fff;color:#C0261A;border-radius:16px;padding:10px 16px}
+.sb-info{font-size:17px;line-height:1.6;background:rgba(0,0,0,.18);border-radius:14px;padding:12px;white-space:pre-line}
 /* sound alerts */
 .ring{width:120px;height:120px;border-radius:50%;background:var(--ink2);display:flex;align-items:center;justify-content:center;font-size:52px}
 .ring.on{animation:ringp 1.6s infinite}
@@ -170,6 +192,12 @@ nav svg{width:24px;height:24px}
 <div class="field"><label for="pIns">التأمين الصحي</label><input id="pIns" placeholder="مثلاً: مفيش، أو اسم الشركة"></div>
 <div class="field"><label for="pAddr">العنوان</label><input id="pAddr"></div>
 <div class="field"><label for="pNotes">حاجات وصل لازم يعرفها</label><textarea id="pNotes" rows="3"></textarea></div>
+<b style="margin-top:6px">بيانات الطوارئ</b>
+<div class="field"><label for="pBlood">فصيلة الدم</label><input id="pBlood" placeholder="مثلاً: O+"></div>
+<div class="field"><label for="pCond">أمراض مزمنة</label><input id="pCond" placeholder="مثلاً: سكر، ضغط"></div>
+<div class="field"><label for="pMeds">أدوية بتاخدها بانتظام</label><input id="pMeds"></div>
+<div class="row"><div class="field"><label for="pC1n">رقم طوارئ 1: الاسم</label><input id="pC1n" placeholder="ماما"></div><div class="field"><label for="pC1p">الرقم</label><input id="pC1p" type="tel" inputmode="tel" placeholder="01xxxxxxxxx"></div></div>
+<div class="row"><div class="field"><label for="pC2n">رقم طوارئ 2: الاسم</label><input id="pC2n"></div><div class="field"><label for="pC2p">الرقم</label><input id="pC2p" type="tel" inputmode="tel"></div></div>
 <button class="btn" id="saveMe">احفظ</button>
 <div class="note" id="savedNote"></div>
 </div>
@@ -180,6 +208,7 @@ nav svg{width:24px;height:24px}
 </div>
 </div>
 
+<button id="sosBtn" aria-label="طوارئ">SOS<small>طوارئ</small></button>
 <nav aria-label="التبويبات">
 <button class="on" data-tab="face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>وجهاً لوجه</button>
 <button data-tab="tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>مهامي</button>
@@ -224,6 +253,33 @@ nav svg{width:24px;height:24px}
 <div class="note" id="fSaid"></div>
 </div>
 </section>
+
+<!-- ============ EMERGENCY ============ -->
+<section id="sos" class="screen" aria-label="الطوارئ">
+<div class="top" style="background:#A3221A"><button class="back" id="sosBack" style="background:#7E1912">→ رجوع</button><b style="font-size:20px">طوارئ</b><span style="width:70px"></span></div>
+<div class="body">
+<div id="sosStep1">
+<h2 style="margin-bottom:10px">إيه اللي حصل؟</h2>
+<div class="sosgrid" id="sosTypes"></div>
+</div>
+<div id="sosStep2" class="hidden" style="display:flex;flex-direction:column;gap:12px">
+<div class="card" style="border:2px solid #A3221A"><b id="sosTitle" style="font-size:20px"></b><span class="note" id="sosLoc">بيحدد مكانك...</span></div>
+<button class="sosact" id="sosShow"><span>🪧</span><div><b>اعرض للناس اللي حواليك</b><small>رسالة كبيرة، وصوت إنذار، وفلاش</small></div></button>
+<button class="sosact" id="sosFamily"><span>👨‍👩‍👧</span><div><b>ابعت لأهلي</b><small id="sosFamSub">رسالة فيها مكانك</small></div></button>
+<button class="sosact" id="sosCall"><span>📞</span><div><b id="sosCallT">اتصل ووصل يتكلم عنك</b><small>شغّل السبيكر، ووصل يقول اللي حصل والعنوان</small></div></button>
+<button class="sosact" id="sosRC"><span>💬</span><div><b>واتساب الهلال الأحمر</b><small>رسالة مكتوبة من غير مكالمة</small></div></button>
+<div class="card hidden" id="sosScript"><b>اللي وصل هيقوله:</b><p class="lead" id="sosScriptText" style="color:var(--ink)"></p><button class="btn or" id="sosSpeak">🔊 اتكلم دلوقتي</button><span class="note">لو الكلام ما طلعش في المكالمة، حط الموبايل قريب من السماعة ودوس تاني.</span></div>
+<button class="btn ghost" id="sosAgain">نوع تاني من الطوارئ</button>
+</div>
+<div class="card"><b>أرقام الطوارئ في مصر</b><div class="nums" id="sosNums"></div></div>
+<div class="card"><b>بطاقتي الطبية</b><div id="sosMed" class="lead"></div><button class="btn ghost" id="sosEdit">عدّل بياناتي</button></div>
+</div>
+</section>
+<div id="sosBoard" role="alertdialog" aria-label="رسالة طوارئ للناس">
+<div class="sb-top"><button id="sbSiren">🔊 إنذار</button><button id="sbTorch">🔦 فلاش</button><button id="sbClose">إقفل</button></div>
+<div class="sb-main"><div class="sb-big">أنا أصم<br>ومحتاج مساعدة</div><div class="sb-what" id="sbWhat"></div><div class="sb-call" id="sbCall"></div></div>
+<div class="sb-info" id="sbInfo"></div>
+</div>
 
 <!-- ============ SOUND ALERTS ============ -->
 <section id="alerts" class="screen" aria-label="تنبيهات الأصوات">
@@ -283,7 +339,7 @@ document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
  if(b.dataset.tab==='tasks')drawTasks();if(b.dataset.tab==='me')loadMe()});
 
 /* ---------- profile ---------- */
-const PF={pName:'name',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes'};
+const PF={pName:'name',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return store.get('wasl_profile',{})}
 function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||''}
 $('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent='اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.'};
@@ -410,6 +466,68 @@ $('fInput').onkeydown=e=>{if(e.key==='Enter')$('fSay').click()};
 $('fFlip').onclick=()=>{const t=$('fInput').value||$('fSaid').textContent.replace('اتقال: ','');if(!t)return;$('flip').textContent=t;$('flip').style.display='flex'};
 $('flip').onclick=()=>$('flip').style.display='none';
 $('fSign').onclick=()=>openSigns('free');
+
+/* ================= EMERGENCY ================= */
+const SOS_TYPES=[
+ {id:'med',icon:'🚑',ar:'تعبان ومحتاج إسعاف',num:'123',svc:'إسعاف',say:'تعبان جداً ومحتاج عربية إسعاف'},
+ {id:'acc',icon:'💥',ar:'حادثة',num:'123',svc:'إسعاف',say:'حصلتله حادثة ومحتاج إسعاف'},
+ {id:'fire',icon:'🔥',ar:'حريق',num:'180',svc:'مطافي',say:'فيه حريق ومحتاج المطافي'},
+ {id:'danger',icon:'🚔',ar:'حرامي أو خطر',num:'122',svc:'شرطة',say:'في خطر ومحتاج الشرطة'},
+ {id:'gas',icon:'⚠️',ar:'ريحة غاز أو كهربا',num:'129',svc:'طوارئ الغاز',say:'فيه ريحة غاز أو مشكلة كهربا خطيرة'},
+ {id:'lost',icon:'🧭',ar:'تهت ومحتاج حد',num:'122',svc:'مساعدة',say:'تايه ومحتاج حد يساعده يوصل'}
+];
+const SOS_NUMS=[['123','إسعاف'],['122','شرطة'],['180','مطافي'],['129','غاز'],['121','كهربا'],['15322','الهلال الأحمر']];
+const RC_WA='201152072077';
+let sosT=null,sosPos=null,sirenCtx=null,sirenOsc=null,torchTrack=null,torchT=null;
+$('sosNums').innerHTML=SOS_NUMS.map(([n,l])=>`<a href="tel:${n}"><span>${esc(l)}</span><b>${n}</b></a>`).join('')+`<a href="https://wa.me/${RC_WA}" target="_blank" rel="noopener"><span>واتساب الهلال الأحمر</span><b>💬</b></a>`;
+$('sosTypes').innerHTML=SOS_TYPES.map(t=>`<button><span>${t.icon}</span>${esc(t.ar)}</button>`).join('');
+$('sosTypes').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>pickSos(SOS_TYPES[i]));
+function mapLink(){return sosPos?`https://maps.google.com/?q=${sosPos.lat.toFixed(6)},${sosPos.lng.toFixed(6)}`:''}
+function medLines(p){return[p.blood?'فصيلة الدم: '+p.blood:'',p.allergies?'حساسية: '+p.allergies:'',p.conditions?'أمراض: '+p.conditions:'',p.meds?'أدوية: '+p.meds:''].filter(Boolean)}
+function drawMed(){const p=profile();const L=[p.name?'الاسم: '+p.name:'',...medLines(p),p.c1phone?'طوارئ: '+(p.c1name||'')+' '+p.c1phone:'',p.c2phone?'طوارئ: '+(p.c2name||'')+' '+p.c2phone:''].filter(Boolean);
+ $('sosMed').innerHTML=L.length?L.map(esc).join('<br>'):'لسه ما كتبتش بياناتك. ضيف فصيلة الدم والحساسية وأرقام أهلك عشان تظهر للمسعفين.'}
+function locate(){$('sosLoc').textContent='بيحدد مكانك...';
+ if(!navigator.geolocation){$('sosLoc').textContent='الموبايل مش بيدّي المكان. اكتب عنوانك في بياناتي.';return}
+ navigator.geolocation.getCurrentPosition(p=>{sosPos={lat:p.coords.latitude,lng:p.coords.longitude,acc:p.coords.accuracy};$('sosLoc').textContent='📍 مكانك اتحدد (دقة حوالي '+Math.round(sosPos.acc)+' متر)';if(sosT)buildScript()},
+  ()=>{$('sosLoc').textContent='ما قدرتش أحدد المكان. اسمح بالموقع، وهستخدم العنوان المكتوب في بياناتك.'},{enableHighAccuracy:true,timeout:12000,maximumAge:60000})}
+function sosMessage(){const p=profile();const who=p.name?p.name:'شخص أصم';
+ return['🚨 طوارئ من '+who+': '+sosT.ar+'.','أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.',mapLink()?'مكاني: '+mapLink():'',p.address?'العنوان: '+p.address:'',...medLines(p),'(اتبعتت من وصل)'].filter(Boolean).join('\n')}
+function buildScript(){const p=profile();const who=p.name||'شخص أصم';
+ const addr=p.address?'العنوان: '+p.address+'.':(sosPos?'مكانه اتبعت برسالة.':'');
+ const s='ألو، أنا وصل، مساعد صوتي لشخص أصم اسمه '+who+'. هو '+sosT.say+'. '+addr+(p.allergies?' عنده حساسية من '+p.allergies+'.':'')+' من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.';
+ $('sosScriptText').textContent=s;return s}
+function pickSos(t){sosT=t;buzz([200,100,200]);$('sosStep1').classList.add('hidden');$('sosStep2').classList.remove('hidden');
+ $('sosTitle').textContent=t.icon+' '+t.ar;$('sosCallT').textContent='اتصل بـ'+t.svc+' '+t.num+' ووصل يتكلم';
+ const p=profile();$('sosFamSub').textContent=p.c1phone?('لـ'+[p.c1name||p.c1phone,p.c2phone?(p.c2name||p.c2phone):''].filter(Boolean).join(' و')+'، ومعاها مكانك'):'ضيف أرقام أهلك في بياناتي الأول';
+ $('sosScript').classList.add('hidden');buildScript();locate()}
+$('sosBtn').onclick=()=>{show('sos');sosT=null;$('sosStep1').classList.remove('hidden');$('sosStep2').classList.add('hidden');drawMed()};
+$('sosBack').onclick=()=>{stopSiren();stopTorch();show('home')};
+$('sosAgain').onclick=()=>{$('sosStep1').classList.remove('hidden');$('sosStep2').classList.add('hidden')};
+$('sosEdit').onclick=()=>{show('home');document.querySelector('nav button[data-tab="me"]').click()};
+const intl=n=>{n=String(n||'').replace(/[^\d+]/g,'');if(n.startsWith('+'))return n;if(n.startsWith('00'))return '+'+n.slice(2);if(n.startsWith('0'))return '+2'+n;return n};
+$('sosFamily').onclick=()=>{const p=profile();const nums=[p.c1phone,p.c2phone].filter(Boolean).map(intl);
+ if(!nums.length){alert('ضيف رقم طوارئ واحد على الأقل في بياناتي.');$('sosEdit').click();return}
+ const body=encodeURIComponent(sosMessage());const sep=/iPhone|iPad/.test(navigator.userAgent)?'&':'?';
+ location.href='sms:'+nums.join(',')+sep+'body='+body};
+$('sosRC').onclick=()=>{window.open('https://wa.me/'+RC_WA+'?text='+encodeURIComponent(sosMessage()),'_blank','noopener')};
+$('sosCall').onclick=()=>{$('sosScript').classList.remove('hidden');buildScript();location.href='tel:'+sosT.num};
+$('sosSpeak').onclick=()=>speak(buildScript());
+/* show-to-people board */
+$('sosShow').onclick=()=>{const p=profile();$('sbWhat').textContent=sosT.icon+' '+sosT.ar;$('sbCall').textContent='من فضلك اتصل بـ'+sosT.svc+': '+sosT.num;
+ const info=[p.name?'الاسم: '+p.name:'',...medLines(p),p.c1phone?'كلّم '+(p.c1name||'أهلي')+': '+p.c1phone:'',p.address?'العنوان: '+p.address:''].filter(Boolean);
+ $('sbInfo').textContent=info.join('\n');$('sbInfo').classList.toggle('hidden',!info.length);
+ $('sosBoard').classList.add('on','blink');buzz([500,200,500]);try{navigator.wakeLock&&navigator.wakeLock.request('screen')}catch(e){}};
+$('sbClose').onclick=()=>{$('sosBoard').classList.remove('on','blink');stopSiren();stopTorch()};
+function startSiren(){try{sirenCtx=new (window.AudioContext||window.webkitAudioContext)();sirenOsc=sirenCtx.createOscillator();const g=sirenCtx.createGain();g.gain.value=0.9;sirenOsc.type='square';sirenOsc.connect(g);g.connect(sirenCtx.destination);
+ const t0=sirenCtx.currentTime;for(let i=0;i<120;i++){sirenOsc.frequency.setValueAtTime(700,t0+i);sirenOsc.frequency.linearRampToValueAtTime(1400,t0+i+0.5);sirenOsc.frequency.linearRampToValueAtTime(700,t0+i+1)}
+ sirenOsc.start();$('sbSiren').textContent='🔇 وقّف الإنذار'}catch(e){}}
+function stopSiren(){try{sirenOsc&&sirenOsc.stop();sirenCtx&&sirenCtx.close()}catch(e){}sirenOsc=sirenCtx=null;$('sbSiren').textContent='🔊 إنذار'}
+$('sbSiren').onclick=()=>{sirenOsc?stopSiren():startSiren()};
+async function startTorch(){try{const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});torchTrack=s.getVideoTracks()[0];
+ const caps=torchTrack.getCapabilities?torchTrack.getCapabilities():{};if(!caps.torch){stopTorch();$('sbTorch').textContent='الفلاش مش مدعوم';return}
+ let on=false;torchT=setInterval(()=>{on=!on;torchTrack.applyConstraints({advanced:[{torch:on}]}).catch(()=>{})},400);$('sbTorch').textContent='🔦 وقّف الفلاش'}catch(e){$('sbTorch').textContent='الفلاش مش متاح'}}
+function stopTorch(){clearInterval(torchT);torchT=null;try{torchTrack&&torchTrack.stop()}catch(e){}torchTrack=null;$('sbTorch').textContent='🔦 فلاش'}
+$('sbTorch').onclick=()=>{torchTrack?stopTorch():startTorch()};
 
 /* ================= SOUND ALERTS ================= */
 const GROUPS=[
