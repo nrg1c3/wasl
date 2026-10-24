@@ -105,6 +105,20 @@ nav svg{width:24px;height:24px}
 #flip{position:fixed;inset:0;background:#fff;color:#000;display:none;align-items:center;justify-content:center;font-size:44px;font-weight:800;padding:30px;text-align:center;transform:rotate(180deg);z-index:30}
 .note{font-size:13px;color:var(--mute);line-height:1.6}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* sound alerts */
+.ring{width:120px;height:120px;border-radius:50%;background:var(--ink2);display:flex;align-items:center;justify-content:center;font-size:52px}
+.ring.on{animation:ringp 1.6s infinite}
+@keyframes ringp{0%{box-shadow:0 0 0 0 rgba(217,122,43,.6)}100%{box-shadow:0 0 0 28px rgba(217,122,43,0)}}
+.chip.sel{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.al-item{display:flex;justify-content:space-between;gap:10px;font-size:16px;border-bottom:1px solid var(--line);padding:8px 0}
+.al-item:last-child{border-bottom:0}.al-item small{color:var(--mute)}
+#bigAlert{position:fixed;inset:0;z-index:40;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:30px;text-align:center;color:#fff;background:#B8431A}
+#bigAlert.on{display:flex;animation:flash 1s infinite}
+@keyframes flash{50%{filter:brightness(1.35)}}
+#baIcon{font-size:110px;line-height:1}
+#baText{font-size:clamp(34px,10vw,52px);font-weight:800;line-height:1.2}
+#baSub{font-size:18px;opacity:.9}
+#baOk{min-height:64px;min-width:240px;border:0;border-radius:18px;background:#fff;color:#13262F;font-size:22px;font-weight:800;margin-top:12px}
 </style>
 </head>
 <body>
@@ -124,6 +138,11 @@ nav svg{width:24px;height:24px}
 <textarea id="goal" class="goal" placeholder="مثلاً: عايز أصرف الروشتة دي"></textarea>
 <div class="chips" id="quick"></div>
 <button class="btn or" id="startTask">ابدأ المهمة</button>
+</div>
+<div class="card" style="border:2px solid var(--or)">
+<b style="font-size:18px">تنبيهات الأصوات</b>
+<p class="lead">وصل يسمع البيت بدالك: جرس الباب، وعياط طفل، وإنذار حريق، والتليفون. الموبايل يهتز والشاشة تنوّر.</p>
+<button class="btn" id="openAlerts">شغّل التنبيهات</button>
 </div>
 <div class="card dark">
 <b style="font-size:18px">محادثة حرة</b>
@@ -205,6 +224,28 @@ nav svg{width:24px;height:24px}
 <div class="note" id="fSaid"></div>
 </div>
 </section>
+
+<!-- ============ SOUND ALERTS ============ -->
+<section id="alerts" class="screen" aria-label="تنبيهات الأصوات">
+<div class="top"><button class="back" id="alBack">→ رجوع</button><b style="font-size:18px">تنبيهات الأصوات</b><span style="width:70px"></span></div>
+<div class="body">
+<div class="card dark" style="align-items:center;text-align:center">
+<div id="alRing" class="ring"><span id="alIcon">🔇</span></div>
+<b id="alStatus" style="font-size:20px">متوقف</b>
+<span id="alHeard" class="note" style="color:var(--soft)">دوس "ابدأ" وسيب الموبايل في مكان واضح.</span>
+<button class="btn or" id="alToggle" style="width:100%">ابدأ</button>
+</div>
+<div class="card"><b>نبّهني لما أسمع</b><div class="chips" id="alGroups"></div></div>
+<div class="card"><b>آخر التنبيهات</b><div id="alLog" class="log"><div class="empty">لسه مفيش تنبيهات.</div></div></div>
+<p class="note">خلي الصفحة دي مفتوحة. وصل بيحاول يخلي الشاشة منوّرة عشان يفضل سامع. التعرف على الأصوات بيحصل على الموبايل نفسه، ومفيش أي صوت بيتبعت لبرّه.</p>
+</div>
+</section>
+<div id="bigAlert" role="alertdialog" aria-live="assertive">
+<div id="baIcon">🔔</div>
+<div id="baText">حد على الباب</div>
+<div id="baSub"></div>
+<button id="baOk">تمام، شُفت</button>
+</div>
 
 <!-- ============ SIGNS ============ -->
 <div id="signs" role="dialog" aria-label="الإشارات">
@@ -369,6 +410,70 @@ $('fInput').onkeydown=e=>{if(e.key==='Enter')$('fSay').click()};
 $('fFlip').onclick=()=>{const t=$('fInput').value||$('fSaid').textContent.replace('اتقال: ','');if(!t)return;$('flip').textContent=t;$('flip').style.display='flex'};
 $('flip').onclick=()=>$('flip').style.display='none';
 $('fSign').onclick=()=>openSigns('free');
+
+/* ================= SOUND ALERTS ================= */
+const GROUPS=[
+ {id:'door',icon:'🚪',ar:'حد على الباب',chip:'جرس الباب والخبط',color:'#1F5F8B',vib:[400,150,400],labels:['Doorbell','Ding-dong','Knock']},
+ {id:'baby',icon:'👶',ar:'الطفل بيعيط',chip:'عياط طفل',color:'#8A4FBF',vib:[300,100,300,100,300],labels:['Baby cry, infant cry','Crying, sobbing','Whimper']},
+ {id:'fire',icon:'🔥',ar:'إنذار حريق!',chip:'إنذار حريق ودخان',color:'#C0261A',vib:[1000,200,1000,200,1000],urgent:true,labels:['Smoke detector, smoke alarm','Fire alarm']},
+ {id:'alarm',icon:'🚨',ar:'فيه إنذار أو سرينة',chip:'إنذار وسرينة',color:'#C0261A',vib:[700,200,700],urgent:true,labels:['Siren','Civil defense siren','Ambulance (siren)','Police car (siren)','Fire engine, fire truck (siren)','Alarm','Car alarm','Buzzer']},
+ {id:'phone',icon:'📞',ar:'التليفون بيرن',chip:'التليفون',color:'#2E7D5B',vib:[250,100,250,100,250],labels:['Telephone bell ringing','Ringtone','Telephone']},
+ {id:'clock',icon:'⏰',ar:'المنبه بيرن',chip:'المنبه',color:'#B8431A',vib:[300,300,300,300],labels:['Alarm clock']},
+ {id:'shout',icon:'📢',ar:'حد بيزعق أو بينادي',chip:'زعيق وصريخ',color:'#B8431A',vib:[500,100,500],labels:['Screaming','Shout','Yell','Children shouting']},
+ {id:'glass',icon:'💥',ar:'حاجة اتكسرت',chip:'كسر إزاز',color:'#7A5A1A',vib:[600,100,600],labels:['Shatter','Glass','Breaking']},
+ {id:'water',icon:'🚰',ar:'فيه مية مفتوحة أو بتغلي',chip:'مية وغلاية',color:'#1F5F8B',vib:[300,200,300],labels:['Water tap, faucet','Boiling','Kettle whistle','Steam whistle']},
+ {id:'car',icon:'🚗',ar:'كلاكس عربية',chip:'كلاكس',color:'#7A5A1A',vib:[200,100,200],labels:['Vehicle horn, car horn, honking','Toot','Air horn, truck horn']},
+ {id:'dog',icon:'🐕',ar:'كلب بينبح',chip:'نباح كلب',color:'#5B6870',vib:[200,100,200],labels:['Bark','Dog','Growling']}
+];
+const DEFAULT_ON=['door','baby','fire','alarm','phone','clock'];
+let alOn=false,alClassifier=null,alCtx=null,alStream=null,alNode=null,alWake=null,alStreak={},alLast={},alBuzzT=null;
+let alSel=store.get('wasl_alert_groups',DEFAULT_ON);
+const labelMap={};GROUPS.forEach(g=>g.labels.forEach(l=>labelMap[l.toLowerCase()]=g));
+function drawGroups(){$('alGroups').innerHTML=GROUPS.map(g=>`<button class="chip${alSel.includes(g.id)?' sel':''}" aria-pressed="${alSel.includes(g.id)}">${g.icon} ${esc(g.chip)}</button>`).join('');
+ $('alGroups').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{const id=GROUPS[i].id;alSel=alSel.includes(id)?alSel.filter(x=>x!==id):[...alSel,id];store.set('wasl_alert_groups',alSel);drawGroups()})}
+function drawAlLog(){const L=store.get('wasl_alert_log',[]);$('alLog').innerHTML=L.length?L.slice().reverse().slice(0,8).map(x=>`<div class="al-item"><span>${x.icon} ${esc(x.ar)}</span><small>${esc(x.t)}</small></div>`).join(''):'<div class="empty">لسه مفيش تنبيهات.</div>'}
+function setAl(state,heard){$('alStatus').textContent=state;if(heard!==undefined)$('alHeard').textContent=heard}
+async function loadClassifier(){
+ const base='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-audio@0.10.14';
+ const {AudioClassifier,FilesetResolver}=await import(base+'/audio_bundle.mjs');
+ const fs=await FilesetResolver.forAudioTasks(base+'/wasm');
+ const models=['https://storage.googleapis.com/mediapipe-models/audio_classifier/yamnet/float32/1/yamnet.tflite','https://tfhub.dev/google/lite-model/yamnet/classification/tflite/1?lite-format=tflite'];
+ let err;for(const m of models){try{return await AudioClassifier.createFromOptions(fs,{baseOptions:{modelAssetPath:m},maxResults:5,scoreThreshold:0.15})}catch(e){err=e}}throw err}
+async function startAlerts(){
+ setAl('بيجهّز...','بيحمّل موديل الأصوات، ثواني.');$('alToggle').disabled=true;
+ try{if(!alClassifier)alClassifier=await loadClassifier();
+  alStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:true}});
+  alCtx=new (window.AudioContext||window.webkitAudioContext)({sampleRate:16000});
+  const src=alCtx.createMediaStreamSource(alStream);alNode=alCtx.createScriptProcessor(16384,1,1);
+  alNode.onaudioprocess=e=>{if(!alOn)return;let cats=[];try{const r=alClassifier.classify(e.inputBuffer.getChannelData(0),alCtx.sampleRate);cats=(r[0]&&r[0].classifications[0].categories)||[]}catch(x){return}onSounds(cats)};
+  src.connect(alNode);alNode.connect(alCtx.destination);
+  alOn=true;$('alRing').classList.add('on');$('alIcon').textContent='👂';$('alToggle').textContent='وقف';setAl('بسمع البيت بدالك...','مفيش أصوات مهمة دلوقتي.');
+  try{alWake=await navigator.wakeLock.request('screen')}catch(e){}
+ }catch(e){setAl('ما اشتغلش',e&&e.name==='NotAllowedError'?'اسمح بالمايك من إعدادات المتصفح.':'اتأكد من النت وجرّب تاني.');stopAlerts(true)}
+ $('alToggle').disabled=false}
+function stopAlerts(keepMsg){alOn=false;try{alNode&&alNode.disconnect()}catch(e){}try{alCtx&&alCtx.close()}catch(e){}alStream&&alStream.getTracks().forEach(t=>t.stop());alNode=alCtx=alStream=null;try{alWake&&alWake.release()}catch(e){}alWake=null;
+ $('alRing').classList.remove('on');$('alIcon').textContent='🔇';$('alToggle').textContent='ابدأ';if(!keepMsg)setAl('متوقف','دوس "ابدأ" وسيب الموبايل في مكان واضح.')}
+function onSounds(cats){
+ const top=cats.slice(0,5);const seen={};
+ top.forEach(c=>{const g=labelMap[String(c.categoryName||c.displayName||'').toLowerCase()];if(g&&alSel.includes(g.id)){seen[g.id]=Math.max(seen[g.id]||0,c.score)}});
+ if(top[0])$('alHeard').textContent='بسمع: '+(top[0].categoryName||'')+' ('+Math.round(top[0].score*100)+'%)';
+ GROUPS.forEach(g=>{const s=seen[g.id]||0;const need=g.urgent?0.25:0.35;
+  if(s>=need){alStreak[g.id]=(alStreak[g.id]||0)+1}else alStreak[g.id]=0;
+  const enough=g.urgent||s>=0.6?1:2;
+  if(alStreak[g.id]>=enough&&(Date.now()-(alLast[g.id]||0))>10000){alLast[g.id]=Date.now();alStreak[g.id]=0;fireAlert(g,s)}})}
+function fireAlert(g,score){
+ const t=new Date().toLocaleTimeString('ar-EG',{hour:'numeric',minute:'2-digit'});
+ const L=store.get('wasl_alert_log',[]);L.push({icon:g.icon,ar:g.ar,t});store.set('wasl_alert_log',L.slice(-50));drawAlLog();
+ $('bigAlert').style.background=g.color;$('baIcon').textContent=g.icon;$('baText').textContent=g.ar;$('baSub').textContent=t+' · متأكد بنسبة '+Math.round(score*100)+'%';
+ $('bigAlert').classList.add('on');clearInterval(alBuzzT);let n=0;buzz(g.vib);
+ alBuzzT=setInterval(()=>{if(++n>(g.urgent?40:12)){clearInterval(alBuzzT);return}buzz(g.vib)},2000);
+ try{if(document.hidden&&'Notification'in window&&Notification.permission==='granted')new Notification('وصل: '+g.ar)}catch(e){}}
+$('baOk').onclick=()=>{$('bigAlert').classList.remove('on');clearInterval(alBuzzT);buzz(0)};
+$('openAlerts').onclick=()=>{show('alerts');drawGroups();drawAlLog()};
+$('alToggle').onclick=()=>{alOn?stopAlerts():startAlerts()};
+$('alBack').onclick=()=>{stopAlerts();show('home')};
+document.addEventListener('visibilitychange',async()=>{if(alOn&&!document.hidden){try{alWake=await navigator.wakeLock.request('screen')}catch(e){}}});
+window.__waslTestAlert=(id)=>fireAlert(GROUPS.find(g=>g.id===id)||GROUPS[0],0.9);
 
 /* ================= SIGNS ================= */
 const v=$('v'),c=$('c'),ctx=c.getContext('2d');
