@@ -96,14 +96,27 @@ async function smart(text){if(!text||text.trim().length<3)return;const n=++aiN;$
   if(d.replies&&d.replies.length){$('sug').innerHTML=d.replies.map(t=>`<button onclick="speak(this.textContent)">✨ ${t.replace(/</g,'&lt;')}</button>`).join('');$('status').textContent='✨ ردود ذكية على حسب الكلام'}else throw 0}
  catch(e){if(n===aiN){drawSug();$('status').textContent='🎤 بيسمع... (الردود الجاهزة)'}}}
 function detect(text){for(const k in S){if(S[k].w.some(w=>text.includes(w))){if(k!==cur)setSit(k);return}}}
-function speak(t){t=(t||'').replace('✨','').trim();if(!t)return;listening&&rec&&rec.abort();speechSynthesis.cancel();
+const TTS_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-tts';let player=null;
+async function speak(t){t=(t||'').replace('✨','').trim();if(!t)return;listening&&rec&&rec.abort();speechSynthesis.cancel();if(player){player.pause();player=null}
+ player={pause(){}};
+ $('said').textContent='اتقال: '+t;
+ const vl=/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':LANG;
+ try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),6000);
+  const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,lang:vl}),signal:ac.signal});clearTimeout(to);
+  if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;
+  const url=URL.createObjectURL(await r.blob());player=new Audio(url);
+  player.onended=()=>{URL.revokeObjectURL(url);player=null;if(listening)startRec()};
+  await player.play();return}
+ catch(e){}
+ player=null;robotSpeak(t)}
+function robotSpeak(t){
  const u=new SpeechSynthesisUtterance(t);u.lang=/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':(LANG.startsWith('ar')?LANG:'ar-EG');u.rate=.95;const bv=bestVoice(u.lang);if(bv)u.voice=bv;u.onend=()=>{if(listening)startRec()};speechSynthesis.speak(u);
  $('said').textContent='اتقال: '+t}
 function startRec(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;
  if(!R){$('status').textContent='التعرف على الكلام محتاج Chrome';return}
  rec=new R();rec.lang=LANG;rec.continuous=false;rec.onstart=()=>{$('status').textContent='🎤 بيسمع دلوقتي... اتكلم'};rec.interimResults=true;
  rec.onresult=e=>{let t='',fin=false;for(let i=e.resultIndex;i<e.results.length;i++){t+=e.results[i][0].transcript;if(e.results[i].isFinal)fin=true}$('cap').textContent=t;detect(t);if(fin){clearTimeout(aiT);aiT=setTimeout(()=>smart(t),700)}};
- rec.onend=()=>{if(listening&&!speechSynthesis.speaking)setTimeout(startRec,300)};
+ rec.onend=()=>{if(listening&&!speechSynthesis.speaking&&!player)setTimeout(startRec,300)};
  rec.onerror=ev=>{const m={'not-allowed':'❌ المايك مقفول: اسمح للموقع يستخدم المايك من القفل اللي جنب الرابط','service-not-allowed':'❌ المتصفح مانع التعرف على الكلام. افتح الرابط في Chrome نفسه','network':'❌ التعرف على الكلام محتاج نت','audio-capture':'❌ مش لاقي مايك. ممكن تطبيق تاني بيستخدمه','language-not-supported':'❌ اللهجة دي مش مدعومة، جرب مصري'};if(ev.error==='no-speech'||ev.error==='aborted')return;$('status').textContent=m[ev.error]||('❌ مشكلة في السماع: '+ev.error);if(ev.error!=='network'){listening=false;$('go').textContent='▶ ابدأ'}};try{rec.start()}catch(e){}}
 $('go').onclick=()=>{listening=!listening;$('go').textContent=listening?'⏸ وقف':'▶ ابدأ';
  $('status').textContent=listening?'🎤 بيسمع... الموقف بيتغير لوحده على حسب الكلام':'متوقف';if(listening)micCheck();else rec&&rec.abort()};
