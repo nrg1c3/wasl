@@ -35,7 +35,7 @@ h2{margin:0;font-size:22px;font-weight:800}
 .btn.or{background:var(--or);color:#1A0E05}
 .btn.ghost{background:var(--bg);color:var(--ink);border:1px solid var(--line);font-size:16px;min-height:48px}
 .btn:disabled{opacity:.5}
-.row{display:flex;gap:10px}.row>*{flex:1}
+.row{display:flex;gap:10px}.row>*{flex:1 1 0;min-width:0}.field input,.field textarea,.field select{width:100%;min-width:0}a.btn{display:flex;align-items:center;justify-content:center}.row>.btn{padding:0 6px;font-size:16px;line-height:1.3}.row>*{flex:1}
 nav{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border-top:1px solid var(--line);padding:8px 0 calc(10px + env(safe-area-inset-bottom))}
 nav button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:var(--mute);min-height:48px}
 nav button.on{color:#B85F1A;font-weight:800}
@@ -237,7 +237,7 @@ nav svg{width:24px;height:24px}
 <section id="me" class="screen" aria-label="بياناتي">
 <div class="top"><button class="back" id="meBack">→ رجوع</button><b style="font-size:18px">بياناتي</b><span style="width:70px"></span></div>
 <div class="body">
-<p class="lead">بنستخدمها عشان نرد عنك من غير ما نسألك كل مرة. محفوظة على الموبايل ده بس.</p>
+<p class="lead">بنستخدمها عشان نرد عنك من غير ما نسألك كل مرة. محفوظة على الموبايل ده بس، وأرقام الطوارئ مش بتخرج منه أبداً.</p>
 <div class="card">
 <div class="field"><label for="pName">الاسم</label><input id="pName" autocomplete="name"></div>
 <div class="field"><label for="pVoice">وصل يتكلم بصوت</label><select id="pVoice"><option value="f">ست</option><option value="m">راجل</option></select></div>
@@ -253,6 +253,12 @@ nav svg{width:24px;height:24px}
 <div class="row"><div class="field"><label for="pC2n">رقم طوارئ 2: الاسم</label><input id="pC2n"></div><div class="field"><label for="pC2p">الرقم</label><input id="pC2p" type="tel" inputmode="tel"></div></div>
 <button class="btn" id="saveMe">احفظ</button>
 <div class="note" id="savedNote"></div>
+</div>
+<div class="card">
+<b>الخصوصية</b>
+<p class="lead">كل بياناتك على الموبايل ده. تقدر تمسحها كلها في أي وقت.</p>
+<button class="btn ghost" id="wipeMe" style="color:#B3261E;border-color:#B3261E">امسح كل بياناتي</button>
+<a class="btn ghost" href="privacy.html" style="text-align:center;text-decoration:none">اقرا سياسة الخصوصية</a>
 </div>
 <div class="card">
 <b>الإشارات</b>
@@ -279,7 +285,7 @@ nav svg{width:24px;height:24px}
 <div class="log" id="tLog"></div>
 <div class="decide hidden" id="tDecide"><div class="q" id="tQ"></div><div class="opts" id="tOpts"></div></div>
 <div class="typerow hidden" id="tType"><label class="sr" for="tInput">اكتب لوصل</label><input id="tInput" placeholder="اكتب اللي عايز وصل يقوله أو يعرفه"><button id="tSend">ابعت</button></div>
-<div class="summary hidden" id="tSum"><b>✓ المهمة خلصت</b><p id="tSumText"></p><button class="btn" id="tHome">رجوع للرئيسية</button></div>
+<div class="summary hidden" id="tSum"><b>✓ المهمة خلصت</b><p id="tSumText"></p><button class="btn ghost" id="tShare" style="margin-bottom:8px">ابعت الملخص</button><button class="btn" id="tHome">رجوع للرئيسية</button></div>
 </div>
 <div class="tfoot" id="tFoot">
 <button id="tWrite">أنا هكتب</button>
@@ -298,7 +304,7 @@ nav svg{width:24px;height:24px}
 <div class="cards lg" id="fCards"></div>
 <div class="sug" id="fSug"></div>
 <div class="typerow"><label class="sr" for="fInput">اكتب كلامك</label><input id="fInput" placeholder="أو اكتب كلامك هنا..."><button id="fSay">انطق</button></div>
-<div class="row"><button class="btn ghost" id="fSign">إشارة</button><button class="btn ghost" id="fPay">الدفع</button><button class="btn ghost" id="fFlip">اعرض كلامي للي قدامي</button></div>
+<div class="row"><button class="btn ghost" id="fSign">إشارة</button><button class="btn ghost" id="fPay">الدفع</button><button class="btn ghost" id="fFlip">اعرض للي قدامي</button></div>
 <div class="note" id="fSaid"></div>
 </div>
 </section>
@@ -421,8 +427,10 @@ function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').tex
 /* ---------- profile ---------- */
 const PF={pName:'name',pVoice:'voice',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return store.get('wasl_profile',{})}
+function taskProfile(){const p=profile(),o={};['name','address','allergies','insurance','notes'].forEach(k=>{if(p[k])o[k]=p[k]});return o}
 function voiceName(){const m=profile().voice==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
 function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='f'}
+$('wipeMe').onclick=()=>{if(!confirm('هتتمسح بياناتك ومهامك وإشاراتك من الموبايل ده. متأكد؟'))return;try{Object.keys(localStorage).filter(k=>k.startsWith('wasl_')||k==='signs').forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()};
 $('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent='اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.'};
 
 /* ---------- quick tasks ---------- */
@@ -432,7 +440,7 @@ $('quick').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{$('goal').va
 
 /* ---------- my tasks ---------- */
 function drawTasks(){const t=store.get('wasl_tasks',[]);
- $('taskList').innerHTML=t.length?t.slice().reverse().map(x=>`<div class="task-item"><b>${esc(x.title)}</b><small>${esc(x.date)}</small><p>${esc(x.summary||'اتقفلت قبل ما تخلص.')}</p></div>`).join(''):'<div class="empty">لسه مفيش مهام. ابدأ أول مهمة من "وجهاً لوجه".</div>'}
+ $('taskList').innerHTML=t.length?t.slice().reverse().map(x=>`<div class="task-item"><b>${esc(x.title)}</b><small>${esc(x.date)}</small><p>${esc(x.summary||'اتقفلت قبل ما تخلص.')}</p></div>`).join(''):'<div class="empty">لسه مفيش مهام. ابدأ أول مهمة من "اتكلم بدالي".</div>'}
 
 /* ---------- audio: voice out ---------- */
 const AUD=new Audio();AUD.preload='auto';let audUnlocked=false,player=null;
@@ -511,10 +519,11 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
  let d=null;
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),20000);
-  const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:profile(),history:T.history,event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
+  const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:taskProfile(),history:T.history,event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
   clearTimeout(to);d=await r.json()}catch(e){}
  if(!T||my!==T.seq||T.over)return;
- if(!d||d.error){setState('think','النت ضعيف، بجرّب تاني...');setTimeout(()=>agent(event),1500);return}
+ if(!d||d.error){T.fails=(T.fails||0)+1;if(T.fails===2)setHear('لحظة من فضلك','لحظة واحدة من فضلك','النت ضعيف شوية.');if(T.fails>6){setState('think','النت فاصل. دوس هنا عشان تجرّب تاني');$('tState').onclick=()=>{$('tState').onclick=null;T.fails=0;agent(event)};return}setState('think','النت ضعيف، بجرّب تاني...');setTimeout(()=>agent(event),1500+T.fails*700);return}
+ T.fails=0;
  if(event.type==='heard'||event.type==='typed')drawCards('tCards',d.cards||[]);
  if(d.task_title)$('tTitle').textContent=T.title=d.task_title;
  if(d.step)drawProg(d.step);
@@ -558,6 +567,7 @@ $('tSign').onclick=()=>openSigns('task');
 function endTask(){haltListening();clearTimeout(heardTimer);heardBuf='';if(player){try{player.pause()}catch(e){}}player=null;if(T&&!T.over){T.over=true;saveTask('')}T=null;onHeard=onInterim=onListenState=null;show('home')}
 $('tEnd').onclick=()=>{if(confirm('تنهي المهمة؟'))endTask()};
 $('tHome').onclick=endTask;
+$('tShare').onclick=async()=>{const t=$('tSumText').innerText;try{if(navigator.share){await navigator.share({title:'وصل',text:t});return}await navigator.clipboard.writeText(t);$('tShare').textContent='اتنسخ ✓'}catch(e){}};
 
 /* ================= FREE MODE ================= */
 let freeOn=false,fSeq=0;
@@ -566,7 +576,7 @@ function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${smar
  $('fSug').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>fSpeak(list[i]))}
 function fSpeak(t){$('fSaid').textContent='اتقال: '+t;speak(t,()=>{if(freeOn)startListening()})}
 async function smartReplies(text){const n=++fSeq;$('fState').textContent='✨ بيجهّز ردود...';
- try{const r=await fetch(REPLY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,situation:'عام',lang:LANG})});const d=await r.json();
+ try{const ac=new AbortController();setTimeout(()=>ac.abort(),12000);const r=await fetch(REPLY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,situation:'عام',lang:LANG}),signal:ac.signal});const d=await r.json();
   if(n!==fSeq)return;drawCards('fCards',d.cards||[]);if(d.replies&&d.replies.length){drawReplies(d.replies,true);$('fState').textContent='✨ ردود على حسب الكلام'+(d.situation&&d.situation!=='عام'?' · '+d.situation:'')}}catch(e){if(n===fSeq)$('fState').textContent='بسمع...'}}
 $('openFree').onclick=()=>{show('free');drawReplies(DEFAULT_REPLIES,false)};
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
