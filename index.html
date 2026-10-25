@@ -395,12 +395,13 @@ function haltListening(){wantListen=false;stopListening()}
 
 /* ================= TASK MODE ================= */
 let T=null;
-function setHear(lab,big,sub){$('hLab').textContent=lab;$('hBig').textContent=big;$('hSub').textContent=sub||''}
+function nums(t){return esc(t).replace(/[+0-9\u0660-\u0669][0-9\u0660-\u0669 \-]{4,}[0-9\u0660-\u0669]/g,m=>'<bdi dir="ltr">'+m+'</bdi>')}
+function setHear(lab,big,sub){$('hLab').textContent=lab;$('hBig').innerHTML=nums(big);$('hSub').innerHTML=nums(sub||'')}
 function setState(kind,text){$('tDot').className='dot'+(kind==='think'?' think':kind==='talk'?' talk':'');$('tState').textContent=text}
 function logMsg(role,text){if(!text)return;const d=document.createElement('div');d.className='msg '+(role==='hearing'?'h':role==='wasl'?'w':'u');
- d.innerHTML='<b>'+(role==='hearing'?'اللي قدامك':role==='wasl'?'وصل قال':'إنت قررت')+'</b>'+esc(text);
+ d.innerHTML='<b>'+(role==='hearing'?'اللي قدامك':role==='wasl'?'وصل قال':'إنت قررت')+'</b>'+nums(text);
  const log=$('tLog');log.appendChild(d);while(log.children.length>4)log.removeChild(log.firstChild);$('tbody').scrollTop=$('tbody').scrollHeight}
-function liveCap(t,on){const b=$('tLive');$('tLiveText').textContent=t;$('tLiveLab').textContent=on?'اللي قدامك بيقول دلوقتي':'آخر كلام قاله اللي قدامك';b.classList.toggle('on',!!on);b.scrollTop=b.scrollHeight}
+function liveCap(t,on){const b=$('tLive');$('tLiveText').innerHTML=nums(t);$('tLiveLab').textContent=on?'اللي قدامك بيقول دلوقتي':'آخر كلام قاله اللي قدامك';b.classList.toggle('on',!!on);b.scrollTop=b.scrollHeight}
 function drawProg(step){const n=Math.max(1,Math.min(step.n||1,step.total||3)),tot=Math.max(n,step.total||3);
  $('tStep').textContent='خطوة '+n+' من '+tot;$('tProg').innerHTML=Array.from({length:tot},(_,i)=>`<i class="${i<n-1?'done':i===n-1?'now':''}"></i>`).join('')}
 function listenForHearing(){if(!T||T.over)return;setState('ok','بسمع اللي قدامك...');setHear('وصل سامعك · اتكلم عادي',T.lastSaid||'اتفضل، أنا سامعك','صاحب الموبايل أصم، وأنا مساعده.');startListening()}
@@ -427,7 +428,7 @@ async function agent(event){if(!T||T.over)return;haltListening();const my=++T.se
   if(d.say)speak(d.say);$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.action==='done'){
   T.over=true;buzz([300]);setHear('شكراً',d.say||'شكراً جزيلاً','');
-  $('tSumText').textContent=d.summary||'المهمة خلصت.';$('tSum').classList.remove('hidden');$('tFoot').classList.add('hidden');setState('ok','المهمة خلصت');
+  $('tSumText').innerHTML=nums(d.summary||'المهمة خلصت.');$('tSum').classList.remove('hidden');$('tFoot').classList.add('hidden');setState('ok','المهمة خلصت');
   saveTask(d.summary);if(d.say)speak(d.say);$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.say){setState('talk','وصل بيتكلم...');setHear('وصل بيقول',d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
 
@@ -465,7 +466,7 @@ $('openFree').onclick=()=>{show('free');drawReplies(DEFAULT_REPLIES,false)};
 $('freeGo').onclick=async()=>{if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent='المايك مقفول ('+ok+'). اسمح بيه من إعدادات المتصفح';return}
  freeOn=true;$('freeGo').textContent='⏸ وقف';$('fDot').className='dot';$('fState').textContent='بسمع...';
- onHeard=t=>{const c=$('cap');c.textContent=t;c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.textContent=t;c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول'};
+ onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول'};
  startListening()};
 $('freeBack').onclick=()=>{freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';onHeard=onInterim=onListenState=null;show('home')};
 $('fSay').onclick=()=>{const t=$('fInput').value.trim();if(t){$('fInput').value='';fSpeak(t)}};
