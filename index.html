@@ -41,7 +41,7 @@ nav button.on{color:#B85F1A;font-weight:800}
 nav svg{width:24px;height:24px}
 .field{display:flex;flex-direction:column;gap:6px}
 .field label{font-size:14px;font-weight:700;color:var(--mute)}
-.field input,.field textarea{min-height:48px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:16px;background:var(--bg);color:var(--ink)}
+.field input,.field textarea,.field select{min-height:48px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:16px;background:var(--bg);color:var(--ink)}
 .task-item{display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--line);padding-bottom:12px}
 .task-item:last-child{border-bottom:0;padding-bottom:0}
 .task-item b{font-size:17px}.task-item small{color:var(--mute);font-size:13px}
@@ -192,6 +192,7 @@ nav svg{width:24px;height:24px}
 <div><h2>بياناتي</h2><p class="lead">وصل بيستخدمها عشان يرد عنك من غير ما يسألك كل مرة. محفوظة على الموبايل ده بس.</p></div>
 <div class="card">
 <div class="field"><label for="pName">الاسم</label><input id="pName" autocomplete="name"></div>
+<div class="field"><label for="pVoice">وصل يتكلم بصوت</label><select id="pVoice"><option value="f">ست</option><option value="m">راجل</option></select></div>
 <div class="field"><label for="pAll">حساسية من أدوية أو أكل</label><input id="pAll" placeholder="مثلاً: البنسلين"></div>
 <div class="field"><label for="pIns">التأمين الصحي</label><input id="pIns" placeholder="مثلاً: مفيش، أو اسم الشركة"></div>
 <div class="field"><label for="pAddr">العنوان</label><input id="pAddr"></div>
@@ -344,9 +345,9 @@ document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
  if(b.dataset.tab==='tasks')drawTasks();if(b.dataset.tab==='me')loadMe()});
 
 /* ---------- profile ---------- */
-const PF={pName:'name',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
+const PF={pName:'name',pVoice:'voice',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return store.get('wasl_profile',{})}
-function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||''}
+function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='f'}
 $('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent='اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.'};
 
 /* ---------- quick tasks ---------- */
@@ -368,8 +369,8 @@ async function speak(t,done){t=String(t||'').replace('✨','').trim();if(!t){don
  stopListening();try{speechSynthesis.cancel()}catch(e){}if(player){try{player.pause()}catch(e){}}player={pause(){}};
  const vl=/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':LANG;
  const finish=()=>{player=null;done&&done()};
- try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),7000);
-  const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,lang:vl}),signal:ac.signal});clearTimeout(to);
+ try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),9000);
+  const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,lang:vl,gender:profile().voice==='m'?'m':'f'}),signal:ac.signal});clearTimeout(to);
   if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;
   const url=URL.createObjectURL(await r.blob());player=AUD;AUD.src=url;
   AUD.onended=()=>{URL.revokeObjectURL(url);finish()};AUD.onerror=()=>finish();
