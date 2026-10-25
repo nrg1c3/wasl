@@ -415,7 +415,10 @@ function drawProg(step){const n=Math.max(1,Math.min(step.n||1,step.total||3)),to
  $('tStep').textContent='خطوة '+n+' من '+tot;$('tProg').innerHTML=Array.from({length:tot},(_,i)=>`<i class="${i<n-1?'done':i===n-1?'now':''}"></i>`).join('')}
 function listenForHearing(){if(!T||T.over)return;setState('ok','بسمع اللي قدامك...');setHear('وصل سامعك · اتكلم عادي',T.lastSaid||'اتفضل، أنا سامعك','صاحب الموبايل أصم، وأنا مساعده.');startListening()}
 
-async function agent(event){if(!T||T.over)return;haltListening();const my=++T.seq;
+let heardBuf='',heardTimer=null;
+function flushHeard(){heardTimer=null;if(!T||T.over||!heardBuf.trim())return;const t=heardBuf.trim();heardBuf='';T.history.push({role:'hearing',text:t});logMsg('hearing',t);
+ if(!$('tDecide').classList.contains('hidden'))return;agent({type:'heard',text:t})}
+async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
  let d=null;
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),20000);
@@ -434,9 +437,9 @@ async function agent(event){if(!T||T.over)return;haltListening();const my=++T.se
   $('tOpts').innerHTML=opts.map(o=>`<button>${esc(o)}</button>`).join('');
   $('tOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{const c=opts[i];T.history.push({role:'user',text:c});logMsg('user',c);agent({type:'decision',text:c})});
   $('tDecide').classList.remove('hidden');setState('talk','وصل محتاج قرارك');
-  if(d.say)speak(d.say);$('tbody').scrollTop=$('tbody').scrollHeight;return}
+  if(d.say)speak(d.say,()=>{if(T&&!T.over)startListening()});else startListening();$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.action==='done'){
-  T.over=true;buzz([300]);setHear('شكراً',d.say||'شكراً جزيلاً','');
+  T.over=true;haltListening();clearTimeout(heardTimer);buzz([300]);setHear('شكراً',d.say||'شكراً جزيلاً','');
   $('tSumText').innerHTML=nums(d.summary||'المهمة خلصت.');$('tSum').classList.remove('hidden');$('tFoot').classList.add('hidden');setState('ok','المهمة خلصت');
   saveTask(d.summary);if(d.say)speak(d.say);$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.say){setState('talk','وصل بيتكلم...');setHear('وصل بيقول',d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
@@ -449,8 +452,9 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  $('tTitle').textContent=goal;$('tLog').innerHTML='';drawProg({n:1,total:3});liveCap('',false);$('tLiveLab').textContent='كلام اللي قدامك هيظهر هنا';
  ['tDecide','tSum','tType'].forEach(id=>$(id).classList.add('hidden'));$('tFoot').classList.remove('hidden');
  setHear('وصل','أهلاً بيك','صاحب الموبايل أصم، وأنا مساعده.');show('task');
- onHeard=t=>{if(!T||T.over)return;liveCap(t,false);T.history.push({role:'hearing',text:t});logMsg('hearing',t);agent({type:'heard',text:t})};
- onInterim=t=>{if(T&&!T.over)liveCap(t,true)};
+ heardBuf='';clearTimeout(heardTimer);
+ onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,1100)};
+ onInterim=t=>{if(!T||T.over)return;liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,2500)}};
  onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')setState('think','السماع محتاج Chrome')};
  agent({type:'start'})};
 
@@ -458,7 +462,7 @@ $('tWrite').onclick=()=>{$('tType').classList.toggle('hidden');if(!$('tType').cl
 $('tSend').onclick=()=>{const t=$('tInput').value.trim();if(!t||!T)return;$('tInput').value='';$('tType').classList.add('hidden');T.history.push({role:'user',text:t});logMsg('user',t);agent({type:'typed',text:t})};
 $('tInput').onkeydown=e=>{if(e.key==='Enter')$('tSend').click()};
 $('tSign').onclick=()=>openSigns('task');
-function endTask(){haltListening();if(player){try{player.pause()}catch(e){}}player=null;if(T&&!T.over){T.over=true;saveTask('')}T=null;onHeard=onInterim=onListenState=null;show('home')}
+function endTask(){haltListening();clearTimeout(heardTimer);heardBuf='';if(player){try{player.pause()}catch(e){}}player=null;if(T&&!T.over){T.over=true;saveTask('')}T=null;onHeard=onInterim=onListenState=null;show('home')}
 $('tEnd').onclick=()=>{if(confirm('تنهي المهمة؟'))endTask()};
 $('tHome').onclick=endTask;
 
