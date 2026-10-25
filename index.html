@@ -93,10 +93,10 @@ nav svg{width:24px;height:24px}
 .live small{display:block;color:#bdb3a8;font-size:13px;font-weight:700;margin-bottom:2px}
 .live.on small::before{content:'● ';color:#ff4d3d}
 .cards{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.cards:empty{display:none}
-.card{background:#fff;color:#13262F;border-radius:14px;padding:8px 10px;min-width:92px;flex:1 1 92px;max-width:150px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;border-top:5px solid var(--cc,#13262F)}
-.card svg{width:34px;height:34px;stroke:var(--cc,#13262F)}
-.card b{font-size:24px;line-height:1.15;unicode-bidi:plaintext}.card small{font-size:13px;font-weight:700;color:#3d4d54}
-.cards.big .card{min-width:110px;padding:12px}.cards.big .card svg{width:44px;height:44px}.cards.big .card b{font-size:30px}
+.pcard{background:#fff;color:#13262F;border-radius:14px;padding:8px 10px;min-width:92px;flex:1 1 92px;max-width:150px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;border-top:5px solid var(--cc,#13262F)}
+.pcard svg{width:34px;height:34px;stroke:var(--cc,#13262F)}
+.pcard b{font-size:24px;line-height:1.15;unicode-bidi:plaintext}.pcard small{font-size:13px;font-weight:700;color:#3d4d54}
+.cards.big .pcard{min-width:110px;padding:12px}.cards.big .pcard svg{width:44px;height:44px}.cards.big .pcard b{font-size:30px}
 .live p{margin:0;font-size:clamp(20px,6vw,26px);line-height:1.45;font-weight:700}
 .sug{display:flex;flex-direction:column;gap:8px}
 .sug button{min-height:56px;border:2px solid var(--or);border-radius:14px;background:var(--card);font-size:19px;font-weight:700;text-align:right;padding:10px 14px;color:var(--ink)}
@@ -496,7 +496,7 @@ const CARD={
  doc:{l:'محتاج ورق',c:'#13262F',s:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M14 10h4M14 14h4M6 16c.6-1.4 1.7-2 3-2s2.4.6 3 2"/>'}};
 function drawCards(id,cards){const el=$(id);if(!el)return;
  el.innerHTML=(cards||[]).filter(c=>CARD[c.k]).map(c=>{const d=CARD[c.k];const v=String(c.v||'').trim();
-  return `<div class="card" style="--cc:${d.c}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d.s}</svg>${v?`<b>${esc(v)}</b>`:''}<small>${d.l}</small></div>`}).join('');
+  return `<div class="pcard" style="--cc:${d.c}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d.s}</svg>${v?`<b>${esc(v)}</b>`:''}<small>${d.l}</small></div>`}).join('');
  if(el.innerHTML)buzz([60])}
 function liveCap(t,on){const b=$('tLive');$('tLiveText').innerHTML=nums(t);$('tLiveLab').textContent=on?'اللي قدامك بيقول دلوقتي':'آخر كلام قاله اللي قدامك';b.classList.toggle('on',!!on);b.scrollTop=b.scrollHeight}
 function drawProg(step){const n=Math.max(1,Math.min(step.n||1,step.total||3)),tot=Math.max(n,step.total||3);
