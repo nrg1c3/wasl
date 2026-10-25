@@ -356,6 +356,7 @@ document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
 /* ---------- profile ---------- */
 const PF={pName:'name',pVoice:'voice',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return store.get('wasl_profile',{})}
+function voiceName(){const m=profile().voice==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'ar-AE':['منى','بندر'],'ar-JO':['سناء','تيم'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
 function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='f'}
 $('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent='اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.'};
 
@@ -422,7 +423,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
  let d=null;
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),20000);
-  const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:profile(),history:T.history,event}),signal:ac.signal});
+  const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:profile(),history:T.history,event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
   clearTimeout(to);d=await r.json()}catch(e){}
  if(!T||my!==T.seq||T.over)return;
  if(!d||d.error){setState('think','النت ضعيف، بجرّب تاني...');setTimeout(()=>agent(event),1500);return}
@@ -534,7 +535,7 @@ function sosMessage(){const p=profile();const who=p.name?p.name:'شخص أصم';
  return['🚨 طوارئ من '+who+': '+sosT.ar+'.','أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.',mapLink()?'مكاني: '+mapLink():'',p.address?'العنوان: '+p.address:'',...medLines(p),'(اتبعتت من وصل)'].filter(Boolean).join('\n')}
 function buildScript(){const p=profile();const who=p.name||'شخص أصم';
  const addr=p.address?'العنوان: '+p.address+'.':(sosPos?'مكانه اتبعت برسالة.':'');
- const s='ألو، أنا وصل، مساعد صوتي لشخص أصم اسمه '+who+'. هو '+sosT.say+'. '+addr+(p.allergies?' عنده حساسية من '+p.allergies+'.':'')+' من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.';
+ const s='ألو، أنا '+voiceName()+'، مساعد صوتي لشخص أصم اسمه '+who+'. هو '+sosT.say+'. '+addr+(p.allergies?' عنده حساسية من '+p.allergies+'.':'')+' من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.';
  $('sosScriptText').textContent=s;return s}
 function pickSos(t){sosT=t;buzz([200,100,200]);$('sosStep1').classList.add('hidden');$('sosStep2').classList.remove('hidden');
  $('sosTitle').textContent=t.icon+' '+t.ar;$('sosCallT').textContent='اتصل بـ'+t.svc+' '+t.num+' ووصل يتكلم';
