@@ -195,7 +195,7 @@ nav svg{width:24px;height:24px}
 <div class="hhead">
 <div class="hbrand"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#13262F"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>وَصَّل</b><small>صوتك في كل مكان</small></div></div>
 <label class="sr" for="lang">لهجة اللي قدامك</label>
-<select id="lang"><option value="ar-EG">مصري</option><option value="ar-SA">سعودي</option><option value="ar-AE">إماراتي</option><option value="ar-JO">شامي</option><option value="en-US">English</option></select>
+<select id="lang"><option value="ar-EG">مصري</option><option value="ar-SA">خليجي</option><option value="en-US">English</option></select>
 </div>
 <div class="hbody">
 <button class="alchip" id="alChip"><span class="d"></span><span id="alChipT">تنبيهات الأصوات مقفولة · شغّلها</span></button>
@@ -379,7 +379,7 @@ const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e)
 const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
 
 /* ---------- language ---------- */
-let LANG=store.get('wasl_lang','ar-EG');$('lang').value=LANG;
+let LANG=store.get('wasl_lang','ar-EG');if(LANG==='ar-AE')LANG='ar-SA';if(LANG==='ar-JO')LANG='ar-EG';$('lang').value=LANG;
 $('lang').onchange=()=>{LANG=$('lang').value;store.set('wasl_lang',LANG)};
 
 /* ---------- screens & tabs ---------- */
@@ -420,7 +420,7 @@ function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').tex
 /* ---------- profile ---------- */
 const PF={pName:'name',pVoice:'voice',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return store.get('wasl_profile',{})}
-function voiceName(){const m=profile().voice==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'ar-AE':['منى','بندر'],'ar-JO':['سناء','تيم'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
+function voiceName(){const m=profile().voice==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
 function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='f'}
 $('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent='اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.'};
 
@@ -517,6 +517,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  if(event.type==='heard'||event.type==='typed')drawCards('tCards',d.cards||[]);
  if(d.task_title)$('tTitle').textContent=T.title=d.task_title;
  if(d.step)drawProg(d.step);
+ if(d.say&&event.type==='heard'&&d.action==='speak'&&isAck(d.say))d.say='';
  if(d.say){T.history.push({role:'wasl',text:d.say});T.lastSaid=d.say;logMsg('wasl',d.say)}
  if(d.action==='ask_user'){
   buzz([200,100,200]);
@@ -532,6 +533,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
   $('tSumText').innerHTML=nums(d.summary||'المهمة خلصت.');$('tSum').classList.remove('hidden');$('tFoot').classList.add('hidden');setState('ok','المهمة خلصت');
   saveTask(d.summary);if(d.say)speak(d.say);$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.say){setState('talk','وصل بيتكلم...');setHear('وصل بيقول',d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
+function isAck(t){const w=String(t).replace(/[،.!؟?,]/g,' ').trim().split(/\s+/);return w.length<=4&&w.every(x=>/^(ماشي|تمام|طيب|اتفضل|اتفضلي|كمل|كملي|كمّل|أوكي|اوكي|اه|آه|أيوه|ايوه|حاضر|معاك|معاكي|سامعك|سامعاك|و|يا|فندم|حضرتك|ok|okay|sure|go|on)$/i.test(x))}
 
 function saveTask(summary){const t=store.get('wasl_tasks',[]);t.push({title:T.title||T.goal,goal:T.goal,summary:summary||'',date:new Date().toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
 
@@ -543,8 +545,8 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  ['tDecide','tSum','tType'].forEach(id=>$(id).classList.add('hidden'));$('tFoot').classList.remove('hidden');
  setHear('وصل','أهلاً بيك','صاحب الموبايل أصم، وأنا مساعده.');show('task');
  heardBuf='';clearTimeout(heardTimer);
- onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,1100)};
- onInterim=t=>{if(!T||T.over)return;liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,2500)}};
+ onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,1800)};
+ onInterim=t=>{if(!T||T.over)return;liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,3000)}};
  onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')setState('think','السماع محتاج Chrome')};
  agent({type:'start'})};
 
@@ -584,7 +586,7 @@ const PAY_SAY={eg:{cash:'الدفع هيكون كاش، لو سمحت.',card:'ا
  gulf:{cash:'الدفع بيكون كاش، لو سمحت.',card:'الدفع بيكون بالبطاقة، لو سمحت.',wallet:'الدفع بيكون بمحفظة إلكترونية، لو سمحت.',instapay:'الدفع بيكون تحويل بنكي. ممكن رقم الحساب؟'},
  lev:{cash:'رح يكون الدفع كاش، لو سمحت.',card:'رح يكون الدفع بالبطاقة، لو سمحت.',wallet:'رح يكون الدفع بمحفظة إلكترونية، لو سمحت.',instapay:'رح يكون الدفع تحويل. ممكن رقم الحساب؟'},
  en:{cash:'Payment will be in cash, please.',card:'Payment will be by card, please.',wallet:'Payment will be by mobile wallet, please.',instapay:'Payment will be by bank transfer. Could you share the account details?'}};
-function paySay(k){const d=LANG==='en-US'?'en':LANG==='ar-EG'?'eg':LANG==='ar-JO'?'lev':'gulf';return PAY_SAY[d][k]}
+function paySay(k){const d=LANG==='en-US'?'en':LANG==='ar-EG'?'eg':'gulf';return PAY_SAY[d][k]}
 let payFrom=null;
 function openPay(from){payFrom=from;$('payOpts').innerHTML=PAY.map(p=>`<button><i>${p.i}</i>${p.l}</button>`).join('');
  $('payOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>choosePay(PAY[i]));$('paySheet').style.display='flex'}
