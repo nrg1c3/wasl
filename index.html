@@ -106,6 +106,13 @@ nav svg{width:24px;height:24px}
 #signs summary{font-size:16px;font-weight:700;cursor:pointer;min-height:36px;display:flex;align-items:center}
 .tags span{display:inline-block;background:var(--ink);border-radius:8px;padding:4px 10px;margin:3px;font-size:14px}
 #signs input{flex:1;min-width:0;min-height:48px;border:0;border-radius:12px;padding:0 12px;font-size:16px}
+#paySheet{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;z-index:25}
+.pbox{background:var(--card);width:100%;border-radius:20px 20px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px}
+.pbox b{font-size:20px}.pbox small{color:var(--mute);font-size:14px}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pgrid button{min-height:86px;border:1px solid var(--line);border-radius:16px;background:var(--bg);font-size:18px;font-weight:800;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.pgrid i{font-style:normal;font-size:28px}
+.pclose{min-height:48px;border:0;border-radius:14px;background:var(--line);font-size:16px;font-weight:700;color:var(--ink)}
 #flip{position:fixed;inset:0;background:#fff;color:#000;display:none;align-items:center;justify-content:center;font-size:44px;font-weight:800;padding:30px;text-align:center;transform:rotate(180deg);z-index:30}
 .note{font-size:13px;color:var(--mute);line-height:1.6}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -243,6 +250,7 @@ nav svg{width:24px;height:24px}
 <div class="tfoot" id="tFoot">
 <button id="tWrite">أنا هكتب</button>
 <button id="tSign">إشارة</button>
+<button id="tPay">الدفع</button>
 <button class="end" id="tEnd">إنهاء</button>
 </div>
 </section>
@@ -255,7 +263,7 @@ nav svg{width:24px;height:24px}
 <div id="cap" aria-live="polite">كلام اللي قدامك هيظهر هنا...</div>
 <div class="sug" id="fSug"></div>
 <div class="typerow"><label class="sr" for="fInput">اكتب كلامك</label><input id="fInput" placeholder="أو اكتب كلامك هنا..."><button id="fSay">انطق</button></div>
-<div class="row"><button class="btn ghost" id="fSign">إشارة</button><button class="btn ghost" id="fFlip">اعرض كلامي للي قدامي</button></div>
+<div class="row"><button class="btn ghost" id="fSign">إشارة</button><button class="btn ghost" id="fPay">الدفع</button><button class="btn ghost" id="fFlip">اعرض كلامي للي قدامي</button></div>
 <div class="note" id="fSaid"></div>
 </div>
 </section>
@@ -323,6 +331,7 @@ nav svg{width:24px;height:24px}
 </details>
 </div>
 <div id="flip"></div>
+<div id="paySheet" role="dialog" aria-label="طريقة الدفع"><div class="pbox"><b>هتدفع إزاي؟</b><small>وصل هيقول طريقة الدفع للي قدامك</small><div class="pgrid" id="payOpts"></div><button class="pclose" id="payClose">إلغاء</button></div></div>
 
 <script>
 const $=id=>document.getElementById(id);
@@ -474,6 +483,25 @@ $('fInput').onkeydown=e=>{if(e.key==='Enter')$('fSay').click()};
 $('fFlip').onclick=()=>{const t=$('fInput').value||$('fSaid').textContent.replace('اتقال: ','');if(!t)return;$('flip').textContent=t;$('flip').style.display='flex'};
 $('flip').onclick=()=>$('flip').style.display='none';
 $('fSign').onclick=()=>openSigns('free');
+
+/* ================= PAYMENT STAMPS ================= */
+const PAY=[{k:'cash',i:'💵',l:'كاش'},{k:'card',i:'💳',l:'فيزا'},{k:'wallet',i:'📱',l:'محفظة إلكترونية'},{k:'instapay',i:'⚡',l:'إنستاباي'}];
+const PAY_SAY={eg:{cash:'الدفع هيكون كاش، لو سمحت.',card:'الدفع هيكون بالفيزا، لو سمحت.',wallet:'الدفع هيكون بمحفظة إلكترونية زي فودافون كاش، لو سمحت.',instapay:'الدفع هيكون بإنستاباي. ممكن رقم أو حساب إنستاباي بتاعكم؟'},
+ gulf:{cash:'الدفع بيكون كاش، لو سمحت.',card:'الدفع بيكون بالبطاقة، لو سمحت.',wallet:'الدفع بيكون بمحفظة إلكترونية، لو سمحت.',instapay:'الدفع بيكون تحويل بنكي. ممكن رقم الحساب؟'},
+ lev:{cash:'رح يكون الدفع كاش، لو سمحت.',card:'رح يكون الدفع بالبطاقة، لو سمحت.',wallet:'رح يكون الدفع بمحفظة إلكترونية، لو سمحت.',instapay:'رح يكون الدفع تحويل. ممكن رقم الحساب؟'},
+ en:{cash:'Payment will be in cash, please.',card:'Payment will be by card, please.',wallet:'Payment will be by mobile wallet, please.',instapay:'Payment will be by bank transfer. Could you share the account details?'}};
+function paySay(k){const d=LANG==='en-US'?'en':LANG==='ar-EG'?'eg':LANG==='ar-JO'?'lev':'gulf';return PAY_SAY[d][k]}
+let payFrom=null;
+function openPay(from){payFrom=from;$('payOpts').innerHTML=PAY.map(p=>`<button><i>${p.i}</i>${p.l}</button>`).join('');
+ $('payOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>choosePay(PAY[i]));$('paySheet').style.display='flex'}
+function closePay(){$('paySheet').style.display='none'}
+function choosePay(p){closePay();const say=paySay(p.k);
+ if(payFrom==='task'&&T&&!T.over){const note='طريقة الدفع: '+p.l;T.history.push({role:'user',text:note});logMsg('user',note);
+  if(!$('tDecide').classList.contains('hidden')){agent({type:'decision',text:'هدفع '+p.l});return}
+  haltListening();T.history.push({role:'wasl',text:say});logMsg('wasl',say);T.lastSaid=say;setHear('وصل بيقول',say,'');setState('talk','وصل بيتكلم...');speak(say,listenForHearing);return}
+ fSpeak(say)}
+$('tPay').onclick=()=>openPay('task');$('fPay').onclick=()=>openPay('free');
+$('payClose').onclick=closePay;$('paySheet').onclick=e=>{if(e.target.id==='paySheet')closePay()};
 
 /* ================= EMERGENCY ================= */
 const SOS_TYPES=[
