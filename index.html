@@ -378,7 +378,7 @@ async function speak(t,done){t=String(t||'').replace('✨','').trim();if(!t){don
  stopListening();try{speechSynthesis.cancel()}catch(e){}if(player){try{player.pause()}catch(e){}}player={pause(){}};
  const vl=/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':LANG;
  const finish=()=>{player=null;done&&done()};
- try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),9000);
+ try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),13000);
   const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,lang:vl,gender:profile().voice==='m'?'m':'f'}),signal:ac.signal});clearTimeout(to);
   if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;
   const url=URL.createObjectURL(await r.blob());player=AUD;AUD.src=url;
