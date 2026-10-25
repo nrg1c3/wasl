@@ -91,6 +91,11 @@ nav svg{width:24px;height:24px}
 .live{flex:0 0 auto;background:#000;color:#ffd7b0;padding:10px 18px;min-height:70px;max-height:32vh;overflow-y:auto}
 .live small{display:block;color:#bdb3a8;font-size:13px;font-weight:700;margin-bottom:2px}
 .live.on small::before{content:'● ';color:#ff4d3d}
+.cards{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.cards:empty{display:none}
+.card{background:#fff;color:#13262F;border-radius:14px;padding:8px 10px;min-width:92px;flex:1 1 92px;max-width:150px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;border-top:5px solid var(--cc,#13262F)}
+.card svg{width:34px;height:34px;stroke:var(--cc,#13262F)}
+.card b{font-size:24px;line-height:1.15;unicode-bidi:plaintext}.card small{font-size:13px;font-weight:700;color:#3d4d54}
+.cards.big .card{min-width:110px;padding:12px}.cards.big .card svg{width:44px;height:44px}.cards.big .card b{font-size:30px}
 .live p{margin:0;font-size:clamp(20px,6vw,26px);line-height:1.45;font-weight:700}
 .sug{display:flex;flex-direction:column;gap:8px}
 .sug button{min-height:56px;border:2px solid var(--or);border-radius:14px;background:var(--card);font-size:19px;font-weight:700;text-align:right;padding:10px 14px;color:var(--ink)}
@@ -237,7 +242,7 @@ nav svg{width:24px;height:24px}
 <div class="sub" id="hSub">صاحب الموبايل أصم، وأنا مساعده. اتكلم عادي وأنا هوصّل كلامك.</div>
 </div>
 <div class="bar"></div>
-<div class="live" id="tLive" aria-live="polite"><small id="tLiveLab">كلام اللي قدامك هيظهر هنا</small><p id="tLiveText"></p></div>
+<div class="live" id="tLive" aria-live="polite"><small id="tLiveLab">كلام اللي قدامك هيظهر هنا</small><p id="tLiveText"></p><div class="cards" id="tCards"></div></div>
 <div class="tbody" id="tbody">
 <div class="thead"><div><small>المهمة</small><b id="tTitle">مهمة</b></div><span class="stepchip" id="tStep">خطوة 1</span></div>
 <div class="prog" id="tProg"></div>
@@ -261,6 +266,7 @@ nav svg{width:24px;height:24px}
 <div class="body">
 <div class="state"><span class="dot" id="fDot"></span><span id="fState">دوس "ابدأ"، واسند الموبايل.</span></div>
 <div id="cap" aria-live="polite">كلام اللي قدامك هيظهر هنا...</div>
+<div class="cards big" id="fCards"></div>
 <div class="sug" id="fSug"></div>
 <div class="typerow"><label class="sr" for="fInput">اكتب كلامك</label><input id="fInput" placeholder="أو اكتب كلامك هنا..."><button id="fSay">انطق</button></div>
 <div class="row"><button class="btn ghost" id="fSign">إشارة</button><button class="btn ghost" id="fPay">الدفع</button><button class="btn ghost" id="fFlip">اعرض كلامي للي قدامي</button></div>
@@ -411,6 +417,29 @@ function setState(kind,text){$('tDot').className='dot'+(kind==='think'?' think':
 function logMsg(role,text){if(!text)return;const d=document.createElement('div');d.className='msg '+(role==='hearing'?'h':role==='wasl'?'w':'u');
  d.innerHTML='<b>'+(role==='hearing'?'اللي قدامك':role==='wasl'?'وصل قال':'إنت قررت')+'</b>'+nums(text);
  const log=$('tLog');log.appendChild(d);while(log.children.length>4)log.removeChild(log.firstChild);$('tbody').scrollTop=$('tbody').scrollHeight}
+/* ---------- picture cards (for users who don't read well) ---------- */
+const CARD={
+ price:{l:'السعر',c:'#C9501E',s:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/>'},
+ qty:{l:'العدد',c:'#13262F',s:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/>'},
+ time:{l:'الميعاد',c:'#1F6F80',s:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>'},
+ yes:{l:'أيوه',c:'#2E8B57',s:'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>'},
+ no:{l:'لأ',c:'#B3261E',s:'<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>'},
+ available:{l:'موجود',c:'#2E8B57',s:'<path d="M5 12l5 5 9-10"/>'},
+ unavailable:{l:'مش موجود',c:'#B3261E',s:'<path d="M6 6l12 12M18 6L6 18"/>'},
+ alt:{l:'فيه بديل',c:'#1F6F80',s:'<path d="M4 8h14l-4-4M20 16H6l4 4"/>'},
+ dose:{l:'الجرعة',c:'#1F6F80',s:'<path d="M10.5 20.5a5 5 0 0 1-7-7l10-10a5 5 0 0 1 7 7z"/><path d="M8.5 8.5l7 7"/>'},
+ wait:{l:'استنى شوية',c:'#8A6D00',s:'<path d="M6 2h12M6 22h12M7 2c0 5 10 5 10 10S7 17 7 22M17 2c0 5-10 5-10 10s10 5 10 10"/>'},
+ repeat:{l:'عايز يسمع تاني',c:'#8A6D00',s:'<path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/>'},
+ pay:{l:'ادفع',c:'#C9501E',s:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/>'},
+ go:{l:'روح',c:'#13262F',s:'<path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>'},
+ warn:{l:'خلي بالك',c:'#B3261E',s:'<path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.5"/>'},
+ ask:{l:'بيسألك',c:'#1F6F80',s:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.5"/>'},
+ thanks:{l:'شكراً',c:'#2E8B57',s:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>'},
+ doc:{l:'محتاج ورق',c:'#13262F',s:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M14 10h4M14 14h4M6 16c.6-1.4 1.7-2 3-2s2.4.6 3 2"/>'}};
+function drawCards(id,cards){const el=$(id);if(!el)return;
+ el.innerHTML=(cards||[]).filter(c=>CARD[c.k]).map(c=>{const d=CARD[c.k];const v=String(c.v||'').trim();
+  return `<div class="card" style="--cc:${d.c}"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d.s}</svg>${v?`<b>${esc(v)}</b>`:''}<small>${d.l}</small></div>`}).join('');
+ if(el.innerHTML)buzz([60])}
 function liveCap(t,on){const b=$('tLive');$('tLiveText').innerHTML=nums(t);$('tLiveLab').textContent=on?'اللي قدامك بيقول دلوقتي':'آخر كلام قاله اللي قدامك';b.classList.toggle('on',!!on);b.scrollTop=b.scrollHeight}
 function drawProg(step){const n=Math.max(1,Math.min(step.n||1,step.total||3)),tot=Math.max(n,step.total||3);
  $('tStep').textContent='خطوة '+n+' من '+tot;$('tProg').innerHTML=Array.from({length:tot},(_,i)=>`<i class="${i<n-1?'done':i===n-1?'now':''}"></i>`).join('')}
@@ -427,6 +456,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
   clearTimeout(to);d=await r.json()}catch(e){}
  if(!T||my!==T.seq||T.over)return;
  if(!d||d.error){setState('think','النت ضعيف، بجرّب تاني...');setTimeout(()=>agent(event),1500);return}
+ if(event.type==='heard'||event.type==='typed')drawCards('tCards',d.cards||[]);
  if(d.task_title)$('tTitle').textContent=T.title=d.task_title;
  if(d.step)drawProg(d.step);
  if(d.say){T.history.push({role:'wasl',text:d.say});T.lastSaid=d.say;logMsg('wasl',d.say)}
@@ -450,7 +480,7 @@ function saveTask(summary){const t=store.get('wasl_tasks',[]);t.push({title:T.ti
 $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('goal').focus();return}
  const ok=await micOk();if(ok!==true){alert('وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ('+ok+')');return}
  T={goal,history:[],seq:0,over:false,title:goal,lastSaid:''};
- $('tTitle').textContent=goal;$('tLog').innerHTML='';drawProg({n:1,total:3});liveCap('',false);$('tLiveLab').textContent='كلام اللي قدامك هيظهر هنا';
+ $('tTitle').textContent=goal;$('tLog').innerHTML='';drawProg({n:1,total:3});liveCap('',false);$('tLiveLab').textContent='كلام اللي قدامك هيظهر هنا';drawCards('tCards',[]);
  ['tDecide','tSum','tType'].forEach(id=>$(id).classList.add('hidden'));$('tFoot').classList.remove('hidden');
  setHear('وصل','أهلاً بيك','صاحب الموبايل أصم، وأنا مساعده.');show('task');
  heardBuf='';clearTimeout(heardTimer);
@@ -475,7 +505,7 @@ function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${smar
 function fSpeak(t){$('fSaid').textContent='اتقال: '+t;speak(t,()=>{if(freeOn)startListening()})}
 async function smartReplies(text){const n=++fSeq;$('fState').textContent='✨ بيجهّز ردود...';
  try{const r=await fetch(REPLY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,situation:'عام',lang:LANG})});const d=await r.json();
-  if(n!==fSeq)return;if(d.replies&&d.replies.length){drawReplies(d.replies,true);$('fState').textContent='✨ ردود على حسب الكلام'+(d.situation&&d.situation!=='عام'?' · '+d.situation:'')}}catch(e){if(n===fSeq)$('fState').textContent='بسمع...'}}
+  if(n!==fSeq)return;drawCards('fCards',d.cards||[]);if(d.replies&&d.replies.length){drawReplies(d.replies,true);$('fState').textContent='✨ ردود على حسب الكلام'+(d.situation&&d.situation!=='عام'?' · '+d.situation:'')}}catch(e){if(n===fSeq)$('fState').textContent='بسمع...'}}
 $('openFree').onclick=()=>{show('free');drawReplies(DEFAULT_REPLIES,false)};
 $('freeGo').onclick=async()=>{if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent='المايك مقفول ('+ok+'). اسمح بيه من إعدادات المتصفح';return}
