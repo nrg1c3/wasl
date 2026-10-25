@@ -4,13 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#13262F">
-<title>وصل | Wasl</title>
+<title>وَصَّل | Wasl</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='30' fill='%2313262F'/%3E%3Crect x='22' y='44' width='11' height='32' rx='5.5' fill='%23E4602A'/%3E%3Crect x='39' y='30' width='11' height='60' rx='5.5' fill='%23E4602A'/%3E%3Crect x='56' y='48' width='11' height='24' rx='5.5' fill='%23E4602A'/%3E%3Crect x='74' y='40' width='26' height='10' rx='5' fill='white'/%3E%3Crect x='74' y='55' width='19' height='10' rx='5' fill='white'/%3E%3Crect x='74' y='70' width='23' height='10' rx='5' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap">
 <style>
 :root{--ink:#13262F;--ink2:#1E3A47;--bg:#F6F3EE;--card:#FFFFFF;--line:#E3DCCF;--or:#D97A2B;--or2:#E8964F;--orl:#FBE6D4;--ord:#8F4612;--mute:#5B6870;--soft:#BFD3D8;--ok:#5FC59A}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Tajawal',Tahoma,sans-serif}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Cairo',Tahoma,sans-serif}
 button,input,select,textarea{font-family:inherit}
 button{cursor:pointer}
 .screen{position:fixed;inset:0;display:none;flex-direction:column;background:var(--bg)}
@@ -122,8 +123,28 @@ nav svg{width:24px;height:24px}
 .note{font-size:13px;color:var(--mute);line-height:1.6}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 /* emergency */
-#sosBtn{position:fixed;left:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:15;width:72px;height:72px;border-radius:50%;border:4px solid #fff;background:#C0261A;color:#fff;font-weight:800;font-size:20px;line-height:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 6px 18px rgba(160,30,20,.45)}
-#sosBtn small{font-size:11px;font-weight:700}
+/* new home */
+.hhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:calc(16px + env(safe-area-inset-top)) 18px 6px}
+.hbrand{display:flex;align-items:center;gap:10px}.hbrand .logo{width:46px;height:46px;flex-shrink:0}
+.hbrand b{display:block;font-size:28px;font-weight:800;line-height:1.1}.hbrand small{display:block;font-size:13px;font-weight:700;color:var(--mute)}
+.hhead select{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.hbody{flex:1;display:flex;flex-direction:column;gap:14px;padding:10px 18px;min-height:0}
+.alchip{align-self:flex-start;display:flex;align-items:center;gap:8px;min-height:40px;border:0;border-radius:999px;padding:0 14px;font-size:14px;font-weight:700;background:#F3E3D3;color:#7A3A0E}
+.alchip .d{width:10px;height:10px;border-radius:50%;background:#C9501E}
+.alchip.on{background:#E3F1EA;color:#1B5E3B}.alchip.on .d{background:#2E8B57}
+.big{flex:1 1 0;min-height:104px;border:0;border-radius:26px;color:#fff;padding:18px;display:flex;align-items:center;gap:16px;text-align:right}
+.big.sm{flex:.8 1 0}
+.big .ic{width:66px;height:66px;flex-shrink:0;border-radius:20px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center}
+.big .ic svg{width:38px;height:38px}
+.big .tx{display:flex;flex-direction:column;gap:2px}.big b{font-size:27px;font-weight:800;line-height:1.2}.big small{font-size:15px;font-weight:600;opacity:.95;line-height:1.4}
+.hnav{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:8px 18px calc(14px + env(safe-area-inset-bottom))}
+.hnav button{min-height:64px;border:0;border-radius:18px;background:#fff;color:var(--ink);font-size:14px;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.hnav svg{width:24px;height:24px}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qbtn{min-height:58px;border:0;border-radius:16px;background:#fff;font-size:17px;font-weight:700;color:var(--ink)}
+.qbtn:active{background:var(--orl)}
+.tip{display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:14px 16px;font-size:16px;font-weight:600;line-height:1.5}.tip svg{width:30px;height:30px;flex-shrink:0}
+.btn.startbig{min-height:72px;font-size:26px;border-radius:24px;background:#C9501E;color:#fff}
 .sosgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sosgrid button{min-height:96px;border:2px solid #E7C3BE;border-radius:16px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:16px;font-weight:800;color:var(--ink);padding:8px}
 .sosgrid button span{font-size:34px}
@@ -163,45 +184,47 @@ nav svg{width:24px;height:24px}
 
 <!-- ============ HOME ============ -->
 <section id="home" class="screen on" aria-label="الرئيسية">
-<div class="top">
-<div class="brand">وصل <span>Wasl</span></div>
+<div class="hhead">
+<div class="hbrand"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#13262F"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>وَصَّل</b><small>صوتك في كل مكان</small></div></div>
 <label class="sr" for="lang">لهجة اللي قدامك</label>
 <select id="lang"><option value="ar-EG">مصري</option><option value="ar-SA">سعودي</option><option value="ar-AE">إماراتي</option><option value="ar-JO">شامي</option><option value="en-US">English</option></select>
 </div>
+<div class="hbody">
+<button class="alchip" id="alChip"><span class="d"></span><span id="alChipT">تنبيهات الأصوات مقفولة · شغّلها</span></button>
+<button class="big" id="bigTalk" style="background:#C9501E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/><path d="M9 10.5h6M9 13.5h4"/></svg></span><span class="tx"><b>اتكلم بدالي</b><small>قول عايز إيه، وأنا أتكلم مع اللي قدامك</small></span></button>
+<button class="big" id="openFree" style="background:#13262F"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 10h4M13 10h4M7 14h7"/></svg></span><span class="tx"><b>ترجمة</b><small>كلام اللي قدامك يظهر مكتوب وبالصور</small></span></button>
+<button class="big sm" id="sosBtn" style="background:#B3261E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.5"/></svg></span><span class="tx"><b>طوارئ</b><small>إسعاف · شرطة · مطافي · أهلك</small></span></button>
+</div>
+<nav class="hnav" aria-label="باقي التطبيق">
+<button id="openMe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>بياناتي</button>
+<button id="openTasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>مهامي</button>
+<button id="openAlerts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>التنبيهات</button>
+</nav>
+</section>
 
-<div class="body" id="tab-face">
-<div><h2>عايز تخلّص إيه؟</h2><p class="lead">اكتب مهمتك، واسند الموبايل بينك وبين اللي قدامك. وصل هيتكلم عنك، ويرجعلك في القرارات بس.</p></div>
-<div class="card">
-<label class="sr" for="goal">المهمة</label>
-<textarea id="goal" class="goal" placeholder="مثلاً: عايز أصرف الروشتة دي"></textarea>
-<div class="chips" id="quick"></div>
-<button class="btn or" id="startTask">ابدأ المهمة</button>
+<section id="talk" class="screen" aria-label="اتكلم بدالي">
+<div class="top"><button class="back" id="talkBack">→ رجوع</button><b style="font-size:18px">اتكلم بدالي</b><span style="width:70px"></span></div>
+<div class="body">
+<h2 style="font-size:32px">عايز إيه؟</h2>
+<label class="sr" for="goal">اكتب طلبك</label>
+<textarea id="goal" class="goal" placeholder="مثلاً: عايز دوا الضغط اللي في الروشتة"></textarea>
+<p class="lead" style="font-weight:700">أو اختار:</p>
+<div class="qgrid" id="quick"></div>
+<div style="flex:1"></div>
+<div class="tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><span>حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.</span></div>
+<button class="btn or startbig" id="startTask">▶ ابدأ</button>
 </div>
-<div class="card" style="border:2px solid var(--or)">
-<b style="font-size:18px">تنبيهات الأصوات</b>
-<p class="lead">وصل يسمع البيت بدالك: جرس الباب، وعياط طفل، وإنذار حريق، والتليفون. الموبايل يهتز والشاشة تنوّر.</p>
-<button class="btn" id="openAlerts">شغّل التنبيهات</button>
-</div>
-<div class="card dark">
-<b style="font-size:18px">محادثة حرة</b>
-<p class="lead" style="color:var(--soft)">من غير مهمة: وصل يكتبلك كلام اللي قدامك، ويقترح ردود تختار منها.</p>
-<button class="btn ghost" id="openFree">افتح المحادثة الحرة</button>
-</div>
-</div>
+</section>
 
-<div class="body hidden" id="tab-tasks">
-<div><h2>مهامي</h2><p class="lead">كل مهمة خلّصها وصل، وملخصها.</p></div>
-<div class="card" id="taskList"></div>
-</div>
+<section id="mytasks" class="screen" aria-label="مهامي">
+<div class="top"><button class="back" id="tasksBack">→ رجوع</button><b style="font-size:18px">مهامي</b><span style="width:70px"></span></div>
+<div class="body"><p class="lead">كل مهمة خلصت، وملخصها.</p><div class="card" id="taskList"></div></div>
+</section>
 
-<div class="body hidden" id="tab-calls">
-<div><h2>مكالمات</h2><p class="lead">وصل هيتصل بالنيابة عنك، ويحجزلك ويسأل ويرجعلك بالنتيجة مكتوبة.</p></div>
-<div class="card"><span class="soon">قريباً</span>
-<p class="lead">حجز كشف عند دكتور · السؤال عن طلب ديليفري · خدمة العملاء · متابعة شكوى</p></div>
-</div>
-
-<div class="body hidden" id="tab-me">
-<div><h2>بياناتي</h2><p class="lead">وصل بيستخدمها عشان يرد عنك من غير ما يسألك كل مرة. محفوظة على الموبايل ده بس.</p></div>
+<section id="me" class="screen" aria-label="بياناتي">
+<div class="top"><button class="back" id="meBack">→ رجوع</button><b style="font-size:18px">بياناتي</b><span style="width:70px"></span></div>
+<div class="body">
+<p class="lead">بنستخدمها عشان نرد عنك من غير ما نسألك كل مرة. محفوظة على الموبايل ده بس.</p>
 <div class="card">
 <div class="field"><label for="pName">الاسم</label><input id="pName" autocomplete="name"></div>
 <div class="field"><label for="pVoice">وصل يتكلم بصوت</label><select id="pVoice"><option value="f">ست</option><option value="m">راجل</option></select></div>
@@ -224,14 +247,6 @@ nav svg{width:24px;height:24px}
 <button class="btn ghost" id="openSignsMe">افتح الكاميرا</button>
 </div>
 </div>
-
-<button id="sosBtn" aria-label="طوارئ">SOS<small>طوارئ</small></button>
-<nav aria-label="التبويبات">
-<button class="on" data-tab="face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>وجهاً لوجه</button>
-<button data-tab="tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>مهامي</button>
-<button data-tab="calls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>مكالمات</button>
-<button data-tab="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>بياناتي</button>
-</nav>
 </section>
 
 <!-- ============ TASK ============ -->
@@ -262,7 +277,7 @@ nav svg{width:24px;height:24px}
 
 <!-- ============ FREE ============ -->
 <section id="free" class="screen" aria-label="المحادثة الحرة">
-<div class="top"><button class="back" id="freeBack">→ رجوع</button><b style="font-size:18px">محادثة حرة</b><button class="back" id="freeGo">▶ ابدأ</button></div>
+<div class="top"><button class="back" id="freeBack">→ رجوع</button><b style="font-size:18px">ترجمة</b><button class="back" id="freeGo">▶ ابدأ</button></div>
 <div class="body">
 <div class="state"><span class="dot" id="fDot"></span><span id="fState">دوس "ابدأ"، واسند الموبايل.</span></div>
 <div id="cap" aria-live="polite">كلام اللي قدامك هيظهر هنا...</div>
@@ -354,10 +369,12 @@ $('lang').onchange=()=>{LANG=$('lang').value;store.set('wasl_lang',LANG)};
 
 /* ---------- screens & tabs ---------- */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id))}
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
- document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
- ['face','tasks','calls','me'].forEach(t=>$('tab-'+t).classList.toggle('hidden',t!==b.dataset.tab));
- if(b.dataset.tab==='tasks')drawTasks();if(b.dataset.tab==='me')loadMe()});
+$('bigTalk').onclick=()=>{show('talk');setTimeout(()=>$('goal').focus(),50)};
+$('talkBack').onclick=()=>show('home');
+$('openMe').onclick=()=>{loadMe();show('me')};$('meBack').onclick=()=>show('home');
+$('openTasks').onclick=()=>{drawTasks();show('mytasks')};$('tasksBack').onclick=()=>show('home');
+$('alChip').onclick=()=>$('openAlerts').click();
+function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').textContent=alOn?'تنبيهات الأصوات شغالة':'تنبيهات الأصوات مقفولة · شغّلها'}
 
 /* ---------- profile ---------- */
 const PF={pName:'name',pVoice:'voice',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
@@ -367,8 +384,8 @@ function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||''
 $('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent='اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.'};
 
 /* ---------- quick tasks ---------- */
-const QUICK=['عايز أصرف الروشتة دي','عايز أحجز كشف','عايز أدفع فاتورة الكهربا','عايز أسأل عن ورق مطلوب','عايز أشتري حاجة'];
-$('quick').innerHTML=QUICK.map(q=>`<button class="chip">${esc(q.replace('عايز ',''))}</button>`).join('');
+const QUICK=['عايز أصرف الروشتة دي','عايز أحجز كشف','عايز أدفع فاتورة الكهربا','عايز أشتري حاجة'];
+$('quick').innerHTML=QUICK.map(q=>`<button class="qbtn">${esc(q.replace('عايز ',''))}</button>`).join('');
 $('quick').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{$('goal').value=QUICK[i];$('goal').focus()});
 
 /* ---------- my tasks ---------- */
@@ -478,6 +495,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
 function saveTask(summary){const t=store.get('wasl_tasks',[]);t.push({title:T.title||T.goal,goal:T.goal,summary:summary||'',date:new Date().toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
 
 $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('goal').focus();return}
+ if(alOn){stopAlerts(true);drawAlChip()}
  const ok=await micOk();if(ok!==true){alert('وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ('+ok+')');return}
  T={goal,history:[],seq:0,over:false,title:goal,lastSaid:''};
  $('tTitle').textContent=goal;$('tLog').innerHTML='';drawProg({n:1,total:3});liveCap('',false);$('tLiveLab').textContent='كلام اللي قدامك هيظهر هنا';drawCards('tCards',[]);
@@ -507,7 +525,7 @@ async function smartReplies(text){const n=++fSeq;$('fState').textContent='✨ ب
  try{const r=await fetch(REPLY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,situation:'عام',lang:LANG})});const d=await r.json();
   if(n!==fSeq)return;drawCards('fCards',d.cards||[]);if(d.replies&&d.replies.length){drawReplies(d.replies,true);$('fState').textContent='✨ ردود على حسب الكلام'+(d.situation&&d.situation!=='عام'?' · '+d.situation:'')}}catch(e){if(n===fSeq)$('fState').textContent='بسمع...'}}
 $('openFree').onclick=()=>{show('free');drawReplies(DEFAULT_REPLIES,false)};
-$('freeGo').onclick=async()=>{if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
+$('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent='المايك مقفول ('+ok+'). اسمح بيه من إعدادات المتصفح';return}
  freeOn=true;$('freeGo').textContent='⏸ وقف';$('fDot').className='dot';$('fState').textContent='بسمع...';
  onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول'};
@@ -574,7 +592,7 @@ function pickSos(t){sosT=t;buzz([200,100,200]);$('sosStep1').classList.add('hidd
 $('sosBtn').onclick=()=>{show('sos');sosT=null;$('sosStep1').classList.remove('hidden');$('sosStep2').classList.add('hidden');drawMed()};
 $('sosBack').onclick=()=>{stopSiren();stopTorch();show('home')};
 $('sosAgain').onclick=()=>{$('sosStep1').classList.remove('hidden');$('sosStep2').classList.add('hidden')};
-$('sosEdit').onclick=()=>{show('home');document.querySelector('nav button[data-tab="me"]').click()};
+$('sosEdit').onclick=()=>{loadMe();show('me')};
 const intl=n=>{n=String(n||'').replace(/[^\d+]/g,'');if(n.startsWith('+'))return n;if(n.startsWith('00'))return '+'+n.slice(2);if(n.startsWith('0'))return '+2'+n;return n};
 $('sosFamily').onclick=()=>{const p=profile();const nums=[p.c1phone,p.c2phone].filter(Boolean).map(intl);
  if(!nums.length){alert('ضيف رقم طوارئ واحد على الأقل في بياناتي.');$('sosEdit').click();return}
@@ -636,11 +654,11 @@ async function startAlerts(){
   const src=alCtx.createMediaStreamSource(alStream);alNode=alCtx.createScriptProcessor(16384,1,1);
   alNode.onaudioprocess=e=>{if(!alOn)return;let cats=[];try{const r=alClassifier.classify(e.inputBuffer.getChannelData(0),alCtx.sampleRate);cats=(r[0]&&r[0].classifications[0].categories)||[]}catch(x){return}onSounds(cats)};
   src.connect(alNode);alNode.connect(alCtx.destination);
-  alOn=true;$('alRing').classList.add('on');$('alIcon').textContent='👂';$('alToggle').textContent='وقف';setAl('بسمع البيت بدالك...','مفيش أصوات مهمة دلوقتي.');
+  alOn=true;drawAlChip();$('alRing').classList.add('on');$('alIcon').textContent='👂';$('alToggle').textContent='وقف';setAl('بسمع البيت بدالك...','مفيش أصوات مهمة دلوقتي.');
   try{alWake=await navigator.wakeLock.request('screen')}catch(e){}
  }catch(e){setAl('ما اشتغلش',e&&e.name==='NotAllowedError'?'اسمح بالمايك من إعدادات المتصفح.':'اتأكد من النت وجرّب تاني.');stopAlerts(true)}
  $('alToggle').disabled=false}
-function stopAlerts(keepMsg){alOn=false;try{alNode&&alNode.disconnect()}catch(e){}try{alCtx&&alCtx.close()}catch(e){}alStream&&alStream.getTracks().forEach(t=>t.stop());alNode=alCtx=alStream=null;try{alWake&&alWake.release()}catch(e){}alWake=null;
+function stopAlerts(keepMsg){alOn=false;drawAlChip();try{alNode&&alNode.disconnect()}catch(e){}try{alCtx&&alCtx.close()}catch(e){}alStream&&alStream.getTracks().forEach(t=>t.stop());alNode=alCtx=alStream=null;try{alWake&&alWake.release()}catch(e){}alWake=null;
  $('alRing').classList.remove('on');$('alIcon').textContent='🔇';$('alToggle').textContent='ابدأ';if(!keepMsg)setAl('متوقف','دوس "ابدأ" وسيب الموبايل في مكان واضح.')}
 function onSounds(cats){
  const top=cats.slice(0,5);const seen={};
@@ -660,7 +678,7 @@ function fireAlert(g,score){
 $('baOk').onclick=()=>{$('bigAlert').classList.remove('on');clearInterval(alBuzzT);buzz(0)};
 $('openAlerts').onclick=()=>{show('alerts');drawGroups();drawAlLog()};
 $('alToggle').onclick=()=>{alOn?stopAlerts():startAlerts()};
-$('alBack').onclick=()=>{stopAlerts();show('home')};
+$('alBack').onclick=()=>{drawAlChip();show('home')};
 document.addEventListener('visibilitychange',async()=>{if(alOn&&!document.hidden){try{alWake=await navigator.wakeLock.request('screen')}catch(e){}}});
 window.__waslTestAlert=(id)=>fireAlert(GROUPS.find(g=>g.id===id)||GROUPS[0],0.9);
 
