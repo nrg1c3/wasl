@@ -23,6 +23,13 @@ button{cursor:pointer}
 .screen{position:fixed;inset:0;display:none;flex-direction:column;background:var(--bg)}
 .screen.on{display:flex}
 .hidden{display:none!important}
+.ofl{display:flex;flex-direction:column;gap:14px}#order .body>*{flex-shrink:0}.btn.wa{background:#1F7A4D;color:#fff}
+.ophs{display:flex;flex-wrap:wrap;gap:8px}.ophs:empty{display:none}.ophs .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ohead{display:flex;justify-content:space-between;align-items:center;gap:10px}.ohead small{display:block;font-size:12px;color:var(--ord);font-weight:800}.ohead b{font-size:20px;line-height:1.3}
+.oexp{background:var(--ink);color:var(--bg);border-radius:18px;padding:14px}.oexp p{margin:0;font-size:19px;font-weight:700;line-height:1.6}
+#oBusy{position:fixed;inset:0;z-index:26;background:rgba(19,38,47,.92);display:none;align-items:center;justify-content:center;color:#fff;padding:24px;text-align:center}#oBusy b{font-size:24px;line-height:1.5}
+.ochip{width:100%;display:flex;align-items:center;gap:10px;background:#E3F2EA;border:0;border-radius:16px;padding:10px 12px;margin-bottom:8px;font-family:inherit;text-align:right;color:var(--ink)}.ochip span{font-size:24px}.ochip b{flex:1;font-size:15px;line-height:1.4}.ochip small{background:#1F7A4D;color:#fff;border-radius:12px;padding:6px 12px;font-weight:800;font-size:14px}
+
 /* home */
 .top{background:var(--ink);color:var(--bg);padding:16px 18px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .brand{font-size:26px;font-weight:800}.brand span{color:var(--or2)}
@@ -210,8 +217,10 @@ nav svg{width:24px;height:24px}
 <button class="alchip" id="alChip"><span class="d"></span><span id="alChipT">تنبيهات الأصوات مقفولة · شغّلها</span></button>
 <div class="stats hidden" id="stats"></div>
 <div id="refills"></div>
+<div id="orderChip"></div>
 <button class="big" id="bigTalk" style="background:#C9501E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/><path d="M9 10.5h6M9 13.5h4"/></svg></span><span class="tx"><b>اتكلم بدالي</b><small>قول عايز إيه، وأنا أتكلم مع اللي قدامك</small></span></button>
 <button class="big" id="openFree" style="background:#13262F"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 10h4M13 10h4M7 14h7"/></svg></span><span class="tx"><b>ترجمة</b><small>كلام اللي قدامك يظهر مكتوب وبالصور</small></span></button>
+<button class="big sm" id="openOrder" style="background:#1F6B47"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M12 8v6M9 11h6"/></svg></span><span class="tx"><b>اطلب دوا للبيت</b><small>أكتب للصيدلية على واتساب، وأقرالك ردهم</small></span></button>
 <button class="big sm" id="sosBtn" style="background:#B3261E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.5"/></svg></span><span class="tx"><b>طوارئ</b><small>إسعاف · شرطة · مطافي · أهلك</small></span></button>
 </div>
 <nav class="hnav" aria-label="باقي التطبيق">
@@ -288,6 +297,61 @@ nav svg{width:24px;height:24px}
 
 <!-- ============ TASK ============ -->
 <div id="demoBadge" class="hidden" style="position:fixed;top:8px;left:8px;z-index:50;background:#E4602A;color:#fff;font-weight:800;font-size:12px;padding:3px 10px;border-radius:12px;pointer-events:none">عرض تجريبي</div>
+<section id="order" class="screen" aria-label="طلب من الصيدلية">
+<div class="top"><button class="back" id="oBack">→ رجوع</button><b style="font-size:18px">اطلب من الصيدلية</b><span style="width:70px"></span></div>
+<div class="body" id="oBody">
+<div id="oSetup" class="ofl">
+<p class="lead">وصل يكتب الطلب للصيدلية على واتساب بتاعك، ويقرالك ردهم، حتى لو كان رسالة صوتية.</p>
+<div class="card">
+<b>الصيدلية</b>
+<div class="ophs" id="oPhs"></div>
+<div class="field"><label for="oPhName">اسم الصيدلية</label><input id="oPhName" placeholder="مثلاً: صيدلية الشفاء"></div>
+<div class="field"><label for="oPhNum">رقم واتساب الصيدلية</label><input id="oPhNum" inputmode="tel" dir="ltr" placeholder="01xxxxxxxxx"></div>
+</div>
+<div class="card">
+<b>عايز إيه؟</b>
+<button class="cambtn" id="oCam"><span aria-hidden="true">📷</span>صوّر الروشتة</button>
+<input type="file" id="oCamIn" accept="image/*" capture="environment" class="hidden">
+<label class="sr" for="oGoal">اكتب طلبك</label>
+<textarea id="oGoal" class="goal" placeholder="مثلاً: علبة كونكور 5 مجم"></textarea>
+<div class="qgrid" id="oAgain"></div>
+</div>
+<div class="card">
+<div class="field"><label for="oAddr">عنوان التوصيل</label><textarea id="oAddr" rows="2" placeholder="الشارع ورقم العمارة والدور والمنطقة"></textarea></div>
+</div>
+<button class="btn wa" id="oStart">✍️ اكتبلي الرسالة</button>
+<button class="btn ghost" id="oDemo">▶ جرّب طلب تجريبي (من غير صيدلية حقيقية)</button>
+</div>
+<div id="oChat" class="ofl hidden">
+<div class="ohead"><div><small id="oPhLab">الصيدلية</small><b id="oTitle">طلب</b></div><span class="stepchip" id="oStat">بيجهّز</span></div>
+<div class="log" id="oLog"></div>
+<div class="oexp hidden" id="oExp"><p id="oExpT"></p><div class="cards lg" id="oCards"></div></div>
+<div class="decide hidden" id="oDecide"><div class="q" id="oQ"></div><div class="opts" id="oOpts"></div></div>
+<div class="typerow hidden" id="oType"><label class="sr" for="oTypeIn">اكتب ردك</label><input id="oTypeIn" placeholder="اكتب اللي عايز تقوله للصيدلية"><button id="oTypeGo">تمام</button></div>
+<div class="card osend hidden" id="oSend">
+<b>📝 الرسالة جاهزة</b>
+<label class="sr" for="oMsg">الرسالة</label>
+<textarea id="oMsg" class="goal" rows="5"></textarea>
+<button class="btn wa" id="oOpenWa">افتح واتساب وابعت</button>
+<p class="lead" style="font-size:13px">واتساب هيفتح والرسالة مكتوبة. دوس إرسال هناك، وارجع لوصل.</p>
+</div>
+<div class="card oreply hidden" id="oReply">
+<b>⏳ مستنيين رد الصيدلية</b>
+<p class="lead">لما يردّوا على واتساب: دوس مطوّل على ردهم ← مشاركة ← وَصْل. أو انسخه وارجع هنا.</p>
+<button class="btn" id="oPaste">📋 الصق ردهم</button>
+<button class="btn ghost" id="oVoice">🎤 ردّوا برسالة صوتية</button>
+<input type="file" id="oVoiceIn" accept="audio/*,.ogg,.opus,.m4a,.mp3,.aac,.amr" class="hidden">
+<details class="typebox"><summary>أو اكتب ردهم هنا</summary><textarea id="oManual" class="goal" rows="3" placeholder="الصيدلية قالت..."></textarea><button class="btn ghost" id="oManualGo">تمام</button></details>
+</div>
+<div class="summary hidden" id="oSum"><b>✓ الطلب خلص</b><p id="oSumT"></p>
+<div class="refill hidden" id="oRef" style="background:var(--orl);border-radius:14px;padding:12px;margin:0 0 10px"><b id="oRefQ" style="display:block;margin-bottom:8px"></b><div class="ref-opts" id="oRefOpts" style="display:flex;flex-wrap:wrap;gap:8px"><button class="chip" data-d="30">شهر</button><button class="chip" data-d="14">أسبوعين</button><button class="chip" data-d="7">أسبوع</button><button class="chip" data-d="0">مش محتاج</button></div><p id="oRefOk" class="lead hidden"></p></div>
+<button class="btn" id="oHome">رجوع للرئيسية</button></div>
+<button class="btn ghost hidden" id="oCancel" style="min-height:44px;font-size:15px">إلغاء الطلب</button>
+</div>
+</div>
+<div id="oBusy" role="status"><b id="oBusyT">لحظة...</b></div>
+</section>
+
 <section id="task" class="screen" aria-label="المهمة">
 <div class="hear" aria-live="polite">
 <div class="lab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span id="hLab">وصل سامعك · اتكلم عادي</span></div>
@@ -415,7 +479,7 @@ let LANG=store.get('wasl_lang','ar-EG');if(LANG==='ar-AE')LANG='ar-SA';if(LANG==
 $('lang').onchange=()=>{LANG=$('lang').value;store.set('wasl_lang',LANG)};
 
 /* ---------- screens & tabs ---------- */
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='home'&&typeof drawStats==='function'){drawStats();drawRefills()}if(id==='mytasks'&&typeof drawKpis==='function')drawKpis()}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='home'&&typeof drawStats==='function'){drawStats();drawRefills();if(typeof drawOrderChip==='function')drawOrderChip()}if(id==='mytasks'&&typeof drawKpis==='function')drawKpis()}
 $('bigTalk').onclick=()=>{drawPics(null);taskPhoto=null;$('goal').value='';show('talk')};
 /* ---------- choose by pictures (no reading needed) ---------- */
 const PICS=[
@@ -940,6 +1004,133 @@ if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='fi
  const go=new URLSearchParams(location.search).get('go');
  if(go==='sos')setTimeout(()=>$('sosBtn').click(),300);if(go==='free')setTimeout(()=>$('openFree').click(),300);
 })();
+</script>
+<script>
+/* ============ ORDER FROM A PHARMACY ON WHATSAPP ============
+   The user's own WhatsApp sends every message (the user taps send). Wasl writes the messages,
+   reads the replies (pasted, shared, or a voice note turned into text), explains them with
+   picture cards, checks allergies, and asks the user only for decisions. */
+const WA_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-wa';
+const STT_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-stt';
+let OD=null; // scripted demo order (no real pharmacy)
+const oAll=()=>store.get('wasl_orders',[]);
+function oCur(){if(OD)return OD.o;const id=store.get('wasl_order_active',0);return oAll().find(x=>x.id===id)||null}
+function oSave(o){if(OD){OD.o=o;return}const a=oAll().filter(x=>x.id!==o.id);a.push(o);store.set('wasl_orders',a.slice(-20));store.set('wasl_order_active',o.state==='done'||o.state==='cancel'?0:o.id)}
+function oPhones(){return store.get('wasl_pharmacies',[])}
+function waNum(n){let d=String(n||'').replace(/[^\d+]/g,'').replace(/^\+/,'');if(d.startsWith('00'))d=d.slice(2);if(/^01\d{9}$/.test(d))d='2'+d;if(/^1[0125]\d{8}$/.test(d))d='20'+d;return d}
+function oBusy(t){$('oBusyT').textContent=t||'';$('oBusy').style.display=t?'flex':'none'}
+const O_STATE={send:'رسالة جاهزة',decide:'محتاج قرارك',wait:'مستنيين ردهم',done:'خلص',setup:'بيجهّز'};
+
+/* ---------- setup ---------- */
+function oOpen(){const o=oCur();if(o&&o.state!=='done'){oDraw();show('order');return}oSetup();show('order')}
+function oSetup(){OD=null;$('oSetup').classList.remove('hidden');$('oChat').classList.add('hidden');const p=profile();
+ $('oAddr').value=p.address||'';$('oGoal').value='';
+ const phs=oPhones();$('oPhs').innerHTML=phs.map((x,i)=>`<button class="chip" data-i="${i}">${esc(x.name)}</button>`).join('');
+ $('oPhs').querySelectorAll('button').forEach(b=>b.onclick=()=>{const x=phs[+b.dataset.i];$('oPhName').value=x.name;$('oPhNum').value=x.num;$('oPhs').querySelectorAll('button').forEach(y=>y.classList.toggle('on',y===b))});
+ if(phs.length){$('oPhName').value=phs[phs.length-1].name;$('oPhNum').value=phs[phs.length-1].num;const l=$('oPhs').lastElementChild;if(l)l.classList.add('on')}else{$('oPhName').value='';$('oPhNum').value=''}
+ const past=[...new Set(oAll().filter(x=>x.state==='done'&&x.goal).map(x=>x.goal).reverse())].slice(0,4);
+ $('oAgain').innerHTML=past.map(g=>`<button class="chip">${esc(g.slice(0,40))}</button>`).join('');
+ $('oAgain').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{$('oGoal').value=past[i]})}
+$('oCam').onclick=()=>$('oCamIn').click();
+$('oCamIn').onchange=async()=>{const f=$('oCamIn').files[0];$('oCamIn').value='';if(!f)return;let data;try{data=await shrink(f)}catch(e){return}
+ oBusy('بقرا الروشتة...');try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),25000);
+  const r=await fetch(VISION_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,image:data,hint:'روشتة عايز أطلبها من الصيدلية',lang:LANG}),signal:ac.signal});clearTimeout(to);const d=await r.json();oBusy('');
+  if(!d.goal||d.clear===false){alert('الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.');return}$('oGoal').value=d.goal}catch(e){oBusy('');alert('النت ضعيف. جرّب تاني.')}};
+$('oStart').onclick=()=>{const goal=$('oGoal').value.trim(),name=$('oPhName').value.trim()||'الصيدلية',num=$('oPhNum').value.trim();
+ if(!goal){$('oGoal').focus();$('oGoal').placeholder='اكتب الدوا الأول، أو صوّر الروشتة';return}
+ if(num&&waNum(num).length<10){alert('رقم الصيدلية مش مظبوط. اكتبه زي 01xxxxxxxxx');return}
+ if(num){const ps=oPhones().filter(x=>waNum(x.num)!==waNum(num));ps.push({name,num});store.set('wasl_pharmacies',ps.slice(-8))}
+ const o={id:Date.now(),pharmacy:name,num,goal,address:$('oAddr').value.trim(),thread:[],state:'setup',title:goal.slice(0,40),created:Date.now()};
+ oSave(o);oDraw();oStep({type:'start'})};
+$('oDemo').onclick=()=>{const p=profile();OD={step:0,o:{id:1,demo:true,pharmacy:'صيدلية الشفاء (تجريبي)',num:'',goal:'علبة كونكور 5 مجم',address:p.address||'15 شارع 9، المعادي، الدور التالت',thread:[],state:'setup',title:'كونكور 5 مجم'}};oDraw();oStep({type:'start'})};
+
+/* ---------- the conversation ---------- */
+function oDraw(){const o=oCur();if(!o){oSetup();return}
+ $('oSetup').classList.add('hidden');$('oChat').classList.remove('hidden');
+ $('oPhLab').textContent=o.pharmacy+(o.demo?' · تجربة':'');$('oTitle').textContent=o.title||o.goal;$('oStat').textContent=O_STATE[o.state]||'';
+ $('oLog').innerHTML=o.thread.map(m=>{const c=m.from==='me'?'w':m.from==='user'?'u':'h';const who=m.from==='me'?'إنت بعت':m.from==='user'?'اختيارك':m.from==='voice'?'🎤 رسالة صوتية من الصيدلية · وصل حوّلها لكلام':'الصيدلية';
+  return `<div class="msg ${c}"><b>${who}</b>${nums(m.text)}</div>`}).join('');
+ const showExp=!!(o.explain||(o.cards&&o.cards.length))&&o.state!=='done';$('oExp').classList.toggle('hidden',!showExp);$('oExpT').innerHTML=nums(o.explain||'');drawCards('oCards',showExp?(o.cards||[]):[]);
+ $('oDecide').classList.toggle('hidden',o.state!=='decide');$('oType').classList.add('hidden');
+ if(o.state==='decide'){$('oQ').textContent=o.question||'تختار إيه؟';const opts=o.options&&o.options.length?o.options:['أيوه','لأ، شكراً'];
+  $('oOpts').innerHTML=opts.map(x=>`<button>${esc(x)}</button>`).join('');
+  $('oOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{const c=opts[i];if(/بنفسي|هكتب/.test(c)){$('oType').classList.remove('hidden');$('oTypeIn').focus();return}
+   o.thread.push({from:'user',text:c,t:Date.now()});oSave(o);oStep({type:'decision',text:c})})}
+ const canSend=o.state==='send'||(o.state==='done'&&!!o.draft);$('oSend').classList.toggle('hidden',!canSend);if(canSend)$('oMsg').value=o.draft||'';
+ $('oOpenWa').textContent=o.demo?'ابعت (تجربة من غير واتساب)':'افتح واتساب وابعت';
+ $('oReply').classList.toggle('hidden',o.state!=='wait');
+ $('oSum').classList.toggle('hidden',o.state!=='done');if(o.state==='done'){$('oSumT').innerHTML=nums(o.summary||'الطلب خلص.');$('oRef').classList.toggle('hidden',!o.med||o.refDone);$('oRefQ').textContent='💊 أفكّرك قبل ما '+(o.med||'')+' يخلص؟ العلبة بتكفيك قد إيه؟';$('oRefOpts').classList.remove('hidden');$('oRefOk').classList.add('hidden')}
+ $('oCancel').classList.toggle('hidden',o.state==='done');
+ setTimeout(()=>{$('oBody').scrollTop=$('oBody').scrollHeight},30)}
+async function oStep(ev){const o=oCur();if(!o)return;oBusy(ev.type==='reply'?'بقرا رد الصيدلية...':'وصل بيكتب...');
+ let d=null;
+ if(o.demo){await new Promise(r=>setTimeout(r,900));d=oDemoStep(ev,o)}
+ else{const p=taskProfile();const body={k:API_K,profile:p,order:{pharmacy:o.pharmacy,goal:o.goal,address:o.address,thread:o.thread.slice(-24).map(m=>({from:m.from,text:m.text}))},event:ev};
+  for(let i=0;i<2&&!d;i++){try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),45000);const r=await fetch(WA_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:ac.signal});clearTimeout(to);const j=await r.json();if(j&&!j.error)d=j}catch(e){}}}
+ oBusy('');
+ if(!d){alert('النت ضعيف ومقدرتش أكمّل. جرّب تاني.');oDraw();return}
+ Object.assign(o,{state:d.state||'wait',draft:d.message||'',explain:d.explain||'',question:d.question||'',options:d.options||[],cards:d.cards||[]});
+ if(d.title&&ev.type==='start')o.title=d.title;
+ if(d.state==='done'){o.summary=d.summary||d.explain||'';o.med=d.med||'';oFinish(o)}
+ if(d.state==='decide'||d.state==='done')buzz([200,100,200]);
+ oSave(o);oDraw()}
+function oFinish(o){if(o.demo)return;const t=store.get('wasl_tasks',[]);t.push({id:Date.now(),done:true,title:'طلب من '+o.pharmacy+': '+(o.title||o.goal),goal:'أطلب '+o.goal+' من '+o.pharmacy+' على واتساب',summary:o.summary,date:new Date().toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
+$('oOpenWa').onclick=()=>{const o=oCur();if(!o)return;const msg=$('oMsg').value.trim();if(!msg)return;
+ if(!o.demo){const n=waNum(o.num);window.open('https://wa.me/'+(n||'')+'?text='+encodeURIComponent(msg),'_blank')}
+ o.thread.push({from:'me',text:msg,t:Date.now()});o.draft='';o.explain='';o.cards=[];
+ const wasDone=o.state==='done';o.state=wasDone?'done':'wait';oSave(o);oDraw();
+ if(o.demo&&!wasDone)oDemoReply(o)};
+$('oTypeGo').onclick=()=>{const o=oCur();const t=$('oTypeIn').value.trim();if(!o||!t)return;$('oTypeIn').value='';o.thread.push({from:'user',text:t,t:Date.now()});oSave(o);oStep({type:'typed',text:t})};
+function oGotReply(text,voice){const o=oCur();text=String(text||'').trim();if(!o||!text)return false;if(o.state==='done')return false;
+ o.thread.push({from:voice?'voice':'ph',text,t:Date.now()});o.state='wait';oSave(o);oDraw();oStep({type:'reply',text,voice:!!voice});return true}
+$('oPaste').onclick=async()=>{let t='';try{t=await navigator.clipboard.readText()}catch(e){}
+ if(t&&t.trim())oGotReply(t);else{const dt=$('oManual').closest('details');dt.open=true;$('oManual').focus();$('oManual').placeholder='مقدرتش أقرا المنسوخ. الصق ردهم هنا (دوس مطوّل ← لصق)'}};
+$('oManualGo').onclick=()=>{const t=$('oManual').value;if(oGotReply(t))$('oManual').value=''};
+$('oVoice').onclick=()=>$('oVoiceIn').click();
+$('oVoiceIn').onchange=()=>{const f=$('oVoiceIn').files[0];$('oVoiceIn').value='';if(f)oVoiceNote(f)};
+function b64(blob){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]||'');r.onerror=no;r.readAsDataURL(blob)})}
+async function oVoiceNote(blob){const o=oCur();if(!o){oOpen();return}
+ if(blob.size>12e6){alert('الرسالة الصوتية كبيرة أوي.');return}
+ oBusy('🎤 بحوّل الرسالة الصوتية لكلام...');let text='';
+ try{const audio=await b64(blob);const ac=new AbortController();const to=setTimeout(()=>ac.abort(),70000);
+  const r=await fetch(STT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,audio,mime:blob.type||'audio/ogg'}),signal:ac.signal});clearTimeout(to);const d=await r.json();text=d.text||''}catch(e){}
+ oBusy('');if(!text){alert('مقدرتش أفهم الرسالة الصوتية. ممكن تطلب منهم يكتبوا الرد؟');return}
+ oGotReply(text,true)}
+$('oCancel').onclick=()=>{const o=oCur();if(!o)return;if(!confirm('تلغي الطلب ده؟'))return;o.state='cancel';oSave(o);OD=null;show('home')};
+$('oHome').onclick=()=>{OD=null;show('home')};
+$('oBack').onclick=()=>{OD=null;show('home')};
+$('oRefOpts').querySelectorAll('button').forEach(b=>b.onclick=()=>{const o=oCur();if(!o)return;const d=+b.dataset.d;o.refDone=true;oSave(o);
+ if(!d){$('oRef').classList.add('hidden');return}
+ const due=Date.now()+Math.max(1,d-3)*864e5;const when=new Date(due).toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long'});
+ if(!o.demo){const r=store.get('wasl_refills',[]).filter(x=>x.med!==o.med);r.push({id:Date.now(),med:o.med,goal:'عايز '+o.med+' (زي المرة اللي فاتت)',due});store.set('wasl_refills',r)}
+ $('oRefOpts').classList.add('hidden');$('oRefOk').textContent='✓ هفكّرك يوم '+when+'، قبل ما يخلص بـ 3 أيام.';$('oRefOk').classList.remove('hidden');buzz([40])});
+
+/* ---------- home: button and the open order ---------- */
+$('openOrder').onclick=oOpen;
+function drawOrderChip(){const o=(()=>{const id=store.get('wasl_order_active',0);return oAll().find(x=>x.id===id)})();const el=$('orderChip');
+ if(!o||o.state==='done'||o.state==='cancel'){el.innerHTML='';return}
+ el.innerHTML=`<button class="ochip"><span>💊</span><b>${esc(o.pharmacy)}: ${esc(O_STATE[o.state]||'')}</b><small>افتح</small></button>`;el.firstElementChild.onclick=oOpen}
+
+/* ---------- replies shared from WhatsApp (Android share sheet) ---------- */
+async function oTakeShared(){if(new URLSearchParams(location.search).get('shared')!=='1')return;history.replaceState(null,'',location.pathname);
+ let text='',audio=null;try{const c=await caches.open('wasl-share');const t=await c.match('/wasl-share/text');if(t)text=(await t.json()).text||'';const a=await c.match('/wasl-share/audio');if(a)audio=await a.blob();await c.delete('/wasl-share/text');await c.delete('/wasl-share/audio')}catch(e){}
+ const o=oCur();if(!o||o.state==='done'){show('order');oSetup();if(text)$('oGoal').value='';alert('مفيش طلب مفتوح. ابدأ طلب جديد، وبعدين شارك رد الصيدلية لوصل.');return}
+ show('order');oDraw();if(audio&&audio.size)oVoiceNote(audio);else if(text)oGotReply(text)}
+
+/* ---------- scripted demo: a pharmacy that answers with a voice note ---------- */
+function oDemoStep(ev,o){const n=profile().name||'محمد';
+ if(ev.type==='start')return{state:'send',title:'كونكور 5 مجم',message:'السلام عليكم، أنا '+n+'، أصم وبتواصل بالكتابة بس، فلو سمحت الرد يكون مكتوب. محتاج علبة كونكور 5 مجم توصيل على '+o.address+'. ممكن أعرف السعر وميعاد التوصيل؟ شكراً جداً.',explain:'جهزت الرسالة. راجعها ولو تمام ابعتها.'};
+ if(ev.type==='reply'&&OD.step===1)return{state:'decide',explain:'الصيدلية بعتت رسالة صوتية، وبتقول: كونكور 5 للأسف مش متوفر دلوقتي، والبديل المتاح بيزوكور 5 بنفس المادة الفعالة بـ 60 جنيه، وتوصيل خلال ساعة.',question:'الصيدلية بتقول إن كونكور 5 للأسف مش متوفر، والبديل المتاح بيزوكور 5 بنفس المادة الفعالة وسعره 60 جنيه.',options:['هاخد البديل','اسألهم على بديل تاني','لأ، شكراً'],cards:[{k:'unavailable',v:'كونكور 5'},{k:'alt',v:'بيزوكور 5'},{k:'price',v:'60'},{k:'time',v:'ساعة'}]};
+ if(ev.type==='decision'&&/هاخد/.test(ev.text))return{state:'send',message:'تمام، هاخد بيزوكور 5 بـ 60 جنيه. ابعتوه على نفس العنوان لو سمحت. شكراً جداً.'};
+ if(ev.type==='decision')return{state:'send',message:'شكراً جداً لحضرتك، مش هاخده المرة دي.'};
+ if(ev.type==='reply')return{state:'done',summary:'علبة بيزوكور 5 (بديل كونكور 5) خرجت مع الطيار من '+o.pharmacy+'. هتوصل خلال ساعة، والسعر 60 جنيه كاش عند الاستلام.',med:'بيزوكور 5 مجم',explain:'الطلب خرج.',message:''};
+ return{state:'wait',explain:'مستنيين الصيدلية.'}}
+function oDemoReply(o){const declined=o.thread.some(m=>m.from==='user'&&!/هاخد/.test(m.text));
+ if(declined){setTimeout(()=>{if(!OD)return;o.state='done';o.summary='اعتذرت للصيدلية بلطف، والطلب اتلغى.';o.med='';oSave(o);oDraw()},1500);return}
+ setTimeout(()=>{if(!OD)return;OD.step++;if(OD.step===1)oGotReply('أهلاً يا فندم، للأسف كونكور خمسة مش موجود دلوقتي، بس عندنا بيزوكور خمسة نفس المادة بستين جنيه، والتوصيل خلال ساعة. تحب نبعته؟',true);
+  else oGotReply('تمام يا فندم، الطلب خرج مع الطيار وهيوصلك خلال ساعة، والحساب 60 جنيه كاش. ألف سلامة.')},2200)}
+oTakeShared();
+if(new URLSearchParams(location.search).get('go')==='order')setTimeout(oOpen,300);
 </script>
 </body>
 </html>

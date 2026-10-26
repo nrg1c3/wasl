@@ -2,9 +2,9 @@
    - App pages: network first (so updates arrive), cached copy when offline.
    - Fonts, sound/sign models: cached after first use.
    - POST requests (AI, voice) are never cached. */
-const SHELL = 'wasl-shell-v13';
+const SHELL = 'wasl-shell-v14';
 const RUNTIME = 'wasl-rt-v1';
-const KEEP = [SHELL, RUNTIME, 'wasl-demo-v1'];
+const KEEP = [SHELL, RUNTIME, 'wasl-demo-v1', 'wasl-share'];
 const FILES = ['./', 'index.html', 'privacy.html', 'manifest.webmanifest',
   'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 const RUNTIME_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdn.jsdelivr.net',
@@ -45,8 +45,24 @@ async function cacheFirst(req) {
   return res;
 }
 
+/* WhatsApp replies shared to Wasl (text or a voice note) arrive here as a POST.
+   Keep them in a small cache and open the app, which picks them up. */
+async function takeShare(req) {
+  try {
+    const f = await req.formData();
+    const c = await caches.open('wasl-share');
+    const text = [f.get('title'), f.get('text'), f.get('url')].filter(x => typeof x === 'string' && x.trim()).join('\n');
+    await c.put('/wasl-share/text', new Response(JSON.stringify({ text }), { headers: { 'Content-Type': 'application/json' } }));
+    const a = f.getAll('audio').find(x => x && typeof x === 'object' && x.size);
+    if (a) await c.put('/wasl-share/audio', new Response(a, { headers: { 'Content-Type': a.type || 'audio/ogg' } }));
+    else await c.delete('/wasl-share/audio');
+  } catch (err) {}
+  return Response.redirect(new URL('./?shared=1', self.registration.scope).href, 303);
+}
+
 self.addEventListener('fetch', e => {
   const req = e.request;
+  if (req.method === 'POST' && new URL(req.url).pathname.endsWith('/share-target')) { e.respondWith(takeShare(req)); return; }
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin === self.location.origin) { e.respondWith(networkFirst(req)); return; }
