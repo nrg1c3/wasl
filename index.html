@@ -498,7 +498,7 @@ let rec=null,wantListen=false,onHeard=null,onInterim=null,onListenState=null;
 async function micOk(){try{const s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(t=>t.stop());return true}catch(e){return e.name||'error'}}
 /* One recognizer at a time. The old code aborted and recreated the recognizer whenever it was asked to listen,
    and the aborted one's onend started a new one: an endless restart loop (Android beeps on every start) that froze the app. */
-let recLive=false,recFails=0,recStartAt=0,restartT=null;
+let recLive=false,recFails=0,recStartAt=0,restartT=null,lastVoiceAt=0;
 function startListening(){if(DEMO)return;if(!SR){onListenState&&onListenState('nosr');return}
  wantListen=true;if(player)return;if(rec&&recLive)return;
  clearTimeout(restartT);const me=new SR();rec=me;me.lang=LANG;me.continuous=true;me.interimResults=true;me.maxAlternatives=1;
@@ -508,7 +508,7 @@ function startListening(){if(DEMO)return;if(!SR){onListenState&&onListenState('n
   for(let i=0;i<e.results.length;i++){const r=e.results[i],t=(r[0]&&r[0].transcript||'').trim();if(!t)continue;
    if(r.isFinal){const p=fins[fins.length-1];if(p&&t.startsWith(p))fins[fins.length-1]=t;else if(!(p&&p.startsWith(t)))fins.push(t)}else int=t}
   const fin=fins.join(' ');let delta=fin.startsWith(sent)?fin.slice(sent.length).trim():(sent.includes(fin)?'':fin);
-  if(fin.length>=sent.length)sent=fin;pend=int;
+  if(fin.length>=sent.length)sent=fin;pend=int;me._pend=int;if(int||delta)lastVoiceAt=Date.now();
   if(delta.length>1){recFails=0;const h=onHeard;h&&h(delta)}
   if(int){recFails=0;onInterim&&onInterim(int)}};
  me.onerror=ev=>{if(rec!==me)return;if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){wantListen=false;onListenState&&onListenState('blocked')}else if(ev.error!=='no-speech'&&ev.error!=='aborted')recFails++};
@@ -519,7 +519,7 @@ function startListening(){if(DEMO)return;if(!SR){onListenState&&onListenState('n
   if(recFails>6){wantListen=false;onListenState&&onListenState('stuck');return}
   restartT=setTimeout(()=>{if(wantListen&&!player&&!rec)startListening()},recFails?Math.min(4000,400*recFails):150)};
  try{me.start()}catch(e){rec=null;recLive=false}}
-function stopListening(){clearTimeout(restartT);const r=rec;rec=null;recLive=false;try{r&&r.abort()}catch(e){}}
+function stopListening(){clearTimeout(restartT);const r=rec;rec=null;recLive=false;const p=r&&r._pend;try{r&&r.abort()}catch(e){}if(p&&p.length>1&&onHeard){r._pend='';onHeard(p)}}
 function resumeListening(){recFails=0;startListening()}
 function haltListening(){wantListen=false;stopListening()}
 
@@ -574,6 +574,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
   if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
   clearTimeout(to);d=await r.json()}}catch(e){}
  if(!T||my!==T.seq||T.over)return;
+ if(d&&!d.error&&(heardBuf.trim()||Date.now()-lastVoiceAt<1500)){if(!heardTimer&&heardBuf.trim())heardTimer=setTimeout(flushHeard,2600);setTimeout(()=>{if(T&&!T.over&&my===T.seq&&!heardBuf.trim()&&Date.now()-lastVoiceAt>=1500)agent(event)},3000);return} // the other person is still talking: don't talk over them, answer everything together
  if(!d||d.error){T.fails=(T.fails||0)+1;if(T.fails===2)setHear('لحظة من فضلك','لحظة واحدة من فضلك','النت ضعيف شوية.');if(T.fails>6){setState('think','النت فاصل. دوس هنا عشان تجرّب تاني');$('tState').onclick=()=>{$('tState').onclick=null;T.fails=0;agent(event)};return}setState('think','النت ضعيف، بجرّب تاني...');setTimeout(()=>agent(event),1500+T.fails*700);return}
  T.fails=0;
  if(event.type==='heard')drawCards('tCards',d.cards||[]);else drawCards('tCards',(d.cards||[]).filter(c=>c.k==='map'));
