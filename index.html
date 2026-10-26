@@ -491,16 +491,31 @@ async function speak(t,done,o){t=String(t||'').replace('✨','').trim();if(!t){d
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 let rec=null,wantListen=false,onHeard=null,onInterim=null,onListenState=null;
 async function micOk(){try{const s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(t=>t.stop());return true}catch(e){return e.name||'error'}}
+/* One recognizer at a time. The old code aborted and recreated the recognizer whenever it was asked to listen,
+   and the aborted one's onend started a new one: an endless restart loop (Android beeps on every start) that froze the app. */
+let recLive=false,recFails=0,recStartAt=0,restartT=null;
 function startListening(){if(DEMO)return;if(!SR){onListenState&&onListenState('nosr');return}
- wantListen=true;if(player)return;try{rec&&rec.abort()}catch(e){}
- rec=new SR();rec.lang=LANG;rec.continuous=false;rec.interimResults=true;
- rec.onstart=()=>onListenState&&onListenState('listening');
- rec.onresult=e=>{let t='',fin=false;for(let i=e.resultIndex;i<e.results.length;i++){t+=e.results[i][0].transcript;if(e.results[i].isFinal)fin=true}
-  onInterim&&onInterim(t);if(fin&&t.trim().length>1){const h=onHeard;h&&h(t.trim())}};
- rec.onerror=ev=>{if(ev.error==='no-speech'||ev.error==='aborted')return;if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){wantListen=false;onListenState&&onListenState('blocked')}};
- rec.onend=()=>{if(wantListen&&!player)setTimeout(()=>{if(wantListen&&!player)startListening()},250)};
- try{rec.start()}catch(e){}}
-function stopListening(){try{rec&&rec.abort()}catch(e){}}
+ wantListen=true;if(player)return;if(rec&&recLive)return;
+ clearTimeout(restartT);const me=new SR();rec=me;me.lang=LANG;me.continuous=true;me.interimResults=true;me.maxAlternatives=1;
+ let sent='',pend='';
+ me.onstart=()=>{if(rec!==me)return;recLive=true;recStartAt=Date.now();onListenState&&onListenState('listening')};
+ me.onresult=e=>{if(rec!==me)return;const fins=[];let int='';
+  for(let i=0;i<e.results.length;i++){const r=e.results[i],t=(r[0]&&r[0].transcript||'').trim();if(!t)continue;
+   if(r.isFinal){const p=fins[fins.length-1];if(p&&t.startsWith(p))fins[fins.length-1]=t;else if(!(p&&p.startsWith(t)))fins.push(t)}else int=t}
+  const fin=fins.join(' ');let delta=fin.startsWith(sent)?fin.slice(sent.length).trim():(sent.includes(fin)?'':fin);
+  if(fin.length>=sent.length)sent=fin;pend=int;
+  if(delta.length>1){recFails=0;const h=onHeard;h&&h(delta)}
+  if(int){recFails=0;onInterim&&onInterim(int)}};
+ me.onerror=ev=>{if(rec!==me)return;if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){wantListen=false;onListenState&&onListenState('blocked')}else if(ev.error!=='no-speech'&&ev.error!=='aborted')recFails++};
+ me.onend=()=>{if(rec!==me)return;recLive=false;rec=null;
+  if(pend.length>1){const t=pend;pend='';const h=onHeard;h&&h(t)} // words that never became "final" used to be lost
+  if(!wantListen||player)return;
+  if(Date.now()-recStartAt<1500)recFails++;
+  if(recFails>6){wantListen=false;onListenState&&onListenState('stuck');return}
+  restartT=setTimeout(()=>{if(wantListen&&!player&&!rec)startListening()},recFails?Math.min(4000,400*recFails):150)};
+ try{me.start()}catch(e){rec=null;recLive=false}}
+function stopListening(){clearTimeout(restartT);const r=rec;rec=null;recLive=false;try{r&&r.abort()}catch(e){}}
+function resumeListening(){recFails=0;startListening()}
 function haltListening(){wantListen=false;stopListening()}
 
 /* ================= TASK MODE ================= */
@@ -546,7 +561,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
  let d=null;
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),20000);
-  if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history,event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
+  if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
   clearTimeout(to);d=await r.json()}}catch(e){}
  if(!T||my!==T.seq||T.over)return;
  if(!d||d.error){T.fails=(T.fails||0)+1;if(T.fails===2)setHear('لحظة من فضلك','لحظة واحدة من فضلك','النت ضعيف شوية.');if(T.fails>6){setState('think','النت فاصل. دوس هنا عشان تجرّب تاني');$('tState').onclick=()=>{$('tState').onclick=null;T.fails=0;agent(event)};return}setState('think','النت ضعيف، بجرّب تاني...');setTimeout(()=>agent(event),1500+T.fails*700);return}
@@ -585,7 +600,7 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  heardBuf='';clearTimeout(heardTimer);
  onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,1800)};
  onInterim=t=>{if(!T||T.over)return;liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,3000)}};
- onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')setState('think','السماع محتاج Chrome')};
+ onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')setState('think','السماع محتاج Chrome');if(s==='stuck'){setState('think','السماع وقف. دوس هنا عشان أسمع تاني');$('tState').onclick=()=>{$('tState').onclick=null;setState('ok','بسمع اللي قدامك...');resumeListening()}}};
  agent({type:'start'})};
 
 $('tWrite').onclick=()=>{$('tType').classList.toggle('hidden');if(!$('tType').classList.contains('hidden'))$('tInput').focus()};
@@ -671,7 +686,7 @@ $('openFree').onclick=()=>{show('free');drawReplies(DEFAULT_REPLIES,false)};
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent='المايك مقفول ('+ok+'). اسمح بيه من إعدادات المتصفح';return}
  freeOn=true;bumpStat('free');$('freeGo').textContent='⏸ وقف';$('fDot').className='dot';$('fState').textContent='بسمع...';
- onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول'};
+ onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول';if(s==='stuck'){$('fState').textContent='السماع وقف. دوس هنا';$('fState').onclick=()=>{$('fState').onclick=null;$('fState').textContent='بسمع...';resumeListening()}}};
  startListening()};
 $('freeBack').onclick=()=>{freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';onHeard=onInterim=onListenState=null;show('home')};
 $('fSay').onclick=()=>{const t=$('fInput').value.trim();if(t){$('fInput').value='';fSpeak(t)}};
