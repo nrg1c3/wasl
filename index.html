@@ -251,7 +251,7 @@ nav svg{width:24px;height:24px}
 <div class="card">
 <div class="field"><label for="pName">الاسم</label><input id="pName" autocomplete="name"></div>
 <div class="field"><label for="pSex">أنا</label><select id="pSex"><option value="m">راجل</option><option value="f">ست / بنت</option></select></div>
-<div class="field"><label for="pVoice">وصل يتكلم بصوت</label><select id="pVoice"><option value="f">ست</option><option value="m">راجل</option></select></div>
+<div class="field"><label for="pVoice">وصل يتكلم بصوت</label><select id="pVoice"><option value="auto">زيّي (حسب أنا راجل ولا ست)</option><option value="f">ست</option><option value="m">راجل</option></select></div>
 <div class="field"><label for="pMem">وصل يفتكر مهامك اللي فاتت</label><select id="pMem"><option value="on">أيوه، عشان يقولي «زي المرة اللي فاتت؟»</option><option value="off">لأ</option></select></div>
 <div class="field"><label for="pAll">حساسية من أدوية أو أكل</label><input id="pAll" placeholder="مثلاً: البنسلين"></div>
 <div class="field"><label for="pIns">التأمين الصحي</label><input id="pIns" placeholder="مثلاً: مفيش، أو اسم الشركة"></div>
@@ -452,10 +452,13 @@ function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').tex
 /* ---------- profile ---------- */
 const PF={pName:'name',pSex:'sex',pVoice:'voice',pMem:'mem',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return DEMO?DEMO.profile:store.get('wasl_profile',{})}
+try{if(!localStorage.getItem('wasl_vmig')){const p=store.get('wasl_profile',null);if(p&&p.voice==='f'){p.voice='auto';store.set('wasl_profile',p)}localStorage.setItem('wasl_vmig','1')}}catch(e){}
 function taskMemory(){if(DEMO||profile().mem==='off')return[];return store.get('wasl_tasks',[]).filter(x=>x.summary).slice(-5).reverse().map(x=>({d:x.date||'',t:String(x.title||'').slice(0,60),s:String(x.summary).slice(0,220)}))}
 function taskProfile(){const p=profile(),o={};['name','sex','address','allergies','insurance','notes'].forEach(k=>{if(p[k])o[k]=p[k]});return o}
-function voiceName(){const m=profile().voice==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
-function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='f';if(!$('pMem').value)$('pMem').value='on';if(!$('pSex').value)$('pSex').value='m'}
+/* Wasl's voice matches the user by default, so a man is never spoken for in a woman's voice unless he picks it. */
+function vg(){const p=profile();return p.voice==='m'||p.voice==='f'?p.voice:(p.sex==='f'?'f':'m')}
+function voiceName(){const m=vg()==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
+function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='auto';if(!$('pMem').value)$('pMem').value='on';if(!$('pSex').value)$('pSex').value='m'}
 $('wipeMe').onclick=()=>{if(!confirm('هتتمسح بياناتك ومهامك وإشاراتك من الموبايل ده. متأكد؟'))return;try{Object.keys(localStorage).filter(k=>k.startsWith('wasl_')||k==='signs').forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()};
 $('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent='اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.'};
 
@@ -484,7 +487,7 @@ async function ttsBlob(t,vl,g,useCache,signal){const key='https://wasl.voice/'+e
  if(c){try{await c.put(key,new Response(b,{headers:{'Content-Type':'audio/mpeg'}}))}catch(e){}}return b}
 async function speak(t,done,o){t=mascTTS(String(t||'').replace('✨','').trim());if(!t){done&&done();return}
  stopListening();try{speechSynthesis.cancel()}catch(e){}if(player){try{player.pause()}catch(e){}}player={pause(){}};
- const vl=DEMO?'ar-EG':(/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':LANG);const g=(o&&o.g)||(profile().voice==='m'?'m':'f');
+ const vl=DEMO?'ar-EG':(/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':LANG);const g=(o&&o.g)||vg();
  const finish=()=>{player=null;done&&done()};
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),13000);
   const blob=await ttsBlob(t,vl,g,!!DEMO,ac.signal);clearTimeout(to);
@@ -566,14 +569,26 @@ function drawProg(step){const n=Math.max(1,Math.min(step.n||1,step.total||3)),to
 function listenForHearing(){if(!T||T.over)return;setState('ok','بسمع اللي قدامك...');setHear('وصل سامعك · اتكلم عادي',T.lastSaid||'اتفضل، أنا سامعك','صاحب الموبايل أصم، وأنا مساعده.');if(DEMO)demoHear();else startListening()}
 
 let heardBuf='',heardTimer=null;
+/* A short "one moment" so the other person isn't left in silence while Wasl prepares the reply. At most once every 15 s, never over someone talking. */
+let fillP=null,fillWanted=false,lastFill=0;
+function fillers(){return LANG==='en-US'?['One moment, please.','Just a second, please.']:['لحظة واحدة لو سمحت.','ثانية واحدة من فضلك.','لحظة بس لو سمحت.']}
+function prefetchFillers(){if(DEMO)return;const g=vg();fillers().forEach(t=>ttsBlob(mascTTS(t),LANG,g,true).catch(()=>{}))}
+function playFiller(){if(DEMO||!T||T.over||!fillWanted||player||fillP||Date.now()-lastFill<15000||Date.now()-lastVoiceAt<2000||heardBuf.trim())return;
+ lastFill=Date.now();const l=fillers(),t=mascTTS(l[Math.floor(Math.random()*l.length)]);
+ fillP=(async()=>{try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),2500);const b=await ttsBlob(t,LANG,vg(),true,ac.signal);clearTimeout(to);
+  if(!T||T.over||!fillWanted||player)return;stopListening();setHear('لحظة واحدة',t,'وصل بيجهّز الرد.');
+  const url=URL.createObjectURL(b);AUD.src=url;await new Promise(res=>{AUD.onended=AUD.onerror=res;const pl=AUD.play();if(pl)pl.catch(res)});URL.revokeObjectURL(url);
+  if(T&&!T.over&&fillWanted)startListening()}catch(e){}finally{fillP=null}})()}
 function flushHeard(){heardTimer=null;if(!T||T.over||!heardBuf.trim())return;const t=heardBuf.trim();heardBuf='';T.history.push({role:'hearing',text:t});logMsg('hearing',t);
  if(!$('tDecide').classList.contains('hidden'))return;agent({type:'heard',text:t})}
 async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
  let d=null;
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),20000);
-  if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
+  if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{if(event.type==='heard'){fillWanted=true;var ft=setTimeout(playFiller,2800)}const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:vg()}),signal:ac.signal});
   clearTimeout(to);d=await r.json()}}catch(e){}
+ if(typeof ft!=='undefined')clearTimeout(ft);fillWanted=false;const filled=!!fillP||Date.now()-lastFill<8000;if(fillP)await fillP;
+ if(filled&&d&&typeof d.say==='string')d.say=d.say.replace(/^\s*(لحظة|ثانية) (واحدة|بس)( لو سمحت| من فضلك)?[،,.]\s*/,''); // don't repeat "one moment" right after the filler
  if(!T||my!==T.seq||T.over)return;
  if(d&&!d.error&&(heardBuf.trim()||Date.now()-lastVoiceAt<1500)){if(!heardTimer&&heardBuf.trim())heardTimer=setTimeout(flushHeard,2600);setTimeout(()=>{if(T&&!T.over&&my===T.seq&&!heardBuf.trim()&&Date.now()-lastVoiceAt>=1500)agent(event)},3000);return} // the other person is still talking: don't talk over them, answer everything together
  if(!d||d.error){T.fails=(T.fails||0)+1;if(T.fails===2)setHear('لحظة من فضلك','لحظة واحدة من فضلك','النت ضعيف شوية.');if(T.fails>6){setState('think','النت فاصل. دوس هنا عشان تجرّب تاني');$('tState').onclick=()=>{$('tState').onclick=null;T.fails=0;agent(event)};return}setState('think','النت ضعيف، بجرّب تاني...');setTimeout(()=>agent(event),1500+T.fails*700);return}
@@ -610,7 +625,7 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  if(!DEMO&&!store.get('wasl_consent',false)){if(!confirm('قبل أول مهمة:\n\nعشان وصل يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي وصل هيقولها بتتبعت لخدمة الصوت (ElevenLabs).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟'))return;store.set('wasl_consent',true)}
  if(alOn){stopAlerts(true);drawAlChip()}
  const ok=DEMO?true:await micOk();if(ok!==true){alert('وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ('+ok+')');return}
- T={goal,history:[],seq:0,over:false,title:goal,lastSaid:''};lastMap='';
+ T={goal,history:[],seq:0,over:false,title:goal,lastSaid:''};lastMap='';prefetchFillers();
  $('tTitle').textContent=goal;$('tLog').innerHTML='';if(taskPhoto){$('hPhoto').src=taskPhoto;$('hPhoto').classList.remove('hidden')}else $('hPhoto').classList.add('hidden');drawProg({n:1,total:3});liveCap('',false);$('tLiveLab').textContent='كلام اللي قدامك هيظهر هنا';drawCards('tCards',[]);
  ['tDecide','tSum','tType'].forEach(id=>$(id).classList.add('hidden'));$('tFoot').classList.remove('hidden');
  setHear('وصل','أهلاً بيك','صاحب الموبايل أصم، وأنا مساعده.');show('task');
