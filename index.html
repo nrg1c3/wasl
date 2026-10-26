@@ -53,7 +53,7 @@ nav svg{width:24px;height:24px}
 .task-item:last-child{border-bottom:0;padding-bottom:0}
 .task-item b{font-size:17px}.task-item small{color:var(--mute);font-size:13px}
 .task-item p{margin:0;font-size:15px;line-height:1.6;white-space:pre-line}
-.empty{color:var(--mute);font-size:15px;text-align:center;padding:20px 0}
+.empty{color:var(--mute);font-size:15px;text-align:center;padding:20px 0}.rate{display:flex;align-items:center;gap:10px;margin:4px 0 10px}.rate span{flex:1;font-weight:800}.rate button{width:56px;height:48px;border:1px solid var(--line);border-radius:14px;background:var(--bg);font-size:24px}.rate button.on{border-color:var(--or);background:var(--orl)}.why{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}.why button{border:1px solid var(--line);border-radius:999px;background:var(--bg);padding:8px 12px;font:700 14px Cairo,sans-serif;color:var(--ink)}.why button.on{background:var(--ink);color:#fff;border-color:var(--ink)}.stats{align-self:flex-start;display:flex;gap:8px;flex-wrap:wrap;font-size:14px;font-weight:700;color:var(--mute)}.stats span{background:#fff;border-radius:999px;padding:4px 12px}.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:center}.kpis div{background:var(--bg);border-radius:14px;padding:10px 4px}.kpis b{display:block;font-size:26px;line-height:1.2}.kpis small{color:var(--mute);font-size:13px}
 .soon{display:inline-block;font-size:12px;font-weight:800;background:var(--orl);color:var(--ord);padding:4px 10px;border-radius:999px;align-self:flex-start}
 /* task */
 #task .hear{flex:0 0 36%;background:var(--ink);color:var(--bg);transform:rotate(180deg);padding:20px 22px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
@@ -208,6 +208,7 @@ nav svg{width:24px;height:24px}
 <div class="hbody">
 <div id="instBar" class="hidden" style="display:flex;align-items:center;gap:10px;background:#13262F;color:#fff;border-radius:16px;padding:10px 12px;margin-bottom:10px"><img src="icon-192.png" alt="" width="36" height="36" style="border-radius:9px"><span id="instTxt" style="flex:1;font-weight:700;font-size:15px;line-height:1.4">ثبّت وَصَّل على موبايلك، ويشتغل من غير نت</span><button id="instGo" style="background:#E4602A;color:#fff;border:0;border-radius:12px;padding:8px 14px;font:800 15px Cairo,sans-serif">ثبّت</button><button id="instX" aria-label="إخفاء" style="background:none;border:0;color:#BFD3D8;font-size:20px;padding:4px">✕</button></div>
 <button class="alchip" id="alChip"><span class="d"></span><span id="alChipT">تنبيهات الأصوات مقفولة · شغّلها</span></button>
+<div class="stats hidden" id="stats"></div>
 <button class="big" id="bigTalk" style="background:#C9501E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/><path d="M9 10.5h6M9 13.5h4"/></svg></span><span class="tx"><b>اتكلم بدالي</b><small>قول عايز إيه، وأنا أتكلم مع اللي قدامك</small></span></button>
 <button class="big" id="openFree" style="background:#13262F"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 10h4M13 10h4M7 14h7"/></svg></span><span class="tx"><b>ترجمة</b><small>كلام اللي قدامك يظهر مكتوب وبالصور</small></span></button>
 <button class="big sm" id="sosBtn" style="background:#B3261E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.5"/></svg></span><span class="tx"><b>طوارئ</b><small>إسعاف · شرطة · مطافي · أهلك</small></span></button>
@@ -239,7 +240,7 @@ nav svg{width:24px;height:24px}
 
 <section id="mytasks" class="screen" aria-label="مهامي">
 <div class="top"><button class="back" id="tasksBack">→ رجوع</button><b style="font-size:18px">مهامي</b><span style="width:70px"></span></div>
-<div class="body"><p class="lead">كل مهمة خلصت، وملخصها.</p><div class="card" id="taskList"></div></div>
+<div class="body"><div class="card" id="kpiCard"><div class="kpis" id="kpis"></div><button class="btn ghost" id="shareRates">شارك التقييمات</button><p class="lead" style="margin:0;font-size:13px">بيبعت التاريخ والتقييم بس، من غير أي كلام أو بيانات. للمشاركين في التجربة.</p></div><p class="lead">كل مهمة خلصت، وملخصها.</p><div class="card" id="taskList"></div></div>
 </section>
 
 <section id="me" class="screen" aria-label="بياناتي">
@@ -300,7 +301,7 @@ nav svg{width:24px;height:24px}
 <div class="log" id="tLog"></div>
 <div class="decide hidden" id="tDecide"><div class="q" id="tQ"></div><div class="opts" id="tOpts"></div></div>
 <div class="typerow hidden" id="tType"><label class="sr" for="tInput">اكتب لوصل</label><input id="tInput" placeholder="اكتب اللي عايز وصل يقوله أو يعرفه"><button id="tSend">ابعت</button></div>
-<div class="summary hidden" id="tSum"><b>✓ المهمة خلصت</b><p id="tSumText"></p><button class="btn ghost" id="tShare" style="margin-bottom:8px">ابعت الملخص</button><button class="btn" id="tHome">رجوع للرئيسية</button></div>
+<div class="summary hidden" id="tSum"><b>✓ المهمة خلصت</b><p id="tSumText"></p><div class="rate" id="tRate"><span>وَصَّل ساعدك؟</span><button data-r="up" aria-label="ساعدني">👍</button><button data-r="down" aria-label="ماساعدنيش">👎</button></div><div class="why hidden" id="tWhy"><button>مفهمش اللي قدامي</button><button>بطيء</button><button>الصوت مش واضح</button><button>قال حاجة غلط</button><button>حاجة تانية</button></div><button class="btn ghost" id="tShare" style="margin-bottom:8px">ابعت الملخص</button><button class="btn" id="tHome">رجوع للرئيسية</button></div>
 </div>
 <div class="tfoot" id="tFoot">
 <button id="tWrite">أنا هكتب</button>
@@ -406,7 +407,7 @@ let LANG=store.get('wasl_lang','ar-EG');if(LANG==='ar-AE')LANG='ar-SA';if(LANG==
 $('lang').onchange=()=>{LANG=$('lang').value;store.set('wasl_lang',LANG)};
 
 /* ---------- screens & tabs ---------- */
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id))}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='home'&&typeof drawStats==='function')drawStats();if(id==='mytasks'&&typeof drawKpis==='function')drawKpis()}
 $('bigTalk').onclick=()=>{drawPics(null);taskPhoto=null;$('goal').value='';show('talk')};
 /* ---------- choose by pictures (no reading needed) ---------- */
 const PICS=[
@@ -560,12 +561,13 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
   if(d.say)speak(d.say,()=>{if(T&&!T.over)startListening()});else startListening();$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.action==='done'){
   T.over=true;haltListening();clearTimeout(heardTimer);buzz([300]);drawCards('tCards',[]);setHear('شكراً',d.say||'شكراً جزيلاً','');
-  $('tSumText').innerHTML=nums(d.summary||'المهمة خلصت.');$('tSum').classList.remove('hidden');$('tFoot').classList.add('hidden');setState('ok','المهمة خلصت');
+  resetRate();$('tSumText').innerHTML=nums(d.summary||'المهمة خلصت.');$('tSum').classList.remove('hidden');$('tFoot').classList.add('hidden');setState('ok','المهمة خلصت');
   saveTask(d.summary);if(d.say)speak(d.say);$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.say){setState('talk','وصل بيتكلم...');setHear('وصل بيقول',d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
 function isAck(t){const w=String(t).replace(/[،.!؟?,]/g,' ').trim().split(/\s+/);return w.length<=4&&w.every(x=>/^(ماشي|تمام|طيب|اتفضل|اتفضلي|كمل|كملي|كمّل|أوكي|اوكي|اه|آه|أيوه|ايوه|حاضر|معاك|معاكي|سامعك|سامعاك|و|يا|فندم|حضرتك|ok|okay|sure|go|on)$/i.test(x))}
 
-function saveTask(summary){if(DEMO)return;const t=store.get('wasl_tasks',[]);t.push({title:T.title||T.goal,goal:T.goal,summary:summary||'',date:new Date().toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
+let lastTid=null;
+function saveTask(summary){if(DEMO){lastTid=null;return}const t=store.get('wasl_tasks',[]);lastTid=Date.now();t.push({id:lastTid,done:!!summary,title:T.title||T.goal,goal:T.goal,summary:summary||'',date:new Date().toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
 
 $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('goal').focus();return}
  if(alOn){stopAlerts(true);drawAlChip()}
@@ -587,6 +589,19 @@ $('tSign').onclick=()=>openSigns('task');
 function endTask(){if(DEMO){DEMO.timers.forEach(clearTimeout);DEMO=null;$('demoBadge').classList.add('hidden')}haltListening();clearTimeout(heardTimer);heardBuf='';if(player){try{player.pause()}catch(e){}}player=null;if(T&&!T.over){T.over=true;saveTask('')}T=null;onHeard=onInterim=onListenState=null;show('home')}
 $('tEnd').onclick=()=>{if(confirm('تنهي المهمة؟'))endTask()};
 $('tHome').onclick=endTask;
+function setRate(patch){if(!lastTid)return;const t=store.get('wasl_tasks',[]);const x=t.find(y=>y.id===lastTid);if(x){Object.assign(x,patch);store.set('wasl_tasks',t)}}
+function resetRate(){$('tRate').querySelectorAll('button').forEach(b=>b.classList.remove('on'));$('tWhy').classList.add('hidden');$('tWhy').querySelectorAll('button').forEach(b=>b.classList.remove('on'))}
+$('tRate').querySelectorAll('button').forEach(b=>b.onclick=()=>{resetRate();b.classList.add('on');buzz([40]);const r=b.dataset.r;setRate({rating:r,why:''});if(r==='down')$('tWhy').classList.remove('hidden')});
+$('tWhy').querySelectorAll('button').forEach(b=>b.onclick=()=>{b.classList.toggle('on');setRate({why:[...$('tWhy').querySelectorAll('button.on')].map(x=>x.textContent).join('، ')})});
+function statsData(){const t=store.get('wasl_tasks',[]),st=store.get('wasl_stats',{});const done=t.filter(x=>x.done||x.summary).length;const rated=t.filter(x=>x.rating);const up=rated.filter(x=>x.rating==='up').length;
+ return{done,free:st.free||0,alerts:(store.get('wasl_alert_log',[])||[]).length,rated:rated.length,up}}
+function drawStats(){const d=statsData(),el=$('stats');const parts=[];if(d.done)parts.push('✓ '+d.done+' مهمة');if(d.free)parts.push('💬 '+d.free+' ترجمة');if(d.alerts)parts.push('🔔 '+d.alerts+' تنبيه');
+ el.innerHTML=parts.map(p=>'<span>'+p+'</span>').join('');el.classList.toggle('hidden',!parts.length)}
+function drawKpis(){const d=statsData();$('kpis').innerHTML=`<div><b>${d.done}</b><small>مهمة خلصت</small></div><div><b>${d.free}</b><small>مرة ترجمة</small></div><div><b>${d.rated?Math.round(100*d.up/d.rated)+'%':'—'}</b><small>ساعدتك</small></div>`;$('shareRates').classList.toggle('hidden',!d.rated)}
+$('shareRates').onclick=async()=>{const t=store.get('wasl_tasks',[]).filter(x=>x.rating);const csv='date,completed,rating,reason\n'+t.map(x=>[new Date(x.id||0).toISOString().slice(0,16),x.done?1:0,x.rating,'"'+(x.why||'').replace(/"/g,'')+'"'].join(',')).join('\n');
+ try{const f=new File([csv],'wasl-ratings.csv',{type:'text/csv'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'تقييمات وصل'});return}}catch(e){}
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='wasl-ratings.csv';a.click()};
+function bumpStat(k){const st=store.get('wasl_stats',{});st[k]=(st[k]||0)+1;store.set('wasl_stats',st)}
 $('tShare').onclick=async()=>{const t=$('tSumText').innerText;try{if(navigator.share){await navigator.share({title:'وصل',text:t});return}await navigator.clipboard.writeText(t);$('tShare').textContent='اتنسخ ✓'}catch(e){}};
 
 /* ================= DEMO MODE (scripted pharmacy scene, works offline once voices are prepared) ================= */
@@ -635,7 +650,7 @@ async function smartReplies(text){const n=++fSeq;$('fState').textContent='✨ ب
 $('openFree').onclick=()=>{show('free');drawReplies(DEFAULT_REPLIES,false)};
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent='المايك مقفول ('+ok+'). اسمح بيه من إعدادات المتصفح';return}
- freeOn=true;$('freeGo').textContent='⏸ وقف';$('fDot').className='dot';$('fState').textContent='بسمع...';
+ freeOn=true;bumpStat('free');$('freeGo').textContent='⏸ وقف';$('fDot').className='dot';$('fState').textContent='بسمع...';
  onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول'};
  startListening()};
 $('freeBack').onclick=()=>{freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';onHeard=onInterim=onListenState=null;show('home')};
@@ -814,6 +829,7 @@ $('sUse').onclick=()=>{const t=$('sentence').textContent.trim();const m=signMode
 $('rec').onclick=()=>{const l=$('label').value.trim();if(!l)return alert('اكتب معنى الإشارة الأول');if(!camOn)return alert('الكاميرا لسه ما اشتغلتش');let n=3;$('slive').textContent='استعد...';setTimeout(()=>{recording=l;const t=setInterval(()=>{$('slive').textContent='بيسجل: '+l+' ('+n--+')';if(n<0){clearInterval(t);recording=null;store.set('signs',data);tags();$('slive').textContent='اتسجلت ✓ سجّلها مرتين كمان'}},1000)},1000)};
 $('sWipe').onclick=()=>{if(confirm('تمسح كل الإشارات؟')){data=[];store.set('signs',[]);tags()}};
 
+drawStats();
 /* ================= INSTALL + OFFLINE ================= */
 if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
 (function(){const bar=$('instBar'),standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;let ev=null;
