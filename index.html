@@ -250,6 +250,7 @@ nav svg{width:24px;height:24px}
 <div class="card">
 <div class="field"><label for="pName">الاسم</label><input id="pName" autocomplete="name"></div>
 <div class="field"><label for="pVoice">وصل يتكلم بصوت</label><select id="pVoice"><option value="f">ست</option><option value="m">راجل</option></select></div>
+<div class="field"><label for="pMem">وصل يفتكر مهامك اللي فاتت</label><select id="pMem"><option value="on">أيوه، عشان يقولي «زي المرة اللي فاتت؟»</option><option value="off">لأ</option></select></div>
 <div class="field"><label for="pAll">حساسية من أدوية أو أكل</label><input id="pAll" placeholder="مثلاً: البنسلين"></div>
 <div class="field"><label for="pIns">التأمين الصحي</label><input id="pIns" placeholder="مثلاً: مفيش، أو اسم الشركة"></div>
 <div class="field"><label for="pAddr">العنوان</label><input id="pAddr"></div>
@@ -442,11 +443,12 @@ $('alChip').onclick=()=>$('openAlerts').click();
 function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').textContent=alOn?'تنبيهات الأصوات شغالة':'تنبيهات الأصوات مقفولة · شغّلها'}
 
 /* ---------- profile ---------- */
-const PF={pName:'name',pVoice:'voice',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
+const PF={pName:'name',pVoice:'voice',pMem:'mem',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return DEMO?DEMO.profile:store.get('wasl_profile',{})}
+function taskMemory(){if(DEMO||profile().mem==='off')return[];return store.get('wasl_tasks',[]).filter(x=>x.summary).slice(-5).reverse().map(x=>({d:x.date||'',t:String(x.title||'').slice(0,60),s:String(x.summary).slice(0,220)}))}
 function taskProfile(){const p=profile(),o={};['name','address','allergies','insurance','notes'].forEach(k=>{if(p[k])o[k]=p[k]});return o}
 function voiceName(){const m=profile().voice==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
-function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='f'}
+function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='f';if(!$('pMem').value)$('pMem').value='on'}
 $('wipeMe').onclick=()=>{if(!confirm('هتتمسح بياناتك ومهامك وإشاراتك من الموبايل ده. متأكد؟'))return;try{Object.keys(localStorage).filter(k=>k.startsWith('wasl_')||k==='signs').forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()};
 $('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent='اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.'};
 
@@ -456,8 +458,9 @@ $('quick').innerHTML=QUICK.map(q=>`<button class="qbtn">${esc(q.replace('عاي�
 $('quick').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{$('goal').value=QUICK[i];$('goal').focus()});
 
 /* ---------- my tasks ---------- */
+function bindRedo(){document.querySelectorAll('#taskList .redo').forEach(b=>b.onclick=()=>{drawPics(null);taskPhoto=null;$('goal').value=b.dataset.g+' (زي المرة اللي فاتت)';const dt=$('goal').closest('details');if(dt)dt.open=true;show('talk')})}
 function drawTasks(){const t=store.get('wasl_tasks',[]);
- $('taskList').innerHTML=t.length?t.slice().reverse().map(x=>`<div class="task-item"><b>${esc(x.title)}</b><small>${esc(x.date)}</small><p>${esc(x.summary||'اتقفلت قبل ما تخلص.')}</p></div>`).join(''):'<div class="empty">لسه مفيش مهام. ابدأ أول مهمة من "اتكلم بدالي".</div>'}
+ $('taskList').innerHTML=t.length?t.slice().reverse().map(x=>`<div class="task-item"><b>${esc(x.title)}</b><small>${esc(x.date)}</small><p>${esc(x.summary||'اتقفلت قبل ما تخلص.')}</p>${x.goal?`<button class="btn ghost redo" data-g="${esc(x.goal)}" style="min-height:44px;font-size:16px">↻ اعملها تاني</button>`:''}</div>`).join(''):'<div class="empty">لسه مفيش مهام. ابدأ أول مهمة من "اتكلم بدالي".</div>';bindRedo()}
 
 /* ---------- audio: voice out ---------- */
 const AUD=new Audio();AUD.preload='auto';let audUnlocked=false,player=null;
@@ -540,7 +543,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
  let d=null;
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),20000);
-  if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:taskProfile(),history:T.history,event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
+  if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history,event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
   clearTimeout(to);d=await r.json()}}catch(e){}
  if(!T||my!==T.seq||T.over)return;
  if(!d||d.error){T.fails=(T.fails||0)+1;if(T.fails===2)setHear('لحظة من فضلك','لحظة واحدة من فضلك','النت ضعيف شوية.');if(T.fails>6){setState('think','النت فاصل. دوس هنا عشان تجرّب تاني');$('tState').onclick=()=>{$('tState').onclick=null;T.fails=0;agent(event)};return}setState('think','النت ضعيف، بجرّب تاني...');setTimeout(()=>agent(event),1500+T.fails*700);return}
