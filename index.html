@@ -610,8 +610,8 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  ['tDecide','tSum','tType'].forEach(id=>$(id).classList.add('hidden'));$('tFoot').classList.remove('hidden');
  setHear('وصل','أهلاً بيك','صاحب الموبايل أصم، وأنا مساعده.');show('task');
  heardBuf='';clearTimeout(heardTimer);
- onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,1800)};
- onInterim=t=>{if(!T||T.over)return;liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,3000)}};
+ onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,2600)};
+ onInterim=t=>{if(!T||T.over)return;liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,3500)}};
  onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')setState('think','السماع محتاج Chrome');if(s==='stuck'){setState('think','السماع وقف. دوس هنا عشان أسمع تاني');$('tState').onclick=()=>{$('tState').onclick=null;setState('ok','بسمع اللي قدامك...');resumeListening()}}};
  agent({type:'start'})};
 
