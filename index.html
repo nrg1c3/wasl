@@ -403,6 +403,7 @@ const $=id=>document.getElementById(id);
 const AGENT_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-agent';
 const REPLY_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-replies';
 const TTS_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-tts';
+const API_K='wasl-nrg-2026'; // identifies the app; the server also checks the site address and limits requests per device
 const VISION_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-vision';
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let DEMO=null;
@@ -436,7 +437,7 @@ $('camIn').onchange=async()=>{const f=$('camIn').files[0];$('camIn').value='';if
  let data;try{data=await shrink(f)}catch(e){return}
  $('readImg').src=data;$('readT').textContent='بقرا الصورة...';$('readOv').style.display='flex';
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),25000);
-  const r=await fetch(VISION_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:data,hint:camHint,lang:LANG}),signal:ac.signal});clearTimeout(to);const d=await r.json();
+  const r=await fetch(VISION_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,image:data,hint:camHint,lang:LANG}),signal:ac.signal});clearTimeout(to);const d=await r.json();
   if(my!==readSeq)return;
   if(!d.goal||d.clear===false){$('readT').textContent='الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.';return}
   $('readOv').style.display='none';taskPhoto=data;$('goal').value=d.goal;$('startTask').click()}
@@ -478,7 +479,7 @@ function bestVoice(lang){const vs=speechSynthesis.getVoices().filter(v=>v.lang.r
 function mascTTS(t){return String(t).replace(/حضرتك/g,'حضرتَك').replace(/(^|[\s،.؟!,])(و?(?:إن|ان|عند|بتاع|إذن|اذن|ذوق|سؤال|كلام|وقت|تعب|خدمت))ك(?=[\s،.؟!,]|$)/g,'$1$2َك')}
 async function ttsBlob(t,vl,g,useCache,signal){const key='https://wasl.voice/'+encodeURIComponent(g+'|'+vl+'|'+t);let c=null;
  if(useCache&&window.caches){try{c=await caches.open('wasl-demo-v1');const m=await c.match(key);if(m)return await m.blob()}catch(e){c=null}}
- const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,lang:vl,gender:g}),signal});
+ const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,text:t,lang:vl,gender:g}),signal});
  if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;const b=await r.blob();
  if(c){try{await c.put(key,new Response(b,{headers:{'Content-Type':'audio/mpeg'}}))}catch(e){}}return b}
 async function speak(t,done,o){t=mascTTS(String(t||'').replace('✨','').trim());if(!t){done&&done();return}
@@ -571,7 +572,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
  let d=null;
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),20000);
-  if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
+  if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
   clearTimeout(to);d=await r.json()}}catch(e){}
  if(!T||my!==T.seq||T.over)return;
  if(d&&!d.error&&(heardBuf.trim()||Date.now()-lastVoiceAt<1500)){if(!heardTimer&&heardBuf.trim())heardTimer=setTimeout(flushHeard,2600);setTimeout(()=>{if(T&&!T.over&&my===T.seq&&!heardBuf.trim()&&Date.now()-lastVoiceAt>=1500)agent(event)},3000);return} // the other person is still talking: don't talk over them, answer everything together
@@ -606,6 +607,7 @@ let lastTid=null;
 function saveTask(summary){if(DEMO){lastTid=null;return}const t=store.get('wasl_tasks',[]);lastTid=Date.now();t.push({id:lastTid,done:!!summary,title:T.title||T.goal,goal:T.goal,summary:summary||'',date:new Date().toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
 
 $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('goal').focus();return}
+ if(!DEMO&&!store.get('wasl_consent',false)){if(!confirm('قبل أول مهمة:\n\nعشان وصل يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي وصل هيقولها بتتبعت لخدمة الصوت (ElevenLabs).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟'))return;store.set('wasl_consent',true)}
  if(alOn){stopAlerts(true);drawAlChip()}
  const ok=DEMO?true:await micOk();if(ok!==true){alert('وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ('+ok+')');return}
  T={goal,history:[],seq:0,over:false,title:goal,lastSaid:''};lastMap='';
@@ -702,7 +704,7 @@ function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${smar
  $('fSug').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>fSpeak(list[i]))}
 function fSpeak(t){$('fSaid').textContent='اتقال: '+t;speak(t,()=>{if(freeOn)startListening()})}
 async function smartReplies(text){const n=++fSeq;$('fState').textContent='✨ بيجهّز ردود...';
- try{const ac=new AbortController();setTimeout(()=>ac.abort(),12000);const r=await fetch(REPLY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,situation:'عام',lang:LANG}),signal:ac.signal});const d=await r.json();
+ try{const ac=new AbortController();setTimeout(()=>ac.abort(),12000);const r=await fetch(REPLY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,text,situation:'عام',lang:LANG}),signal:ac.signal});const d=await r.json();
   if(n!==fSeq)return;drawCards('fCards',d.cards||[]);if(d.replies&&d.replies.length){drawReplies(d.replies,true);$('fState').textContent='✨ ردود على حسب الكلام'+(d.situation&&d.situation!=='عام'?' · '+d.situation:'')}}catch(e){if(n===fSeq)$('fState').textContent='بسمع...'}}
 $('openFree').onclick=()=>{show('free');drawReplies(DEFAULT_REPLIES,false)};
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
