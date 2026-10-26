@@ -193,6 +193,7 @@ nav svg{width:24px;height:24px}
 
 <!-- ============ HOME ============ -->
 <section id="home" class="screen on" aria-label="الرئيسية">
+<button id="demoFab" class="hidden" style="position:fixed;bottom:96px;left:16px;z-index:40;background:#E4602A;color:#fff;border:0;border-radius:24px;padding:10px 16px;font:800 16px Cairo,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.2)">▶ عرض تجريبي</button>
 <div class="hhead">
 <div class="hbrand"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#13262F"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>وَصَّل</b><small>صوتك في كل مكان</small></div></div>
 <label class="sr" for="lang">لهجة اللي قدامك</label>
@@ -261,6 +262,12 @@ nav svg{width:24px;height:24px}
 <a class="btn ghost" href="privacy.html" style="text-align:center;text-decoration:none">اقرا سياسة الخصوصية</a>
 </div>
 <div class="card">
+<b>وضع العرض</b>
+<p class="lead">مشهد صيدلية جاهز للعروض والفيديو: فاطمة بتكلم الصيدلي، وتكتشف الحساسية، وتسألك. حضّر الأصوات مرة وإنت على النت، وبعدها يشتغل من غير نت.</p>
+<button class="btn ghost" id="demoPrep">حضّر أصوات العرض</button>
+<button class="btn" id="demoRun">▶ شغّل العرض</button>
+</div>
+<div class="card">
 <b>الإشارات</b>
 <p class="lead">علّم وصل إشاراتك، وتقدر تستخدمها جوه المهمة والمحادثة.</p>
 <button class="btn ghost" id="openSignsMe">افتح الكاميرا</button>
@@ -269,6 +276,7 @@ nav svg{width:24px;height:24px}
 </section>
 
 <!-- ============ TASK ============ -->
+<div id="demoBadge" class="hidden" style="position:fixed;top:8px;left:8px;z-index:50;background:#E4602A;color:#fff;font-weight:800;font-size:12px;padding:3px 10px;border-radius:12px;pointer-events:none">عرض تجريبي</div>
 <section id="task" class="screen" aria-label="المهمة">
 <div class="hear" aria-live="polite">
 <div class="lab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span id="hLab">وصل سامعك · اتكلم عادي</span></div>
@@ -382,6 +390,7 @@ const REPLY_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-replies';
 const TTS_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-tts';
 const VISION_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-vision';
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let DEMO=null;
 const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
 
@@ -426,7 +435,7 @@ function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').tex
 
 /* ---------- profile ---------- */
 const PF={pName:'name',pVoice:'voice',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
-function profile(){return store.get('wasl_profile',{})}
+function profile(){return DEMO?DEMO.profile:store.get('wasl_profile',{})}
 function taskProfile(){const p=profile(),o={};['name','address','allergies','insurance','notes'].forEach(k=>{if(p[k])o[k]=p[k]});return o}
 function voiceName(){const m=profile().voice==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
 function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='f'}
@@ -448,14 +457,18 @@ const SILENT=(()=>{const n=800,b=new ArrayBuffer(44+n*2),v=new DataView(b),w=(o,
 function unlockAudio(){if(audUnlocked)return;audUnlocked=true;try{AUD.src=SILENT;const p=AUD.play();if(p)p.catch(()=>{audUnlocked=false})}catch(e){audUnlocked=false}}
 document.addEventListener('pointerdown',unlockAudio,{capture:true});document.addEventListener('touchstart',unlockAudio,{capture:true,passive:true});
 function bestVoice(lang){const vs=speechSynthesis.getVoices().filter(v=>v.lang.replace('_','-').toLowerCase().startsWith(lang.slice(0,2)));if(!vs.length)return null;const ex=vs.filter(v=>v.lang.replace('_','-')===lang);const pool=ex.length?ex:vs;return pool.find(v=>/natural|neural|online|google/i.test(v.name))||pool[0]}
-async function speak(t,done){t=String(t||'').replace('✨','').trim();if(!t){done&&done();return}
+async function ttsBlob(t,vl,g,useCache,signal){const key='https://wasl.voice/'+encodeURIComponent(g+'|'+vl+'|'+t);let c=null;
+ if(useCache&&window.caches){try{c=await caches.open('wasl-demo-v1');const m=await c.match(key);if(m)return await m.blob()}catch(e){c=null}}
+ const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,lang:vl,gender:g}),signal});
+ if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;const b=await r.blob();
+ if(c){try{await c.put(key,new Response(b,{headers:{'Content-Type':'audio/mpeg'}}))}catch(e){}}return b}
+async function speak(t,done,o){t=String(t||'').replace('✨','').trim();if(!t){done&&done();return}
  stopListening();try{speechSynthesis.cancel()}catch(e){}if(player){try{player.pause()}catch(e){}}player={pause(){}};
- const vl=/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':LANG;
+ const vl=DEMO?'ar-EG':(/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':LANG);const g=(o&&o.g)||(profile().voice==='m'?'m':'f');
  const finish=()=>{player=null;done&&done()};
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),13000);
-  const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,lang:vl,gender:profile().voice==='m'?'m':'f'}),signal:ac.signal});clearTimeout(to);
-  if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;
-  const url=URL.createObjectURL(await r.blob());player=AUD;AUD.src=url;
+  const blob=await ttsBlob(t,vl,g,!!DEMO,ac.signal);clearTimeout(to);
+  const url=URL.createObjectURL(blob);player=AUD;AUD.src=url;
   AUD.onended=()=>{URL.revokeObjectURL(url);finish()};AUD.onerror=()=>finish();
   await AUD.play();return}catch(e){}
  try{const u=new SpeechSynthesisUtterance(t);u.lang=vl;u.rate=.95;const bv=bestVoice(vl);if(bv)u.voice=bv;u.onend=finish;u.onerror=finish;player={pause(){speechSynthesis.cancel()}};speechSynthesis.speak(u)}catch(e){finish()}}
@@ -464,7 +477,7 @@ async function speak(t,done){t=String(t||'').replace('✨','').trim();if(!t){don
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 let rec=null,wantListen=false,onHeard=null,onInterim=null,onListenState=null;
 async function micOk(){try{const s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(t=>t.stop());return true}catch(e){return e.name||'error'}}
-function startListening(){if(!SR){onListenState&&onListenState('nosr');return}
+function startListening(){if(DEMO)return;if(!SR){onListenState&&onListenState('nosr');return}
  wantListen=true;if(player)return;try{rec&&rec.abort()}catch(e){}
  rec=new SR();rec.lang=LANG;rec.continuous=false;rec.interimResults=true;
  rec.onstart=()=>onListenState&&onListenState('listening');
@@ -510,7 +523,7 @@ function drawCards(id,cards){const el=$(id);if(!el)return;
 function liveCap(t,on){const b=$('tLive');$('tLiveText').innerHTML=nums(t);$('tLiveLab').textContent=on?'اللي قدامك بيقول دلوقتي':'آخر كلام قاله اللي قدامك';b.classList.toggle('on',!!on);b.scrollTop=b.scrollHeight}
 function drawProg(step){const n=Math.max(1,Math.min(step.n||1,step.total||3)),tot=Math.max(n,step.total||3);
  $('tStep').textContent='خطوة '+n+' من '+tot;$('tProg').innerHTML=Array.from({length:tot},(_,i)=>`<i class="${i<n-1?'done':i===n-1?'now':''}"></i>`).join('')}
-function listenForHearing(){if(!T||T.over)return;setState('ok','بسمع اللي قدامك...');setHear('وصل سامعك · اتكلم عادي',T.lastSaid||'اتفضل، أنا سامعك','صاحب الموبايل أصم، وأنا مساعده.');startListening()}
+function listenForHearing(){if(!T||T.over)return;setState('ok','بسمع اللي قدامك...');setHear('وصل سامعك · اتكلم عادي',T.lastSaid||'اتفضل، أنا سامعك','صاحب الموبايل أصم، وأنا مساعده.');if(DEMO)demoHear();else startListening()}
 
 let heardBuf='',heardTimer=null;
 function flushHeard(){heardTimer=null;if(!T||T.over||!heardBuf.trim())return;const t=heardBuf.trim();heardBuf='';T.history.push({role:'hearing',text:t});logMsg('hearing',t);
@@ -519,8 +532,8 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
  let d=null;
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),20000);
-  const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:taskProfile(),history:T.history,event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
-  clearTimeout(to);d=await r.json()}catch(e){}
+  if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal:T.goal,lang:LANG,profile:taskProfile(),history:T.history,event,name:voiceName(),agender:profile().voice==='m'?'m':'f'}),signal:ac.signal});
+  clearTimeout(to);d=await r.json()}}catch(e){}
  if(!T||my!==T.seq||T.over)return;
  if(!d||d.error){T.fails=(T.fails||0)+1;if(T.fails===2)setHear('لحظة من فضلك','لحظة واحدة من فضلك','النت ضعيف شوية.');if(T.fails>6){setState('think','النت فاصل. دوس هنا عشان تجرّب تاني');$('tState').onclick=()=>{$('tState').onclick=null;T.fails=0;agent(event)};return}setState('think','النت ضعيف، بجرّب تاني...');setTimeout(()=>agent(event),1500+T.fails*700);return}
  T.fails=0;
@@ -539,17 +552,17 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
   $('tDecide').classList.remove('hidden');setState('talk','وصل محتاج قرارك');
   if(d.say)speak(d.say,()=>{if(T&&!T.over)startListening()});else startListening();$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.action==='done'){
-  T.over=true;haltListening();clearTimeout(heardTimer);buzz([300]);setHear('شكراً',d.say||'شكراً جزيلاً','');
+  T.over=true;haltListening();clearTimeout(heardTimer);buzz([300]);drawCards('tCards',[]);setHear('شكراً',d.say||'شكراً جزيلاً','');
   $('tSumText').innerHTML=nums(d.summary||'المهمة خلصت.');$('tSum').classList.remove('hidden');$('tFoot').classList.add('hidden');setState('ok','المهمة خلصت');
   saveTask(d.summary);if(d.say)speak(d.say);$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.say){setState('talk','وصل بيتكلم...');setHear('وصل بيقول',d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
 function isAck(t){const w=String(t).replace(/[،.!؟?,]/g,' ').trim().split(/\s+/);return w.length<=4&&w.every(x=>/^(ماشي|تمام|طيب|اتفضل|اتفضلي|كمل|كملي|كمّل|أوكي|اوكي|اه|آه|أيوه|ايوه|حاضر|معاك|معاكي|سامعك|سامعاك|و|يا|فندم|حضرتك|ok|okay|sure|go|on)$/i.test(x))}
 
-function saveTask(summary){const t=store.get('wasl_tasks',[]);t.push({title:T.title||T.goal,goal:T.goal,summary:summary||'',date:new Date().toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
+function saveTask(summary){if(DEMO)return;const t=store.get('wasl_tasks',[]);t.push({title:T.title||T.goal,goal:T.goal,summary:summary||'',date:new Date().toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
 
 $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('goal').focus();return}
  if(alOn){stopAlerts(true);drawAlChip()}
- const ok=await micOk();if(ok!==true){alert('وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ('+ok+')');return}
+ const ok=DEMO?true:await micOk();if(ok!==true){alert('وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ('+ok+')');return}
  T={goal,history:[],seq:0,over:false,title:goal,lastSaid:''};
  $('tTitle').textContent=goal;$('tLog').innerHTML='';if(taskPhoto){$('hPhoto').src=taskPhoto;$('hPhoto').classList.remove('hidden')}else $('hPhoto').classList.add('hidden');drawProg({n:1,total:3});liveCap('',false);$('tLiveLab').textContent='كلام اللي قدامك هيظهر هنا';drawCards('tCards',[]);
  ['tDecide','tSum','tType'].forEach(id=>$(id).classList.add('hidden'));$('tFoot').classList.remove('hidden');
@@ -564,10 +577,44 @@ $('tWrite').onclick=()=>{$('tType').classList.toggle('hidden');if(!$('tType').cl
 $('tSend').onclick=()=>{const t=$('tInput').value.trim();if(!t||!T)return;$('tInput').value='';$('tType').classList.add('hidden');T.history.push({role:'user',text:t});logMsg('user',t);agent({type:'typed',text:t})};
 $('tInput').onkeydown=e=>{if(e.key==='Enter')$('tSend').click()};
 $('tSign').onclick=()=>openSigns('task');
-function endTask(){haltListening();clearTimeout(heardTimer);heardBuf='';if(player){try{player.pause()}catch(e){}}player=null;if(T&&!T.over){T.over=true;saveTask('')}T=null;onHeard=onInterim=onListenState=null;show('home')}
+function endTask(){if(DEMO){DEMO.timers.forEach(clearTimeout);DEMO=null;$('demoBadge').classList.add('hidden')}haltListening();clearTimeout(heardTimer);heardBuf='';if(player){try{player.pause()}catch(e){}}player=null;if(T&&!T.over){T.over=true;saveTask('')}T=null;onHeard=onInterim=onListenState=null;show('home')}
 $('tEnd').onclick=()=>{if(confirm('تنهي المهمة؟'))endTask()};
 $('tHome').onclick=endTask;
 $('tShare').onclick=async()=>{const t=$('tSumText').innerText;try{if(navigator.share){await navigator.share({title:'وصل',text:t});return}await navigator.clipboard.writeText(t);$('tShare').textContent='اتنسخ ✓'}catch(e){}};
+
+/* ================= DEMO MODE (scripted pharmacy scene, works offline once voices are prepared) ================= */
+const DL={
+ a0:'صباح الخير، أنا فاطمة، مساعدة صوتية لمحمد، وهو أصم. محتاجين المضاد الحيوي اللي في الروشتة دي لو سمحت.',
+ p1:'آه، ده أوجمنتين 1 جرام. موجود، والعلبة بـ 180 جنيه.',
+ a1:'لحظة واحدة من فضلك، بسأله.',
+ a2:'محمد عنده حساسية من البنسلين. فيه بديل مناسب من غير بنسلين؟',
+ a2no:'تمام، هناخد أوجمنتين. شكراً جزيلاً.',
+ p2:'آه، ياخد كلاسيد 500. قرص كل 12 ساعة لمدة أسبوع، والعلبة بـ 90 جنيه.',
+ a3:'لحظة، بسأله.',
+ a4:'تمام، هناخد كلاسيد. شكراً جزيلاً، ربنا يخليك.',
+ a4no:'لأ شكراً، مش هناخده دلوقتي. شكراً لحضرتك.'};
+const DLG={p1:'m',p2:'m'};
+function demoStep(ev){const D=DEMO;
+ if(ev.type==='start'){D.st=1;return{say:DL.a0,action:'speak',task_title:'صرف مضاد حيوي',step:{n:1,total:4},cards:[]}}
+ if(ev.type==='heard'&&D.st===1){D.st=2;return{say:DL.a1,action:'ask_user',question:'أوجمنتين فيه بنسلين، وإنت عندك حساسية منه. أسأله على بديل؟',options:['أيوه، اسأله على بديل','لأ، خده'],cards:[{k:'available',v:''},{k:'price',v:'180'},{k:'warn',v:'بنسلين'}],step:{n:2,total:4}}}
+ if(ev.type==='decision'&&D.st===2){if(/بديل/.test(ev.text)){D.st=3;return{say:DL.a2,action:'speak',step:{n:3,total:4}}}
+  D.st=9;return{say:DL.a2no,action:'done',summary:'اشتريت أوجمنتين 1 جرام بـ 180 جنيه. تنبيه: فيه بنسلين وإنت عندك حساسية منه.'}}
+ if(ev.type==='heard'&&D.st===3){D.st=4;return{say:DL.a3,action:'ask_user',question:'البديل كلاسيد 500 بـ 90 جنيه. قرص كل 12 ساعة لمدة أسبوع. ناخده؟',options:['أيوه، خده','لأ، شكراً'],cards:[{k:'alt',v:'كلاسيد 500'},{k:'dose',v:'كل 12 ساعة'},{k:'price',v:'90'}],step:{n:4,total:4}}}
+ if(ev.type==='decision'&&D.st===4){D.st=9;if(/أيوه/.test(ev.text))return{say:DL.a4,action:'done',summary:'اشتريت كلاسيد 500 بـ 90 جنيه بدل أوجمنتين، لأنه فيه بنسلين. الجرعة: قرص كل 12 ساعة لمدة 7 أيام.'};
+  return{say:DL.a4no,action:'done',summary:'مشتريتش حاجة. الصيدلي اقترح كلاسيد 500 بـ 90 جنيه بديل لأوجمنتين.'}}
+ return{say:'',action:'speak'}}
+function demoHear(){const D=DEMO;if(!D)return;const k=D.st===1?'p1':D.st===3?'p2':null;if(!k)return;
+ const line=DL[k],w=line.split(' ');let i=0;
+ D.timers.push(setTimeout(()=>{if(DEMO!==D)return;
+  const tick=setInterval(()=>{if(DEMO!==D||i>=w.length){clearInterval(tick);return}i++;onInterim&&onInterim(w.slice(0,i).join(' '))},260);D.timers.push(tick);
+  speak(line,()=>{if(DEMO!==D)return;clearInterval(tick);onHeard&&onHeard(line);clearTimeout(heardTimer);D.timers.push(setTimeout(()=>{if(DEMO===D)flushHeard()},500))},{g:'m'})},1100))}
+function runDemo(){DEMO={profile:{name:'محمد',allergies:'البنسلين',voice:'f'},st:0,timers:[]};$('demoBadge').classList.remove('hidden');
+ taskPhoto=null;$('goal').value='عايز المضاد الحيوي اللي في الروشتة';$('startTask').click()}
+async function prepDemo(){const btn=$('demoPrep'),keys=Object.keys(DL);let ok=0;btn.disabled=true;
+ for(const k of keys){btn.textContent='بحضّر الأصوات '+ok+'/'+keys.length+'...';try{await ttsBlob(DL[k],'ar-EG',DLG[k]||'f',true);ok++}catch(e){}}
+ btn.disabled=false;btn.textContent=ok===keys.length?'الأصوات جاهزة ✓ (يشتغل من غير نت)':'اتحضّر '+ok+' من '+keys.length+'، جرّب تاني';}
+$('demoRun').onclick=runDemo;$('demoPrep').onclick=prepDemo;$('demoFab').onclick=runDemo;
+if(/[?&]demo\b/.test(location.search))$('demoFab').classList.remove('hidden');
 
 /* ================= FREE MODE ================= */
 let freeOn=false,fSeq=0;
