@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#13262F">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="وَصَّل">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>وَصَّل | Wasl</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='30' fill='%2313262F'/%3E%3Crect x='22' y='44' width='11' height='32' rx='5.5' fill='%23E4602A'/%3E%3Crect x='39' y='30' width='11' height='60' rx='5.5' fill='%23E4602A'/%3E%3Crect x='56' y='48' width='11' height='24' rx='5.5' fill='%23E4602A'/%3E%3Crect x='74' y='40' width='26' height='10' rx='5' fill='white'/%3E%3Crect x='74' y='55' width='19' height='10' rx='5' fill='white'/%3E%3Crect x='74' y='70' width='23' height='10' rx='5' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -200,6 +206,7 @@ nav svg{width:24px;height:24px}
 <select id="lang"><option value="ar-EG">مصري</option><option value="ar-SA">خليجي</option><option value="en-US">English</option></select>
 </div>
 <div class="hbody">
+<div id="instBar" class="hidden" style="display:flex;align-items:center;gap:10px;background:#13262F;color:#fff;border-radius:16px;padding:10px 12px;margin-bottom:10px"><img src="icon-192.png" alt="" width="36" height="36" style="border-radius:9px"><span id="instTxt" style="flex:1;font-weight:700;font-size:15px;line-height:1.4">ثبّت وَصَّل على موبايلك، ويشتغل من غير نت</span><button id="instGo" style="background:#E4602A;color:#fff;border:0;border-radius:12px;padding:8px 14px;font:800 15px Cairo,sans-serif">ثبّت</button><button id="instX" aria-label="إخفاء" style="background:none;border:0;color:#BFD3D8;font-size:20px;padding:4px">✕</button></div>
 <button class="alchip" id="alChip"><span class="d"></span><span id="alChipT">تنبيهات الأصوات مقفولة · شغّلها</span></button>
 <button class="big" id="bigTalk" style="background:#C9501E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/><path d="M9 10.5h6M9 13.5h4"/></svg></span><span class="tx"><b>اتكلم بدالي</b><small>قول عايز إيه، وأنا أتكلم مع اللي قدامك</small></span></button>
 <button class="big" id="openFree" style="background:#13262F"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 10h4M13 10h4M7 14h7"/></svg></span><span class="tx"><b>ترجمة</b><small>كلام اللي قدامك يظهر مكتوب وبالصور</small></span></button>
@@ -806,6 +813,21 @@ $('sUse').onclick=()=>{const t=$('sentence').textContent.trim();const m=signMode
  else if(m==='free')fSpeak(t)};
 $('rec').onclick=()=>{const l=$('label').value.trim();if(!l)return alert('اكتب معنى الإشارة الأول');if(!camOn)return alert('الكاميرا لسه ما اشتغلتش');let n=3;$('slive').textContent='استعد...';setTimeout(()=>{recording=l;const t=setInterval(()=>{$('slive').textContent='بيسجل: '+l+' ('+n--+')';if(n<0){clearInterval(t);recording=null;store.set('signs',data);tags();$('slive').textContent='اتسجلت ✓ سجّلها مرتين كمان'}},1000)},1000)};
 $('sWipe').onclick=()=>{if(confirm('تمسح كل الإشارات؟')){data=[];store.set('signs',[]);tags()}};
+
+/* ================= INSTALL + OFFLINE ================= */
+if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+(function(){const bar=$('instBar'),standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;let ev=null;
+ const hidden=()=>{try{return localStorage.getItem('wasl_inst_x')==='1'}catch(e){return false}};
+ const showBar=()=>{if(!standalone&&!hidden())bar.classList.remove('hidden')};
+ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();ev=e;showBar()});
+ const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;
+ if(ios&&!standalone){$('instTxt').textContent='ثبّت وَصَّل: دوس زرار المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»';$('instGo').classList.add('hidden');showBar()}
+ $('instGo').onclick=async()=>{if(!ev)return;ev.prompt();try{await ev.userChoice}catch(e){}ev=null;bar.classList.add('hidden')};
+ $('instX').onclick=()=>{bar.classList.add('hidden');try{localStorage.setItem('wasl_inst_x','1')}catch(e){}};
+ window.addEventListener('appinstalled',()=>bar.classList.add('hidden'));
+ const go=new URLSearchParams(location.search).get('go');
+ if(go==='sos')setTimeout(()=>$('sosBtn').click(),300);if(go==='free')setTimeout(()=>$('openFree').click(),300);
+})();
 </script>
 </body>
 </html>
