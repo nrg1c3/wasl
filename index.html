@@ -342,7 +342,7 @@ nav svg{width:24px;height:24px}
 <div class="card" style="border:2px solid #A3221A"><b id="sosTitle" style="font-size:20px"></b><span class="note" id="sosLoc">بيحدد مكانك...</span></div>
 <button class="sosact" id="sosShow"><span>🪧</span><div><b>اعرض للناس اللي حواليك</b><small>رسالة كبيرة، وصوت إنذار، وفلاش</small></div></button>
 <button class="sosact" id="sosFamily"><span>👨‍👩‍👧</span><div><b>ابعت لأهلي</b><small id="sosFamSub">رسالة فيها مكانك</small></div></button>
-<button class="sosact" id="sosCall"><span>📞</span><div><b id="sosCallT">اتصل ووصل يتكلم عنك</b><small>شغّل السبيكر، ووصل يقول اللي حصل والعنوان</small></div></button>
+<button class="sosact" id="sosCall"><span>📞</span><div><b id="sosCallT">اتصل، ووصل يقرأ رسالة الطوارئ</b><small>شغّل السبيكر وارجع هنا ودوس «اتكلم دلوقتي». الرد مش هيتكتب، فابعت لأهلك كمان</small></div></button>
 <button class="sosact" id="sosRC"><span>💬</span><div><b>واتساب الهلال الأحمر</b><small>رسالة مكتوبة من غير مكالمة</small></div></button>
 <div class="card hidden" id="sosScript"><b>اللي وصل هيقوله:</b><p class="lead" id="sosScriptText" style="color:var(--ink)"></p><button class="btn or" id="sosSpeak">🔊 اتكلم دلوقتي</button><span class="note">لو الكلام ما طلعش في المكالمة، حط الموبايل قريب من السماعة ودوس تاني.</span></div>
 <button class="btn ghost" id="sosAgain">نوع تاني من الطوارئ</button>
@@ -768,7 +768,7 @@ function buildScript(){const p=profile();const who=p.name||'شخص أصم';
  const s='ألو، أنا '+voiceName()+'، مساعد صوتي لشخص أصم اسمه '+who+'. هو '+sosT.say+'. '+addr+(p.allergies?' عنده حساسية من '+p.allergies+'.':'')+' من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.';
  $('sosScriptText').textContent=s;return s}
 function pickSos(t){sosT=t;buzz([200,100,200]);$('sosStep1').classList.add('hidden');$('sosStep2').classList.remove('hidden');
- $('sosTitle').textContent=t.icon+' '+t.ar;$('sosCallT').textContent='اتصل بـ'+t.svc+' '+t.num+' ووصل يتكلم';
+ $('sosTitle').textContent=t.icon+' '+t.ar;$('sosCallT').textContent='اتصل بـ'+t.svc+' '+t.num+'، ووصل يقرأ الرسالة';
  const p=profile();$('sosFamSub').textContent=p.c1phone?('لـ'+[p.c1name||p.c1phone,p.c2phone?(p.c2name||p.c2phone):''].filter(Boolean).join(' و')+'، ومعاها مكانك'):'ضيف أرقام أهلك في بياناتي الأول';
  $('sosScript').classList.add('hidden');buildScript();locate()}
 $('sosBtn').onclick=()=>{show('sos');sosT=null;$('sosStep1').classList.remove('hidden');$('sosStep2').classList.add('hidden');drawMed()};
