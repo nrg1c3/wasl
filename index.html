@@ -581,9 +581,13 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
   buzz([200,100,200]);
   setHear('لحظة واحدة',d.say||'لحظة واحدة، بسأله','صاحب الموبايل بيختار دلوقتي.');
   $('tQ').textContent=d.question||'تختار إيه؟';
-  const opts=(d.options&&d.options.length?d.options:['أيوه','لأ']);
+  let opts=(d.options&&d.options.length?d.options:['أيوه','لأ']);const isT=o=>/هكتب العنوان|بنفسي/.test(o);if(opts.some(isT))opts=[...opts.filter(isT),...opts.filter(o=>!isT(o))];if(!profile().address)opts=opts.filter(o=>!/المحفوظ/.test(o));
   $('tOpts').innerHTML=opts.map(o=>`<button>${esc(o)}</button>`).join('');
-  $('tOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{const c=opts[i];if(/خريطة|الخريطة|اللوكيشن|الموقع/.test(c)){const q=lastMap||profile().address||'';if(q)window.open(mapUrl(q),'_blank');else{$('tMap').click()}}T.history.push({role:'user',text:c});logMsg('user',c);agent({type:'decision',text:c})});
+  $('tOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{const c=opts[i];
+   if(/(أوري|اوري|وري|افتح).*(خريطة|الخريطة)/.test(c)){const q=lastMap||profile().address||'';if(q)window.open(mapUrl(q),'_blank');else{$('tMap').click()}}
+   else if(/المحفوظ/.test(c)&&profile().address){const t='عنواني المحفوظ: '+profile().address;lastMap=profile().address;T.history.push({role:'user',text:t});logMsg('user',t);agent({type:'typed',text:t});return}
+   else if(/اكتب|هكتب|أكتب|بنفسي|علامة|معلم|اسم المكان|العنوان|عنوان/.test(c)){askType(c);return}
+   T.history.push({role:'user',text:c});logMsg('user',c);agent({type:'decision',text:c})});
   $('tDecide').classList.remove('hidden');setState('talk','وصل محتاج قرارك');
   if(d.say)speak(d.say,()=>{if(T&&!T.over)startListening()});else startListening();$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.action==='done'){
@@ -610,7 +614,13 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  agent({type:'start'})};
 
 $('tWrite').onclick=()=>{$('tType').classList.toggle('hidden');if(!$('tType').classList.contains('hidden'))$('tInput').focus()};
-$('tSend').onclick=()=>{const t=$('tInput').value.trim();if(!t||!T)return;$('tInput').value='';$('tType').classList.add('hidden');T.history.push({role:'user',text:t});logMsg('user',t);agent({type:'typed',text:t})};
+let typeFor='';
+function askType(choice){typeFor=choice;$('tDecide').classList.add('hidden');const inp=$('tInput');
+ inp.placeholder=/علامة|معلم/.test(choice)?'اكتب العلامة المميزة (مثلاً: جنب مسجد الحصري، 6 أكتوبر)':'اكتب العنوان أو اسم المكان والمنطقة (مثلاً: شارع التحرير، الدقي)';
+ $('tType').classList.remove('hidden');setState('talk','اكتب وابعت، ووصل هيقوله');inp.focus()}
+$('tSend').onclick=()=>{const t=$('tInput').value.trim();if(!t||!T)return;$('tInput').value='';$('tType').classList.add('hidden');$('tInput').placeholder='اكتب اللي عايز وصل يقوله أو يعرفه';
+ const full=typeFor?typeFor+': '+t:t;typeFor='';if(/عنوان|علامة|معلم|شارع|مسجد|جنب|قدام/.test(full))lastMap=t;
+ T.history.push({role:'user',text:full});logMsg('user',full);agent({type:'typed',text:full})};
 $('tInput').onkeydown=e=>{if(e.key==='Enter')$('tSend').click()};
 $('tSign').onclick=()=>openSigns('task');
 $('tMap').onclick=()=>{const def=lastMap||(profile().address||'');const q=prompt('اكتب العنوان اللي عايز توريه للي قدامك على الخريطة',def);if(!q||!q.trim())return;lastMap=q.trim();if(T){T.history.push({role:'user',text:'فتحت الخريطة على: '+lastMap})}window.open(mapUrl(lastMap),'_blank')};
