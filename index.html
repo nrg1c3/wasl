@@ -368,6 +368,8 @@ nav svg{width:24px;height:24px}
 <button class="btn or" id="alToggle" style="width:100%">ابدأ</button>
 </div>
 <div class="card"><b>نبّهني لما أسمع</b><div class="chips" id="alGroups"></div></div>
+<div class="card"><b>🎓 علّم وصل صوت من بيتك</b><span class="note">لو جرس بيتك أو التليفون مش بيتعرف عليه، علّمه لوصل مرة واحدة: اختار الصوت، ودوس "سجّل"، وشغّل الصوت جنب الموبايل.</span>
+<div class="row"><select id="lrnG" aria-label="الصوت"></select><button class="btn" id="lrnGo">سجّل</button></div><p id="lrnMsg" class="note"></p><div id="lrnList"></div></div>
 <div class="card"><b>آخر التنبيهات</b><div id="alLog" class="log"><div class="empty">لسه مفيش تنبيهات.</div></div></div>
 <p class="note">خلي الصفحة دي مفتوحة. وصل بيحاول يخلي الشاشة منوّرة عشان يفضل سامع. التعرف على الأصوات بيحصل على الموبايل نفسه، ومفيش أي صوت بيتبعت لبرّه.</p>
 </div>
@@ -795,7 +797,7 @@ $('sbTorch').onclick=()=>{torchTrack?stopTorch():startTorch()};
 
 /* ================= SOUND ALERTS ================= */
 const GROUPS=[
- {id:'door',icon:'🚪',ar:'حد على الباب',chip:'جرس الباب والخبط',color:'#1F5F8B',vib:[400,150,400],labels:['Doorbell','Ding-dong','Knock']},
+ {id:'door',icon:'🚪',ar:'حد على الباب',chip:'جرس الباب والخبط',color:'#1F5F8B',vib:[400,150,400],labels:['Doorbell','Ding-dong','Knock','Chime','Bell','Jingle bell','Tubular bells','Bicycle bell','Ding','Wind chime','Glockenspiel']},
  {id:'baby',icon:'👶',ar:'الطفل بيعيط',chip:'عياط طفل',color:'#8A4FBF',vib:[300,100,300,100,300],labels:['Baby cry, infant cry','Crying, sobbing','Whimper']},
  {id:'fire',icon:'🔥',ar:'إنذار حريق!',chip:'إنذار حريق ودخان',color:'#C0261A',vib:[1000,200,1000,200,1000],urgent:true,labels:['Smoke detector, smoke alarm','Fire alarm']},
  {id:'alarm',icon:'🚨',ar:'فيه إنذار أو سرينة',chip:'إنذار وسرينة',color:'#C0261A',vib:[700,200,700],urgent:true,labels:['Siren','Civil defense siren','Ambulance (siren)','Police car (siren)','Fire engine, fire truck (siren)','Alarm','Car alarm','Buzzer']},
@@ -820,14 +822,16 @@ async function loadClassifier(){
  const {AudioClassifier,FilesetResolver}=await import(base+'/audio_bundle.mjs');
  const fs=await FilesetResolver.forAudioTasks(base+'/wasm');
  const models=['https://storage.googleapis.com/mediapipe-models/audio_classifier/yamnet/float32/1/yamnet.tflite','https://tfhub.dev/google/lite-model/yamnet/classification/tflite/1?lite-format=tflite'];
- let err;for(const m of models){try{return await AudioClassifier.createFromOptions(fs,{baseOptions:{modelAssetPath:m},maxResults:5,scoreThreshold:0.15})}catch(e){err=e}}throw err}
+ let err;for(const m of models){try{return await AudioClassifier.createFromOptions(fs,{baseOptions:{modelAssetPath:m},maxResults:-1,scoreThreshold:0})}catch(e){err=e}}throw err}
 async function startAlerts(){
  setAl('بيجهّز...','بيحمّل موديل الأصوات، ثواني.');$('alToggle').disabled=true;
  try{if(!alClassifier)alClassifier=await loadClassifier();
   alStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:true}});
   alCtx=new (window.AudioContext||window.webkitAudioContext)({sampleRate:16000});
   const src=alCtx.createMediaStreamSource(alStream);alNode=alCtx.createScriptProcessor(16384,1,1);
-  alNode.onaudioprocess=e=>{if(!alOn)return;let cats=[];try{const r=alClassifier.classify(e.inputBuffer.getChannelData(0),alCtx.sampleRate);cats=(r[0]&&r[0].classifications[0].categories)||[]}catch(x){return}onSounds(cats)};
+  alNode.onaudioprocess=e=>{if(!alOn)return;const buf=e.inputBuffer.getChannelData(0);let cats=[];try{const r=alClassifier.classify(buf,alCtx.sampleRate);cats=(r[0]&&r[0].classifications[0].categories)||[]}catch(x){return}
+   let ss=0;for(let i=0;i<buf.length;i+=4)ss+=buf[i]*buf[i];const rms=Math.sqrt(ss/(buf.length/4));const v=vecOf(cats);if(learning)learning.frames.push({v,rms});
+   cats=cats.slice().sort((a,b)=>b.score-a.score);onSounds(cats.filter(c=>c.score>=0.15),v,rms)};
   src.connect(alNode);alNode.connect(alCtx.destination);
   alOn=true;drawAlChip();$('alRing').classList.add('on');$('alIcon').textContent='👂';$('alToggle').textContent='وقف';setAl('بسمع البيت بدالك...','مفيش أصوات مهمة دلوقتي.');
   try{alWake=await navigator.wakeLock.request('screen')}catch(e){}
@@ -835,13 +839,20 @@ async function startAlerts(){
  $('alToggle').disabled=false}
 function stopAlerts(keepMsg){alOn=false;drawAlChip();try{alNode&&alNode.disconnect()}catch(e){}try{alCtx&&alCtx.close()}catch(e){}alStream&&alStream.getTracks().forEach(t=>t.stop());alNode=alCtx=alStream=null;try{alWake&&alWake.release()}catch(e){}alWake=null;
  $('alRing').classList.remove('on');$('alIcon').textContent='🔇';$('alToggle').textContent='ابدأ';if(!keepMsg)setAl('متوقف','دوس "ابدأ" وسيب الموبايل في مكان واضح.')}
-function onSounds(cats){
+/* sounds the user taught Wasl (their own doorbell, phone...) */
+let alSamples=store.get('wasl_snd_samples',[]),learning=null;
+function vecOf(cats){const v=new Float32Array(521);cats.forEach(c=>{const i=c.index;if(i>=0&&i<521)v[i]=c.score});return v}
+function cosSim(a,b){let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]}return na&&nb?d/Math.sqrt(na*nb):0}
+const LBL_AR={'speech':'كلام','silence':'هدوء','bird':'عصافير','bird vocalization, bird call, bird song':'عصافير','chirp, tweet':'زقزقة','music':'مزيكا','doorbell':'جرس الباب','ding-dong':'جرس الباب','knock':'خبط','bell':'جرس','chime':'رنة جرس','telephone bell ringing':'تليفون بيرن','ringtone':'رنة تليفون','alarm':'إنذار','siren':'سرينة','baby cry, infant cry':'عياط طفل','dog':'كلب','bark':'نباح','vehicle':'عربية','television':'تلفزيون','inside, small room':'صوت أوضة','water':'مية','tick':'تكتكة','alarm clock':'منبه'};
+const arLabel=n=>LBL_AR[String(n||'').toLowerCase()]||n;
+function onSounds(cats,v,rms){
  const top=cats.slice(0,5);const seen={};
+ if(v&&rms>0.008)alSamples.forEach(sm=>{if(!alSel.includes(sm.g))return;const sim=cosSim(v,sm.v);if(sim>=0.8)seen[sm.g]=Math.max(seen[sm.g]||0,Math.min(0.99,sim))});
  top.forEach(c=>{const g=labelMap[String(c.categoryName||c.displayName||'').toLowerCase()];if(g&&alSel.includes(g.id)){seen[g.id]=Math.max(seen[g.id]||0,c.score)}});
- if(top[0])$('alHeard').textContent='بسمع: '+(top[0].categoryName||'')+' ('+Math.round(top[0].score*100)+'%)';
- GROUPS.forEach(g=>{const s=seen[g.id]||0;const need=g.urgent?0.25:0.35;
+ if(top[0])$('alHeard').textContent='بسمع: '+arLabel(top[0].categoryName||'')+' ('+Math.round(top[0].score*100)+'%)';
+ GROUPS.forEach(g=>{const s=seen[g.id]||0;const need=g.urgent||g.id==='door'?0.25:0.35;
   if(s>=need){alStreak[g.id]=(alStreak[g.id]||0)+1}else alStreak[g.id]=0;
-  const enough=g.urgent||s>=0.6?1:2;
+  const enough=g.urgent||s>=0.6||(g.id==='door'&&s>=0.4)?1:2;
   if(alStreak[g.id]>=enough&&(Date.now()-(alLast[g.id]||0))>10000){alLast[g.id]=Date.now();alStreak[g.id]=0;fireAlert(g,s)}})}
 function fireAlert(g,score){
  const t=new Date().toLocaleTimeString('ar-EG',{hour:'numeric',minute:'2-digit'});
@@ -851,7 +862,20 @@ function fireAlert(g,score){
  alBuzzT=setInterval(()=>{if(++n>(g.urgent?40:12)){clearInterval(alBuzzT);return}buzz(g.vib)},2000);
  try{if(document.hidden&&'Notification'in window&&Notification.permission==='granted')new Notification('وصل: '+g.ar)}catch(e){}}
 $('baOk').onclick=()=>{$('bigAlert').classList.remove('on');clearInterval(alBuzzT);buzz(0)};
-$('openAlerts').onclick=()=>{show('alerts');drawGroups();drawAlLog()};
+$('openAlerts').onclick=()=>{show('alerts');drawGroups();drawAlLog();drawLearn()};
+function drawLearn(){$('lrnG').innerHTML=GROUPS.map(g=>`<option value="${g.id}">${g.icon} ${esc(g.chip)}</option>`).join('');
+ $('lrnList').innerHTML=alSamples.map((sm,k)=>{const g=GROUPS.find(x=>x.id===sm.g)||{icon:'🔔',chip:sm.g};return`<div class="row" style="align-items:center"><span>${g.icon} ${esc(g.chip)} · صوت متعلّم</span><button class="btn ghost" data-k="${k}" style="min-height:40px;flex:0 0 auto">امسح</button></div>`}).join('');
+ $('lrnList').querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{alSamples.splice(+b.dataset.k,1);store.set('wasl_snd_samples',alSamples);drawLearn()})}
+$('lrnGo').onclick=async()=>{const g=$('lrnG').value;if(!alOn){await startAlerts();if(!alOn)return}
+ if(!alSel.includes(g)){alSel.push(g);store.set('wasl_alert_groups',alSel);drawGroups()}
+ learning={g,frames:[]};$('lrnGo').disabled=true;let left=8;$('lrnMsg').textContent='🎙️ شغّل الصوت دلوقتي جنب الموبايل... '+left;
+ const t=setInterval(()=>{left--;if(left>0){$('lrnMsg').textContent='🎙️ شغّل الصوت دلوقتي جنب الموبايل... '+left;return}clearInterval(t);
+  const fr=(learning?learning.frames:[]).filter(f=>f.rms>0.01).sort((a,b)=>b.rms-a.rms).slice(0,3);learning=null;$('lrnGo').disabled=false;
+  if(!fr.length){$('lrnMsg').textContent='ما سمعتش صوت واضح. قرّب الموبايل من الصوت وجرّب تاني.';return}
+  const v=new Float32Array(521);fr.forEach(f=>{for(let i=0;i<521;i++)v[i]+=f.v[i]/fr.length});
+  const mine=alSamples.filter(x=>x.g===g);if(mine.length>=3)alSamples.splice(alSamples.indexOf(mine[0]),1);
+  alSamples.push({g,v:Array.from(v,x=>Math.round(x*1000)/1000),d:Date.now()});store.set('wasl_snd_samples',alSamples);
+  $('lrnMsg').textContent='✅ اتعلمته! من دلوقتي لما الصوت ده يتكرر وصل هينبّهك. جرّبه مرة كمان عشان تتأكد.';drawLearn()},1000)};
 $('alToggle').onclick=()=>{alOn?stopAlerts():startAlerts()};
 $('alBack').onclick=()=>{drawAlChip();show('home')};
 document.addEventListener('visibilitychange',async()=>{if(alOn&&!document.hidden){try{alWake=await navigator.wakeLock.request('screen')}catch(e){}}});
