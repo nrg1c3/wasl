@@ -474,12 +474,14 @@ const SILENT=(()=>{const n=800,b=new ArrayBuffer(44+n*2),v=new DataView(b),w=(o,
 function unlockAudio(){if(audUnlocked)return;audUnlocked=true;try{AUD.src=SILENT;const p=AUD.play();if(p)p.catch(()=>{audUnlocked=false})}catch(e){audUnlocked=false}}
 document.addEventListener('pointerdown',unlockAudio,{capture:true});document.addEventListener('touchstart',unlockAudio,{capture:true,passive:true});
 function bestVoice(lang){const vs=speechSynthesis.getVoices().filter(v=>v.lang.replace('_','-').toLowerCase().startsWith(lang.slice(0,2)));if(!vs.length)return null;const ex=vs.filter(v=>v.lang.replace('_','-')===lang);const pool=ex.length?ex:vs;return pool.find(v=>/natural|neural|online|google/i.test(v.name))||pool[0]}
+/* The voice reads unvowelled حضرتك as feminine (حضرتِك). Wasl always talks to the other person in the masculine by default, so add the fatha. */
+function mascTTS(t){return String(t).replace(/حضرتك/g,'حضرتَك').replace(/(^|[\s،.؟!,])(و?(?:إن|ان|عند|بتاع|إذن|اذن|ذوق|سؤال|كلام|وقت|تعب|خدمت))ك(?=[\s،.؟!,]|$)/g,'$1$2َك')}
 async function ttsBlob(t,vl,g,useCache,signal){const key='https://wasl.voice/'+encodeURIComponent(g+'|'+vl+'|'+t);let c=null;
  if(useCache&&window.caches){try{c=await caches.open('wasl-demo-v1');const m=await c.match(key);if(m)return await m.blob()}catch(e){c=null}}
  const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t,lang:vl,gender:g}),signal});
  if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;const b=await r.blob();
  if(c){try{await c.put(key,new Response(b,{headers:{'Content-Type':'audio/mpeg'}}))}catch(e){}}return b}
-async function speak(t,done,o){t=String(t||'').replace('✨','').trim();if(!t){done&&done();return}
+async function speak(t,done,o){t=mascTTS(String(t||'').replace('✨','').trim());if(!t){done&&done();return}
  stopListening();try{speechSynthesis.cancel()}catch(e){}if(player){try{player.pause()}catch(e){}}player={pause(){}};
  const vl=DEMO?'ar-EG':(/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':LANG);const g=(o&&o.g)||(profile().voice==='m'?'m':'f');
  const finish=()=>{player=null;done&&done()};
