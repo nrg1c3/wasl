@@ -29,6 +29,7 @@ input:focus,select:focus{outline:none;border-color:var(--or)}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips button{min-height:48px;border:1px solid var(--line);border-radius:999px;background:var(--bg);padding:0 18px;font:700 16px Cairo,sans-serif;color:var(--ink)}
 .chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chips.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.chips.scale button{padding:6px 2px;min-height:64px;border-radius:14px;font-size:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;line-height:1.1}.chips.scale small{font-size:11.5px;font-weight:700}
 .q{font-size:17px;font-weight:800;line-height:1.5;margin:0}
 .check{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.55;font-weight:600}.check input{width:26px;height:26px;min-height:0;flex-shrink:0;margin-top:2px;accent-color:var(--ink)}
 .go{min-height:60px;border:0;border-radius:16px;background:var(--ok);color:#fff;font:800 20px Cairo,sans-serif}
@@ -74,6 +75,17 @@ input:focus,select:focus{outline:none;border-color:var(--or)}
 </section>
 
 <section class="card">
+<h2>حياتك دلوقتي</h2>
+<div><p class="q">لما بتحتاج تكلم حد سامع، مين بيساعدك؟ (اختار كل اللي ينطبق)</p><div class="chips" data-k="helper" data-multi><button type="button" data-v="أهلي">أهلي</button><button type="button" data-v="صحابي">صحابي</button><button type="button" data-v="مترجم إشارة">مترجم إشارة</button><button type="button" data-v="بكتب على ورقة">بكتب على ورقة</button><button type="button" data-v="بستغنى عن المشوار">بستغنى عن المشوار</button></div></div>
+<div><p class="q">بتحتاج المساعدة دي كام مرة؟</p><div class="chips" data-k="need"><button type="button" data-v="كل يوم">كل يوم</button><button type="button" data-v="كام مرة في الأسبوع">كام مرة في الأسبوع</button><button type="button" data-v="نادراً">نادراً</button></div></div>
+<div><p class="q">المشاوير زي الصيدلية والتاكسي، صعبة عليك قد إيه؟</p><div class="chips scale" data-k="tripHard"><button type="button" data-v="1">😀<small>سهل جداً</small></button><button type="button" data-v="2">🙂<small>سهل</small></button><button type="button" data-v="3">😐<small>متوسط</small></button><button type="button" data-v="4">🙁<small>صعب</small></button><button type="button" data-v="5">😣<small>صعب جداً</small></button></div></div>
+<div><p class="q">المكالمات والرسايل الصوتية، صعبة عليك قد إيه؟</p><div class="chips scale" data-k="voiceHard"><button type="button" data-v="1">😀<small>سهل جداً</small></button><button type="button" data-v="2">🙂<small>سهل</small></button><button type="button" data-v="3">😐<small>متوسط</small></button><button type="button" data-v="4">🙁<small>صعب</small></button><button type="button" data-v="5">😣<small>صعب جداً</small></button></div></div>
+<div><p class="q">النت على موبايلك:</p><div class="chips" data-k="net"><button type="button" data-v="دايماً">شغال دايماً</button><button type="button" data-v="أحياناً">أحياناً</button><button type="button" data-v="واي فاي بس">واي فاي بس</button></div></div>
+<div><p class="q">بتستخدم واتساب كل يوم؟</p><div class="chips" data-k="wa"><button type="button" data-v="أيوه">أيوه</button><button type="button" data-v="لأ">لأ</button></div></div>
+<div><p class="q">فاضي تجرّب وَصْل أسبوعين، 3 مهام صغيرة في الأسبوع، وتقولنا رأيك؟</p><div class="chips" data-k="free"><button type="button" data-v="أيوه">أيوه</button><button type="button" data-v="لأ">لأ</button></div></div>
+</section>
+
+<section class="card">
 <label class="f">عرفت وَصْل منين؟ (اسم الجروب أو الصفحة)<input id="source" maxlength="80"></label>
 <label class="check"><input type="checkbox" id="adult">سني 18 سنة أو أكتر.</label>
 <label class="check"><input type="checkbox" id="consent">موافق أشارك في التجربة، وفريق وَصْل يكلمني على واتساب. أقدر أنسحب في أي وقت.</label>
@@ -86,7 +98,7 @@ input:focus,select:focus{outline:none;border-color:var(--or)}
 <section class="card done hidden" id="done">
 <div class="big">✅</div>
 <h2>اتسجلت، شكراً</h2>
-<p class="note" style="font-size:16px">هنكلمك على واتساب خلال أسبوع، ونبعتلك الرابط وطريقة التثبيت.</p>
+<p class="note" style="font-size:16px">هنراجع التسجيلات، ولو اتختارت هنكلمك على واتساب خلال أسبوع ونبعتلك الرابط وطريقة التثبيت.</p>
 </section>
 </main>
 <script>
@@ -94,7 +106,7 @@ const URL_JOIN='https://nrg1c3.app.n8n.cloud/webhook/wasl-join';
 const $=id=>document.getElementById(id);
 ['القاهرة','الجيزة','الإسكندرية','القليوبية','الدقهلية','الشرقية','الغربية','المنوفية','البحيرة','كفر الشيخ','دمياط','بورسعيد','الإسماعيلية','السويس','الفيوم','بني سويف','المنيا','أسيوط','سوهاج','قنا','الأقصر','أسوان','البحر الأحمر','مطروح','الوادي الجديد','شمال سيناء','جنوب سيناء','بره مصر'].forEach(g=>{const o=document.createElement('option');o.value=o.textContent=g;$('gov').appendChild(o)});
 const pick={};
-document.querySelectorAll('.chips').forEach(c=>c.querySelectorAll('button').forEach(b=>b.onclick=()=>{c.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));pick[c.dataset.k]=b.dataset.v}));
+document.querySelectorAll('.chips').forEach(c=>c.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(c.hasAttribute('data-multi')){b.classList.toggle('on');pick[c.dataset.k]=[...c.querySelectorAll('button.on')].map(x=>x.dataset.v);return}c.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));pick[c.dataset.k]=b.dataset.v}));
 const say=t=>{$('err').textContent=t;$('err').classList.toggle('hidden',!t);if(t)$('err').scrollIntoView({block:'center',behavior:'smooth'})};
 $('f').onsubmit=async e=>{e.preventDefault();say('');
  const name=$('name').value.trim(),phone=$('phone').value.trim();
@@ -104,12 +116,13 @@ $('f').onsubmit=async e=>{e.preventDefault();say('');
  if(!$('gov').value)return say('اختار المحافظة.');
  if(!pick.hearing||!pick.device)return say('اختار: أصم أو ضعيف سمع، ونوع موبايلك.');
  if(!pick.q1||!pick.q2)return say('جاوب على السؤالين الصغيرين.');
+ if(!pick.need||!pick.tripHard||!pick.voiceHard||!pick.net||!pick.wa||!pick.free)return say('جاوب على أسئلة «حياتك دلوقتي».');
  if(!$('adult').checked)return say('التجربة دي للي سنهم 18 سنة أو أكتر.');
  if(!$('consent').checked)return say('محتاجين موافقتك على المشاركة.');
  $('go').disabled=true;$('go').textContent='بيتسجل...';
- try{const r=await fetch(URL_JOIN,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:'wasl-nrg-2026',name,phone:digits,gov:$('gov').value,hearing:pick.hearing,sign:pick.sign||'',device:pick.device,q1:pick.q1,q2:pick.q2,source:$('source').value.trim(),adult:true,consent:true})});
+ try{const r=await fetch(URL_JOIN,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:'wasl-nrg-2026',name,phone:digits,gov:$('gov').value,hearing:pick.hearing,sign:pick.sign||'',device:pick.device,q1:pick.q1,q2:pick.q2,source:$('source').value.trim(),helper:pick.helper||[],need:pick.need,tripHard:+pick.tripHard,voiceHard:+pick.voiceHard,net:pick.net,wa:pick.wa,free:pick.free,adult:true,consent:true})});
   const d=await r.json().catch(()=>({}));
-  if(r.ok&&d.ok){$('f').classList.add('hidden');$('about').classList.add('hidden');$('done').classList.remove('hidden');scrollTo(0,0);try{localStorage.setItem('wasl_joined','1')}catch(e){}return}
+  if(r.ok&&d.ok){$('f').classList.add('hidden');$('about').classList.add('hidden');$('done').classList.remove('hidden');scrollTo(0,0);try{localStorage.setItem('wasl_joined','1');localStorage.setItem('wasl_phone',digits)}catch(e){}return}
   say(d.why==='rate'?'اتسجل كتير من نفس الجهاز. جرّب بعد شوية.':'حصلت مشكلة. جرّب تاني بعد دقيقة.')}
  catch(e){say('النت ضعيف. جرّب تاني.')}
  $('go').disabled=false;$('go').textContent='سجّلني'};

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#13262F">
+<title>رأيك في وَصْل</title>
+<meta name="description" content="قولنا رأيك في وَصْل بعد ما جربته.">
+<meta property="og:title" content="رأيك في وَصْل">
+<meta property="og:description" content="دقيقتين بس، ورأيك بيغيّر التطبيق.">
+<meta property="og:image" content="https://nrg1c3.github.io/wasl/icon-512.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#13262F;--ink2:#1E3A47;--bg:#F6F3EE;--card:#fff;--line:#E3DCCF;--or:#D97A2B;--orl:#FBE6D4;--ord:#8F4612;--mute:#5B6870;--ok:#1F7A4D;--bad:#B3261E}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',Tahoma,sans-serif}
+header{background:var(--ink);color:var(--bg);padding:22px 18px 26px}
+.brand{display:flex;align-items:center;gap:12px}.brand svg{width:52px;height:52px}.brand b{font-size:28px;font-weight:800}.brand small{display:block;color:#BFD3D8;font-size:14px}
+header h1{font-size:26px;line-height:1.35;margin:18px 0 6px}header p{margin:0;color:#BFD3D8;font-size:16px;line-height:1.6}
+main{max-width:560px;margin:0 auto;padding:16px 16px 40px;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.card h2{margin:0;font-size:19px}
+.pts{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:16px;line-height:1.5}.pts li{display:flex;gap:10px}.pts span{font-size:22px;flex-shrink:0}
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;color:var(--mute)}
+input,select{min-height:52px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:600 17px Cairo,sans-serif;background:var(--bg);color:var(--ink);width:100%}
+input:focus,select:focus{outline:none;border-color:var(--or)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{min-height:48px;border:1px solid var(--line);border-radius:999px;background:var(--bg);padding:0 18px;font:700 16px Cairo,sans-serif;color:var(--ink)}
+.chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chips.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.chips.scale button{padding:6px 2px;min-height:64px;border-radius:14px;font-size:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;line-height:1.1}.chips.scale small{font-size:11.5px;font-weight:700}
+.q{font-size:17px;font-weight:800;line-height:1.5;margin:0}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.55;font-weight:600}.check input{width:26px;height:26px;min-height:0;flex-shrink:0;margin-top:2px;accent-color:var(--ink)}
+.go{min-height:60px;border:0;border-radius:16px;background:var(--ok);color:#fff;font:800 20px Cairo,sans-serif}
+.go:disabled{opacity:.6}
+.err{color:var(--bad);font-weight:700;font-size:15px;margin:0}
+.note{color:var(--mute);font-size:14px;line-height:1.6;margin:0}.note a{color:var(--ink)}
+.done{text-align:center;padding:28px 16px}.done .big{font-size:56px}.done h2{font-size:24px}
+.hidden{display:none!important}
+.nps{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}.nps button{min-height:48px;padding:0;border-radius:10px;font-size:16px}
+.ends{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mute);font-weight:700;margin-top:4px}
+textarea{min-height:84px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:600 16px Cairo,sans-serif;background:var(--bg);color:var(--ink);width:100%;resize:vertical}
+</style>
+</head>
+<body>
+<header>
+<div class="brand"><svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#1E3A47"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>وَصْل</b><small>صوتك في كل مكان</small></div></div>
+<h1>رأيك في وَصْل</h1>
+<p>دقيقتين بس. رأيك الصريح، حتى لو وحش، هو اللي بيحسّن التطبيق.</p>
+</header>
+<main>
+<form id="f" novalidate>
+<section class="card">
+<label class="f">رقم واتساب اللي سجّلت بيه<input id="phone" inputmode="tel" dir="ltr" autocomplete="tel" placeholder="01xxxxxxxxx" maxlength="16" required></label>
+<div><p class="q">إحنا في:</p><div class="chips" data-k="week"><button type="button" data-v="الأسبوع الأول">الأسبوع الأول</button><button type="button" data-v="الأسبوع التاني">الأسبوع التاني</button><button type="button" data-v="آخر التجربة">آخر التجربة</button></div></div>
+<div><p class="q">استخدمت إيه في وَصْل؟ (اختار كل اللي ينطبق)</p><div class="chips" data-k="used" data-multi><button type="button" data-v="اتكلم بدالي">اتكلم بدالي</button><button type="button" data-v="ترجمة">ترجمة</button><button type="button" data-v="طلب دوا">طلب دوا</button><button type="button" data-v="الرسايل الصوتية">الرسايل الصوتية</button><button type="button" data-v="طوارئ">طوارئ</button><button type="button" data-v="تنبيهات الأصوات">تنبيهات الأصوات</button><button type="button" data-v="إشارات">إشارات</button></div></div>
+</section>
+
+<section class="card">
+<h2>وَصْل فادك؟</h2>
+<div><p class="q">وَصْل فادك قد إيه؟</p><div class="chips scale" data-k="help"><button type="button" data-v="1">😣<small>خالص</small></button><button type="button" data-v="2">🙁<small>شوية</small></button><button type="button" data-v="3">😐<small>متوسط</small></button><button type="button" data-v="4">🙂<small>كتير</small></button><button type="button" data-v="5">😀<small>جداً</small></button></div></div>
+<div><p class="q">المهام اللي جربتها خلصت؟</p><div class="chips" data-k="done"><button type="button" data-v="كلها">كلها</button><button type="button" data-v="بعضها">بعضها</button><button type="button" data-v="ولا واحدة">ولا واحدة</button></div></div>
+<div><p class="q">استخدامه كان سهل؟</p><div class="chips scale" data-k="easy"><button type="button" data-v="1">😣<small>خالص</small></button><button type="button" data-v="2">🙁<small>شوية</small></button><button type="button" data-v="3">😐<small>متوسط</small></button><button type="button" data-v="4">🙂<small>كتير</small></button><button type="button" data-v="5">😀<small>جداً</small></button></div></div>
+<div><p class="q">دلوقتي مع وَصْل، المشاوير زي الصيدلية والتاكسي صعبة قد إيه؟</p><div class="chips scale" data-k="tripHard"><button type="button" data-v="1">😀<small>سهل جداً</small></button><button type="button" data-v="2">🙂<small>سهل</small></button><button type="button" data-v="3">😐<small>متوسط</small></button><button type="button" data-v="4">🙁<small>صعب</small></button><button type="button" data-v="5">😣<small>صعب جداً</small></button></div></div>
+<div><p class="q">ومع وَصْل، المكالمات والرسايل الصوتية صعبة قد إيه؟</p><div class="chips scale" data-k="voiceHard"><button type="button" data-v="1">😀<small>سهل جداً</small></button><button type="button" data-v="2">🙂<small>سهل</small></button><button type="button" data-v="3">😐<small>متوسط</small></button><button type="button" data-v="4">🙁<small>صعب</small></button><button type="button" data-v="5">😣<small>صعب جداً</small></button></div></div>
+<div><p class="q">هتكمّل تستخدمه؟</p><div class="chips" data-k="keep"><button type="button" data-v="أيوه">أيوه</button><button type="button" data-v="ممكن">ممكن</button><button type="button" data-v="لأ">لأ</button></div></div>
+<div><p class="q">تنصح صاحبك الأصم بيه؟ (من 0 لـ 10)</p><div class="chips nps" data-k="nps"><button type="button" data-v="0">0</button><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button><button type="button" data-v="6">6</button><button type="button" data-v="7">7</button><button type="button" data-v="8">8</button><button type="button" data-v="9">9</button><button type="button" data-v="10">10</button></div><div class="ends"><span>مستحيل</span><span>أكيد</span></div></div>
+</section>
+
+<section class="card">
+<h2>إيه اللي ما اشتغلش؟</h2>
+<div class="chips" data-k="issues" data-multi><button type="button" data-v="الكلام اتكتب غلط">الكلام اتكتب غلط</button><button type="button" data-v="بطيء">بطيء</button><button type="button" data-v="الصوت مش واضح">الصوت مش واضح</button><button type="button" data-v="النت">النت</button><button type="button" data-v="صعب أفهم">صعب أفهم</button><button type="button" data-v="الناس اتلخبطت">الناس اتلخبطت</button><button type="button" data-v="حاجة تانية">حاجة تانية</button></div>
+<label class="f">احكيلنا المشكلة (لو حابب)<textarea id="issueText" maxlength="400" placeholder="مثلاً: في الصيدلية الكلام ما اتكتبش كله"></textarea></label>
+<label class="f">أكتر حاجة ساعدتك<textarea id="best" maxlength="400"></textarea></label>
+</section>
+
+<section class="card">
+<h2>حصلك موقف مع وَصْل؟</h2>
+<label class="f">احكيه في سطرين<textarea id="story" maxlength="600" placeholder="مثلاً: طلبت الدوا لوحدي من غير ما أكلم أخويا"></textarea></label>
+<div><p class="q">ينفع نحكي قصتك في عرض المشروع؟</p><div class="chips" data-k="storyOk"><button type="button" data-v="أيوه باسمي">أيوه باسمي</button><button type="button" data-v="أيوه من غير اسمي">أيوه من غير اسمي</button><button type="button" data-v="لأ">لأ</button></div></div>
+<div><p class="q">ينفع نعمل معاك فيديو قصير بلغة الإشارة؟</p><div class="chips" data-k="video"><button type="button" data-v="أيوه">أيوه</button><button type="button" data-v="لأ">لأ</button></div></div>
+<p class="err hidden" id="err"></p>
+<button class="go" id="go" type="submit">ابعت رأيي</button>
+<p class="note">رأيك بيتحفظ عند فريق وَصْل للتجربة بس. <a href="privacy.html">سياسة الخصوصية</a></p>
+</section>
+</form>
+
+<section class="card done hidden" id="done">
+<div class="big">💛</div>
+<h2>وصلنا رأيك، شكراً</h2>
+<p class="note" style="font-size:16px">كل رأي بيتقري، وبنصلّح اللي ما اشتغلش.</p>
+</section>
+</main>
+<script>
+const URL_FB='https://nrg1c3.app.n8n.cloud/webhook/wasl-feedback';
+const $=id=>document.getElementById(id);
+const Q=new URLSearchParams(location.search);
+const pick={};
+document.querySelectorAll('.chips').forEach(c=>c.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(c.hasAttribute('data-multi')){b.classList.toggle('on');pick[c.dataset.k]=[...c.querySelectorAll('button.on')].map(x=>x.dataset.v);return}c.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));pick[c.dataset.k]=b.dataset.v}));
+try{const ph=localStorage.getItem('wasl_phone');if(ph)$('phone').value=ph}catch(e){}
+const say=t=>{$('err').textContent=t;$('err').classList.toggle('hidden',!t);if(t)$('err').scrollIntoView({block:'center',behavior:'smooth'})};
+const n=k=>{const v=Q.get(k);return v!==null&&/^\d{1,3}$/.test(v)?+v:undefined};
+const dev=/iphone|ipad|ipod/i.test(navigator.userAgent)?'آيفون':/android/i.test(navigator.userAgent)?'أندرويد':'';
+$('f').onsubmit=async e=>{e.preventDefault();say('');
+ const digits=$('phone').value.trim().replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/\D/g,'').replace(/^(0020|20)(?=1\d{9}$)/,'0').replace(/^(?=1\d{9}$)/,'0');
+ if(!/^01[0125]\d{8}$/.test(digits))return say('اكتب رقم الواتساب اللي سجّلت بيه، زي 01012345678');
+ if(!pick.help)return say('قولنا وَصْل فادك قد إيه.');
+ $('go').disabled=true;$('go').textContent='بيتبعت...';
+ const body={k:'wasl-nrg-2026',phone:digits,week:pick.week||'',used:pick.used||[],help:+pick.help,done:pick.done||'',easy:pick.easy?+pick.easy:'',tripHard:pick.tripHard?+pick.tripHard:'',voiceHard:pick.voiceHard?+pick.voiceHard:'',keep:pick.keep||'',nps:pick.nps!==undefined?+pick.nps:'',issues:pick.issues||[],issueText:$('issueText').value.trim(),best:$('best').value.trim(),story:$('story').value.trim(),storyOk:pick.storyOk||'',video:pick.video||'',appTasks:n('t'),appUp:n('u'),appDown:n('d'),device:dev};
+ try{const r=await fetch(URL_FB,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json().catch(()=>({}));
+  if(r.ok&&d.ok){$('f').classList.add('hidden');$('done').classList.remove('hidden');scrollTo(0,0);try{localStorage.setItem('wasl_phone',digits)}catch(e){}return}
+  say(d.why==='phone'?'رقم الواتساب مش مظبوط.':'حصلت مشكلة. جرّب تاني بعد دقيقة.')}
+ catch(e){say('النت ضعيف. جرّب تاني.')}
+ $('go').disabled=false;$('go').textContent='ابعت رأيي'};
+</script>
+</body>
+</html>

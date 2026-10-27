@@ -251,7 +251,7 @@ nav svg{width:24px;height:24px}
 
 <section id="mytasks" class="screen" aria-label="مهامي">
 <div class="top"><button class="back" id="tasksBack">→ رجوع</button><b style="font-size:18px">مهامي</b><span style="width:70px"></span></div>
-<div class="body"><div class="card" id="kpiCard"><div class="kpis" id="kpis"></div><button class="btn ghost" id="shareRates">شارك التقييمات</button><p class="lead" style="margin:0;font-size:13px">بيبعت التاريخ والتقييم بس، من غير أي كلام أو بيانات. للمشاركين في التجربة.</p></div><p class="lead">كل مهمة خلصت، وملخصها.</p><div class="card" id="taskList"></div></div>
+<div class="body"><a class="btn wa" id="fbLink" href="feedback.html" style="text-decoration:none">📝 قولنا رأيك في وَصْل</a><div class="card" id="kpiCard"><div class="kpis" id="kpis"></div><button class="btn ghost" id="shareRates">شارك التقييمات</button><p class="lead" style="margin:0;font-size:13px">بيبعت التاريخ والتقييم بس، من غير أي كلام أو بيانات. للمشاركين في التجربة.</p></div><p class="lead">كل مهمة خلصت، وملخصها.</p><div class="card" id="taskList"></div></div>
 </section>
 
 <section id="me" class="screen" aria-label="بياناتي">
@@ -510,7 +510,7 @@ $('camIn').onchange=async()=>{const f=$('camIn').files[0];$('camIn').value='';if
 $('readCancel').onclick=()=>{readSeq++;$('readOv').style.display='none'};
 $('talkBack').onclick=()=>show('home');
 $('openMe').onclick=()=>{loadMe();show('me')};$('meBack').onclick=()=>show('home');
-$('openTasks').onclick=()=>{drawTasks();show('mytasks')};$('tasksBack').onclick=()=>show('home');
+$('openTasks').onclick=()=>{drawTasks();try{const d=statsData();$('fbLink').href='feedback.html?t='+d.done+'&u='+d.up+'&d='+(d.rated-d.up)}catch(e){}show('mytasks')};$('tasksBack').onclick=()=>show('home');
 $('alChip').onclick=()=>$('openAlerts').click();
 function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').textContent=alOn?'تنبيهات الأصوات شغالة':'تنبيهات الأصوات مقفولة · شغّلها'}
 
