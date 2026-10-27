@@ -142,7 +142,8 @@ nav svg{width:24px;height:24px}
 .hbrand{display:flex;align-items:center;gap:10px}.hbrand .logo{width:46px;height:46px;flex-shrink:0}
 .hbrand b{display:block;font-size:28px;font-weight:800;line-height:1.1}.hbrand small{display:block;font-size:13px;font-weight:700;color:var(--mute)}
 .hhead select{background:#fff;color:var(--ink);border:1px solid var(--line)}
-.hbody{flex:1;display:flex;flex-direction:column;gap:14px;padding:10px 18px;min-height:0}
+.hbody{flex:1;display:flex;flex-direction:column;gap:14px;padding:10px 18px;min-height:0;overflow-y:auto}
+@media (max-height:780px){.hbody{gap:10px}.big{min-height:78px;padding:12px 16px;gap:12px;border-radius:22px}.big .ic{width:52px;height:52px;border-radius:16px}.big .ic svg{width:30px;height:30px}.big b{font-size:22px}.big small{font-size:13.5px}}
 .alchip{align-self:flex-start;display:flex;align-items:center;gap:8px;min-height:40px;border:0;border-radius:999px;padding:0 14px;font-size:14px;font-weight:700;background:#F3E3D3;color:#7A3A0E}
 .alchip .d{width:10px;height:10px;border-radius:50%;background:#C9501E}
 .alchip.on{background:#E3F1EA;color:#1B5E3B}.alchip.on .d{background:#2E8B57}
@@ -1039,6 +1040,7 @@ $('oCamIn').onchange=async()=>{const f=$('oCamIn').files[0];$('oCamIn').value=''
 $('oStart').onclick=()=>{const goal=$('oGoal').value.trim(),name=$('oPhName').value.trim()||'الصيدلية',num=$('oPhNum').value.trim();
  if(!goal){$('oGoal').focus();$('oGoal').placeholder='اكتب الدوا الأول، أو صوّر الروشتة';return}
  if(num&&waNum(num).length<10){alert('رقم الصيدلية مش مظبوط. اكتبه زي 01xxxxxxxxx');return}
+ if(!store.get('wasl_consent_order',false)){if(!confirm('قبل أول طلب:\n\nعشان وصل يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (ElevenLabs).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟'))return;store.set('wasl_consent_order',true)}
  if(num){const ps=oPhones().filter(x=>waNum(x.num)!==waNum(num));ps.push({name,num});store.set('wasl_pharmacies',ps.slice(-8))}
  const o={id:Date.now(),pharmacy:name,num,goal,address:$('oAddr').value.trim(),thread:[],state:'setup',title:goal.slice(0,40),created:Date.now()};
  oSave(o);oDraw();oStep({type:'start'})};
