@@ -465,11 +465,38 @@ nav svg{width:24px;height:24px}
 
 <script>
 const $=id=>document.getElementById(id);
-const AGENT_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-agent';
-const REPLY_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-replies';
-const TTS_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-tts';
+// The one place that says where Wasl's server is. Moving servers = change this line.
+const API_BASE='https://nrg1c3.app.n8n.cloud/webhook/';
+const AGENT_URL=API_BASE+'wasl-agent';
+const REPLY_URL=API_BASE+'wasl-replies';
+const TTS_URL=API_BASE+'wasl-tts';
 const API_K='wasl-nrg-2026'; // identifies the app; the server also checks the site address and limits requests per device
-const VISION_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-vision';
+const VISION_URL=API_BASE+'wasl-vision';
+// Per-phone token: the server signs one for this phone and limits each phone per day.
+// Every call to the server gets it added automatically; a rejected token is renewed once.
+(function(){
+  const _fetch=window.fetch.bind(window);
+  const get=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+  const set=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+  let dev=get('wasl_dev');
+  if(!dev||!/^[A-Za-z0-9_-]{8,64}$/.test(dev)){dev=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2)).replace(/[^A-Za-z0-9]/g,'').slice(0,32);set('wasl_dev',dev)}
+  let tok=get('wasl_tok')||'', triedAt=+(get('wasl_tok_at')||0), pending=null;
+  async function register(){
+    if(pending)return pending;
+    pending=(async()=>{try{const r=await _fetch(API_BASE+'wasl-register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,d:dev})});const j=await r.json();tok=(j&&j.t)||'';set('wasl_tok',tok)}catch(e){}triedAt=Date.now();set('wasl_tok_at',String(triedAt));pending=null})();
+    return pending;
+  }
+  window.fetch=async function(u,o){
+    if(typeof u!=='string'||!u.startsWith(API_BASE)||u.endsWith('wasl-register')||!o||typeof o.body!=='string')return _fetch(u,o);
+    let b;try{b=JSON.parse(o.body)}catch(e){return _fetch(u,o)}
+    if(!b||b.k!==API_K)return _fetch(u,o);
+    if(!tok&&Date.now()-triedAt>6*3600e3)await register();
+    const send=()=>_fetch(u,Object.assign({},o,{body:JSON.stringify(Object.assign(b,{t:tok}))}));
+    let r=await send();
+    if(r.status===429){const j=await r.clone().json().catch(()=>({}));if(j&&j.why==='token'){tok='';await register();r=await send()}}
+    return r;
+  };
+})();
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let DEMO=null;
 const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
@@ -1011,8 +1038,8 @@ if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='fi
    The user's own WhatsApp sends every message (the user taps send). Wasl writes the messages,
    reads the replies (pasted, shared, or a voice note turned into text), explains them with
    picture cards, checks allergies, and asks the user only for decisions. */
-const WA_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-wa';
-const STT_URL='https://nrg1c3.app.n8n.cloud/webhook/wasl-stt';
+const WA_URL=API_BASE+'wasl-wa';
+const STT_URL=API_BASE+'wasl-stt';
 let OD=null; // scripted demo order (no real pharmacy)
 const oAll=()=>store.get('wasl_orders',[]);
 function oCur(){if(OD)return OD.o;const id=store.get('wasl_order_active',0);return oAll().find(x=>x.id===id)||null}

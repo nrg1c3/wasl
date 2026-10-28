@@ -58,6 +58,7 @@ POSTGRES_PASSWORD=$(openssl rand -hex 24)
 N8N_ENCRYPTION_KEY=$(openssl rand -hex 32)
 TZ=Africa/Cairo
 COMPOSE_PROJECT_NAME=nrg
+WASL_TOKEN_SECRET=$(openssl rand -hex 32)
 EOF
   chmod 600 .env
 else
@@ -102,6 +103,8 @@ services:
       GENERIC_TIMEZONE: ${TZ}
       TZ: ${TZ}
       N8N_RUNNERS_ENABLED: "true"
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
+      WASL_TOKEN_SECRET: ${WASL_TOKEN_SECRET}
       N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
       N8N_DIAGNOSTICS_ENABLED: "false"
       EXECUTIONS_DATA_PRUNE: "true"
@@ -163,6 +166,7 @@ timedatectl set-timezone Africa/Cairo || true
 
 say "7/7 Starting n8n (the first start takes 1 to 2 minutes)"
 grep -q '^COMPOSE_PROJECT_NAME=' .env || echo 'COMPOSE_PROJECT_NAME=nrg' >> .env
+grep -q '^WASL_TOKEN_SECRET=' .env || echo "WASL_TOKEN_SECRET=$(openssl rand -hex 32)" >> .env
 docker compose pull
 docker compose up -d
 
