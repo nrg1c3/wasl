@@ -472,6 +472,10 @@ const REPLY_URL=API_BASE+'wasl-replies';
 const TTS_URL=API_BASE+'wasl-tts';
 const API_K='wasl-nrg-2026'; // identifies the app; the server also checks the site address and limits requests per device
 const VISION_URL=API_BASE+'wasl-vision';
+// One way to call the server: adds the app key, gives up after ms, and treats any refusal as a failure.
+async function postJSON(url,body,ms){const ac=new AbortController();const to=setTimeout(()=>ac.abort(),ms);
+ try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:API_K},body)),signal:ac.signal});
+  if(!r.ok)throw new Error('http '+r.status);return await r.json()}finally{clearTimeout(to)}}
 // Per-phone token: the server signs one for this phone and limits each phone per day.
 // Every call to the server gets it added automatically; a rejected token is renewed once.
 (function(){
@@ -528,8 +532,7 @@ function shrink(file){return new Promise((ok,no)=>{const img=new Image();img.onl
 $('camIn').onchange=async()=>{const f=$('camIn').files[0];$('camIn').value='';if(!f)return;const my=++readSeq;
  let data;try{data=await shrink(f)}catch(e){return}
  $('readImg').src=data;$('readT').textContent='بقرا الصورة...';$('readOv').style.display='flex';
- try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),25000);
-  const r=await fetch(VISION_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,image:data,hint:camHint,lang:LANG}),signal:ac.signal});clearTimeout(to);const d=await r.json();
+ try{const d=await postJSON(VISION_URL,{image:data,hint:camHint,lang:LANG},25000);
   if(my!==readSeq)return;
   if(!d.goal||d.clear===false){$('readT').textContent='الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.';return}
   $('readOv').style.display='none';taskPhoto=data;$('goal').value=d.goal;$('startTask').click()}
@@ -676,9 +679,8 @@ function flushHeard(){heardTimer=null;if(!T||T.over||!heardBuf.trim())return;con
 async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
  let d=null;
- try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),20000);
-  if(DEMO){clearTimeout(to);await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{if(event.type==='heard'){fillWanted=true;var ft=setTimeout(playFiller,2800)}const r=await fetch(AGENT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:vg()}),signal:ac.signal});
-  clearTimeout(to);d=await r.json()}}catch(e){}
+ try{if(DEMO){await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{if(event.type==='heard'){fillWanted=true;var ft=setTimeout(playFiller,2800)}
+  d=await postJSON(AGENT_URL,{goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:vg()},20000)}}catch(e){}
  if(typeof ft!=='undefined')clearTimeout(ft);fillWanted=false;const filled=!!fillP||Date.now()-lastFill<8000;if(fillP)await fillP;
  if(filled&&d&&typeof d.say==='string')d.say=d.say.replace(/^\s*(لحظة|ثانية) (واحدة|بس)( لو سمحت| من فضلك)?[،,.]\s*/,''); // don't repeat "one moment" right after the filler
  if(!T||my!==T.seq||T.over)return;
@@ -811,7 +813,7 @@ function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${smar
  $('fSug').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>fSpeak(list[i]))}
 function fSpeak(t){$('fSaid').textContent='اتقال: '+t;speak(t,()=>{if(freeOn)startListening()})}
 async function smartReplies(text){const n=++fSeq;$('fState').textContent='✨ بيجهّز ردود...';
- try{const ac=new AbortController();setTimeout(()=>ac.abort(),12000);const r=await fetch(REPLY_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,text,situation:'عام',lang:LANG}),signal:ac.signal});const d=await r.json();
+ try{const d=await postJSON(REPLY_URL,{text,situation:'عام',lang:LANG},12000);
   if(n!==fSeq)return;drawCards('fCards',d.cards||[]);if(d.replies&&d.replies.length){drawReplies(d.replies,true);$('fState').textContent='✨ ردود على حسب الكلام'+(d.situation&&d.situation!=='عام'?' · '+d.situation:'')}}catch(e){if(n===fSeq)$('fState').textContent='بسمع...'}}
 $('openFree').onclick=()=>{show('free');drawReplies(DEFAULT_REPLIES,false)};
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
@@ -1061,8 +1063,7 @@ function oSetup(){OD=null;$('oSetup').classList.remove('hidden');$('oChat').clas
  $('oAgain').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{$('oGoal').value=past[i]})}
 $('oCam').onclick=()=>$('oCamIn').click();
 $('oCamIn').onchange=async()=>{const f=$('oCamIn').files[0];$('oCamIn').value='';if(!f)return;let data;try{data=await shrink(f)}catch(e){return}
- oBusy('بقرا الروشتة...');try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),25000);
-  const r=await fetch(VISION_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,image:data,hint:'روشتة عايز أطلبها من الصيدلية',lang:LANG}),signal:ac.signal});clearTimeout(to);const d=await r.json();oBusy('');
+ oBusy('بقرا الروشتة...');try{const d=await postJSON(VISION_URL,{image:data,hint:'روشتة عايز أطلبها من الصيدلية',lang:LANG},25000);oBusy('');
   if(!d.goal||d.clear===false){alert('الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.');return}$('oGoal').value=d.goal}catch(e){oBusy('');alert('النت ضعيف. جرّب تاني.')}};
 $('oStart').onclick=()=>{const goal=$('oGoal').value.trim(),name=$('oPhName').value.trim()||'الصيدلية',num=$('oPhNum').value.trim();
  if(!goal){$('oGoal').focus();$('oGoal').placeholder='اكتب الدوا الأول، أو صوّر الروشتة';return}
@@ -1095,7 +1096,7 @@ async function oStep(ev){const o=oCur();if(!o)return;oBusy(ev.type==='reply'?'ب
  let d=null;
  if(o.demo){await new Promise(r=>setTimeout(r,900));d=oDemoStep(ev,o)}
  else{const p=taskProfile();const body={k:API_K,profile:p,order:{pharmacy:o.pharmacy,goal:o.goal,address:o.address,thread:o.thread.slice(-24).map(m=>({from:m.from,text:m.text}))},event:ev};
-  for(let i=0;i<2&&!d;i++){try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),45000);const r=await fetch(WA_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:ac.signal});clearTimeout(to);const j=await r.json();if(j&&!j.error)d=j}catch(e){}}}
+  for(let i=0;i<2&&!d;i++){try{const j=await postJSON(WA_URL,body,45000);if(j&&!j.error)d=j}catch(e){}}}
  oBusy('');
  if(!d){alert('النت ضعيف ومقدرتش أكمّل. جرّب تاني.');oDraw();return}
  Object.assign(o,{state:d.state||'wait',draft:d.message||'',explain:d.explain||'',question:d.question||'',options:d.options||[],cards:d.cards||[]});
@@ -1121,8 +1122,7 @@ function b64(blob){return new Promise((ok,no)=>{const r=new FileReader();r.onloa
 async function oVoiceNote(blob){const o=oCur();if(!o){oOpen();return}
  if(blob.size>12e6){alert('الرسالة الصوتية كبيرة أوي.');return}
  oBusy('🎤 بحوّل الرسالة الصوتية لكلام...');let text='';
- try{const audio=await b64(blob);const ac=new AbortController();const to=setTimeout(()=>ac.abort(),70000);
-  const r=await fetch(STT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,audio,mime:blob.type||'audio/ogg'}),signal:ac.signal});clearTimeout(to);const d=await r.json();text=d.text||''}catch(e){}
+ try{const audio=await b64(blob);const d=await postJSON(STT_URL,{audio,mime:blob.type||'audio/ogg'},70000);text=d.text||''}catch(e){}
  oBusy('');if(!text){alert('مقدرتش أفهم الرسالة الصوتية. ممكن تطلب منهم يكتبوا الرد؟');return}
  oGotReply(text,true)}
 $('oCancel').onclick=()=>{const o=oCur();if(!o)return;if(!confirm('تلغي الطلب ده؟'))return;o.state='cancel';oSave(o);OD=null;show('home')};
