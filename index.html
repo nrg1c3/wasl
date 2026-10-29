@@ -66,8 +66,9 @@ nav svg{width:24px;height:24px}
 .soon{display:inline-block;font-size:12px;font-weight:800;background:var(--orl);color:var(--ord);padding:4px 10px;border-radius:999px;align-self:flex-start}
 /* task */
 #task .hear{flex:0 0 36%;background:var(--ink);color:var(--bg);transform:rotate(180deg);padding:20px 22px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.hear>*{flex-shrink:0}
 .hear .lab{display:flex;align-items:center;gap:8px;color:var(--or2);font-size:16px;font-weight:800}
-.hear .big{font-size:clamp(24px,7vw,34px);font-weight:800;line-height:1.35}
+.hear .big{display:block;flex:0 0 auto;min-height:0;padding:0;border-radius:0;color:inherit;text-align:inherit;font-size:clamp(24px,7vw,34px);font-weight:800;line-height:1.35}
 .hear .sub{font-size:16px;line-height:1.5;color:var(--soft)}
 .bar{height:6px;background:var(--or)}
 .tbody{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
@@ -627,7 +628,11 @@ function haltListening(){wantListen=false;stopListening()}
 /* ================= TASK MODE ================= */
 let T=null;
 function nums(t){return esc(t).replace(/[+0-9\u0660-\u0669][0-9\u0660-\u0669 \-]{4,}[0-9\u0660-\u0669]/g,m=>'<bdi dir="ltr">'+m+'</bdi>')}
-function setHear(lab,big,sub){$('hLab').textContent=lab;$('hBig').innerHTML=nums(big);$('hSub').innerHTML=nums(sub||'')}
+function setHear(lab,big,sub){$('hLab').textContent=lab;$('hBig').innerHTML=nums(big);$('hSub').innerHTML=nums(sub||'');fitHear()}
+/* The hearing person's half has a fixed height: shrink the big text until the whole sentence fits, so its end is never cut off. */
+function fitHear(){const box=document.querySelector('#task .hear'),big=$('hBig');if(!box||!big)return;big.style.fontSize='';
+ let px=parseFloat(getComputedStyle(big).fontSize)||30;let n=0;while(box.scrollHeight>box.clientHeight+1&&px>15&&n<30){px-=1.5;big.style.fontSize=px+'px';n++}}
+addEventListener('resize',()=>{try{fitHear()}catch(e){}});
 function setState(kind,text){$('tDot').className='dot'+(kind==='think'?' think':kind==='talk'?' talk':'');$('tState').textContent=text}
 function logMsg(role,text){if(!text)return;const d=document.createElement('div');d.className='msg '+(role==='hearing'?'h':role==='wasl'?'w':'u');
  d.innerHTML='<b>'+(role==='hearing'?'اللي قدامك':role==='wasl'?'وصل قال':'إنت قررت')+'</b>'+nums(text);
