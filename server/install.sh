@@ -161,7 +161,8 @@ find backups -type f -mtime +14 -delete
 echo "backup ok $STAMP"
 EOF
 chmod 700 backup.sh
-( crontab -l 2>/dev/null | grep -v '/opt/nrg/backup.sh' ; echo "30 3 * * * /opt/nrg/backup.sh >> /opt/nrg/backups/backup.log 2>&1" ) | crontab -
+# (an empty crontab makes 'crontab -l' and grep fail; that must not stop the script)
+{ crontab -l 2>/dev/null | grep -v '/opt/nrg/backup.sh' || true; echo "30 3 * * * /opt/nrg/backup.sh >> /opt/nrg/backups/backup.log 2>&1"; } | crontab -
 timedatectl set-timezone Africa/Cairo || true
 
 say "7/7 Starting n8n (the first start takes 1 to 2 minutes)"
