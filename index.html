@@ -570,7 +570,7 @@ function drawTasks(){const t=store.get('wasl_tasks',[]);
  $('taskList').innerHTML=t.length?t.slice().reverse().map(x=>`<div class="task-item"><b>${esc(x.title)}</b><small>${esc(x.date)}</small><p>${esc(x.summary||'اتقفلت قبل ما تخلص.')}</p>${x.goal?`<button class="btn ghost redo" data-g="${esc(x.goal)}" style="min-height:44px;font-size:16px">↻ اعملها تاني</button>`:''}</div>`).join(''):'<div class="empty">لسه مفيش مهام. ابدأ أول مهمة من "اتكلم بدالي".</div>';bindRedo()}
 
 /* ---------- audio: voice out ---------- */
-const AUD=new Audio();AUD.preload='auto';let audUnlocked=false,player=null;
+const AUD=new Audio();AUD.preload='auto';/* Speak a bit faster than the voice's natural pace; pitch stays the same. Every new src starts at this rate. */AUD.defaultPlaybackRate=1.15;AUD.playbackRate=1.15;try{AUD.preservesPitch=true}catch(e){}let audUnlocked=false,player=null;
 const SILENT=(()=>{const n=800,b=new ArrayBuffer(44+n*2),v=new DataView(b),w=(o,t)=>{for(let i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i))};w(0,'RIFF');v.setUint32(4,36+n*2,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,8000,true);v.setUint32(28,16000,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*2,true);return URL.createObjectURL(new Blob([b],{type:'audio/wav'}))})();
 function unlockAudio(){if(audUnlocked)return;audUnlocked=true;try{AUD.src=SILENT;const p=AUD.play();if(p)p.catch(()=>{audUnlocked=false})}catch(e){audUnlocked=false}}
 document.addEventListener('pointerdown',unlockAudio,{capture:true});document.addEventListener('touchstart',unlockAudio,{capture:true,passive:true});
@@ -591,7 +591,7 @@ async function speak(t,done,o){t=mascTTS(String(t||'').replace('✨','').trim())
   const url=URL.createObjectURL(blob);player=AUD;AUD.src=url;
   AUD.onended=()=>{URL.revokeObjectURL(url);finish()};AUD.onerror=()=>finish();
   await AUD.play();return}catch(e){}
- try{const u=new SpeechSynthesisUtterance(t);u.lang=vl;u.rate=.95;const bv=bestVoice(vl);if(bv)u.voice=bv;u.onend=finish;u.onerror=finish;player={pause(){speechSynthesis.cancel()}};speechSynthesis.speak(u)}catch(e){finish()}}
+ try{const u=new SpeechSynthesisUtterance(t);u.lang=vl;u.rate=1.1;const bv=bestVoice(vl);if(bv)u.voice=bv;u.onend=finish;u.onerror=finish;player={pause(){speechSynthesis.cancel()}};speechSynthesis.speak(u)}catch(e){finish()}}
 
 /* ---------- audio: listening ---------- */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
