@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>وَصْل — بيتكلم بالنيابة عنك</title>
+<meta name="description" content="وَصْل تطبيق مجاني للصم وضعاف السمع في مصر: تكتب اللي عايزه، وَصْل يقوله بصوت مصري واضح، وكلام اللي قدامك يظهرلك مكتوب.">
+<meta property="og:title" content="وَصْل — بيتكلم بالنيابة عنك">
+<meta property="og:description" content="تطبيق مجاني للصم وضعاف السمع في مصر. في الصيدلية، والتاكسي، وعلى واتساب.">
+<meta property="og:image" content="https://nrg1c3.github.io/wasl/site/og.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#13262F">
+<link rel="icon" href="../icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap">
+<style>
+/* Wasl site. Brand = the app: deep ink, warm paper, signal orange.
+   The one memorable thing: the "table" demo, a phone split in two with the top half
+   turned to face the hearing person, exactly like the app. Everything else stays quiet. */
+:root{
+  --ink:#13262F; --ink2:#1E3540; --paper:#F7F3EC; --card:#FFFFFF; --line:#E3DCCF;
+  --signal:#E2622A; --signal-d:#B85F1A; --soft:#4A5A61; --soft-on-ink:#BFD3D8;
+  --font:'Cairo',Tahoma,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:18px;line-height:1.75;
+  padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:max(20px,env(safe-area-inset-left,0px))}
+:focus-visible{outline:3px solid var(--signal);outline-offset:3px;border-radius:6px}
+h1,h2,h3{line-height:1.3;margin:0;text-wrap:balance}
+p{margin:0}
+
+/* header */
+.top{position:sticky;top:0;z-index:5;background:var(--ink);color:var(--paper)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;font-size:24px}
+.brand img{width:36px;height:36px;border-radius:9px}
+.top nav{display:flex;gap:6px;align-items:center}
+.top nav a.l{text-decoration:none;font-weight:600;font-size:16px;padding:8px 10px;color:var(--soft-on-ink)}
+.top nav a.l:hover{color:var(--paper)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border-radius:14px;
+  font:800 18px var(--font);text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn.go{background:var(--signal);color:#fff}
+.btn.go:hover{background:#C9501E}
+.btn.ghost{border-color:currentColor;color:var(--ink);background:transparent}
+.top .btn{min-height:42px;font-size:16px;padding:0 16px}
+@media (max-width:720px){.top nav a.l{display:none}}
+
+/* hero */
+.hero{background:var(--ink);color:var(--paper);padding-block:56px 72px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(38px,6.2vw,68px);font-weight:900;letter-spacing:-.5px}
+.hero .lead{font-size:clamp(19px,2.2vw,22px);color:var(--soft-on-ink);margin-top:18px;max-width:34ch}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero .ghost{color:var(--paper)}
+.hero .note{margin-top:16px;font-size:15px;color:var(--soft-on-ink)}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero .phone{order:2}}
+
+/* the table demo */
+.phone{justify-self:center;width:min(330px,86vw);aspect-ratio:9/18.5;background:#0B1A21;border-radius:44px;padding:12px;
+  box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.screen{height:100%;border-radius:34px;overflow:hidden;display:flex;flex-direction:column;background:var(--paper)}
+.half-hear{flex:0 0 40%;background:var(--ink2);color:var(--paper);transform:rotate(180deg);padding:18px 18px 14px;display:flex;flex-direction:column;gap:8px}
+.half-hear small{color:#F0A36F;font-weight:700;font-size:13px}
+.half-hear .said{font-weight:800;font-size:17px;line-height:1.5}
+.half-me{flex:1;padding:14px;display:flex;flex-direction:column;gap:10px;color:var(--ink)}
+.half-me .lab{font-size:13px;color:var(--soft);font-weight:700}
+.bubble{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 12px;font-size:15px;line-height:1.55}
+.cards{display:flex;gap:8px}
+.mini{flex:1;background:#fff;border:1px solid var(--line);border-top:4px solid var(--signal);border-radius:12px;text-align:center;padding:6px 4px;font-size:12px;color:var(--soft)}
+.mini b{display:block;font-size:22px;color:var(--ink);line-height:1.2}
+.opts{display:flex;gap:8px;margin-top:auto}
+.opts span{flex:1;text-align:center;border-radius:12px;padding:9px 4px;font-weight:800;font-size:14px}
+.opts .y{background:var(--ink);color:#fff}.opts .n{background:var(--signal-d);color:#fff}
+.fold{height:4px;background:var(--signal)}
+/* one orchestrated moment: the reply arrives */
+@media (prefers-reduced-motion:no-preference){
+  .arrive{animation:arrive .6s ease-out 1.1s both}
+  .arrive2{animation:arrive .6s ease-out 1.7s both}
+  @keyframes arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+}
+.cap{text-align:center;font-size:14px;color:var(--soft-on-ink);margin-top:14px}
+
+/* sections */
+section.band{padding-block:72px}
+.band h2{font-size:clamp(28px,4vw,40px);font-weight:900}
+.band .intro{color:var(--soft);margin-top:10px;max-width:60ch}
+.does{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px}
+.does article{display:flex;flex-direction:column;gap:10px}
+.does .ic{width:64px;height:64px;border-radius:18px;background:var(--ink);display:grid;place-items:center}
+.does .ic svg{width:34px;height:34px}
+.does h3{font-size:22px;font-weight:800}
+.does p{color:var(--soft)}
+.also{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);color:var(--soft);font-size:16px}
+@media (max-width:860px){.does{grid-template-columns:1fr}}
+
+.how{background:var(--card);border-block:1px solid var(--line)}
+.steps{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;counter-reset:s}
+.steps li{counter-increment:s;display:flex;flex-direction:column;gap:8px}
+.steps li::before{content:counter(s);font-weight:900;font-size:44px;line-height:1;color:var(--signal)}
+.steps h3{font-size:21px;font-weight:800}
+.steps p{color:var(--soft)}
+@media (max-width:860px){.steps{grid-template-columns:1fr}}
+
+.trust{background:var(--ink);color:var(--paper)}
+.trust .intro{color:var(--soft-on-ink)}
+.promises{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:36px}
+.promises div{border-top:2px solid var(--signal);padding-top:14px}
+.promises h3{font-size:20px;font-weight:800}
+.promises p{color:var(--soft-on-ink);margin-top:6px}
+.trust a{color:#F0A36F}
+@media (max-width:860px){.promises{grid-template-columns:1fr}}
+
+.pilot .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:start}
+.need{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:10px}
+.need li{display:flex;gap:10px;align-items:baseline}
+.need li::before{content:"";flex:0 0 10px;height:10px;border-radius:50%;background:var(--signal);transform:translateY(-2px)}
+.pilot .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.sign{background:var(--card);border:2px dashed var(--line);border-radius:20px;aspect-ratio:4/3;display:grid;place-items:center;text-align:center;padding:24px;color:var(--soft)}
+.sign b{display:block;color:var(--ink);font-size:20px;margin-bottom:6px}
+@media (max-width:860px){.pilot .wrap{grid-template-columns:1fr}.sign{aspect-ratio:auto;min-height:180px}}
+
+.partners{background:var(--card);border-top:1px solid var(--line)}
+.who{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:36px}
+.who h3{font-size:20px;font-weight:800}
+.who p{color:var(--soft);margin-top:6px}
+.law{margin-top:32px;background:var(--paper);border-radius:16px;padding:18px 20px;color:var(--soft);font-size:16px}
+@media (max-width:860px){.who{grid-template-columns:1fr}}
+
+footer{background:var(--ink);color:var(--soft-on-ink);padding-block:36px;font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
+footer a{color:var(--paper)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><img src="../icon-192.png" alt="">وَصْل</a>
+    <nav aria-label="أقسام الصفحة">
+      <a class="l" href="#does">بيعمل إيه</a>
+      <a class="l" href="#trust">الخصوصية</a>
+      <a class="l" href="#pilot">التجربة</a>
+      <a class="l" href="#partners">للشركات</a>
+      <a class="btn go" href="../">افتح وَصْل</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <div>
+      <h1 id="h1">وَصْل بيتكلم بالنيابة عنك</h1>
+      <p class="lead">تطبيق مجاني للصم وضعاف السمع في مصر. تكتب اللي عايزه، وَصْل يقوله بصوت مصري واضح، وكلام اللي قدامك يظهرلك مكتوب.</p>
+      <div class="ctas">
+        <a class="btn go" href="../">افتح وَصْل</a>
+        <a class="btn ghost" href="../join.html">سجّل في التجربة</a>
+      </div>
+      <p class="note">بيشتغل من متصفح الموبايل، من غير تحميل من المتجر.</p>
+    </div>
+
+    <figure class="phone" aria-label="مثال: وَصْل في الصيدلية. نص الشاشة اللي فوق متقلوب عشان الصيدلي يقراه، والنص اللي تحت لصاحب الموبايل.">
+      <div class="screen">
+        <div class="half-hear">
+          <small>وَصْل بيقول للصيدلي</small>
+          <p class="said">السلام عليكم، أنا فاطمة، مساعدة محمد، وهو أصم. محتاجين علبة كونكور ٥ مجم لو سمحت.</p>
+        </div>
+        <div class="fold"></div>
+        <div class="half-me">
+          <span class="lab">الصيدلي قال</span>
+          <p class="bubble arrive">موجود يا فندم، العلبة بـ ٩٥ جنيه.</p>
+          <div class="cards arrive2" aria-hidden="true">
+            <div class="mini"><b>95</b>السعر</div>
+            <div class="mini"><b>✓</b>موجود</div>
+          </div>
+          <div class="opts arrive2"><span class="y">موافق</span><span class="n">لأ، شكراً</span></div>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="band" id="does" aria-labelledby="h-does">
+  <div class="wrap">
+    <h2 id="h-does">في المشاوير اللي محتاجة كلام</h2>
+    <p class="intro">وَصْل معمول للمواقف اليومية اللي الأصم بيحتاج فيها حد يتكلم بداله.</p>
+    <div class="does">
+      <article>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#E2622A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg></div>
+        <h3>وجهاً لوجه</h3>
+        <p>في الصيدلية والتاكسي والبنك والعيادة: وَصْل يتكلم بدالك بأدب، وأي رد يظهرلك مكتوب ومعاه صور بسيطة.</p>
+      </article>
+      <article>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#E2622A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
+        <h3>الدوا على واتساب</h3>
+        <p>يكتب طلبك للصيدلية من رقمك، ولو ردّوا برسالة صوتية يحوّلها لكلام مكتوب وكروت فيها السعر والميعاد.</p>
+      </article>
+      <article>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#E2622A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4v6c0 5-3.8 9.4-9 10-5.2-.6-9-5-9-10V6z"/><path d="M12 8v5M12 16h.01"/></svg></div>
+        <h3>الطوارئ</h3>
+        <p>زرار واحد ينبّه اللي حواليك بصوت عالي، ويبعت مكانك لأهلك على واتساب.</p>
+      </article>
+    </div>
+    <p class="also">وكمان: بيراجع الحساسية اللي سجّلتها قدام أي دوا بيتذكر، وبينبّهك بالاهتزاز لما جرس البيت يرن.</p>
+  </div>
+</section>
+
+<section class="band how" aria-labelledby="h-how">
+  <div class="wrap">
+    <h2 id="h-how">بيشتغل إزاي</h2>
+    <ol class="steps">
+      <li><h3>اكتب أو صوّر</h3><p>اكتب اللي عايزه، أو صوّر الروشتة أو العنوان. وَصْل يفهم المطلوب.</p></li>
+      <li><h3>وَصْل يتكلم</h3><p>يقول الكلام بصوت مصري مهذب، ونص الشاشة اللي فوق بيتقلب عشان اللي قدامك يقرا كمان.</p></li>
+      <li><h3>إنت اللي بتقرر</h3><p>الرد يظهرلك مكتوب وبالصور. أي حاجة فيها فلوس أو صحة، وَصْل بيسألك الأول.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band trust" id="trust" aria-labelledby="h-trust">
+  <div class="wrap">
+    <h2 id="h-trust">بياناتك بتاعتك</h2>
+    <p class="intro">وَصْل معمول عشان يخدمك، مش عشان يجمع عنك معلومات.</p>
+    <div class="promises">
+      <div><h3>على موبايلك</h3><p>اسمك وحساسيتك ومهامك محفوظين على موبايلك إنت.</p></div>
+      <div><h3>مش بنبيع</h3><p>مش بنبيع بياناتك، ومفيش إعلانات بتتابعك.</p></div>
+      <div><h3>القرار ليك</h3><p>وَصْل ما بيوافقش على سعر ولا دوا ولا دفع من غير ما تختار.</p></div>
+    </div>
+    <p class="intro" style="margin-top:28px">التفاصيل كلها في <a href="../privacy.html">سياسة الخصوصية</a>.</p>
+  </div>
+</section>
+
+<section class="band pilot" id="pilot" aria-labelledby="h-pilot">
+  <div class="wrap">
+    <div>
+      <h2 id="h-pilot">محتاجين 100 مجرّب</h2>
+      <p class="intro">تجربة أسبوعين، و3 مهام صغيرة كل أسبوع. رأيك هو اللي هيغيّر التطبيق.</p>
+      <ul class="need">
+        <li>سنك 18 سنة أو أكتر</li>
+        <li>أصم أو ضعيف سمع، وبتعرف تقرا وتكتب عربي ولو شوية</li>
+        <li>عندك موبايل عليه واتساب</li>
+      </ul>
+      <div class="ctas">
+        <a class="btn go" href="../join.html">سجّل في التجربة</a>
+        <a class="btn ghost" href="../">جرّب وَصْل دلوقتي</a>
+      </div>
+    </div>
+    <div class="sign" role="note"><div><b>شرح بلغة الإشارة</b>فيديو الشرح بلغة الإشارة هيتحط هنا قريب.</div></div>
+  </div>
+</section>
+
+<section class="band partners" id="partners" aria-labelledby="h-partners">
+  <div class="wrap">
+    <h2 id="h-partners">للشركات والجهات</h2>
+    <p class="intro">وَصْل مجاني للصم. اللي بيدعمه شركاء عايزين يوصلوا لمجتمع الصم ويخدموه.</p>
+    <div class="who">
+      <div><h3>خدمة العميل الأصم</h3><p>الصيدليات والمطاعم والبنوك تقدر تخدم العميل الأصم من غير مترجم.</p></div>
+      <div><h3>تشغيل موظفين صم</h3><p>الموظف الأصم يقرا كلام مديره وزمايله مكتوب، ويرد بصوت. فيشتغل وينتج.</p></div>
+      <div><h3>رعاية التجربة</h3><p>رعاية بتخلّي وَصْل مجاني، وبتدفع مرتبات شباب صم بيشتغلوا فيه.</p></div>
+    </div>
+    <p class="law">القانون 10 لسنة 2018 بيلزم أي صاحب عمل عنده 20 عامل أو أكتر يشغّل 5% على الأقل من ذوي الإعاقة. وَصْل بيخلّي ده شغل حقيقي ومنتج، مش رقم في كشف.</p>
+    <p class="intro" style="margin-top:20px">للشراكة كلّمنا في رسالة على صفحة وَصْل على فيسبوك.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>وَصْل مشروع من شركة إن آر جي، مصر.</span>
+    <span><a href="../privacy.html">سياسة الخصوصية</a> · <a href="../join.html">التسجيل في التجربة</a></span>
+  </div>
+</footer>
+</body>
+</html>
