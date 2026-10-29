@@ -716,20 +716,23 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
   $('tDecide').classList.remove('hidden');setState('talk','وصل محتاج قرارك');
   if(d.say)speak(d.say,()=>{if(T&&!T.over)startListening()});else startListening();$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.action==='done'){
-  T.over=true;haltListening();clearTimeout(heardTimer);buzz([300]);drawCards('tCards',[]);setHear('شكراً',d.say||'شكراً جزيلاً','');
-  resetRate();$('tRefill').classList.add('hidden');if(d.med)showRefill(d.med);$('tSumText').innerHTML=nums(d.summary||'المهمة خلصت.');$('tSum').classList.remove('hidden');$('tFoot').classList.add('hidden');setState('ok','المهمة خلصت');
-  saveTask(d.summary);if(d.say)speak(d.say);$('tbody').scrollTop=$('tbody').scrollHeight;return}
+  // The task stays open: only the user ends it with إنهاء. Keep listening and keep the controls.
+  T.summary=d.summary||T.summary||'';buzz([300]);setHear('وصل بيقول',d.say||'شكراً جزيلاً','لو فيه كلام تاني كمّل، ودوس إنهاء لما تخلص.');
+  resetRate();if(d.med&&d.med!==refillMed)showRefill(d.med);$('tSumText').innerHTML=nums(T.summary||'المهمة خلصت.');$('tSum').classList.remove('hidden');$('tFoot').classList.remove('hidden');
+  if(d.say){setState('talk','وصل بيتكلم...');speak(d.say,()=>{if(T&&!T.over){setState('ok','بسمع لو فيه كلام تاني · دوس إنهاء لما تخلص');listenForHearing()}})}else listenForHearing();
+  $('tbody').scrollTop=$('tbody').scrollHeight;return}
+ if(T.summary)$('tSum').classList.add('hidden');
  if(d.say){setState('talk','وصل بيتكلم...');setHear('وصل بيقول',d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
 function isAck(t){const w=String(t).replace(/[،.!؟?,]/g,' ').trim().split(/\s+/);return w.length<=4&&w.every(x=>/^(ماشي|تمام|طيب|اتفضل|اتفضلي|كمل|كملي|كمّل|أوكي|اوكي|اه|آه|أيوه|ايوه|حاضر|معاك|معاكي|سامعك|سامعاك|و|يا|فندم|حضرتك|ok|okay|sure|go|on)$/i.test(x))}
 
 let lastTid=null;
-function saveTask(summary){if(DEMO){lastTid=null;return}const t=store.get('wasl_tasks',[]);lastTid=Date.now();t.push({id:lastTid,done:!!summary,title:T.title||T.goal,goal:T.goal,summary:summary||'',date:new Date().toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
+function saveTask(summary){if(DEMO){lastTid=null;return}const t=store.get('wasl_tasks',[]);lastTid=Date.now();t.push({...((T&&T.rate)||{}),id:lastTid,done:!!summary,title:T.title||T.goal,goal:T.goal,summary:summary||'',date:new Date().toLocaleString('ar-EG-u-nu-latn',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
 
 $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('goal').focus();return}
  if(!DEMO&&!store.get('wasl_consent',false)){if(!confirm('قبل أول مهمة:\n\nعشان وصل يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي وصل هيقولها بتتبعت لخدمة الصوت (ElevenLabs).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟'))return;store.set('wasl_consent',true)}
  if(alOn){stopAlerts(true);drawAlChip()}
  const ok=DEMO?true:await micOk();if(ok!==true){alert('وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ('+ok+')');return}
- T={goal,history:[],seq:0,over:false,title:goal,lastSaid:''};lastMap='';prefetchFillers();
+ T={goal,history:[],seq:0,over:false,title:goal,lastSaid:''};lastTid=null;refillMed='';lastMap='';prefetchFillers();
  $('tTitle').textContent=goal;$('tLog').innerHTML='';if(taskPhoto){$('hPhoto').src=taskPhoto;$('hPhoto').classList.remove('hidden')}else $('hPhoto').classList.add('hidden');drawProg({n:1,total:3});liveCap('',false);$('tLiveLab').textContent='كلام اللي قدامك هيظهر هنا';drawCards('tCards',[]);
  ['tDecide','tSum','tType'].forEach(id=>$(id).classList.add('hidden'));$('tFoot').classList.remove('hidden');
  setHear('وصل','أهلاً بيك','صاحب الموبايل أصم، وأنا مساعده.');show('task');
@@ -750,13 +753,13 @@ $('tSend').onclick=()=>{const t=$('tInput').value.trim();if(!t||!T)return;$('tIn
 $('tInput').onkeydown=e=>{if(e.key==='Enter')$('tSend').click()};
 $('tSign').onclick=()=>openSigns('task');
 $('tMap').onclick=()=>{const def=lastMap||(profile().address||'');const q=prompt('اكتب العنوان اللي عايز توريه للي قدامك على الخريطة',def);if(!q||!q.trim())return;lastMap=q.trim();if(T){T.history.push({role:'user',text:'فتحت الخريطة على: '+lastMap})}window.open(mapUrl(lastMap),'_blank')};
-function endTask(){if(DEMO){DEMO.timers.forEach(clearTimeout);DEMO=null;$('demoBadge').classList.add('hidden')}haltListening();clearTimeout(heardTimer);heardBuf='';if(player){try{player.pause()}catch(e){}}player=null;if(T&&!T.over){T.over=true;saveTask('')}T=null;onHeard=onInterim=onListenState=null;show('home')}
-$('tEnd').onclick=()=>{if(confirm('تنهي المهمة؟'))endTask()};
+function endTask(){if(DEMO){DEMO.timers.forEach(clearTimeout);DEMO=null;$('demoBadge').classList.add('hidden')}haltListening();clearTimeout(heardTimer);heardBuf='';if(player){try{player.pause()}catch(e){}}player=null;if(T&&!T.over){T.over=true;saveTask(T.summary||'')}T=null;onHeard=onInterim=onListenState=null;show('home')}
+$('tEnd').onclick=()=>{if((T&&T.summary)||confirm('تنهي المهمة؟'))endTask()};
 $('tHome').onclick=endTask;
 let refillMed='',refillGoal='',refillDue=0;
 function showRefill(med){refillMed=med;refillGoal=T?T.goal:'';$('tRefQ').textContent='💊 أفكّرك قبل ما '+med+' يخلص؟ العلبة بتكفيك قد إيه؟';$('tRefOk').classList.add('hidden');$('tRefCal').classList.add('hidden');$('tRefOpts').classList.remove('hidden');$('tRefill').classList.remove('hidden')}
 $('tRefOpts').querySelectorAll('button').forEach(b=>b.onclick=()=>{const d=+b.dataset.d;if(!d){$('tRefill').classList.add('hidden');return}
- refillDue=Date.now()+Math.max(1,d-3)*864e5;const when=new Date(refillDue).toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long'});
+ refillDue=Date.now()+Math.max(1,d-3)*864e5;const when=new Date(refillDue).toLocaleDateString('ar-EG-u-nu-latn',{weekday:'long',day:'numeric',month:'long'});
  if(!DEMO){const r=store.get('wasl_refills',[]).filter(x=>x.med!==refillMed);r.push({id:Date.now(),med:refillMed,goal:'عايز '+refillMed+' (زي المرة اللي فاتت)',due:refillDue});store.set('wasl_refills',r)}
  $('tRefOpts').classList.add('hidden');$('tRefQ').textContent='💊 تذكير '+refillMed;$('tRefOk').textContent='✓ هفكّرك يوم '+when+'، قبل ما يخلص بـ 3 أيام.';$('tRefOk').classList.remove('hidden');$('tRefCal').classList.remove('hidden');buzz([40])});
 $('tRefCal').onclick=()=>{const f=t=>new Date(t).toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';const st=new Date(refillDue);st.setHours(10,0,0,0);
@@ -767,7 +770,7 @@ function drawRefills(){const now=Date.now(),r=store.get('wasl_refills',[]).filte
  const drop=id=>store.set('wasl_refills',store.get('wasl_refills',[]).filter(x=>x.id!==id));
  $('refills').querySelectorAll('.rfGo').forEach(b=>b.onclick=()=>{const x=r.find(y=>y.id===+b.dataset.id);drop(x.id);drawRefills();drawPics(null);taskPhoto=null;$('goal').value=x.goal;const dt=$('goal').closest('details');if(dt)dt.open=true;show('talk')});
  $('refills').querySelectorAll('.rfX').forEach(b=>b.onclick=()=>{drop(+b.dataset.id);drawRefills()})}
-function setRate(patch){if(!lastTid)return;const t=store.get('wasl_tasks',[]);const x=t.find(y=>y.id===lastTid);if(x){Object.assign(x,patch);store.set('wasl_tasks',t)}}
+function setRate(patch){if(T&&!T.over){T.rate=Object.assign(T.rate||{},patch);return}if(!lastTid)return;const t=store.get('wasl_tasks',[]);const x=t.find(y=>y.id===lastTid);if(x){Object.assign(x,patch);store.set('wasl_tasks',t)}}
 function resetRate(){$('tRate').querySelectorAll('button').forEach(b=>b.classList.remove('on'));$('tWhy').classList.add('hidden');$('tWhy').querySelectorAll('button').forEach(b=>b.classList.remove('on'))}
 $('tRate').querySelectorAll('button').forEach(b=>b.onclick=()=>{resetRate();b.classList.add('on');buzz([40]);const r=b.dataset.r;setRate({rating:r,why:''});if(r==='down')$('tWhy').classList.remove('hidden')});
 $('tWhy').querySelectorAll('button').forEach(b=>b.onclick=()=>{b.classList.toggle('on');setRate({why:[...$('tWhy').querySelectorAll('button.on')].map(x=>x.textContent).join('، ')})});
@@ -979,7 +982,7 @@ function onSounds(cats,v,rms){
   const enough=g.urgent||s>=0.6||(g.id==='door'&&s>=0.4)?1:2;
   if(alStreak[g.id]>=enough&&(Date.now()-(alLast[g.id]||0))>10000){alLast[g.id]=Date.now();alStreak[g.id]=0;fireAlert(g,s)}})}
 function fireAlert(g,score){
- const t=new Date().toLocaleTimeString('ar-EG',{hour:'numeric',minute:'2-digit'});
+ const t=new Date().toLocaleTimeString('ar-EG-u-nu-latn',{hour:'numeric',minute:'2-digit'});
  const L=store.get('wasl_alert_log',[]);L.push({icon:g.icon,ar:g.ar,t});store.set('wasl_alert_log',L.slice(-50));drawAlLog();
  $('bigAlert').style.background=g.color;$('baIcon').textContent=g.icon;$('baText').textContent=g.ar;$('baSub').textContent=t+' · متأكد بنسبة '+Math.round(score*100)+'%';
  $('bigAlert').classList.add('on');clearInterval(alBuzzT);let n=0;buzz(g.vib);
@@ -1114,7 +1117,7 @@ async function oStep(ev){const o=oCur();if(!o)return;oBusy(ev.type==='reply'?'ب
  if(d.state==='done'){o.summary=d.summary||d.explain||'';o.med=d.med||'';oFinish(o)}
  if(d.state==='decide'||d.state==='done')buzz([200,100,200]);
  oSave(o);oDraw()}
-function oFinish(o){if(o.demo)return;const t=store.get('wasl_tasks',[]);t.push({id:Date.now(),done:true,title:'طلب من '+o.pharmacy+': '+(o.title||o.goal),goal:'أطلب '+o.goal+' من '+o.pharmacy+' على واتساب',summary:o.summary,date:new Date().toLocaleString('ar-EG',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
+function oFinish(o){if(o.demo)return;const t=store.get('wasl_tasks',[]);t.push({id:Date.now(),done:true,title:'طلب من '+o.pharmacy+': '+(o.title||o.goal),goal:'أطلب '+o.goal+' من '+o.pharmacy+' على واتساب',summary:o.summary,date:new Date().toLocaleString('ar-EG-u-nu-latn',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
 $('oOpenWa').onclick=()=>{const o=oCur();if(!o)return;const msg=$('oMsg').value.trim();if(!msg)return;
  if(!o.demo){const n=waNum(o.num);window.open('https://wa.me/'+(n||'')+'?text='+encodeURIComponent(msg),'_blank')}
  o.thread.push({from:'me',text:msg,t:Date.now()});o.draft='';o.explain='';o.cards=[];
@@ -1140,7 +1143,7 @@ $('oHome').onclick=()=>{OD=null;show('home')};
 $('oBack').onclick=()=>{OD=null;show('home')};
 $('oRefOpts').querySelectorAll('button').forEach(b=>b.onclick=()=>{const o=oCur();if(!o)return;const d=+b.dataset.d;o.refDone=true;oSave(o);
  if(!d){$('oRef').classList.add('hidden');return}
- const due=Date.now()+Math.max(1,d-3)*864e5;const when=new Date(due).toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long'});
+ const due=Date.now()+Math.max(1,d-3)*864e5;const when=new Date(due).toLocaleDateString('ar-EG-u-nu-latn',{weekday:'long',day:'numeric',month:'long'});
  if(!o.demo){const r=store.get('wasl_refills',[]).filter(x=>x.med!==o.med);r.push({id:Date.now(),med:o.med,goal:'عايز '+o.med+' (زي المرة اللي فاتت)',due});store.set('wasl_refills',r)}
  $('oRefOpts').classList.add('hidden');$('oRefOk').textContent='✓ هفكّرك يوم '+when+'، قبل ما يخلص بـ 3 أيام.';$('oRefOk').classList.remove('hidden');buzz([40])});
 
