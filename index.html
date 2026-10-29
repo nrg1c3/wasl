@@ -600,7 +600,7 @@ let rec=null,wantListen=false,onHeard=null,onInterim=null,onListenState=null;
 async function micOk(){try{const s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(t=>t.stop());return true}catch(e){return e.name||'error'}}
 /* One recognizer at a time. The old code aborted and recreated the recognizer whenever it was asked to listen,
    and the aborted one's onend started a new one: an endless restart loop (Android beeps on every start) that froze the app. */
-let recLive=false,recFails=0,recStartAt=0,restartT=null,lastVoiceAt=0;
+let lastRecErr='',recLive=false,recFails=0,recStartAt=0,restartT=null,lastVoiceAt=0;
 function startListening(){if(DEMO)return;if(!SR){onListenState&&onListenState('nosr');return}
  wantListen=true;if(player)return;if(rec&&recLive)return;
  clearTimeout(restartT);const me=new SR();rec=me;me.lang=LANG;me.continuous=true;me.interimResults=true;me.maxAlternatives=1;
@@ -613,14 +613,17 @@ function startListening(){if(DEMO)return;if(!SR){onListenState&&onListenState('n
   if(fin.length>=sent.length)sent=fin;pend=int;me._pend=int;if(int||delta)lastVoiceAt=Date.now();
   if(delta.length>1){recFails=0;const h=onHeard;h&&h(delta)}
   if(int){recFails=0;onInterim&&onInterim(int)}};
- me.onerror=ev=>{if(rec!==me)return;if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){wantListen=false;onListenState&&onListenState('blocked')}else if(ev.error!=='no-speech'&&ev.error!=='aborted')recFails++};
+ me.onerror=ev=>{if(rec!==me)return;lastRecErr=ev.error;if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){wantListen=false;onListenState&&onListenState('blocked')}
+  else if(ev.error==='language-not-supported'||ev.error==='audio-capture'){wantListen=false;onListenState&&onListenState(ev.error)}
+  else if(ev.error!=='no-speech'&&ev.error!=='aborted')recFails++};
  me.onend=()=>{if(rec!==me)return;recLive=false;rec=null;
   if(pend.length>1){const t=pend;pend='';const h=onHeard;h&&h(t)} // words that never became "final" used to be lost
   if(!wantListen||player)return;
   if(Date.now()-recStartAt<1500)recFails++;
-  if(recFails>6){wantListen=false;onListenState&&onListenState('stuck');return}
+  if(recFails>6){wantListen=false;onListenState&&onListenState(lastRecErr==='network'?'network':'stuck');return}
   restartT=setTimeout(()=>{if(wantListen&&!player&&!rec)startListening()},recFails?Math.min(4000,400*recFails):150)};
  try{me.start()}catch(e){rec=null;recLive=false}}
+const LISTEN_WHY={'language-not-supported':'الموبايل مش بيسمع عربي. حدّث تطبيق Google وفعّل العربي في «الكتابة بالصوت»','audio-capture':'المايك مشغول في تطبيق تاني. اقفله ودوس هنا','network':'السماع محتاج نت. اتأكد من النت ودوس هنا'};
 function stopListening(){clearTimeout(restartT);const r=rec;rec=null;recLive=false;const p=r&&r._pend;try{r&&r.abort()}catch(e){}if(p&&p.length>1&&onHeard){r._pend='';onHeard(p)}}
 function resumeListening(){recFails=0;startListening()}
 function haltListening(){wantListen=false;stopListening()}
@@ -733,7 +736,7 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  heardBuf='';clearTimeout(heardTimer);
  onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,2600)};
  onInterim=t=>{if(!T||T.over)return;liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,3500)}};
- onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')setState('think','السماع محتاج Chrome');if(s==='stuck'){setState('think','السماع وقف. دوس هنا عشان أسمع تاني');$('tState').onclick=()=>{$('tState').onclick=null;setState('ok','بسمع اللي قدامك...');resumeListening()}}};
+ onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')setState('think','السماع محتاج Chrome');if(LISTEN_WHY[s]||s==='stuck'){setState('think',LISTEN_WHY[s]||'السماع وقف. دوس هنا عشان أسمع تاني');$('tState').onclick=()=>{$('tState').onclick=null;setState('ok','بسمع اللي قدامك...');resumeListening()}}};
  agent({type:'start'})};
 
 $('tWrite').onclick=()=>{$('tType').classList.toggle('hidden');if(!$('tType').classList.contains('hidden'))$('tInput').focus()};
@@ -826,7 +829,7 @@ $('openFree').onclick=()=>{show('free');drawReplies(DEFAULT_REPLIES,false)};
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent='المايك مقفول ('+ok+'). اسمح بيه من إعدادات المتصفح';return}
  freeOn=true;bumpStat('free');$('freeGo').textContent='⏸ وقف';$('fDot').className='dot';$('fState').textContent='بسمع...';
- onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول';if(s==='stuck'){$('fState').textContent='السماع وقف. دوس هنا';$('fState').onclick=()=>{$('fState').onclick=null;$('fState').textContent='بسمع...';resumeListening()}}};
+ onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول. اسمح بيه من إعدادات المتصفح';if(s==='nosr')$('fState').textContent='السماع محتاج Chrome';if(LISTEN_WHY[s]||s==='stuck'){$('fState').textContent=LISTEN_WHY[s]||'السماع وقف. دوس هنا';$('fState').onclick=()=>{$('fState').onclick=null;$('fState').textContent='بسمع...';resumeListening()}}};
  startListening()};
 $('freeBack').onclick=()=>{freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';onHeard=onInterim=onListenState=null;show('home')};
 $('fSay').onclick=()=>{const t=$('fInput').value.trim();if(t){$('fInput').value='';fSpeak(t)}};
