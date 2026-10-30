@@ -246,7 +246,7 @@ nav svg{width:24px;height:24px}
 <textarea id="goal" class="goal" placeholder="مثلاً: عايز دوا الضغط اللي في الروشتة"></textarea>
 <div class="qgrid hidden" id="quick"></div>
 </details>
-<button class="ordlink" id="openOrder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M12 8v6M9 11h6"/></svg><span><b>مش في الصيدلية؟ اطلب دوا للبيت</b><small>أكتب للصيدلية على واتساب، وأقرالك ردهم</small></span></button>
+<button class="ordlink hidden" id="openOrder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M12 8v6M9 11h6"/></svg><span><b>مش في الصيدلية؟ اطلب دوا للبيت</b><small>أكتب للصيدلية على واتساب، وأقرالك ردهم</small></span></button>
 <div style="flex:1"></div>
 <div class="tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><span>حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.</span></div>
 <button class="btn or startbig" id="startTask">▶ ابدأ</button>
@@ -527,6 +527,7 @@ const PICS=[
  {i:'🏛️',l:'ورق حكومي',sub:[{i:'🪪',l:'البطاقة',g:'عايز أطلع أو أجدد البطاقة'},{i:'📜',l:'شهادة',g:'عايز أطلع شهادة'},{i:'📋',l:'الورق المطلوب',g:'عايز أعرف الورق المطلوب'},{i:'📄',l:'ورقة معايا',cam:'ورقة حكومية'}]}];
 let taskPhoto=null,camHint='صورة',readSeq=0;
 function drawPics(cat){const list=cat?[{i:'↩️',l:'رجوع',back:1},...cat.sub]:PICS;
+ $('openOrder').classList.toggle('hidden',!(cat&&cat.l==='صيدلية'));
  $('pics').innerHTML=list.map(x=>`<button class="pic${x.back?' back':''}${x.cam?' pcam':''}"><i aria-hidden="true">${x.i}</i>${esc(x.l)}</button>`).join('');
  $('pics').querySelectorAll('button').forEach((b,k)=>b.onclick=()=>{const x=list[k];buzz([30]);
   if(x.back)return drawPics(null);if(x.sub)return drawPics(x);if(x.cam){camHint=x.cam;$('camIn').click();return}
