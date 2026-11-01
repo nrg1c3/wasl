@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#13262F">
 <title>جرّب وَصْل</title>
-<link rel="canonical" href="https://nrg1c3.github.io/wasl/join.html">
+<link rel="canonical" href="https://wasl.nrg-egypt.com/join.html">
 <meta name="description" content="سجّل عشان تجرّب وَصْل، تطبيق مجاني بيساعد الصم وضعاف السمع في مشاويرهم.">
 <meta property="og:title" content="جرّب وَصْل — محتاجين 100 مجرّب">
 <meta property="og:description" content="تطبيق مجاني بيتكلم بدالك، ويكتبلك كلام اللي قدامك، ويحوّل رسايل واتساب الصوتية لكلام.">
-<meta property="og:image" content="https://nrg1c3.github.io/wasl/icon-512.png">
+<meta property="og:image" content="https://wasl.nrg-egypt.com/icon-512.png">
 <link rel="icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,7 +103,7 @@ input:focus,select:focus{outline:none;border-color:var(--or)}
 </section>
 </main>
 <script>
-const URL_JOIN='https://2.31.109.72.sslip.io/webhook/wasl-join';
+const URL_JOIN='https://api.nrg-egypt.com/webhook/wasl-join';
 const $=id=>document.getElementById(id);
 ['القاهرة','الجيزة','الإسكندرية','القليوبية','الدقهلية','الشرقية','الغربية','المنوفية','البحيرة','كفر الشيخ','دمياط','بورسعيد','الإسماعيلية','السويس','الفيوم','بني سويف','المنيا','أسيوط','سوهاج','قنا','الأقصر','أسوان','البحر الأحمر','مطروح','الوادي الجديد','شمال سيناء','جنوب سيناء','بره مصر'].forEach(g=>{const o=document.createElement('option');o.value=o.textContent=g;$('gov').appendChild(o)});
 const pick={};
