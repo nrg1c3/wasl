@@ -205,6 +205,16 @@ nav svg{width:24px;height:24px}
 #baText{font-size:clamp(34px,10vw,52px);font-weight:800;line-height:1.2}
 #baSub{font-size:18px;opacity:.9}
 #baOk{min-height:64px;min-width:240px;border:0;border-radius:18px;background:#fff;color:#13262F;font-size:22px;font-weight:800;margin-top:12px}
+.cobadge{align-self:flex-start;display:inline-block;font-size:13px;font-weight:700;color:var(--mute);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px 10px;margin-bottom:8px}
+.qleft{margin:0 0 8px;text-align:center;font-size:15px;font-weight:700;color:var(--ord)}
+.sayfix{display:block;margin-top:4px;background:none;border:0;padding:4px 0;min-height:32px;font-size:13px;font-weight:700;color:var(--mute);text-decoration:underline;text-align:right}
+.ovl{position:fixed;inset:0;z-index:70;background:rgba(19,38,47,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.ovl .card{width:100%;max-width:480px;max-height:85vh;overflow:auto;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.ovl h3{margin:0;font-size:24px;line-height:1.3}
+.wchips{display:flex;flex-wrap:wrap;gap:8px}
+.wchips button{min-height:48px;padding:8px 14px;border-radius:14px;border:2px solid var(--line);background:var(--card);font-size:18px;font-weight:700;color:var(--ink)}
+.wchips button.on{border-color:var(--or);background:var(--orl)}
+.btn:disabled{opacity:.45}
 </style>
 </head>
 <body>
@@ -220,6 +230,7 @@ nav svg{width:24px;height:24px}
 <div class="hbody">
 <div id="instBar" class="hidden" style="display:flex;align-items:center;gap:10px;background:#13262F;color:#fff;border-radius:16px;padding:10px 12px;margin-bottom:10px"><img src="icon-192.png" alt="" width="36" height="36" style="border-radius:9px"><span id="instTxt" style="flex:1;font-weight:700;font-size:15px;line-height:1.4">ثبّت وَصْل على موبايلك، ويشتغل من غير نت</span><button id="instGo" style="background:#E4602A;color:#fff;border:0;border-radius:12px;padding:8px 14px;font:800 15px Cairo,sans-serif">ثبّت</button><button id="instX" aria-label="إخفاء" style="background:none;border:0;color:#BFD3D8;font-size:20px;padding:4px">✕</button></div>
 <button class="alchip" id="alChip"><span class="d"></span><span id="alChipT">تنبيهات الأصوات مقفولة · شغّلها</span></button>
+<div id="coBadge" class="cobadge hidden"></div>
 <div class="stats hidden" id="stats"></div>
 <div id="refills"></div>
 <div id="orderChip"></div>
@@ -249,6 +260,7 @@ nav svg{width:24px;height:24px}
 <button class="ordlink hidden" id="openOrder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M12 8v6M9 11h6"/></svg><span><b>مش في الصيدلية؟ اطلب دوا للبيت</b><small>أكتب للصيدلية على واتساب، وأقرالك ردهم</small></span></button>
 <div style="flex:1"></div>
 <div class="tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><span>حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.</span></div>
+<p class="qleft hidden" id="qLeft" aria-live="polite"></p>
 <button class="btn or startbig" id="startTask">▶ ابدأ</button>
 </div>
 </section>
@@ -266,6 +278,7 @@ nav svg{width:24px;height:24px}
 <div class="field"><label for="pName">الاسم</label><input id="pName" autocomplete="name"></div>
 <div class="field"><label for="pSex">أنا</label><select id="pSex"><option value="m">راجل</option><option value="f">ست / بنت</option></select></div>
 <div class="field"><label for="pVoice">وصل يتكلم بصوت</label><select id="pVoice"><option value="auto">زيّي (حسب أنا راجل ولا ست)</option><option value="f">ست</option><option value="m">راجل</option></select></div>
+<div class="field"><label for="pRate">سرعة صوت وصل</label><select id="pRate"><option value="1">هادي</option><option value="1.15">عادي</option><option value="1.3">أسرع</option></select></div>
 <div class="field"><label for="pMem">وصل يفتكر مهامك اللي فاتت</label><select id="pMem"><option value="on">أيوه، عشان يقولي «زي المرة اللي فاتت؟»</option><option value="off">لأ</option></select></div>
 <div class="field"><label for="pAll">حساسية من أدوية أو أكل</label><input id="pAll" placeholder="مثلاً: البنسلين"></div>
 <div class="field"><label for="pIns">التأمين الصحي</label><input id="pIns" placeholder="مثلاً: مفيش، أو اسم الشركة"></div>
@@ -279,6 +292,14 @@ nav svg{width:24px;height:24px}
 <div class="row"><div class="field"><label for="pC2n">رقم طوارئ 2: الاسم</label><input id="pC2n"></div><div class="field"><label for="pC2p">الرقم</label><input id="pC2p" type="tel" inputmode="tel"></div></div>
 <button class="btn" id="saveMe">احفظ</button>
 <div class="note" id="savedNote"></div>
+</div>
+<div class="card" id="coCard">
+<b>كود الشركة أو الجمعية</b>
+<p class="lead" id="coLead">لو شغلك أو جمعيتك إدّتك كود، اكتبه هنا.</p>
+<div class="field"><label for="coCode">الكود</label><input id="coCode" autocomplete="off" autocapitalize="characters" dir="ltr" placeholder="NRG-2026"></div>
+<button class="btn ghost" id="coGo">فعّل الكود</button>
+<div class="note" id="coNote" aria-live="polite"></div>
+<p class="lead" id="qLine"></p>
 </div>
 <div class="card">
 <b>الخصوصية</b>
@@ -467,6 +488,22 @@ nav svg{width:24px;height:24px}
 <div id="readOv" role="status"><img id="readImg" alt=""><b id="readT">بقرا الصورة...</b><button class="btn ghost" id="readCancel" style="min-width:160px">إلغاء</button></div>
 <div id="paySheet" role="dialog" aria-label="طريقة الدفع"><div class="pbox"><b>هتدفع إزاي؟</b><small>وصل هيقول طريقة الدفع للي قدامك</small><div class="pgrid" id="payOpts"></div><button class="pclose" id="payClose">إلغاء</button></div></div>
 
+<div id="quotaBox" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="qbTitle"><div class="card">
+<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D97A2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg>
+<h3 id="qbTitle">خلصت مهام الشهر ده</h3>
+<p class="lead" id="qbText" style="font-size:17px;color:var(--ink)"></p>
+<p class="lead">الترجمة والطوارئ شغالين عادي في أي وقت.</p>
+<button class="btn" id="qbFree">افتح الترجمة</button>
+<button class="btn ghost" id="qbOk">تمام</button>
+</div></div>
+<div id="sayFix" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="sfTitle"><div class="card">
+<h3 id="sfTitle">أنهي كلمة اتنطقت غلط؟</h3>
+<p class="lead">اللي قدامك ممكن يشاورلك عليها. دوس على الكلمة، وهنبعتها هي والجملة لفريق وصل عشان نصلّح نطقها. مش هيتبعت أي حاجة تانية.</p>
+<div class="wchips" id="sfWords"></div>
+<button class="btn" id="sfSend" disabled>ابعت</button>
+<button class="btn ghost" id="sfCancel">إلغاء</button>
+<div class="note" id="sfNote" aria-live="polite"></div>
+</div></div>
 <script>
 const $=id=>document.getElementById(id);
 // The one place that says where Wasl's server is. Moving servers = change this line.
@@ -476,10 +513,12 @@ const REPLY_URL=API_BASE+'wasl-replies';
 const TTS_URL=API_BASE+'wasl-tts';
 const API_K='wasl-nrg-2026'; // identifies the app; the server also checks the site address and limits requests per device
 const VISION_URL=API_BASE+'wasl-vision';
+const QUOTA_URL=API_BASE+'wasl-quota';
+const SAYFIX_URL=API_BASE+'wasl-say-report';
 // One way to call the server: adds the app key, gives up after ms, and treats any refusal as a failure.
 async function postJSON(url,body,ms){const ac=new AbortController();const to=setTimeout(()=>ac.abort(),ms);
  try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:API_K},body)),signal:ac.signal});
-  if(!r.ok)throw new Error('http '+r.status);return await r.json()}finally{clearTimeout(to)}}
+  if(!r.ok){const e=new Error('http '+r.status);e.status=r.status;try{e.data=await r.json();e.why=e.data&&e.data.why}catch(_){}throw e}return await r.json()}finally{clearTimeout(to)}}
 // Per-phone token: the server signs one for this phone and limits each phone per day.
 // Every call to the server gets it added automatically; a rejected token is renewed once.
 (function(){
@@ -516,7 +555,7 @@ $('lang').onchange=()=>{LANG=$('lang').value;store.set('wasl_lang',LANG)};
 
 /* ---------- screens & tabs ---------- */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='home'&&typeof drawStats==='function'){drawStats();drawRefills();if(typeof drawOrderChip==='function')drawOrderChip()}if(id==='mytasks'&&typeof drawKpis==='function')drawKpis()}
-$('bigTalk').onclick=()=>{drawPics(null);taskPhoto=null;$('goal').value='';show('talk')};
+$('bigTalk').onclick=()=>{drawPics(null);taskPhoto=null;$('goal').value='';show('talk');quotaGet()};
 /* ---------- choose by pictures (no reading needed) ---------- */
 const PICS=[
  {i:'💊',l:'صيدلية',sub:[{i:'📄',l:'أصرف روشتة',cam:'روشتة'},{i:'📦',l:'دوا معايا علبته',cam:'علبة دوا'},{i:'🤕',l:'مسكن للصداع',g:'عايز مسكن للصداع'},{i:'🤧',l:'دوا للبرد',g:'عايز دوا للبرد والكحة'}]},
@@ -544,21 +583,23 @@ $('camIn').onchange=async()=>{const f=$('camIn').files[0];$('camIn').value='';if
  catch(e){if(my===readSeq)$('readT').textContent='النت ضعيف. جرّب تاني.'}};
 $('readCancel').onclick=()=>{readSeq++;$('readOv').style.display='none'};
 $('talkBack').onclick=()=>show('home');
-$('openMe').onclick=()=>{loadMe();show('me')};$('meBack').onclick=()=>show('home');
+$('openMe').onclick=()=>{loadMe();$('coNote').textContent='';show('me');quotaGet()};$('meBack').onclick=()=>show('home');
 $('openTasks').onclick=()=>{drawTasks();try{const d=statsData();$('fbLink').href='feedback.html?t='+d.done+'&u='+d.up+'&d='+(d.rated-d.up)}catch(e){}show('mytasks')};$('tasksBack').onclick=()=>show('home');
 $('alChip').onclick=()=>$('openAlerts').click();
 function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').textContent=alOn?'تنبيهات الأصوات شغالة':'تنبيهات الأصوات مقفولة · شغّلها'}
 
 /* ---------- profile ---------- */
-const PF={pName:'name',pSex:'sex',pVoice:'voice',pMem:'mem',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
+const PF={pName:'name',pSex:'sex',pVoice:'voice',pRate:'rate',pMem:'mem',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return DEMO?DEMO.profile:store.get('wasl_profile',{})}
 try{if(!localStorage.getItem('wasl_vmig')){const p=store.get('wasl_profile',null);if(p&&p.voice==='f'){p.voice='auto';store.set('wasl_profile',p)}localStorage.setItem('wasl_vmig','1')}}catch(e){}
 function taskMemory(){if(DEMO||profile().mem==='off')return[];return store.get('wasl_tasks',[]).filter(x=>x.summary).slice(-5).reverse().map(x=>({d:x.date||'',t:String(x.title||'').slice(0,60),s:String(x.summary).slice(0,220)}))}
 function taskProfile(){const p=profile(),o={};['name','sex','address','allergies','insurance','notes'].forEach(k=>{if(p[k])o[k]=p[k]});return o}
 /* Wasl's voice matches the user by default, so a man is never spoken for in a woman's voice unless he picks it. */
 function vg(){const p=profile();return p.voice==='m'||p.voice==='f'?p.voice:(p.sex==='f'?'f':'m')}
+/* How fast Wasl speaks, picked in بياناتي. Pitch stays the same. */
+function vRate(){const r=parseFloat(profile().rate);return r>=0.8&&r<=1.6?r:1.15}
 function voiceName(){const m=vg()==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
-function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='auto';if(!$('pMem').value)$('pMem').value='on';if(!$('pSex').value)$('pSex').value='m'}
+function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='auto';if(!$('pRate').value)$('pRate').value='1.15';if(!$('pMem').value)$('pMem').value='on';if(!$('pSex').value)$('pSex').value='m'}
 $('wipeMe').onclick=()=>{if(!confirm('هتتمسح بياناتك ومهامك وإشاراتك من الموبايل ده. متأكد؟'))return;try{Object.keys(localStorage).filter(k=>k.startsWith('wasl_')||k==='signs').forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()};
 $('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent='اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.'};
 
@@ -591,10 +632,10 @@ async function speak(t,done,o){t=mascTTS(String(t||'').replace('✨','').trim())
  const finish=()=>{player=null;done&&done()};
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),13000);
   const blob=await ttsBlob(t,vl,g,!!DEMO,ac.signal);clearTimeout(to);
-  const url=URL.createObjectURL(blob);player=AUD;AUD.src=url;
+  const url=URL.createObjectURL(blob);player=AUD;AUD.defaultPlaybackRate=vRate();AUD.src=url;AUD.playbackRate=vRate();
   AUD.onended=()=>{URL.revokeObjectURL(url);finish()};AUD.onerror=()=>finish();
   await AUD.play();return}catch(e){}
- try{const u=new SpeechSynthesisUtterance(t);u.lang=vl;u.rate=1.1;const bv=bestVoice(vl);if(bv)u.voice=bv;u.onend=finish;u.onerror=finish;player={pause(){speechSynthesis.cancel()}};speechSynthesis.speak(u)}catch(e){finish()}}
+ try{const u=new SpeechSynthesisUtterance(t);u.lang=vl;u.rate=Math.round(vRate()/1.15*110)/100;const bv=bestVoice(vl);if(bv)u.voice=bv;u.onend=finish;u.onerror=finish;player={pause(){speechSynthesis.cancel()}};speechSynthesis.speak(u)}catch(e){finish()}}
 
 /* ---------- audio: listening ---------- */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -641,7 +682,40 @@ addEventListener('resize',()=>{try{fitHear()}catch(e){}});
 function setState(kind,text){$('tDot').className='dot'+(kind==='think'?' think':kind==='talk'?' talk':'');$('tState').textContent=text}
 function logMsg(role,text){if(!text)return;const d=document.createElement('div');d.className='msg '+(role==='hearing'?'h':role==='wasl'?'w':'u');
  d.innerHTML='<b>'+(role==='hearing'?'اللي قدامك':role==='wasl'?'وصل قال':'إنت قررت')+'</b>'+nums(text);
+ if(role==='wasl'&&!DEMO){const fb=document.createElement('button');fb.className='sayfix';fb.type='button';fb.textContent='كلمة اتنطقت غلط؟';fb.onclick=()=>sayFixOpen(text);d.appendChild(fb)}
  const log=$('tLog');log.appendChild(d);while(log.children.length>4)log.removeChild(log.firstChild);$('tbody').scrollTop=$('tbody').scrollHeight}
+/* ---------- monthly tasks: 30 free a month per phone (or the company's number). Translation and SOS are never counted. ---------- */
+let QS=null;
+async function quotaGet(ms){if(DEMO)return null;try{const q=await postJSON(QUOTA_URL,{op:'status'},ms||5000);if(q&&typeof q.left==='number'){QS=q;quotaDraw();return q}}catch(e){if(e&&e.data&&typeof e.data.left==='number'){QS=e.data;quotaDraw();return QS}}return null}
+function arDate(iso){try{return new Date(String(iso)+'T12:00:00').toLocaleDateString('ar-EG-u-nu-latn',{day:'numeric',month:'long'})}catch(e){return String(iso||'')}}
+function quotaDraw(){const q=QS;if(q)store.set('wasl_company',q.company||'');const co=q?(q.company||''):store.get('wasl_company','');
+ $('coBadge').textContent=co?'وَصْل مقدَّم من '+co:'';$('coBadge').classList.toggle('hidden',!co);
+ $('coLead').textContent=co?'الموبايل ده متفعّل مع '+co+'.':'لو شغلك أو جمعيتك إدّتك كود، اكتبه هنا.';
+ if(!q)return;
+ $('qLeft').textContent=q.left===0?'خلصت مهام الشهر ده':'فاضلك '+q.left+' مهمة الشهر ده';$('qLeft').classList.toggle('hidden',q.left>5);
+ $('qLine').textContent='مهامك الشهر ده: '+q.used+' من '+q.limit+'. بتتجدد يوم '+arDate(q.renews)+'. الترجمة والطوارئ مش بيتحسبوا.'}
+function quotaShow(q){q=q||QS||{};const n=q.limit||30,co=q.company||'';
+ $('qbText').textContent=(co?'استخدمت الـ '+n+' مهمة بتوعك مع '+co+' الشهر ده.':'استخدمت الـ '+n+' مهمة المجانية بتاعة الشهر ده.')+(q.renews?' هيرجعوا تاني يوم '+arDate(q.renews)+'.':'');
+ $('quotaBox').classList.remove('hidden');buzz([200,100,200])}
+$('qbOk').onclick=()=>$('quotaBox').classList.add('hidden');
+$('qbFree').onclick=()=>{$('quotaBox').classList.add('hidden');$('openFree').click()};
+$('coGo').onclick=async()=>{const c=$('coCode').value.trim();if(!c){$('coCode').focus();return}$('coNote').textContent='بتأكد من الكود...';$('coGo').disabled=true;
+ try{const r=await postJSON(QUOTA_URL,{op:'join',code:c},8000);QS=r;quotaDraw();$('coNote').textContent='اتفعّل ✓ الموبايل ده بقى مع '+(r.company||'الجهة دي')+'.';$('coCode').value=''}
+ catch(e){const W={code:'الكود ده مش صح. اتأكد منه واكتبه تاني.',expired:'اشتراك الكود ده خلص. كلّم الجهة اللي إدّتك الكود.',full:'الكود ده وصل لأقصى عدد موبايلات. كلّم الجهة اللي إدّتك الكود.',tries:'جربت كتير. استنى ساعة وجرّب تاني.',nodevice:'مقدرتش أتأكد من الموبايل. جرّب تاني بعد شوية.'};$('coNote').textContent=(e&&W[e.why])||'النت ضعيف. جرّب تاني.'}
+ finally{$('coGo').disabled=false}};
+quotaDraw();setTimeout(()=>quotaGet(),1500);
+
+/* ---------- "a word was said wrong": the user taps the word, it goes to the team to fix the pronunciation list ---------- */
+let SF=null;
+function sayFixOpen(text){const words=[...new Set(String(text).replace(/[،,.؟?!:"«»()]/g,' ').split(/\s+/).filter(w=>w.length>1))].slice(0,40);
+ SF={text:String(text),word:''};$('sfWords').innerHTML=words.map(w=>'<button type="button">'+esc(w)+'</button>').join('');
+ $('sfWords').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{SF.word=words[i];$('sfWords').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));$('sfSend').disabled=false});
+ $('sfSend').disabled=true;$('sfNote').textContent='';$('sayFix').classList.remove('hidden')}
+$('sfCancel').onclick=()=>$('sayFix').classList.add('hidden');
+$('sfSend').onclick=async()=>{if(!SF||!SF.word)return;$('sfNote').textContent='ببعت...';$('sfSend').disabled=true;
+ try{await postJSON(SAYFIX_URL,{word:SF.word,sentence:SF.text.slice(0,300),lang:LANG},8000);$('sfNote').textContent='وصل ✓ شكراً. هنصلّح نطقها.';setTimeout(()=>$('sayFix').classList.add('hidden'),1500)}
+ catch(e){$('sfNote').textContent='مقدرتش أبعت دلوقتي. جرّب تاني.';$('sfSend').disabled=false}};
+
 /* ---------- picture cards (for users who don't read well) ---------- */
 const CARD={
  price:{l:'السعر',c:'#C9501E',s:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/>'},
@@ -684,7 +758,7 @@ function playFiller(){if(DEMO||!T||T.over||!fillWanted||player||fillP||Date.now(
  lastFill=Date.now();const l=fillers(),t=mascTTS(l[Math.floor(Math.random()*l.length)]);
  fillP=(async()=>{try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),2500);const b=await ttsBlob(t,LANG,vg(),true,ac.signal);clearTimeout(to);
   if(!T||T.over||!fillWanted||player)return;stopListening();setHear('لحظة واحدة',t,'وصل بيجهّز الرد.');
-  const url=URL.createObjectURL(b);AUD.src=url;await new Promise(res=>{AUD.onended=AUD.onerror=res;const pl=AUD.play();if(pl)pl.catch(res)});URL.revokeObjectURL(url);
+  const url=URL.createObjectURL(b);AUD.defaultPlaybackRate=vRate();AUD.src=url;AUD.playbackRate=vRate();await new Promise(res=>{AUD.onended=AUD.onerror=res;const pl=AUD.play();if(pl)pl.catch(res)});URL.revokeObjectURL(url);
   if(T&&!T.over&&fillWanted)startListening()}catch(e){}finally{fillP=null}})()}
 function flushHeard(){heardTimer=null;if(!T||T.over||!heardBuf.trim())return;const t=heardBuf.trim();heardBuf='';T.history.push({role:'hearing',text:t});logMsg('hearing',t);
  if(!$('tDecide').classList.contains('hidden'))return;agent({type:'heard',text:t})}
@@ -692,7 +766,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
  let d=null;
  try{if(DEMO){await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{if(event.type==='heard'){fillWanted=true;var ft=setTimeout(playFiller,2800)}
-  d=await postJSON(AGENT_URL,{goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:vg()},20000)}}catch(e){}
+  d=await postJSON(AGENT_URL,{goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:vg()},20000)}}catch(e){if(e&&e.why==='quota'){if(typeof ft!=='undefined')clearTimeout(ft);fillWanted=false;T.over=true;stopListening();show('home');quotaShow(e.data);return}}
  if(typeof ft!=='undefined')clearTimeout(ft);fillWanted=false;const filled=!!fillP||Date.now()-lastFill<8000;if(fillP)await fillP;
  if(filled&&d&&typeof d.say==='string')d.say=d.say.replace(/^\s*(لحظة|ثانية) (واحدة|بس)( لو سمحت| من فضلك)?[،,.]\s*/,''); // don't repeat "one moment" right after the filler
  if(!T||my!==T.seq||T.over)return;
@@ -731,10 +805,11 @@ let lastTid=null;
 function saveTask(summary){if(DEMO){lastTid=null;return}const t=store.get('wasl_tasks',[]);lastTid=Date.now();t.push({...((T&&T.rate)||{}),id:lastTid,done:!!summary,title:T.title||T.goal,goal:T.goal,summary:summary||'',date:new Date().toLocaleString('ar-EG-u-nu-latn',{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
 
 $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('goal').focus();return}
+ if(!DEMO){const q=await quotaGet(4000);if(q&&q.left===0){quotaShow(q);return}}
  if(!DEMO&&!store.get('wasl_consent',false)){if(!confirm('قبل أول مهمة:\n\nعشان وصل يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي وصل هيقولها بتتبعت لخدمة الصوت (ElevenLabs).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟'))return;store.set('wasl_consent',true)}
  if(alOn){stopAlerts(true);drawAlChip()}
  const ok=DEMO?true:await micOk();if(ok!==true){alert('وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ('+ok+')');return}
- T={goal,history:[],seq:0,over:false,title:goal,lastSaid:''};lastTid=null;refillMed='';lastMap='';prefetchFillers();
+ T={goal,history:[],seq:0,over:false,title:goal,lastSaid:'',tid:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)};lastTid=null;refillMed='';lastMap='';prefetchFillers();
  $('tTitle').textContent=goal;$('tLog').innerHTML='';if(taskPhoto){$('hPhoto').src=taskPhoto;$('hPhoto').classList.remove('hidden')}else $('hPhoto').classList.add('hidden');drawProg({n:1,total:3});liveCap('',false);$('tLiveLab').textContent='كلام اللي قدامك هيظهر هنا';drawCards('tCards',[]);
  ['tDecide','tSum','tType'].forEach(id=>$(id).classList.add('hidden'));$('tFoot').classList.remove('hidden');
  setHear('وصل','أهلاً بيك','صاحب الموبايل أصم، وأنا مساعده.');show('task');
@@ -742,7 +817,7 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,2600)};
  onInterim=t=>{if(!T||T.over)return;liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,3500)}};
  onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')setState('think','السماع محتاج Chrome');if(LISTEN_WHY[s]||s==='stuck'){setState('think',LISTEN_WHY[s]||'السماع وقف. دوس هنا عشان أسمع تاني');$('tState').onclick=()=>{$('tState').onclick=null;setState('ok','بسمع اللي قدامك...');resumeListening()}}};
- agent({type:'start'})};
+ agent({type:'start',tid:T.tid})};
 
 $('tWrite').onclick=()=>{$('tType').classList.toggle('hidden');if(!$('tType').classList.contains('hidden'))$('tInput').focus()};
 let typeFor='';
@@ -1080,13 +1155,14 @@ $('oCam').onclick=()=>$('oCamIn').click();
 $('oCamIn').onchange=async()=>{const f=$('oCamIn').files[0];$('oCamIn').value='';if(!f)return;let data;try{data=await shrink(f)}catch(e){return}
  oBusy('بقرا الروشتة...');try{const d=await postJSON(VISION_URL,{image:data,hint:'روشتة عايز أطلبها من الصيدلية',lang:LANG},25000);oBusy('');
   if(!d.goal||d.clear===false){alert('الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.');return}$('oGoal').value=d.goal}catch(e){oBusy('');alert('النت ضعيف. جرّب تاني.')}};
-$('oStart').onclick=()=>{const goal=$('oGoal').value.trim(),name=$('oPhName').value.trim()||'الصيدلية',num=$('oPhNum').value.trim();
+$('oStart').onclick=async()=>{const goal=$('oGoal').value.trim(),name=$('oPhName').value.trim()||'الصيدلية',num=$('oPhNum').value.trim();
  if(!goal){$('oGoal').focus();$('oGoal').placeholder='اكتب الدوا الأول، أو صوّر الروشتة';return}
  if(num&&waNum(num).length<10){alert('رقم الصيدلية مش مظبوط. اكتبه زي 01xxxxxxxxx');return}
+ {const q=await quotaGet(4000);if(q&&q.left===0){quotaShow(q);return}}
  if(!store.get('wasl_consent_order',false)){if(!confirm('قبل أول طلب:\n\nعشان وصل يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (ElevenLabs).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟'))return;store.set('wasl_consent_order',true)}
  if(num){const ps=oPhones().filter(x=>waNum(x.num)!==waNum(num));ps.push({name,num});store.set('wasl_pharmacies',ps.slice(-8))}
  const o={id:Date.now(),pharmacy:name,num,goal,address:$('oAddr').value.trim(),thread:[],state:'setup',title:goal.slice(0,40),created:Date.now()};
- oSave(o);oDraw();oStep({type:'start'})};
+ oSave(o);oDraw();oStep({type:'start',tid:'o'+o.id})};
 $('oDemo').onclick=()=>{const p=profile();OD={step:0,o:{id:1,demo:true,pharmacy:'صيدلية الشفاء (تجريبي)',num:'',goal:'علبة كونكور 5 مجم',address:p.address||'15 شارع 9، المعادي، الدور التالت',thread:[],state:'setup',title:'كونكور 5 مجم'}};oDraw();oStep({type:'start'})};
 
 /* ---------- the conversation ---------- */
@@ -1111,7 +1187,8 @@ async function oStep(ev){const o=oCur();if(!o)return;oBusy(ev.type==='reply'?'ب
  let d=null;
  if(o.demo){await new Promise(r=>setTimeout(r,900));d=oDemoStep(ev,o)}
  else{const p=taskProfile();const body={k:API_K,profile:p,order:{pharmacy:o.pharmacy,goal:o.goal,address:o.address,thread:o.thread.slice(-24).map(m=>({from:m.from,text:m.text}))},event:ev};
-  for(let i=0;i<2&&!d;i++){try{const j=await postJSON(WA_URL,body,45000);if(j&&!j.error)d=j}catch(e){}}}
+  let qd=null;for(let i=0;i<2&&!d&&!qd;i++){try{const j=await postJSON(WA_URL,body,45000);if(j&&!j.error)d=j}catch(e){if(e&&e.why==='quota')qd=e.data||{}}}
+  if(qd){oBusy('');o.state='cancel';oSave(o);OD=null;show('home');quotaShow(qd);return}}
  oBusy('');
  if(!d){alert('النت ضعيف ومقدرتش أكمّل. جرّب تاني.');oDraw();return}
  Object.assign(o,{state:d.state||'wait',draft:d.message||'',explain:d.explain||'',question:d.question||'',options:d.options||[],cards:d.cards||[]});
