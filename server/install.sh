@@ -137,6 +137,10 @@ volumes:
   caddy_config:
 EOF
 
+# domains.sh manages the Caddyfile once real domains are added; don't overwrite its work.
+if [ -f Caddyfile ] && grep -q 'managed by domains.sh' Caddyfile; then
+  say "Keeping the web server settings made by domains.sh"
+else
 cat > Caddyfile <<'EOF'
 {$DOMAIN} {
 	encode gzip
@@ -145,6 +149,7 @@ cat > Caddyfile <<'EOF'
 	}
 }
 EOF
+fi
 
 say "6/7 Daily backup at 3:30 AM Cairo time (keeps the last 14 days)"
 cat > backup.sh <<'EOF'

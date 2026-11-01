@@ -1,0 +1,30 @@
+# Short links for NRG projects, served by the NRG server (domains.sh reads this file).
+# One line per link:   host   path   where-it-goes
+# "/" is the address itself and also catches any other path on that host.
+# Each host needs a DNS A record pointing at the server (2.31.109.72) before it works.
+# After editing, run on the server:
+#   curl -fsSL https://raw.githubusercontent.com/nrg1c3/wasl/main/server/domains.sh | bash
+
+# Basata: shift closing and attendance pages for branch staff
+basata.nrg-egypt.com      /             https://api.nrg-egypt.com/webhook/basata-sheet
+basata.nrg-egypt.com      /closing      https://api.nrg-egypt.com/webhook/basata-sheet
+basata.nrg-egypt.com      /attendance   https://api.nrg-egypt.com/webhook/basata-attendance
+
+# Grand Padel: public booking chat, and the staff forms
+padel.nrg-egypt.com       /             https://api.nrg-egypt.com/webhook/5014eaed-9472-4f9d-9381-3d44c8b681c2/chat
+padel.nrg-egypt.com       /log          https://api.nrg-egypt.com/form/00de89d7-c894-45c0-b6cd-4eb51b181880
+padel.nrg-egypt.com       /screenshot   https://api.nrg-egypt.com/form/475ce379-43da-4a21-b592-ff74e4f566ae
+padel.nrg-egypt.com       /showed       https://api.nrg-egypt.com/form/5b02657e-65fe-4219-995f-f18630421199
+padel.nrg-egypt.com       /report       https://api.nrg-egypt.com/form/051242b3-30ea-4fc6-9795-a96eff7c5957
+
+# Owners' associations (عمارتنا): app for residents, treasurer forms, resident chat
+oa.nrg-egypt.com          /             https://api.nrg-egypt.com/webhook/omara
+oa.nrg-egypt.com          /payment      https://api.nrg-egypt.com/form/oa-payment
+oa.nrg-egypt.com          /expense      https://api.nrg-egypt.com/form/oa-expense
+oa.nrg-egypt.com          /chat         https://api.nrg-egypt.com/webhook/075883eb-3a24-4472-962a-02cdb3bac3cc/chat
+
+# Shaghlana: worker sign-up page (the internal job-order form stays unlisted on purpose)
+shaghlana.nrg-egypt.com   /             https://api.nrg-egypt.com/webhook/shaghlana
+
+# Sanady: the app stays on GitHub Pages for now (moving it would wipe data saved on phones)
+sanady.nrg-egypt.com      /             https://nrg1c3.github.io/Sanady/
