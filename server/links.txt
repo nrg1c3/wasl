@@ -5,10 +5,10 @@
 # After editing, run on the server:
 #   curl -fsSL https://raw.githubusercontent.com/nrg1c3/wasl/main/server/domains.sh | bash
 
-# Basata: shift closing and attendance pages for branch staff
-basata.nrg-egypt.com      /             https://api.nrg-egypt.com/webhook/basata-sheet
-basata.nrg-egypt.com      /closing      https://api.nrg-egypt.com/webhook/basata-sheet
-basata.nrg-egypt.com      /attendance   https://api.nrg-egypt.com/webhook/basata-attendance
+# Basata (C3 Egypt): shift closing and attendance pages for branch staff
+c3.nrg-egypt.com          /             https://api.nrg-egypt.com/webhook/basata-sheet
+c3.nrg-egypt.com          /closing      https://api.nrg-egypt.com/webhook/basata-sheet
+c3.nrg-egypt.com          /attendance   https://api.nrg-egypt.com/webhook/basata-attendance
 
 # Grand Padel: public booking chat, and the staff forms
 padel.nrg-egypt.com       /             https://api.nrg-egypt.com/webhook/5014eaed-9472-4f9d-9381-3d44c8b681c2/chat
