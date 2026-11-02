@@ -15,7 +15,7 @@ function go(){fetch('https://'+l.host+'/manifest.webmanifest',{mode:'no-cors',ca
 <meta name="apple-mobile-web-app-title" content="وَصْل">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>وَصْل | Wasl</title>
-<meta name="description" content="وَصْل: تطبيق مجاني للصم وضعاف السمع في مصر. اكتب اللي عايزه ووَصْل يقوله بصوت مصري، وكلام اللي قدامك يظهرلك مكتوب.">
+<meta name="description" content="وَصْل بيتكلم بدالك ويخلّص المهمة: تطبيق مجاني للصم وضعاف السمع في مصر. اكتب اللي عايزه ووَصْل يقوله بصوت مصري، وكلام اللي قدامك يظهرلك مكتوب.">
 <link rel="canonical" href="https://wasl.nrg-egypt.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='30' fill='%2313262F'/%3E%3Crect x='22' y='44' width='11' height='32' rx='5.5' fill='%23E4602A'/%3E%3Crect x='39' y='30' width='11' height='60' rx='5.5' fill='%23E4602A'/%3E%3Crect x='56' y='48' width='11' height='24' rx='5.5' fill='%23E4602A'/%3E%3Crect x='74' y='40' width='26' height='10' rx='5' fill='white'/%3E%3Crect x='74' y='55' width='19' height='10' rx='5' fill='white'/%3E%3Crect x='74' y='70' width='23' height='10' rx='5' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -219,15 +219,36 @@ nav svg{width:24px;height:24px}
 .wchips button{min-height:48px;padding:8px 14px;border-radius:14px;border:2px solid var(--line);background:var(--card);font-size:18px;font-weight:700;color:var(--ink)}
 .wchips button.on{border-color:var(--or);background:var(--orl)}
 .btn:disabled{opacity:.45}
+/* offline banner, first-run screen, confirm-before-speaking, SOS note */
+#offBar{position:fixed;top:0;left:0;right:0;z-index:28;background:#6B5400;color:#fff;padding:calc(5px + env(safe-area-inset-top)) 12px 5px;font-size:13.5px;font-weight:600;line-height:1.45;display:none}
+#offBar b{font-size:14.5px;font-weight:800}#offBar p{margin:0}
+html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
+#welcome .card{gap:10px}#welcome ul{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:8px;font-size:17px;line-height:1.55}#welcome a{color:#8F4612;font-weight:800}
+.wsos{min-height:48px;border:2px solid #B3261E;border-radius:14px;background:#fff;color:#B3261E;font-size:16px;font-weight:800}
+.okline{margin:0;font-size:20px;font-weight:800;line-height:1.55;background:var(--orl);border-radius:12px;padding:10px 12px}
+#tOkNo{background:var(--bg);color:var(--ink);border:2px solid var(--line)}
+.sosnote{margin:0;background:#FBE6D4;color:#5A2A08;border-radius:14px;padding:10px 12px;font-size:15px;font-weight:700;line-height:1.6}
 </style>
 </head>
 <body>
+<div id="offBar" role="status" aria-live="polite"><p><b>مفيش نت.</b> شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.</p><p>مش شغّال: «اتكلم بدالي»، والردود الذكية، والسماع، والصوت المصري.</p></div>
+<div id="welcome" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="wTitle"><div class="card">
+<h3 id="wTitle">أهلاً بيك في وَصْل</h3>
+<ul>
+<li>وَصْل <b>مجاني</b>.</li>
+<li>كلامك <b>مش بيتسجل</b>. بيعدّي بس على الخدمات اللي بتشغّل وصل. <a href="privacy.html">اقرا الخصوصية</a></li>
+<li>الطوارئ في وصل <b>مساعدة</b>، مش بديل عن الإسعاف والشرطة.</li>
+<li>لو سنك <b>أقل من 18</b>، لازم أهلك يوافقوا.</li>
+</ul>
+<button class="btn or" id="wOk">فهمت، يلا بينا</button>
+<button class="wsos" id="wSos">🚨 عندي طوارئ دلوقتي</button>
+</div></div>
 
 <!-- ============ HOME ============ -->
 <section id="home" class="screen on" aria-label="الرئيسية">
 <button id="demoFab" class="hidden" style="position:fixed;bottom:96px;left:16px;z-index:40;background:#E4602A;color:#fff;border:0;border-radius:24px;padding:10px 16px;font:800 16px Cairo,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.2)">▶ عرض تجريبي</button>
 <div class="hhead">
-<div class="hbrand"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#13262F"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>وَصْل</b><small>صوتك في كل مكان</small></div></div>
+<div class="hbrand"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#13262F"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>وَصْل</b><small>بيتكلم بدالك ويخلّص المهمة</small></div></div>
 <label class="sr" for="lang">لهجة اللي قدامك</label>
 <select id="lang"><option value="ar-EG">مصري</option><option value="ar-SA">خليجي</option><option value="en-US">English</option></select>
 </div>
@@ -397,6 +418,7 @@ nav svg{width:24px;height:24px}
 <div class="state"><span class="dot" id="tDot"></span><span id="tState">بيبدأ...</span></div>
 <div class="log" id="tLog"></div>
 <div class="decide hidden" id="tDecide"><div class="q" id="tQ"></div><div class="opts" id="tOpts"></div></div>
+<div class="decide hidden" id="tOk" role="alertdialog" aria-labelledby="tOkQ"><div class="q" id="tOkQ">وصل هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:</div><p class="okline" id="tOkT"></p><div class="opts"><button id="tOkYes">قوله</button><button id="tOkNo">لأ، استنى</button></div></div>
 <div class="typerow hidden" id="tType"><label class="sr" for="tInput">اكتب لوصل</label><input id="tInput" placeholder="اكتب اللي عايز وصل يقوله أو يعرفه"><button id="tSend">ابعت</button></div>
 <div class="summary hidden" id="tSum"><b>✓ المهمة خلصت</b><p id="tSumText"></p><div class="rate" id="tRate"><span>وَصْل ساعدك؟</span><button data-r="up" aria-label="ساعدني">👍</button><button data-r="down" aria-label="ماساعدنيش">👎</button></div><div class="refill hidden" id="tRefill" style="background:var(--orl);border-radius:14px;padding:12px;margin:0 0 10px"><b id="tRefQ" style="display:block;margin-bottom:8px"></b><div class="why" id="tRefOpts" style="margin:0"><button data-d="7">أسبوع</button><button data-d="14">أسبوعين</button><button data-d="30">شهر</button><button data-d="0">مش عايز</button></div><p id="tRefOk" class="hidden" style="margin:8px 0 0;font-weight:700"></p><button class="btn ghost hidden" id="tRefCal" style="min-height:44px;font-size:16px;margin-top:8px;width:100%">📅 ضيفه لتقويم الموبايل</button></div>
 <div class="why hidden" id="tWhy"><button>مفهمش اللي قدامي</button><button>بطيء</button><button>الصوت مش واضح</button><button>قال حاجة غلط</button><button>حاجة تانية</button></div><button class="btn ghost" id="tShare" style="margin-bottom:8px">ابعت الملخص</button><button class="btn" id="tHome">رجوع للرئيسية</button></div>
@@ -428,6 +450,7 @@ nav svg{width:24px;height:24px}
 <section id="sos" class="screen" aria-label="الطوارئ">
 <div class="top" style="background:#A3221A"><button class="back" id="sosBack" style="background:#7E1912">→ رجوع</button><b style="font-size:20px">طوارئ</b><span style="width:70px"></span></div>
 <div class="body">
+<p class="sosnote">وصل بيساعدك تطلب المساعدة، لكنه مش بديل عن الإسعاف والشرطة. لو تقدر، اتصل بنفسك أو خلّي حد جنبك يتصل.</p>
 <div id="sosStep1">
 <h2 style="margin-bottom:10px">إيه اللي حصل؟</h2>
 <div class="sosgrid" id="sosTypes"></div>
@@ -630,16 +653,21 @@ async function ttsBlob(t,vl,g,useCache,signal){const key='https://wasl.voice/'+e
  const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,text:t,lang:vl,gender:g}),signal});
  if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;const b=await r.blob();
  if(c){try{await c.put(key,new Response(b,{headers:{'Content-Type':'audio/mpeg'}}))}catch(e){}}return b}
+/* Wasl's Egyptian voice comes from the server. Offline, or when it fails, the phone's own voice says it, so Wasl is never silent.
+   o.fast (SOS): wait for the server at most 4 seconds. */
 async function speak(t,done,o){t=mascTTS(String(t||'').replace('✨','').trim());if(!t){done&&done();return}
  stopListening();try{speechSynthesis.cancel()}catch(e){}if(player){try{player.pause()}catch(e){}}player={pause(){}};
  const vl=DEMO?'ar-EG':(/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':LANG);const g=(o&&o.g)||vg();
  const finish=()=>{player=null;done&&done()};
- try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),13000);
+ const device=()=>{try{const u=new SpeechSynthesisUtterance(t);u.lang=vl;u.rate=Math.round(vRate()/1.15*110)/100;const bv=bestVoice(vl);if(bv)u.voice=bv;u.onend=finish;u.onerror=finish;player={pause(){speechSynthesis.cancel()}};speechSynthesis.speak(u)}catch(e){finish()}};
+ if(navigator.onLine===false&&!DEMO){device();return}
+ try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),o&&o.fast?4000:13000);
   const blob=await ttsBlob(t,vl,g,!!DEMO,ac.signal);clearTimeout(to);
   const url=URL.createObjectURL(blob);player=AUD;AUD.defaultPlaybackRate=vRate();AUD.src=url;AUD.playbackRate=vRate();
-  AUD.onended=()=>{URL.revokeObjectURL(url);finish()};AUD.onerror=()=>finish();
+  let started=false;AUD.onplaying=()=>{started=true};
+  AUD.onended=()=>{URL.revokeObjectURL(url);finish()};AUD.onerror=()=>{URL.revokeObjectURL(url);if(started)finish();else device()};
   await AUD.play();return}catch(e){}
- try{const u=new SpeechSynthesisUtterance(t);u.lang=vl;u.rate=Math.round(vRate()/1.15*110)/100;const bv=bestVoice(vl);if(bv)u.voice=bv;u.onend=finish;u.onerror=finish;player={pause(){speechSynthesis.cancel()}};speechSynthesis.speak(u)}catch(e){finish()}}
+ device()}
 
 /* ---------- audio: listening ---------- */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -670,6 +698,7 @@ function startListening(){if(DEMO)return;if(!SR){onListenState&&onListenState('n
   if(recFails>6){wantListen=false;onListenState&&onListenState(lastRecErr==='network'?'network':'stuck');return}
   restartT=setTimeout(()=>{if(wantListen&&!player&&!rec)startListening()},recFails?Math.min(4000,400*recFails):150)};
  try{me.start()}catch(e){rec=null;recLive=false}}
+const NOSR_MSG='الموبايل ده مش بيسمع الكلام. استخدم Chrome على أندرويد، أو آخر نسخة على الآيفون. الكتابة شغالة عادي.';
 const LISTEN_WHY={'language-not-supported':'الموبايل مش بيسمع عربي. حدّث تطبيق Google وفعّل العربي في «الكتابة بالصوت»','audio-capture':'المايك مشغول في تطبيق تاني. اقفله ودوس هنا','network':'السماع محتاج نت. اتأكد من النت ودوس هنا'};
 function stopListening(){clearTimeout(restartT);const r=rec;rec=null;recLive=false;const p=r&&r._pend;try{r&&r.abort()}catch(e){}if(p&&p.length>1&&onHeard){r._pend='';onHeard(p)}}
 function resumeListening(){recFails=0;startListening()}
@@ -765,9 +794,9 @@ function playFiller(){if(DEMO||!T||T.over||!fillWanted||player||fillP||Date.now(
   const url=URL.createObjectURL(b);AUD.defaultPlaybackRate=vRate();AUD.src=url;AUD.playbackRate=vRate();await new Promise(res=>{AUD.onended=AUD.onerror=res;const pl=AUD.play();if(pl)pl.catch(res)});URL.revokeObjectURL(url);
   if(T&&!T.over&&fillWanted)startListening()}catch(e){}finally{fillP=null}})()}
 function flushHeard(){heardTimer=null;if(!T||T.over||!heardBuf.trim())return;const t=heardBuf.trim();heardBuf='';T.history.push({role:'hearing',text:t});logMsg('hearing',t);
- if(!$('tDecide').classList.contains('hidden'))return;agent({type:'heard',text:t})}
+ if(!$('tDecide').classList.contains('hidden')||!$('tOk').classList.contains('hidden'))return;agent({type:'heard',text:t})}
 async function agent(event){if(!T||T.over)return;const my=++T.seq;
- setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');
+ setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');$('tOk').classList.add('hidden');
  let d=null;
  try{if(DEMO){await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{if(event.type==='heard'){fillWanted=true;var ft=setTimeout(playFiller,2800)}
   d=await postJSON(AGENT_URL,{goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:vg()},20000)}}catch(e){if(e&&e.why==='quota'){if(typeof ft!=='undefined')clearTimeout(ft);fillWanted=false;T.over=true;stopListening();show('home');quotaShow(e.data);return}}
@@ -781,7 +810,8 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  if(d.task_title)$('tTitle').textContent=T.title=d.task_title;
  if(d.step)drawProg(d.step);
  if(d.say&&event.type==='heard'&&d.action==='speak'&&isAck(d.say))d.say='';
- if(d.say){T.history.push({role:'wasl',text:d.say});T.lastSaid=d.say;logMsg('wasl',d.say)}
+ const hold=!!d.say&&d.action!=='ask_user'&&needsOk(d); // numbers, money or medicine: the user checks the line before it is said
+ if(d.say&&!hold){T.history.push({role:'wasl',text:d.say});T.lastSaid=d.say;logMsg('wasl',d.say)}
  if(d.action==='ask_user'){
   buzz([200,100,200]);
   setHear('لحظة واحدة',d.say||'لحظة واحدة، بسأله','صاحب الموبايل بيختار دلوقتي.');
@@ -797,12 +827,20 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
   if(d.say)speak(d.say,()=>{if(T&&!T.over)startListening()});else startListening();$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.action==='done'){
   // The task stays open: only the user ends it with إنهاء. Keep listening and keep the controls.
-  T.summary=d.summary||T.summary||'';buzz([300]);setHear('وصل بيقول',d.say||'شكراً جزيلاً','لو فيه كلام تاني كمّل، ودوس إنهاء لما تخلص.');
+  T.summary=d.summary||T.summary||'';buzz([300]);setHear(hold?'لحظة واحدة':'وصل بيقول',hold?'لحظة واحدة من فضلك':(d.say||'شكراً جزيلاً'),'لو فيه كلام تاني كمّل، ودوس إنهاء لما تخلص.');
   resetRate();if(d.med&&d.med!==refillMed)showRefill(d.med);$('tSumText').innerHTML=nums(T.summary||'المهمة خلصت.');$('tSum').classList.remove('hidden');$('tFoot').classList.remove('hidden');
-  if(d.say){setState('talk','وصل بيتكلم...');speak(d.say,()=>{if(T&&!T.over){setState('ok','بسمع لو فيه كلام تاني · دوس إنهاء لما تخلص');listenForHearing()}})}else listenForHearing();
+  if(d.say){const after=()=>{if(T&&!T.over){setState('ok','بسمع لو فيه كلام تاني · دوس إنهاء لما تخلص');listenForHearing()}};if(hold)holdSay(d.say,after);else{setState('talk','وصل بيتكلم...');speak(d.say,after)}}else listenForHearing();
   $('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(T.summary)$('tSum').classList.add('hidden');
- if(d.say){setState('talk','وصل بيتكلم...');setHear('وصل بيقول',d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
+ if(d.say&&hold)holdSay(d.say,listenForHearing);else if(d.say){setState('talk','وصل بيتكلم...');setHear('وصل بيقول',d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
+/* Lines with numbers, money or medicine are shown to the user first; Wasl says them only after «قوله». */
+function needsOk(d){if(DEMO)return false;const t=String(d.say||'');
+ return /[0-9\u0660-\u0669%٪]|جنيه|جنية|ج\.م|ريال|درهم|دولار|قرش/.test(t)||!!d.med||(d.cards||[]).some(c=>c&&c.k==='dose')}
+function holdSay(t,after){haltListening();buzz([200,100,200]);setHear('لحظة واحدة','لحظة واحدة من فضلك','صاحب الموبايل بيراجع الكلام.');
+ $('tOkT').innerHTML=nums(t);$('tOk').classList.remove('hidden');setState('talk','راجع الجملة، ودوس «قوله»');$('tbody').scrollTop=$('tbody').scrollHeight;
+ $('tOkYes').onclick=()=>{$('tOk').classList.add('hidden');if(!T||T.over)return;T.history.push({role:'wasl',text:t});T.lastSaid=t;logMsg('wasl',t);setHear('وصل بيقول',t,'');setState('talk','وصل بيتكلم...');speak(t,after)};
+ $('tOkNo').onclick=()=>{$('tOk').classList.add('hidden');if(!T||T.over)return;T.history.push({role:'user',text:'(صاحب الموبايل وقّف الجملة دي ومتقالتش: '+t+')'});logMsg('user','وقّفت الجملة، ومتقالتش');
+  setHear('وصل سامعك · اتكلم عادي',T.lastSaid||'لحظة واحدة من فضلك','صاحب الموبايل أصم، وأنا مساعده.');$('tType').classList.remove('hidden');setState('ok','الجملة متقالتش. اكتب اللي عايز وصل يقوله');if(!DEMO)startListening()}}
 function isAck(t){const w=String(t).replace(/[،.!؟?,]/g,' ').trim().split(/\s+/);return w.length<=4&&w.every(x=>/^(ماشي|تمام|طيب|اتفضل|اتفضلي|كمل|كملي|كمّل|أوكي|اوكي|اه|آه|أيوه|ايوه|حاضر|معاك|معاكي|سامعك|سامعاك|و|يا|فندم|حضرتك|ok|okay|sure|go|on)$/i.test(x))}
 
 let lastTid=null;
@@ -820,7 +858,7 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  heardBuf='';clearTimeout(heardTimer);
  onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,2600)};
  onInterim=t=>{if(!T||T.over)return;liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,3500)}};
- onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')setState('think','السماع محتاج Chrome');if(LISTEN_WHY[s]||s==='stuck'){setState('think',LISTEN_WHY[s]||'السماع وقف. دوس هنا عشان أسمع تاني');$('tState').onclick=()=>{$('tState').onclick=null;setState('ok','بسمع اللي قدامك...');resumeListening()}}};
+ onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr'){setState('think',NOSR_MSG);$('tType').classList.remove('hidden')};if(LISTEN_WHY[s]||s==='stuck'){setState('think',LISTEN_WHY[s]||'السماع وقف. دوس هنا عشان أسمع تاني');$('tState').onclick=()=>{$('tState').onclick=null;setState('ok','بسمع اللي قدامك...');resumeListening()}}};
  agent({type:'start',tid:T.tid})};
 
 $('tWrite').onclick=()=>{$('tType').classList.toggle('hidden');if(!$('tType').classList.contains('hidden'))$('tInput').focus()};
@@ -917,7 +955,7 @@ $('openFree').onclick=()=>{show('free');fSid=null;fNoSmart=false;drawReplies(DEF
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent='المايك مقفول ('+ok+'). اسمح بيه من إعدادات المتصفح';return}
  freeOn=true;bumpStat('free');if(!fSid){fSid=Date.now().toString(36);freeCount()}$('freeGo').textContent='⏸ وقف';$('fDot').className='dot';$('fState').textContent=fNoSmart?'خلصت مهام الشهر: الكلام هيفضل يتكتب، من غير ردود ذكية':'بسمع...';
- onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول. اسمح بيه من إعدادات المتصفح';if(s==='nosr')$('fState').textContent='السماع محتاج Chrome';if(LISTEN_WHY[s]||s==='stuck'){$('fState').textContent=LISTEN_WHY[s]||'السماع وقف. دوس هنا';$('fState').onclick=()=>{$('fState').onclick=null;$('fState').textContent='بسمع...';resumeListening()}}};
+ onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول. اسمح بيه من إعدادات المتصفح';if(s==='nosr')$('fState').textContent=NOSR_MSG;if(LISTEN_WHY[s]||s==='stuck'){$('fState').textContent=LISTEN_WHY[s]||'السماع وقف. دوس هنا';$('fState').onclick=()=>{$('fState').onclick=null;$('fState').textContent='بسمع...';resumeListening()}}};
  startListening()};
 $('freeBack').onclick=()=>{freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';onHeard=onInterim=onListenState=null;show('home')};
 $('fSay').onclick=()=>{const t=$('fInput').value.trim();if(t){$('fInput').value='';fSpeak(t)}};
@@ -989,7 +1027,7 @@ $('sosFamily').onclick=()=>{const p=profile();const nums=[p.c1phone,p.c2phone].f
  location.href='sms:'+nums.join(',')+sep+'body='+body};
 $('sosRC').onclick=()=>{window.open('https://wa.me/'+RC_WA+'?text='+encodeURIComponent(sosMessage()),'_blank','noopener')};
 $('sosCall').onclick=()=>{$('sosScript').classList.remove('hidden');buildScript();location.href='tel:'+sosT.num};
-$('sosSpeak').onclick=()=>speak(buildScript());
+$('sosSpeak').onclick=()=>speak(buildScript(),null,{fast:true});
 /* show-to-people board */
 $('sosShow').onclick=()=>{const p=profile();$('sbWhat').textContent=sosT.icon+' '+sosT.ar;$('sbCall').textContent='من فضلك اتصل بـ'+sosT.svc+': '+sosT.num;
  const info=[p.name?'الاسم: '+p.name:'',...medLines(p),p.c1phone?'كلّم '+(p.c1name||'أهلي')+': '+p.c1phone:'',p.address?'العنوان: '+p.address:''].filter(Boolean);
@@ -1132,6 +1170,18 @@ if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='fi
  const go=new URLSearchParams(location.search).get('go');
  if(go==='sos')setTimeout(()=>$('sosBtn').click(),300);if(go==='free')setTimeout(()=>$('openFree').click(),300);
 })();
+/* ================= FIRST RUN + NO NETWORK ================= */
+/* One-time welcome before the first real use. SOS never waits for it. */
+(function(){const ok=()=>store.get('wasl_welcome',false)===true,W=$('welcome');
+ ['bigTalk','openFree'].forEach(id=>{const b=$(id),f=b.onclick;b.onclick=e=>{if(!ok()){W.classList.remove('hidden');$('wOk').focus();return}f&&f.call(b,e)}});
+ const sos=$('sosBtn').onclick;$('sosBtn').onclick=e=>{W.classList.add('hidden');sos&&sos.call($('sosBtn'),e)};
+ $('wOk').onclick=()=>{store.set('wasl_welcome',true);W.classList.add('hidden')};
+ $('wSos').onclick=()=>$('sosBtn').click();
+ if(!ok())W.classList.remove('hidden');
+})();
+/* Offline: a banner on every screen saying what still works. */
+function netDraw(){const off=navigator.onLine===false,h=document.documentElement;h.classList.toggle('off',off);if(off)h.style.setProperty('--offh',$('offBar').offsetHeight+'px')}
+addEventListener('online',netDraw);addEventListener('offline',netDraw);addEventListener('resize',netDraw);netDraw();
 </script>
 <script>
 /* ============ ORDER FROM A PHARMACY ON WHATSAPP ============
