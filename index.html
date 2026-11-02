@@ -316,6 +316,22 @@ html.en:not(.tr) body{visibility:hidden}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.seg button{min-height:52px;border:2px solid var(--line);border-radius:14px;background:var(--bg);font-size:18px;font-weight:800;color:var(--ink)}.seg button[aria-pressed="true"]{border-color:var(--or);background:var(--orl)}
 [dir="ltr"] .sw i{right:auto;left:3px}[dir="ltr"] .psw[aria-checked="true"] .sw i{transform:translateX(26px)}
 .sb-en{display:block;font-size:.5em;margin-top:10px;font-weight:700}.sb-call,.sb-what{white-space:pre-line}.back{white-space:nowrap}.pcard.long b{font-size:18px;line-height:1.25}#sosScriptText{white-space:pre-line}
+/* «مكالمة»: Wasl calls a number for the user and shows the call as text */
+.calllink{border-color:#1F6F80;background:#E1EFF1;color:#1F6F80}.calllink small{color:#25525C}
+#call .cbody{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.cnote{margin:0;font-size:15px;line-height:1.6;font-weight:700;color:var(--ink);background:var(--orl);border-radius:12px;padding:10px 12px}
+.simbadge{font-size:13px;font-weight:800;background:#FFF1C2;color:#5C4300;border:1px solid #D9B84A;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.cerr{margin:0;color:#B3261E;font-weight:700;font-size:15px;line-height:1.5}
+.crecent{display:flex;flex-wrap:wrap;gap:8px}.crecent .chip{direction:ltr}
+.cheard{background:#000;color:#ffd7b0;border-radius:16px;padding:10px 14px;min-height:92px;flex-shrink:0}
+.cheard small{display:block;color:#bdb3a8;font-size:13px;font-weight:700}
+.cheard p{margin:4px 0 0;font-size:clamp(21px,6.2vw,27px);line-height:1.45;font-weight:700;max-height:34vh;overflow-y:auto}
+.csaid{margin:0;font-size:16px;line-height:1.55;background:var(--orl);border-radius:12px;padding:8px 12px}.csaid b{display:block;font-size:12px;opacity:.75}
+#call.asking .cheard{min-height:0}#call.asking .cheard p{font-size:20px;max-height:22vh}#call.asking .csaid{display:none}
+html.pm .cheard p{font-size:clamp(26px,8vw,34px)}html.pm #call.asking .cheard p{font-size:22px}
+html.pm #cOk .opts{grid-template-columns:1fr 1fr}html.pm #cOk .opts button{min-height:96px;flex-direction:column;justify-content:center;text-align:center;gap:4px;font-size:22px}html.pm #cOkYes{background:#2E7D5B;color:#fff}
+@media (max-height:720px){#call.asking .cbody{gap:8px;padding-top:8px}#call.asking .state{display:none}#call.asking .cheard{padding:8px 12px}#call.asking .cheard p,html.pm #call.asking .cheard p{font-size:18px;max-height:14vh}#call.asking #cCards{margin-top:4px}#call.asking #cCards .pcard{padding:3px 8px;min-width:76px;border-top-width:4px}#call.asking #cCards .pcard svg{width:24px;height:24px}#call.asking #cCards .pcard b{font-size:19px}#call.asking .decide{padding:10px;gap:8px}#call.asking .decide .q{font-size:16px;line-height:1.45}html.pm #call.asking .opts button{min-height:52px;font-size:18px}html.pm #call.asking .opts .ri{width:32px;height:32px}html.pm #call.asking #cOk .opts button{min-height:76px}}
+html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.tools button{font-size:15px;padding:8px 2px}
 </style>
 <script>try{if(localStorage.getItem('wasl_pic')==='true')document.documentElement.classList.add('pm')}catch(e){}
 /* App language (UI): the user's choice in بياناتي, else the phone's language: English phones get English, every other language Arabic. */
@@ -384,6 +400,7 @@ html.en:not(.tr) body{visibility:hidden}
 <div class="qgrid hidden" id="quick"></div>
 </details>
 <button class="ordlink hidden" id="openOrder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M12 8v6M9 11h6"/></svg><span><b>مش في الصيدلية؟ اطلب دوا للبيت</b><small>أكتب للصيدلية على واتساب، وأقرالك ردهم</small></span></button>
+<button class="ordlink calllink" id="openCall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span><b>مكالمة: وصل يتصل بدالك</b><small>اكتب الرقم واللي عايزه، ووصل يكلمهم ويكتبلك ردهم</small></span></button>
 <div style="flex:1"></div>
 <div class="tip no-pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><span>حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.</span></div>
 <p class="qleft hidden" id="qLeft" aria-live="polite"></p>
@@ -553,6 +570,9 @@ html.en:not(.tr) body{visibility:hidden}
 </section>
 
 <!-- ============ EMERGENCY ============ -->
+<!-- ============ CALL (built in the script, so every word goes through tr()) ============ -->
+<section id="call" class="screen" aria-label="مكالمة"></section>
+
 <section id="sos" class="screen" aria-label="الطوارئ">
 <div class="top" style="background:#A3221A"><button class="back" id="sosBack" style="background:#7E1912">→ رجوع</button><b style="font-size:20px">طوارئ</b><span style="width:70px"></span></div>
 <div class="body">
@@ -1105,7 +1125,58 @@ const EN={
 'بيزوكور 5 مجم':'Alternative brand, 5 mg',
 'الطلب خرج.':'The order is on its way.',
 'مستنيين الصيدلية.':'Waiting for the pharmacy.',
-'اعتذرت للصيدلية بلطف، والطلب اتلغى.':'You politely said no to the pharmacy, and the order is cancelled.'
+'اعتذرت للصيدلية بلطف، والطلب اتلغى.':'You politely said no to the pharmacy, and the order is cancelled.',
+// ---- «مكالمة» (phone call for the user)
+'أسأل على المواعيد':'Ask about opening hours',
+'أسأل على دوا':'Ask about a medicine',
+'أسأل على طلب':'Ask about an order',
+'إنهاء المكالمة':'End call',
+'اكتب اللي عايز وصل يقوله':'Type what you want Wasl to say',
+'اكتب عايز وصل يقول إيه في المكالمة.':'Write what Wasl should say on the call.',
+'الخط اتقفل عشان الرد اتأخر، ووصل قالهم إننا هنكلمهم تاني.':'The call ended because the answer took too long. Wasl told them we will call back.',
+'الخط كان مشغول.':'The line was busy.',
+'الرقم ده مش كامل. اكتبه بالكامل، مثلاً 01001234567 أو +971501234567':'This number is not complete. Write all of it, for example 01001234567 or +971501234567',
+'الرقم ده مش مسموح. اتأكد منه وجرّب تاني.':'This number can\'t be called. Check it and try again.',
+'الطرف التاني بيقول':'They are saying',
+'المكالمة اتقفلت':'The call has ended',
+'المكالمة اتلغت.':'The call was cancelled.',
+'المكالمة خلصت · وصل بيقفل الخط':'The call is done · Wasl is hanging up',
+'المكالمة خلصت.':'The call is over.',
+'المكالمة شغالة · وصل بيسمع':'On the call · Wasl is listening',
+'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.':'The call did not go through. Check the number and try again.',
+'المكالمة مش بتتسجّل، ووصل بيقول للطرف التاني إنه مساعد بالذكاء الاصطناعي':'The call is not recorded, and Wasl tells the other person that it is an AI assistant',
+'النت ضعيف، بحاول تاني...':'Weak internet, trying again...',
+'ببعت ردك...':'Sending your reply...',
+'بيتصل...':'Calling...',
+'بيرن... مستني حد يرد':'Ringing... waiting for an answer',
+'بيقفل المكالمة...':'Ending the call...',
+'تجريبي (محاكاة)':'Test (simulation)',
+'تنهي المكالمة؟':'End the call?',
+'خدمة المكالمات مشغولة النهارده. جرّب بكرة.':'The call service is busy today. Try tomorrow.',
+'رقم التليفون':'Phone number',
+'عايز أسأل على طلب: ':'I want to ask about an order: ',
+'عايز أسأل لو الدوا ده موجود: ':'I want to ask if they have this medicine: ',
+'عايز أعرف مواعيد الشغل':'I want to know the opening hours',
+'عايز وصل يقول إيه؟':'What should Wasl say?',
+'قبل أول مكالمة:\n\nوصل هيتصل بالرقم ده، ويقول للطرف التاني في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nصوت الطرف التاني بيعدّي على خدمة المكالمات (Twilio) عشان يتحول لكتابة، وكلامه وطلبك واسمك بيتبعتوا لخدمة ذكاء اصطناعي (Claude من Anthropic)، وجمل وصل بتتبعت لخدمة الصوت (ElevenLabs).\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح من عندنا أول ما المكالمة تخلص.\n\nموافق؟':'Before your first call:\n\nWasl will call this number and first tell the other person that it is an AI assistant speaking for you.\n\nThe other person\'s voice goes through the call service (Twilio) to become text. Their words, your request and your name are sent to an AI service (Claude by Anthropic), and Wasl\'s sentences are sent to the voice service (ElevenLabs).\n\nThe call is not recorded, and the text is deleted from our server as soon as the call ends.\n\nDo you agree?',
+'كل كلام المكالمة':'The whole call',
+'مثلاً: عايز أحجز كشف عند دكتور العظام بكرة':'For example: I want to book a visit with the orthopedic doctor tomorrow',
+'محدش رد على المكالمة.':'Nobody answered the call.',
+'مقدرتش أبعت. جرّب تاني.':'Couldn\'t send. Try again.',
+'مكالمة':'Call',
+'مكالمة: {g}':'Call: {g}',
+'وصل بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.':'For now Wasl can only call numbers in Egypt, the UAE, Saudi Arabia, the UK and the US.',
+'وصل بيفكر في الرد...':'Wasl is thinking of a reply...',
+'وصل محتاج قرارك · الطرف التاني مستني':'Wasl needs your decision · they are waiting',
+'وصل هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:':'Wasl will say this sentence. It has numbers or money, check it:',
+'وصل يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف التاني يظهر لك مكتوب.':'Wasl calls the number and speaks for you, and the other person\'s words show up as text.',
+'وصلت لأقصى عدد مكالمات النهارده. جرّب بكرة.':'You reached today\'s call limit. Try tomorrow.',
+'✓ المكالمة خلصت':'✓ The call is done',
+'📞 اتصل':'📞 Call',
+'مكالمة: وصل يتصل بدالك':'Call: Wasl phones for you',
+'اكتب الرقم واللي عايزه، ووصل يكلمهم ويكتبلك ردهم':'Write the number and what you need. Wasl talks to them and writes their answer for you',
+'الطرف التاني':'Them',
+'إنت':'You'
 };
 /* Mixed text and bold words: the whole block in English. */
 const EN_HTML={
@@ -1467,7 +1538,50 @@ const GU={
 "بحضّر الأصوات {n}/{m}...": "أجهّز الأصوات {n}/{m}...",
 "الأصوات جاهزة ✓ (يشتغل من غير نت)": "الأصوات جاهزة ✓ (يشتغل بدون نت)",
 "اتحضّر {n} من {m}، جرّب تاني": "تجهّز {n} من {m}، جرّب مرة ثانية",
-"إنستاباي": "Apple Pay"
+"إنستاباي": "Apple Pay",
+// ---- «مكالمة» (phone call for the user)
+"مكالمة: وصل يتصل بدالك": "مكالمة: وصل يتصل عنك",
+"اكتب الرقم واللي عايزه، ووصل يكلمهم ويكتبلك ردهم": "اكتب الرقم وش تبي، ووصل يكلمهم ويكتب لك ردهم",
+"وصل يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف التاني يظهر لك مكتوب.": "وصل يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف الثاني يطلع لك مكتوب.",
+"رقم التليفون": "رقم الجوال أو التلفون",
+"عايز وصل يقول إيه؟": "وش تبي وصل يقول؟",
+"مثلاً: عايز أحجز كشف عند دكتور العظام بكرة": "مثلاً: أبي أحجز موعد عند دكتور العظام بكرة",
+"أسأل على دوا": "أسأل عن دواء",
+"أسأل على طلب": "أسأل عن طلب",
+"أسأل على المواعيد": "أسأل عن المواعيد",
+"عايز أسأل لو الدوا ده موجود: ": "أبي أسأل إذا هالدواء موجود: ",
+"عايز أسأل على طلب: ": "أبي أسأل عن طلب: ",
+"عايز أعرف مواعيد الشغل": "أبي أعرف أوقات الدوام",
+"المكالمة مش بتتسجّل، ووصل بيقول للطرف التاني إنه مساعد بالذكاء الاصطناعي": "المكالمة ما تتسجّل، ووصل يقول للطرف الثاني إنه مساعد بالذكاء الاصطناعي",
+"بيتصل...": "يتصل...",
+"الطرف التاني بيقول": "الطرف الثاني يقول",
+"الطرف التاني": "الطرف الثاني",
+"اكتب اللي عايز وصل يقوله": "اكتب اللي تبي وصل يقوله",
+"الرقم ده مش كامل. اكتبه بالكامل، مثلاً 01001234567 أو +971501234567": "الرقم مو كامل. اكتبه كامل، مثلاً 0501234567 أو +971501234567",
+"وصل بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.": "وصل يتصل الحين بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.",
+"اكتب عايز وصل يقول إيه في المكالمة.": "اكتب وش تبي وصل يقول في المكالمة.",
+"الرقم ده مش مسموح. اتأكد منه وجرّب تاني.": "هالرقم مو مسموح. تأكد منه وجرّب مرة ثانية.",
+"وصلت لأقصى عدد مكالمات النهارده. جرّب بكرة.": "وصلت لأكثر عدد مكالمات اليوم. جرّب بكرة.",
+"خدمة المكالمات مشغولة النهارده. جرّب بكرة.": "خدمة المكالمات مشغولة اليوم. جرّب بكرة.",
+"المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.": "المكالمة ما تمّت. تأكد من الرقم وجرّب مرة ثانية.",
+"بيرن... مستني حد يرد": "يرن... ننتظر أحد يرد",
+"بيقفل المكالمة...": "يسكّر المكالمة...",
+"وصل محتاج قرارك · الطرف التاني مستني": "وصل يحتاج قرارك · الطرف الثاني ينتظر",
+"المكالمة خلصت · وصل بيقفل الخط": "خلصت المكالمة · وصل يسكّر الخط",
+"وصل بيفكر في الرد...": "وصل يفكر في الرد...",
+"المكالمة شغالة · وصل بيسمع": "المكالمة شغّالة · وصل يسمع",
+"النت ضعيف، بحاول تاني...": "النت ضعيف، أحاول مرة ثانية...",
+"ببعت ردك...": "أرسل ردك...",
+"مقدرتش أبعت. جرّب تاني.": "ما قدرت أرسل. جرّب مرة ثانية.",
+"تنهي المكالمة؟": "تبي تنهي المكالمة؟",
+"المكالمة خلصت.": "خلصت المكالمة.",
+"محدش رد على المكالمة.": "ما أحد رد على المكالمة.",
+"المكالمة اتلغت.": "المكالمة انلغت.",
+"الخط اتقفل عشان الرد اتأخر، ووصل قالهم إننا هنكلمهم تاني.": "الخط تسكّر لأن الرد تأخر، ووصل قال لهم إننا بنكلمهم مرة ثانية.",
+"✓ المكالمة خلصت": "✓ خلصت المكالمة",
+"المكالمة اتقفلت": "تسكّرت المكالمة",
+"وصل هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:": "وصل بيقول هالجملة. فيها أرقام أو فلوس، تأكد منها:",
+"قبل أول مكالمة:\n\nوصل هيتصل بالرقم ده، ويقول للطرف التاني في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nصوت الطرف التاني بيعدّي على خدمة المكالمات (Twilio) عشان يتحول لكتابة، وكلامه وطلبك واسمك بيتبعتوا لخدمة ذكاء اصطناعي (Claude من Anthropic)، وجمل وصل بتتبعت لخدمة الصوت (ElevenLabs).\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح من عندنا أول ما المكالمة تخلص.\n\nموافق؟": "قبل أول مكالمة:\n\nوصل بيتصل بهالرقم، ويقول للطرف الثاني في البداية إنه مساعد بالذكاء الاصطناعي يتكلم بالنيابة عنك.\n\nصوت الطرف الثاني يمر على خدمة المكالمات (Twilio) عشان يتحول لكتابة، وكلامه وطلبك واسمك ينرسلون لخدمة ذكاء اصطناعي (Claude من Anthropic)، وجمل وصل تنرسل لخدمة الصوت (ElevenLabs).\n\nالمكالمة ما تتسجّل، والكلام ينمسح عندنا أول ما تخلص المكالمة.\n\nموافق؟"
 };
 const GU_HTML={wList:'<li>وصل <b>مجاني</b>.</li><li>كلامك <b>ما ينسجل</b>. يمر بس على الخدمات اللي يشتغل عليها وصل. <a href="privacy.html">اقرا صفحة الخصوصية</a></li><li>الطوارئ في وصل <b>مساعدة</b>، مو بديل عن الإسعاف أو الشرطة.</li><li>إذا عمرك <b>أقل من 18</b>، لازم أهلك يوافقون.</li>'};
 
@@ -2374,7 +2488,8 @@ const IC={
  talk:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/>',
  hand:'<path d="M18 11V6a1.5 1.5 0 0 0-3 0M15 10V4.5a1.5 1.5 0 0 0-3 0V10M12 10V5.5a1.5 1.5 0 0 0-3 0V12M9 12V8.5a1.5 1.5 0 0 0-3 0V15a7 7 0 0 0 14 0v-4a1.5 1.5 0 0 0-3 0"/>',
  x:'<path d="M6 6l12 12M18 6L6 18"/>',
- flip:'<rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 7h4M10 11h4"/>'};
+ flip:'<rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 7h4M10 11h4"/>',
+ phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>'};
 const svgI=(k,cls)=>`<svg${cls?` class="${cls}"`:''} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]||IC.talk}</svg>`;
 function picOn(){return document.documentElement.classList.contains('pm')}
 function setPic(on){on=!!on;store.set('wasl_pic',on);document.documentElement.classList.toggle('pm',on);
@@ -2404,7 +2519,7 @@ const SIT=[
  {k:'bus',l:'مواصلات',c:'#7A5A00',t:'#F5EDD3',g:'عايز أركب مواصلة، وأعرف أنزل فين والأجرة كام'},
  {k:'bank',l:'بنك',c:'#13262F',t:'#E4EAEC',g:'عايز أخلّص حاجة في البنك'},
  {k:'where',l:'فين المكان؟',c:'#8F4612',t:'#F6E6D8',g:'عايز أسأل عن مكان'}];
-const TOOLS=[{k:'chat',l:'ترجمة',go:()=>$('openFree').click()},{k:'homeRx',l:'دوا للبيت',go:()=>oOpen()},{k:'deaf',l:'أنا أصم',go:showDeaf}];
+const TOOLS=[{k:'chat',l:'ترجمة',go:()=>$('openFree').click()},{k:'homeRx',l:'دوا للبيت',go:()=>oOpen()},{k:'deaf',l:'أنا أصم',go:showDeaf},{k:'phone',l:'مكالمة',go:()=>callOpen()}];
 if(UI==='en'||GULF){SIT.forEach(x=>{x.l=tr(x.l);if(x.g)x.g=tr(x.g)});TOOLS.forEach(x=>x.l=tr(x.l))}
 const welcomed=()=>store.get('wasl_welcome',false)===true;
 const gated=fn=>()=>{buzz([30]);if(!welcomed()){$('welcome').classList.remove('hidden');return}fn()};
@@ -2424,6 +2539,136 @@ $('phOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{buzz([30]);
 function openPh(){$('phSheet').classList.remove('hidden')}
 $('phX').onclick=()=>$('phSheet').classList.add('hidden');
 $('phSheet').onclick=e=>{if(e.target.id==='phSheet')$('phSheet').classList.add('hidden')};
+/* ================= «مكالمة»: Wasl phones a number for the user =================
+   The user writes the number and what to say. The server (Wasl - Call Start / Session) dials with Twilio, says first that it is
+   an AI assistant speaking for a Deaf person, and turns the other side's words into text. The app polls the call as text every
+   1.5 s and shows decisions like a task (same confirm-before-speaking rule for numbers and money). Until Twilio is set up the
+   server runs a simulator: the screen shows «تجريبي (محاكاة)». One call = one task. Nothing is recorded; the text is wiped on
+   the server when the call ends. Every word on this screen goes through tr(). */
+const CALL_START_URL=API_BASE+'wasl-call-start',CALL_URL=API_BASE+'wasl-call';
+const CALL_CC={EG:'+20',AE:'+971',SA:'+966',GB:'+44',US:'+1'};
+const CALL_FINAL=['ended','failed','timeout','noanswer','busy','canceled'];
+let CL=null;
+/* a number as the user typed it -> E.164 (local numbers use the country in بياناتي) */
+function callNumber(raw){let s=String(raw||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[\s().\-]/g,'');
+ if(s.startsWith('00'))s='+'+s.slice(2);
+ if(!s.startsWith('+')){const cc=CALL_CC[countryCode()];if(cc&&/^0\d{6,12}$/.test(s))s=cc+s.slice(1);else if(cc==='+1'&&/^\d{10}$/.test(s))s=cc+s}
+ return /^\+\d{8,15}$/.test(s)?s:''}
+function callBuild(){$('call').setAttribute('aria-label',tr('مكالمة'));
+ $('call').innerHTML=`<div class="top"><button class="back" id="cBack">${tr('→ رجوع')}</button><b style="font-size:18px">${tr('مكالمة')}</b><span class="simbadge hidden" id="cBadge">${tr('تجريبي (محاكاة)')}</span><span id="cSp" style="width:70px"></span></div>
+<div class="cbody" id="cBody">
+<div id="cSetup" style="display:flex;flex-direction:column;gap:12px">
+<p class="lead">${tr('وصل يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف التاني يظهر لك مكتوب.')}</p>
+<div class="field"><label for="cNum">${tr('رقم التليفون')}</label><input id="cNum" type="tel" inputmode="tel" dir="ltr" autocomplete="tel" placeholder="01xxxxxxxxx"><p class="cerr hidden" id="cNumErr" role="alert"></p></div>
+<div class="crecent" id="cRecent"></div>
+<div class="field"><label for="cGoal">${tr('عايز وصل يقول إيه؟')}</label><textarea id="cGoal" class="goal" rows="3" placeholder="${esc(tr('مثلاً: عايز أحجز كشف عند دكتور العظام بكرة'))}"></textarea><p class="cerr hidden" id="cGoalErr" role="alert"></p></div>
+<div class="qgrid" id="cIdeas"></div>
+<p class="cnote" id="cConsent">${tr('المكالمة مش بتتسجّل، ووصل بيقول للطرف التاني إنه مساعد بالذكاء الاصطناعي')}</p>
+<p class="cerr hidden" id="cErr" role="alert"></p>
+<button class="btn or startbig" id="cGo">${tr('📞 اتصل')}</button>
+</div>
+<div id="cLive" class="hidden" style="display:flex;flex-direction:column;gap:10px">
+<div class="state"><span class="dot think" id="cDot"></span><span id="cState">${tr('بيتصل...')}</span></div>
+<div class="cheard" aria-live="polite"><small id="cHeardLab">${tr('الطرف التاني بيقول')}</small><p id="cHeard"></p><div class="cards" id="cCards"></div></div>
+<p class="csaid hidden" id="cSaid"><b>${tr('وصل قال')}</b><span id="cSaidT"></span></p>
+<div class="decide hidden" id="cDecide" role="alertdialog" aria-labelledby="cQ"><div class="q" id="cQ"></div><div class="opts" id="cOpts"></div></div>
+<div class="decide hidden" id="cOk" role="alertdialog" aria-labelledby="cOkQ"><div class="q" id="cOkQ"><span class="no-pic">${tr('وصل هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:')}</span><span class="only-pic">${tr('اتأكد الأول:')}</span></div><p class="okline" id="cOkT"></p><div class="opts"><button id="cOkYes"><span class="pi" aria-hidden="true">✓</span>${tr('قوله')}</button><button id="cOkNo"><span class="pi" aria-hidden="true">✋</span>${tr('لأ، استنى')}</button></div></div>
+<div class="typerow hidden" id="cType"><label class="sr" for="cIn">${tr('اكتب ردك')}</label><input id="cIn" placeholder="${esc(tr('اكتب اللي عايز وصل يقوله'))}"><button id="cSend">${tr('ابعت')}</button></div>
+<div class="summary hidden" id="cSum"><b id="cSumH">${tr('✓ المكالمة خلصت')}</b><p id="cSumT"></p><button class="btn" id="cHome">${tr('رجوع للرئيسية')}</button></div>
+<details class="typebox" id="cLogBox"><summary>${tr('كل كلام المكالمة')}</summary><div class="log" id="cLog"></div></details>
+</div>
+</div>
+<div class="tfoot hidden" id="cFoot"><button id="cWrite">${svgI('pen','only-pic')}${tr('اكتب ردك')}</button><button class="end" id="cEnd">${svgI('x','only-pic')}${tr('إنهاء المكالمة')}</button></div>`;
+ const IDEAS=[['📅','أحجز كشف','عايز أحجز كشف عند الدكتور'],['💊','أسأل على دوا','عايز أسأل لو الدوا ده موجود: '],['📦','أسأل على طلب','عايز أسأل على طلب: '],['🕘','أسأل على المواعيد','عايز أعرف مواعيد الشغل']];
+ $('cIdeas').innerHTML=IDEAS.map(x=>`<button class="qbtn"><span aria-hidden="true">${x[0]}</span> ${esc(tr(x[1]))}</button>`).join('');
+ $('cIdeas').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{buzz([30]);const g=$('cGoal');g.value=tr(IDEAS[i][2]);g.focus();g.setSelectionRange(g.value.length,g.value.length)});
+ $('cGo').onclick=callStart;
+ $('cNum').oninput=()=>$('cNumErr').classList.add('hidden');$('cGoal').oninput=()=>$('cGoalErr').classList.add('hidden');
+ $('cBack').onclick=()=>{if(CL&&!CL.over){$('cEnd').click();return}CL=null;show('home')};
+ $('cHome').onclick=()=>{CL=null;show('home')};
+ $('cEnd').onclick=callEnd;
+ $('cWrite').onclick=()=>{$('cType').classList.toggle('hidden');if(!$('cType').classList.contains('hidden')){$('cIn').focus();showBox('cType')}};
+ $('cSend').onclick=()=>{const t=$('cIn').value.trim();if(!t)return;$('cIn').value='';$('cType').classList.add('hidden');const full=CL&&CL.typeFor?CL.typeFor+': '+t:t;if(CL)CL.typeFor='';callReply('typed',full)};
+ $('cIn').onkeydown=e=>{if(e.key==='Enter')$('cSend').click()};
+ $('cOkYes').onclick=()=>callReply('ok');
+ $('cOkNo').onclick=()=>callReply('no')}
+function callErr(id,msg){const e=$(id);e.textContent=msg;e.classList.toggle('hidden',!msg)}
+function callOpen(){if(!$('cSetup'))callBuild();CL=null;
+ $('cSetup').classList.remove('hidden');$('cLive').classList.add('hidden');$('cFoot').classList.add('hidden');$('cBadge').classList.add('hidden');$('cSp').classList.remove('hidden');
+ ['cNumErr','cGoalErr','cErr'].forEach(id=>callErr(id,''));$('cGo').disabled=false;$('cGo').textContent=tr('📞 اتصل');
+ const rec=store.get('wasl_call_recent',[]);$('cRecent').innerHTML=rec.map(n=>`<button class="chip">${esc(n)}</button>`).join('');
+ $('cRecent').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{$('cNum').value=rec[i];callErr('cNumErr','')});
+ show('call');quotaGet()}
+async function callStart(){const n=callNumber($('cNum').value),goal=$('cGoal').value.trim();let bad=false;
+ if(!n){callErr('cNumErr',tr('الرقم ده مش كامل. اكتبه بالكامل، مثلاً 01001234567 أو +971501234567'));bad=true}
+ else if(!/^\+(20|971|966|44|1)\d/.test(n)){callErr('cNumErr',tr('وصل بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.'));bad=true}
+ if(goal.length<3){callErr('cGoalErr',tr('اكتب عايز وصل يقول إيه في المكالمة.'));bad=true}
+ if(bad){buzz([200]);return}
+ const q=await quotaGet(4000);if(q&&q.left===0){quotaShow(q);return}
+ if(!store.get('wasl_consent_call',false)){if(!confirm(tr('قبل أول مكالمة:\n\nوصل هيتصل بالرقم ده، ويقول للطرف التاني في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nصوت الطرف التاني بيعدّي على خدمة المكالمات (Twilio) عشان يتحول لكتابة، وكلامه وطلبك واسمك بيتبعتوا لخدمة ذكاء اصطناعي (Claude من Anthropic)، وجمل وصل بتتبعت لخدمة الصوت (ElevenLabs).\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح من عندنا أول ما المكالمة تخلص.\n\nموافق؟')))return;store.set('wasl_consent_call',true)}
+ $('cGo').disabled=true;$('cGo').textContent=tr('بيتصل...');callErr('cErr','');
+ try{const d=await postJSON(CALL_START_URL,{to:n,goal,lang:LANG,ui:UI,profile:taskProfile(),name:voiceName(),agender:vg()},30000);
+  if(!d||!d.cid)throw new Error('no call');
+  store.set('wasl_call_recent',[n,...store.get('wasl_call_recent',[]).filter(x=>x!==n)].slice(0,4));
+  CL={cid:d.cid,mode:d.mode,goal,to:n,seen:0,over:false,pendKey:'',summary:'',typeFor:'',fails:0,asked:0};
+  $('cSetup').classList.add('hidden');$('cLive').classList.remove('hidden');$('cFoot').classList.remove('hidden');
+  $('cLog').innerHTML='';$('cHeard').textContent='';drawCards('cCards',[]);$('cSaid').classList.add('hidden');['cDecide','cOk','cType','cSum'].forEach(id=>$(id).classList.add('hidden'));
+  callDraw(d);CL.timer=setTimeout(callPoll,1500)}
+ catch(e){const W={quota:'',number:'الرقم ده مش مسموح. اتأكد منه وجرّب تاني.',calls:'وصلت لأقصى عدد مكالمات النهارده. جرّب بكرة.',daily:'خدمة المكالمات مشغولة النهارده. جرّب بكرة.',dial:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.'};
+  if(e&&e.why==='quota'){quotaShow(e.data);return}
+  callErr('cErr',tr((e&&W[e.why])||(e&&e.data&&W[e.data.why])||'النت ضعيف. جرّب تاني.'))}
+ finally{if(!CL){$('cGo').disabled=false;$('cGo').textContent=tr('📞 اتصل')}}}
+async function callPoll(){if(!CL||CL.over)return;const my=CL;
+ try{const d=await postJSON(CALL_URL,{op:'state',cid:CL.cid},20000);if(my!==CL)return;CL.fails=0;callDraw(d)}
+ catch(e){if(my!==CL)return;if(e&&e.status===404){callFinish(null);return}CL.fails++;if(CL.fails>2)callState('think',tr('النت ضعيف، بحاول تاني...'))}
+ if(CL&&!CL.over&&my===CL){clearTimeout(CL.timer);CL.timer=setTimeout(callPoll,1500)}}
+function callState(dot,text){$('cDot').className='dot '+dot;$('cState').textContent=text}
+function callLog(l){const d=document.createElement('div');d.className='msg '+(l.r==='callee'?'h':l.r==='wasl'?'w':'u');
+ d.innerHTML='<b>'+tr(l.r==='callee'?'الطرف التاني':l.r==='wasl'?'وصل قال':'إنت')+'</b>'+nums(l.t);$('cLog').appendChild(d)}
+function callDraw(d){if(!d||!CL)return;CL.mode=d.mode||CL.mode;const sim=CL.mode==='sim';$('cBadge').classList.toggle('hidden',!sim);$('cSp').classList.toggle('hidden',sim);
+ const L=d.lines||[];
+ if(L.length>CL.seen){const fresh=L.slice(CL.seen);CL.seen=L.length;fresh.forEach(callLog);if(fresh.some(l=>l.r==='callee'))buzz([80])}
+ let lc=null,lw=null;L.forEach(l=>{if(l.r==='callee')lc=l;if(l.r==='wasl')lw=l});
+ if(lc){$('cHeard').innerHTML=nums(lc.t);drawCards('cCards',lc.k||[])}
+ if(lw){$('cSaidT').innerHTML=nums(lw.t);$('cSaid').classList.remove('hidden')}
+ if(d.summary)CL.summary=d.summary;
+ const p=d.pending,key=p?JSON.stringify(p):'';
+ if(key!==CL.pendKey){CL.pendKey=key;$('cDecide').classList.add('hidden');$('cOk').classList.add('hidden');
+  if(p&&p.ok){$('cOkT').innerHTML=nums(p.say);$('cOk').classList.remove('hidden');buzz([200,100,200]);showBox('cOk')}
+  else if(p&&p.type){$('cType').classList.remove('hidden');$('cIn').placeholder=p.q||tr('اكتب اللي عايز وصل يقوله');$('cIn').focus();showBox('cType')}
+  else if(p){$('cQ').textContent=p.q||tr('تختار إيه؟');const opts=(p.o&&p.o.length?p.o:[tr('أيوه'),tr('لأ')]);
+   $('cOpts').innerHTML=opts.map(o=>`<button>${optIc(o)}${esc(o)}</button>`).join('');
+   $('cOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{const c=opts[i];
+    if(/اكتب|هكتب|أكتب|بنفسي/.test(c)||/\btype\b|\bwrite\b|myself/i.test(c)){CL.typeFor='';$('cDecide').classList.add('hidden');$('cType').classList.remove('hidden');$('cIn').focus();showBox('cType');return}
+    callReply('decision',c)});
+   if(p.k&&p.k.length)drawCards('cCards',p.k);
+   $('cDecide').classList.remove('hidden');buzz([200,100,200]);showBox('cDecide')}}
+ $('call').classList.toggle('asking',!!p);
+ const st=d.state||'';
+ if(CALL_FINAL.includes(st)){callFinish(st);return}
+ if(st==='done'&&CL.summary){$('cSumH').textContent=tr('✓ المكالمة خلصت');$('cSumT').innerHTML=nums(CL.summary);$('cSum').classList.remove('hidden')}
+ const last=L[L.length-1];
+ if(st==='ringing')callState('think',tr('بيرن... مستني حد يرد'));
+ else if(st==='ending')callState('think',tr('بيقفل المكالمة...'));
+ else if(p)callState('talk',tr('وصل محتاج قرارك · الطرف التاني مستني'));
+ else if(st==='done')callState('ok',tr('المكالمة خلصت · وصل بيقفل الخط'));
+ else if(d.think||(last&&last.r!=='wasl'))callState('think',tr('وصل بيفكر في الرد...'));
+ else callState('ok',tr('المكالمة شغالة · وصل بيسمع'))}
+async function callReply(kind,text){if(!CL||CL.over)return;$('cDecide').classList.add('hidden');$('cOk').classList.add('hidden');$('call').classList.remove('asking');callState('think',tr('ببعت ردك...'));
+ try{const d=await postJSON(CALL_URL,{op:'reply',cid:CL.cid,kind,text:text||''},15000);callDraw(d)}
+ catch(e){CL.pendKey='';callState('think',tr('مقدرتش أبعت. جرّب تاني.'))}}
+async function callEnd(){if(!CL||CL.over){CL=null;show('home');return}
+ if(!CL.summary&&!confirm(tr('تنهي المكالمة؟')))return;
+ callState('think',tr('بيقفل المكالمة...'));
+ try{const d=await postJSON(CALL_URL,{op:'end',cid:CL.cid},15000);callDraw(d)}catch(e){callFinish('ended')}}
+function callFinish(st){if(!CL||CL.over)return;CL.over=true;clearTimeout(CL.timer);
+ const W={ended:'المكالمة خلصت.',failed:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.',noanswer:'محدش رد على المكالمة.',busy:'الخط كان مشغول.',canceled:'المكالمة اتلغت.',timeout:'الخط اتقفل عشان الرد اتأخر، ووصل قالهم إننا هنكلمهم تاني.'};
+ const msg=CL.summary||tr(W[st]||W.ended);
+ $('cSumH').textContent=CL.summary?tr('✓ المكالمة خلصت'):tr('المكالمة اتقفلت');$('cSumT').innerHTML=nums(msg);
+ ['cDecide','cOk','cType','cFoot'].forEach(id=>$(id).classList.add('hidden'));$('call').classList.remove('asking');$('cSum').classList.remove('hidden');
+ callState('ok',tr('المكالمة اتقفلت'));buzz([300]);showBox('cSum');
+ const t=store.get('wasl_tasks',[]);t.push({id:Date.now(),done:!!CL.summary,title:tr('مكالمة: {g}',{g:CL.goal}).slice(0,80),goal:'',summary:CL.summary||'',date:new Date().toLocaleString(LOC,{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
+$('openCall').onclick=()=>{buzz([30]);callOpen()};
 /* «أنا أصم»: a big sign to show the person in front (phone held toward them, not flipped). */
 /* the sign is for the person in front: conversation language; the close hint is for the user: app language */
 function showDeaf(){const f=$('flip');f.innerHTML=esc(trH('أنا أصم'))+'<small>'+esc(trH('من فضلك اكتبلي، أو شاورلي'))+'</small><span class="fx">'+esc(tr('دوس في أي حتة عشان تقفل'))+'</span>';f.classList.add('up');f.style.display='flex';buzz([60])}
