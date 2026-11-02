@@ -228,7 +228,72 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 .okline{margin:0;font-size:20px;font-weight:800;line-height:1.55;background:var(--orl);border-radius:12px;padding:10px 12px}
 #tOkNo{background:var(--bg);color:var(--ink);border:2px solid var(--line)}
 .sosnote{margin:0;background:#FBE6D4;color:#5A2A08;border-radius:14px;padding:10px 12px;font-size:15px;font-weight:700;line-height:1.6}
+/* ---------- picture mode (وضع الصور): big pictures, fewer words. Off by default; nothing changes unless <html> has class pm. ---------- */
+.only-pic,#picHome,.pi,.ri{display:none}
+html.pm .only-pic{display:revert}html.pm .no-pic{display:none!important}
+html.pm #picHome{display:flex}
+html.pm #bigTalk,html.pm #openFree,html.pm .hbrand small,html.pm #sosBtn small,html.pm .alchip:not(.on){display:none}
+html.pm #sosBtn{flex:0 0 auto;min-height:74px;margin-top:auto}
+#picHome{flex-direction:column;gap:10px;flex-shrink:0}
+.phead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0}.phead b{font-size:17px;font-weight:800;color:var(--mute)}
+.sit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sit button{min-height:98px;border:0;border-radius:20px;background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px 4px;font-size:17px;font-weight:800;line-height:1.2;text-align:center}
+.sit button:active{background:var(--orl)}
+.sit .si{width:50px;height:50px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:var(--t,#E6ECEE)}
+.sit .si svg{width:30px;height:30px;stroke:var(--c,#13262F)}
+.sit.tools button{background:var(--ink);color:#fff;box-shadow:none;min-height:88px}
+.sit.tools .si{background:rgba(255,255,255,.14)}.sit.tools .si svg{stroke:#fff}
+.pwrite{display:flex;align-items:center;gap:6px;min-height:44px;border:0;background:none;color:var(--mute);font-size:15px;font-weight:700;padding:0 10px}
+.pwrite svg{width:20px;height:20px}
+.bigopts{display:flex;flex-direction:column;gap:10px}
+.bigopts button{min-height:72px;border:2px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);display:flex;align-items:center;gap:14px;padding:8px 14px;font-size:20px;font-weight:800;text-align:right}
+.bigopts button:active{background:var(--orl)}
+.bigopts .si{width:48px;height:48px;border-radius:14px;background:var(--orl);display:flex;align-items:center;justify-content:center;flex-shrink:0}.bigopts .si svg{width:30px;height:30px;stroke:var(--ord)}
+@media (max-height:720px){.sit button{min-height:88px;gap:4px}.sit .si{width:46px;height:46px}.sit.tools button{min-height:78px}#picHome{gap:8px}}
+@media (min-height:780px){.sit button{min-height:112px}.sit .si{width:56px;height:56px}.sit .si svg{width:34px;height:34px}.sit.tools button{min-height:100px}}
+html.pm #refills:empty,html.pm #orderChip:empty{display:none}
+#phT{display:flex;align-items:center;gap:10px}#phT svg{width:32px;height:32px;stroke:#1F6F80}
+/* profile switch */
+.psw{width:100%;display:flex;align-items:center;gap:12px;border:0;background:none;padding:0;text-align:right;color:var(--ink);min-height:56px}
+.psw .si{width:48px;height:48px;border-radius:14px;background:var(--orl);display:flex;align-items:center;justify-content:center;flex-shrink:0}.psw .si svg{width:28px;height:28px;stroke:var(--ord)}
+.psw .tx{flex:1;min-width:0}.psw b{display:block;font-size:19px}.psw small{display:block;color:var(--mute);font-size:14px;font-weight:600;line-height:1.4}
+.sw{position:relative;width:60px;height:34px;border-radius:999px;background:#B9B1A4;flex-shrink:0}
+.sw i{position:absolute;top:3px;right:3px;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .15s}
+.psw[aria-checked="true"] .sw{background:#2E7D5B}.psw[aria-checked="true"] .sw i{transform:translateX(-26px)}
+.swl{min-width:44px;font-size:14px;font-weight:800;color:var(--mute);text-align:center}.psw[aria-checked="true"] .swl{color:#1B5E3B}
+@media (prefers-reduced-motion:reduce){.sw i{transition:none}}
+/* first-run choice */
+.wq{margin:4px 0 0;font-size:18px;font-weight:800}
+.wch{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wch button{min-height:92px;border:0;border-radius:18px;background:var(--ink);color:#fff;font-size:19px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px}
+.wch button:active{background:var(--ink2)}.wch svg{width:34px;height:34px}
+/* inside a task, translation and the order: bigger heard text, cards, buttons with icons */
+html.pm .live{min-height:96px}
+html.pm .live p{font-size:clamp(26px,8vw,34px);line-height:1.4}
+html.pm #task .thead,html.pm #task .prog{display:none}
+html.pm #tCards{flex-wrap:nowrap;overflow-x:auto}html.pm #tCards .pcard{flex:0 0 auto;max-width:none}
+html.pm .live{max-height:none;flex:0 1 auto}html.pm #task .tbody{flex:1 1 0;min-height:150px}html.pm #task.asking #tLive{min-height:0}html.pm .decide #tCards{margin:0}
+@media (max-height:720px){html.pm #tLiveLab{display:none}html.pm .live p{font-size:26px}html.pm #tCards .pcard{padding:6px 10px;min-width:96px}html.pm #tCards .pcard svg{width:38px;height:38px}html.pm #tCards .pcard b{font-size:26px}html.pm .opts button{min-height:60px;font-size:19px}html.pm .opts .ri{width:36px;height:36px}html.pm #tOk .opts button{min-height:84px}html.pm .okline{font-size:21px}}
+html.pm #tCards .pcard{min-width:110px;padding:12px}html.pm #tCards .pcard svg{width:44px;height:44px}html.pm #tCards .pcard b{font-size:30px}
+html.pm .ri{display:inline-flex;width:42px;height:42px;border-radius:12px;align-items:center;justify-content:center;background:var(--orl);flex-shrink:0}
+html.pm .ri svg{width:26px;height:26px}
+html.pm .sug button{min-height:68px;font-size:21px;display:flex;align-items:center;gap:12px}
+html.pm .opts{grid-template-columns:1fr}
+html.pm .opts button{min-height:72px;font-size:20px;display:flex;align-items:center;gap:12px;text-align:right;padding:10px 14px}
+html.pm .opts .ri{background:rgba(255,255,255,.2)}
+html.pm #tOk .opts{grid-template-columns:1fr 1fr}
+html.pm #tOk .opts button{min-height:100px;flex-direction:column;justify-content:center;text-align:center;gap:4px;font-size:22px}
+html.pm .pi{display:block;font-size:36px;line-height:1}
+html.pm #tOkYes{background:#2E7D5B;color:#fff}
+html.pm .okline{font-size:24px}
+html.pm .tfoot{gap:6px;padding-inline:10px}
+html.pm .tfoot button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:62px;font-size:13px;padding:4px 2px}
+html.pm .tfoot .end{flex:1;padding:4px 2px}
+.tfoot svg,#free .row svg{width:24px;height:24px}
+html.pm #free .row .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:64px;font-size:14px}
+#flip.up{transform:none;flex-direction:column;gap:18px}#flip small{display:block;font-size:26px;font-weight:700;line-height:1.5}#flip .fx{position:absolute;bottom:24px;font-size:16px;font-weight:700;color:#5B6870}
 </style>
+<script>try{if(localStorage.getItem('wasl_pic')==='true')document.documentElement.classList.add('pm')}catch(e){}</script>
 </head>
 <body>
 <div id="offBar" role="status" aria-live="polite"><p><b>مفيش نت.</b> شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.</p><p>مش شغّال: «اتكلم بدالي»، والردود الذكية، والسماع، والصوت المصري.</p></div>
@@ -240,7 +305,8 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 <li>الطوارئ في وصل <b>مساعدة</b>، مش بديل عن الإسعاف والشرطة.</li>
 <li>لو سنك <b>أقل من 18</b>، لازم أهلك يوافقوا.</li>
 </ul>
-<button class="btn or" id="wOk">فهمت، يلا بينا</button>
+<p class="wq">تحب وصل يكون إزاي؟</p>
+<div class="wch"><button id="wOk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3.5 5v14c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v14"/></svg>بقرا كويس</button><button id="wPic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>بفضّل الصور</button></div>
 <button class="wsos" id="wSos">🚨 عندي طوارئ دلوقتي</button>
 </div></div>
 
@@ -259,6 +325,7 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 <div class="stats hidden" id="stats"></div>
 <div id="refills"></div>
 <div id="orderChip"></div>
+<div id="picHome"></div>
 <button class="big" id="bigTalk" style="background:#C9501E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/><path d="M9 10.5h6M9 13.5h4"/></svg></span><span class="tx"><b>اتكلم بدالي</b><small>قول عايز إيه، وأنا أتكلم مع اللي قدامك</small></span></button>
 <button class="big" id="openFree" style="background:#13262F"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 10h4M13 10h4M7 14h7"/></svg></span><span class="tx"><b>ترجمة</b><small>كلام اللي قدامك يظهر مكتوب وبالصور</small></span></button>
 <button class="big sm" id="sosBtn" style="background:#B3261E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.5"/></svg></span><span class="tx"><b>طوارئ</b><small>إسعاف · شرطة · مطافي · أهلك</small></span></button>
@@ -284,7 +351,7 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 </details>
 <button class="ordlink hidden" id="openOrder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M12 8v6M9 11h6"/></svg><span><b>مش في الصيدلية؟ اطلب دوا للبيت</b><small>أكتب للصيدلية على واتساب، وأقرالك ردهم</small></span></button>
 <div style="flex:1"></div>
-<div class="tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><span>حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.</span></div>
+<div class="tip no-pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><span>حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.</span></div>
 <p class="qleft hidden" id="qLeft" aria-live="polite"></p>
 <button class="btn or startbig" id="startTask">▶ ابدأ</button>
 </div>
@@ -298,6 +365,7 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 <section id="me" class="screen" aria-label="بياناتي">
 <div class="top"><button class="back" id="meBack">→ رجوع</button><b style="font-size:18px">بياناتي</b><span style="width:70px"></span></div>
 <div class="body">
+<div class="card"><button class="psw" id="picSw" role="switch" aria-checked="false"><span class="si"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg></span><span class="tx"><b>وضع الصور</b><small>صور كبيرة وكلام أقل</small></span><span class="swl" id="picSwL">مقفول</span><span class="sw" aria-hidden="true"><i></i></span></button></div>
 <p class="lead">بنستخدمها عشان نرد عنك من غير ما نسألك كل مرة. محفوظة على الموبايل ده بس، وأرقام الطوارئ مش بتخرج منه أبداً.</p>
 <div class="card">
 <div class="field"><label for="pName">الاسم</label><input id="pName" autocomplete="name"></div>
@@ -419,7 +487,7 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 <p class="note srvnote">الموبايل ده بيسمع عن طريق سيرفر وصل، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.</p>
 <div class="log" id="tLog"></div>
 <div class="decide hidden" id="tDecide"><div class="q" id="tQ"></div><div class="opts" id="tOpts"></div></div>
-<div class="decide hidden" id="tOk" role="alertdialog" aria-labelledby="tOkQ"><div class="q" id="tOkQ">وصل هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:</div><p class="okline" id="tOkT"></p><div class="opts"><button id="tOkYes">قوله</button><button id="tOkNo">لأ، استنى</button></div></div>
+<div class="decide hidden" id="tOk" role="alertdialog" aria-labelledby="tOkQ"><div class="q" id="tOkQ"><span class="no-pic">وصل هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:</span><span class="only-pic">اتأكد الأول:</span></div><p class="okline" id="tOkT"></p><div class="opts"><button id="tOkYes"><span class="pi" aria-hidden="true">✓</span>قوله</button><button id="tOkNo"><span class="pi" aria-hidden="true">✋</span>لأ، استنى</button></div></div>
 <div class="typerow hidden" id="tType"><label class="sr" for="tInput">اكتب لوصل</label><input id="tInput" placeholder="اكتب اللي عايز وصل يقوله أو يعرفه"><button id="tSend">ابعت</button></div>
 <div class="summary hidden" id="tSum"><b>✓ المهمة خلصت</b><p id="tSumText"></p><div class="rate" id="tRate"><span>وَصْل ساعدك؟</span><button data-r="up" aria-label="ساعدني">👍</button><button data-r="down" aria-label="ماساعدنيش">👎</button></div><div class="refill hidden" id="tRefill" style="background:var(--orl);border-radius:14px;padding:12px;margin:0 0 10px"><b id="tRefQ" style="display:block;margin-bottom:8px"></b><div class="why" id="tRefOpts" style="margin:0"><button data-d="7">أسبوع</button><button data-d="14">أسبوعين</button><button data-d="30">شهر</button><button data-d="0">مش عايز</button></div><p id="tRefOk" class="hidden" style="margin:8px 0 0;font-weight:700"></p><button class="btn ghost hidden" id="tRefCal" style="min-height:44px;font-size:16px;margin-top:8px;width:100%">📅 ضيفه لتقويم الموبايل</button></div>
 <div class="why hidden" id="tWhy"><button>مفهمش اللي قدامي</button><button>بطيء</button><button>الصوت مش واضح</button><button>قال حاجة غلط</button><button>حاجة تانية</button></div><button class="btn ghost" id="tShare" style="margin-bottom:8px">ابعت الملخص</button><button class="btn" id="tHome">رجوع للرئيسية</button></div>
@@ -524,6 +592,11 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 <p class="lead">الطوارئ شغالة في أي وقت. والترجمة بتفضل تكتب الكلام، بس من غير ردود ذكية.</p>
 <button class="btn" id="qbFree">افتح الترجمة</button>
 <button class="btn ghost" id="qbOk">تمام</button>
+</div></div>
+<div id="phSheet" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="phT"><div class="card">
+<h3 id="phT"></h3>
+<div class="bigopts" id="phOpts"></div>
+<button class="btn ghost" id="phX">إلغاء</button>
 </div></div>
 <div id="sayFix" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="sfTitle"><div class="card">
 <h3 id="sfTitle">أنهي كلمة اتنطقت غلط؟</h3>
@@ -851,7 +924,7 @@ function playFiller(){if(DEMO||!T||T.over||!fillWanted||player||fillP||Date.now(
 function flushHeard(){heardTimer=null;if(!T||T.over||!heardBuf.trim())return;const t=heardBuf.trim();heardBuf='';T.history.push({role:'hearing',text:t});logMsg('hearing',t);
  if(!$('tDecide').classList.contains('hidden')||!$('tOk').classList.contains('hidden'))return;agent({type:'heard',text:t})}
 async function agent(event){if(!T||T.over)return;const my=++T.seq;
- setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');$('tOk').classList.add('hidden');
+ setState('think','وصل بيفكر...');$('tDecide').classList.add('hidden');$('tOk').classList.add('hidden');asking(null);
  let d=null;
  try{if(DEMO){await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{if(event.type==='heard'){fillWanted=true;var ft=setTimeout(playFiller,2800)}
   d=await postJSON(AGENT_URL,{goal:T.goal,lang:LANG,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:vg()},20000)}}catch(e){if(e&&e.why==='quota'){if(typeof ft!=='undefined')clearTimeout(ft);fillWanted=false;T.over=true;stopListening();show('home');quotaShow(e.data);return}}
@@ -872,13 +945,13 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
   setHear('لحظة واحدة',d.say||'لحظة واحدة، بسأله','صاحب الموبايل بيختار دلوقتي.');
   $('tQ').textContent=d.question||'تختار إيه؟';
   let opts=(d.options&&d.options.length?d.options:['أيوه','لأ']);const isT=o=>/هكتب العنوان|بنفسي/.test(o);if(opts.some(isT))opts=[...opts.filter(isT),...opts.filter(o=>!isT(o))];if(!profile().address)opts=opts.filter(o=>!/المحفوظ/.test(o));
-  $('tOpts').innerHTML=opts.map(o=>`<button>${esc(o)}</button>`).join('');
+  $('tOpts').innerHTML=opts.map(o=>`<button>${optIc(o)}${esc(o)}</button>`).join('');
   $('tOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{const c=opts[i];
    if(/(أوري|اوري|وري|افتح).*(خريطة|الخريطة)/.test(c)){const q=lastMap||profile().address||'';if(q)window.open(mapUrl(q),'_blank');else{$('tMap').click()}}
    else if(/المحفوظ/.test(c)&&profile().address){const t='عنواني المحفوظ: '+profile().address;lastMap=profile().address;T.history.push({role:'user',text:t});logMsg('user',t);agent({type:'typed',text:t});return}
    else if(/اكتب|هكتب|أكتب|بنفسي|علامة|معلم|اسم المكان|العنوان|عنوان/.test(c)){askType(c);return}
    T.history.push({role:'user',text:c});logMsg('user',c);agent({type:'decision',text:c})});
-  $('tDecide').classList.remove('hidden');setState('talk','وصل محتاج قرارك');
+  $('tDecide').classList.remove('hidden');asking('tDecide');setState('talk','وصل محتاج قرارك');
   if(d.say)speak(d.say,()=>{if(T&&!T.over)startListening()});else startListening();$('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(d.action==='done'){
   // The task stays open: only the user ends it with إنهاء. Keep listening and keep the controls.
@@ -889,12 +962,15 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  if(T.summary)$('tSum').classList.add('hidden');
  if(d.say&&hold)holdSay(d.say,listenForHearing);else if(d.say){setState('talk','وصل بيتكلم...');setHear('وصل بيقول',d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
 /* Lines with numbers, money or medicine are shown to the user first; Wasl says them only after «قوله». */
+/* Picture mode: while the user decides, the picture cards sit inside the question box, next to the answers. */
+function asking(box){$('task').classList.toggle('asking',!!box);const c=$('tCards'),to=box&&picOn()?$(box):$('tLive');
+ if(c.parentNode!==to){if(to===$('tLive'))to.appendChild(c);else to.insertBefore(c,to.querySelector('.opts'))}}
 function needsOk(d){if(DEMO)return false;const t=String(d.say||'');
  return /[0-9\u0660-\u0669%٪]|جنيه|جنية|ج\.م|ريال|درهم|دولار|قرش/.test(t)||!!d.med||(d.cards||[]).some(c=>c&&c.k==='dose')}
 function holdSay(t,after){haltListening();buzz([200,100,200]);setHear('لحظة واحدة','لحظة واحدة من فضلك','صاحب الموبايل بيراجع الكلام.');
- $('tOkT').innerHTML=nums(t);$('tOk').classList.remove('hidden');setState('talk','راجع الجملة، ودوس «قوله»');$('tbody').scrollTop=$('tbody').scrollHeight;
- $('tOkYes').onclick=()=>{$('tOk').classList.add('hidden');if(!T||T.over)return;T.history.push({role:'wasl',text:t});T.lastSaid=t;logMsg('wasl',t);setHear('وصل بيقول',t,'');setState('talk','وصل بيتكلم...');speak(t,after)};
- $('tOkNo').onclick=()=>{$('tOk').classList.add('hidden');if(!T||T.over)return;T.history.push({role:'user',text:'(صاحب الموبايل وقّف الجملة دي ومتقالتش: '+t+')'});logMsg('user','وقّفت الجملة، ومتقالتش');
+ $('tOkT').innerHTML=nums(t);$('tOk').classList.remove('hidden');asking('tOk');setState('talk','راجع الجملة، ودوس «قوله»');$('tbody').scrollTop=$('tbody').scrollHeight;
+ $('tOkYes').onclick=()=>{$('tOk').classList.add('hidden');asking(null);if(!T||T.over)return;T.history.push({role:'wasl',text:t});T.lastSaid=t;logMsg('wasl',t);setHear('وصل بيقول',t,'');setState('talk','وصل بيتكلم...');speak(t,after)};
+ $('tOkNo').onclick=()=>{$('tOk').classList.add('hidden');asking(null);if(!T||T.over)return;T.history.push({role:'user',text:'(صاحب الموبايل وقّف الجملة دي ومتقالتش: '+t+')'});logMsg('user','وقّفت الجملة، ومتقالتش');
   setHear('وصل سامعك · اتكلم عادي',T.lastSaid||'لحظة واحدة من فضلك','صاحب الموبايل أصم، وأنا مساعده.');$('tType').classList.remove('hidden');setState('ok','الجملة متقالتش. اكتب اللي عايز وصل يقوله');if(!DEMO)startListening()}}
 function isAck(t){const w=String(t).replace(/[،.!؟?,]/g,' ').trim().split(/\s+/);return w.length<=4&&w.every(x=>/^(ماشي|تمام|طيب|اتفضل|اتفضلي|كمل|كملي|كمّل|أوكي|اوكي|اه|آه|أيوه|ايوه|حاضر|معاك|معاكي|سامعك|سامعاك|و|يا|فندم|حضرتك|ok|okay|sure|go|on)$/i.test(x))}
 
@@ -908,7 +984,7 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  const ok=DEMO?true:await micOk();if(ok!==true){alert('وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ('+ok+')');return}
  T={goal,history:[],seq:0,over:false,title:goal,lastSaid:'',tid:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)};lastTid=null;refillMed='';lastMap='';prefetchFillers();
  $('tTitle').textContent=goal;$('tLog').innerHTML='';if(taskPhoto){$('hPhoto').src=taskPhoto;$('hPhoto').classList.remove('hidden')}else $('hPhoto').classList.add('hidden');drawProg({n:1,total:3});liveCap('',false);$('tLiveLab').textContent='كلام اللي قدامك هيظهر هنا';drawCards('tCards',[]);
- ['tDecide','tSum','tType'].forEach(id=>$(id).classList.add('hidden'));$('tFoot').classList.remove('hidden');
+ ['tDecide','tSum','tType','tOk'].forEach(id=>$(id).classList.add('hidden'));asking(null);$('tFoot').classList.remove('hidden');
  setHear('وصل','أهلاً بيك','صاحب الموبايل أصم، وأنا مساعده.');show('task');
  heardBuf='';clearTimeout(heardTimer);
  onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,2600)};
@@ -918,7 +994,7 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
 
 $('tWrite').onclick=()=>{$('tType').classList.toggle('hidden');if(!$('tType').classList.contains('hidden'))$('tInput').focus()};
 let typeFor='';
-function askType(choice){typeFor=choice;$('tDecide').classList.add('hidden');const inp=$('tInput');
+function askType(choice){typeFor=choice;$('tDecide').classList.add('hidden');asking(null);const inp=$('tInput');
  inp.placeholder=/علامة|معلم/.test(choice)?'اكتب العلامة المميزة (مثلاً: جنب مسجد الحصري، 6 أكتوبر)':'اكتب العنوان أو اسم المكان والمنطقة (مثلاً: شارع التحرير، الدقي)';
  $('tType').classList.remove('hidden');setState('talk','اكتب وابعت، ووصل هيقوله');inp.focus()}
 $('tSend').onclick=()=>{const t=$('tInput').value.trim();if(!t||!T)return;$('tInput').value='';$('tType').classList.add('hidden');$('tInput').placeholder='اكتب اللي عايز وصل يقوله أو يعرفه';
@@ -1000,7 +1076,7 @@ async function freeCount(){if(DEMO)return;const sid=fSid;
  try{const r=await postJSON(QUOTA_URL,{op:'translate',tid:sid},6000);if(r&&typeof r.left==='number'){QS=r;quotaDraw()}}
  catch(e){if(e&&e.why==='quota'&&sid===fSid){fNoSmart=true;if(e.data&&typeof e.data.left==='number'){QS=e.data;quotaDraw()}$('fState').textContent='خلصت مهام الشهر: الكلام هيفضل يتكتب، من غير ردود ذكية'}}}
 const DEFAULT_REPLIES=['ممكن تتكلم أبطأ شوية؟','أنا أصم، اقرا كلامي من الشاشة','ممكن تكتبلي؟','شكراً جزيلاً'];
-function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${smart?'✨ ':''}${esc(t)}</button>`).join('');
+function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${optIc(t)}${smart&&!picOn()?'✨ ':''}${esc(t)}</button>`).join('');
  $('fSug').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>fSpeak(list[i]))}
 function fSpeak(t){$('fSaid').textContent='اتقال: '+t;speak(t,()=>{if(freeOn)startListening()})}
 async function smartReplies(text){if(fNoSmart)return;const n=++fSeq;$('fState').textContent='✨ بيجهّز ردود...';
@@ -1016,7 +1092,7 @@ $('freeBack').onclick=()=>{freeOn=false;haltListening();$('freeGo').textContent=
 $('fSay').onclick=()=>{const t=$('fInput').value.trim();if(t){$('fInput').value='';fSpeak(t)}};
 $('fInput').onkeydown=e=>{if(e.key==='Enter')$('fSay').click()};
 $('fFlip').onclick=()=>{const t=$('fInput').value||$('fSaid').textContent.replace('اتقال: ','');if(!t)return;$('flip').textContent=t;$('flip').style.display='flex'};
-$('flip').onclick=()=>$('flip').style.display='none';
+$('flip').onclick=()=>{$('flip').style.display='none';$('flip').classList.remove('up')};
 $('fSign').onclick=()=>openSigns('free');
 
 /* ================= PAYMENT STAMPS ================= */
@@ -1225,12 +1301,93 @@ if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='fi
  const go=new URLSearchParams(location.search).get('go');
  if(go==='sos')setTimeout(()=>$('sosBtn').click(),300);if(go==='free')setTimeout(()=>$('openFree').click(),300);
 })();
+/* ================= PICTURE MODE (وضع الصور) =================
+   For users who read little (many Deaf users' first language is sign language). Off by default; turned on in بياناتي
+   or at the first-run choice «بفضّل الصور». Saved in localStorage (wasl_pic). When on: home becomes big situation
+   pictures that start a task in one tap, heard words and picture cards are bigger, answers are big buttons with an icon.
+   SOS is never hidden. No medicine is ever suggested: the pharmacy picture asks for a photo or the name. */
+const IC={
+ pill:'<path d="M10.5 20.5a5 5 0 0 1-7-7l10-10a5 5 0 0 1 7 7z"/><path d="M8.5 8.5l7 7"/>',
+ basket:'<path d="M4 9h16l-1.6 10.2a1 1 0 0 1-1 .8H6.6a1 1 0 0 1-1-.8z"/><path d="M8.5 9l3.5-5 3.5 5"/><path d="M10 13v3.5M14 13v3.5"/>',
+ steth:'<path d="M6 3H5v6a4 4 0 0 0 8 0V3h-1"/><path d="M9 13v2a5 5 0 0 0 10 0v-2"/><circle cx="19" cy="11" r="2"/>',
+ bus:'<rect x="4" y="3" width="16" height="14" rx="3"/><path d="M4 10h16M8 17v3M16 17v3"/><path d="M8 13.5h.01M16 13.5h.01"/>',
+ bank:'<path d="M3 9l9-5 9 5z"/><path d="M5 9v8M9.5 9v8M14.5 9v8M19 9v8M3 20h18"/>',
+ where:'<path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><path d="M10 8.3a2 2 0 1 1 2.7 1.9c-.4.2-.7.6-.7 1.1v.4M12 14.2v.01"/>',
+ chat:'<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 10h4M13 10h4M7 14h7"/>',
+ homeRx:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 12v5M9.5 14.5h5"/>',
+ deaf:'<path d="M7 10a5 5 0 0 1 10 0c0 3-3 4-3 7a3 3 0 0 1-5.2 2"/><path d="M10 10a2 2 0 0 1 4 0"/><path d="M3 3l18 18"/>',
+ pen:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+ cam:'<path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/>',
+ box:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/>',
+ ok:'<path d="M5 12l5 5 9-10"/>',
+ stop:'<path d="M8 13V6a1.5 1.5 0 0 1 3 0v5M11 11V4.5a1.5 1.5 0 0 1 3 0V11M14 11V6.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-.5a5 5 0 0 1-4.2-2.3L3.6 13.5a1.5 1.5 0 0 1 2.5-1.6L8 14"/>',
+ pin:'<path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>',
+ money:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/>',
+ swap:'<path d="M4 8h14l-4-4M20 16H6l4 4"/>',
+ slow:'<path d="M6 2h12M6 22h12M7 2c0 5 10 5 10 10S7 17 7 22M17 2c0 5-10 5-10 10s10 5 10 10"/>',
+ heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+ repeat:'<path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/>',
+ talk:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/>',
+ hand:'<path d="M18 11V6a1.5 1.5 0 0 0-3 0M15 10V4.5a1.5 1.5 0 0 0-3 0V10M12 10V5.5a1.5 1.5 0 0 0-3 0V12M9 12V8.5a1.5 1.5 0 0 0-3 0V15a7 7 0 0 0 14 0v-4a1.5 1.5 0 0 0-3 0"/>',
+ x:'<path d="M6 6l12 12M18 6L6 18"/>',
+ flip:'<rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 7h4M10 11h4"/>'};
+const svgI=(k,cls)=>`<svg${cls?` class="${cls}"`:''} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]||IC.talk}</svg>`;
+function picOn(){return document.documentElement.classList.contains('pm')}
+function setPic(on){on=!!on;store.set('wasl_pic',on);document.documentElement.classList.toggle('pm',on);
+ $('picSw').setAttribute('aria-checked',String(on));$('picSwL').textContent=on?'شغّال':'مقفول';if($('free').classList.contains('on')&&!freeOn)drawReplies(DEFAULT_REPLIES,false)}
+setPic(store.get('wasl_pic',false)===true);
+$('picSw').onclick=()=>{buzz([30]);setPic(!picOn())};
+/* an icon for an answer button, picked from its words (only in picture mode) */
+function riKey(t){t=String(t||'');
+ if(/^\s*(أيوه|ايوه|آه|اه|نعم|تمام|موافق|ماشي|هاخد|خده|خدها)/.test(t))return'ok';
+ if(/^\s*(لأ|لا[\s،,.]|لا$|مش عايز|مش هاخد|بلاش)/.test(t))return'stop';
+ if(/اكتب|هكتب|بنفسي|تكتبلي|ورقة/.test(t))return'pen';
+ if(/خريطة|عنوان|مكان|فين|شارع/.test(t))return'pin';
+ if(/فلوس|ادفع|دفع|كاش|فيزا|سعر|جنيه|بكام/.test(t))return'money';
+ if(/بديل|غيره/.test(t))return'swap';
+ if(/استنى|لحظة|أبطأ|ابطأ|بالراحة/.test(t))return'slow';
+ if(/أصم|اصم|مش بسمع|الشاشة|اقرا/.test(t))return'deaf';
+ if(/شكر|متشكر/.test(t))return'heart';
+ if(/تاني|كرر|عيد/.test(t))return'repeat';
+ return'talk'}
+function optIc(t){return picOn()?`<span class="ri">${svgI(riKey(t))}</span>`:''}
+[['tWrite','pen'],['tSign','hand'],['tPay','money'],['tMap','pin'],['tEnd','x'],['fSign','hand'],['fPay','money'],['fFlip','flip']].forEach(([id,k])=>$(id).insertAdjacentHTML('afterbegin',svgI(k,'only-pic')));
+/* home: ready situations for «اتكلم بدالي», then the other tools. Each starts in one tap. */
+const SIT=[
+ {k:'pill',l:'صيدلية',c:'#1F6F80',t:'#E1EFF1',ph:1},
+ {k:'basket',l:'كاشير',c:'#B8431A',t:'#FBE6D4',g:'عايز أدفع حساب الحاجات دي عند الكاشير'},
+ {k:'steth',l:'حجز دكتور',c:'#2E7D5B',t:'#E3F1EA',g:'عايز أحجز كشف عند الدكتور'},
+ {k:'bus',l:'مواصلات',c:'#7A5A00',t:'#F5EDD3',g:'عايز أركب مواصلة، وأعرف أنزل فين والأجرة كام'},
+ {k:'bank',l:'بنك',c:'#13262F',t:'#E4EAEC',g:'عايز أخلّص حاجة في البنك'},
+ {k:'where',l:'فين المكان؟',c:'#8F4612',t:'#F6E6D8',g:'عايز أسأل عن مكان'}];
+const TOOLS=[{k:'chat',l:'ترجمة',go:()=>$('openFree').click()},{k:'homeRx',l:'دوا للبيت',go:()=>oOpen()},{k:'deaf',l:'أنا أصم',go:showDeaf}];
+const welcomed=()=>store.get('wasl_welcome',false)===true;
+const gated=fn=>()=>{buzz([30]);if(!welcomed()){$('welcome').classList.remove('hidden');return}fn()};
+const sitBtn=(x,i)=>`<button data-i="${i}" style="--c:${x.c||'#fff'};--t:${x.t||'transparent'}"><span class="si">${svgI(x.k)}</span>${esc(x.l)}</button>`;
+$('picHome').innerHTML=`<div class="phead"><b>اتكلم بدالي</b><button class="pwrite" id="picWrite">${svgI('pen')}اكتب بنفسي</button></div><div class="sit" id="sitGrid" role="group" aria-label="اتكلم بدالي">${SIT.map(sitBtn).join('')}</div>`+
+ `<div class="sit tools" id="toolGrid">${TOOLS.map(sitBtn).join('')}</div>`;
+function startSit(g){drawPics(null);taskPhoto=null;$('goal').value=g;$('startTask').click()}
+function typeGoal(pre){drawPics(null);taskPhoto=null;$('goal').value=pre||'';show('talk');quotaGet();const dt=$('goal').closest('details');if(dt)dt.open=true;setTimeout(()=>{const g=$('goal');g.focus();g.setSelectionRange(g.value.length,g.value.length)},60)}
+$('sitGrid').querySelectorAll('button').forEach(b=>b.onclick=gated(()=>{const x=SIT[+b.dataset.i];if(x.ph)openPh();else startSit(x.g)}));
+$('toolGrid').querySelectorAll('button').forEach(b=>b.onclick=gated(()=>TOOLS[+b.dataset.i].go()));
+$('picWrite').onclick=gated(()=>typeGoal(''));
+/* pharmacy: Wasl never suggests a medicine. The user shows the prescription or the box, or writes the name. */
+const PH=[{k:'cam',l:'صوّر الروشتة',go:()=>{camHint='روشتة';$('camIn').click()}},{k:'box',l:'صوّر علبة الدوا',go:()=>{camHint='علبة دوا';$('camIn').click()}},{k:'pen',l:'اكتب اسم الدوا',go:()=>typeGoal('عايز من الصيدلية: ')}];
+$('phT').innerHTML=svgI('pill')+'صيدلية';
+$('phOpts').innerHTML=PH.map(x=>`<button><span class="si">${svgI(x.k)}</span>${esc(x.l)}</button>`).join('');
+$('phOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{buzz([30]);$('phSheet').classList.add('hidden');drawPics(null);taskPhoto=null;PH[i].go()});
+function openPh(){$('phSheet').classList.remove('hidden')}
+$('phX').onclick=()=>$('phSheet').classList.add('hidden');
+$('phSheet').onclick=e=>{if(e.target.id==='phSheet')$('phSheet').classList.add('hidden')};
+/* «أنا أصم»: a big sign to show the person in front (phone held toward them, not flipped). */
+function showDeaf(){const f=$('flip');f.innerHTML='أنا أصم<small>من فضلك اكتبلي، أو شاورلي</small><span class="fx">دوس في أي حتة عشان تقفل</span>';f.classList.add('up');f.style.display='flex';buzz([60])}
 /* ================= FIRST RUN + NO NETWORK ================= */
 /* One-time welcome before the first real use. SOS never waits for it. */
 (function(){const ok=()=>store.get('wasl_welcome',false)===true,W=$('welcome');
  ['bigTalk','openFree'].forEach(id=>{const b=$(id),f=b.onclick;b.onclick=e=>{if(!ok()){W.classList.remove('hidden');$('wOk').focus();return}f&&f.call(b,e)}});
  const sos=$('sosBtn').onclick;$('sosBtn').onclick=e=>{W.classList.add('hidden');sos&&sos.call($('sosBtn'),e)};
- $('wOk').onclick=()=>{store.set('wasl_welcome',true);W.classList.add('hidden')};
+ $('wOk').onclick=()=>{store.set('wasl_welcome',true);setPic(false);W.classList.add('hidden')};
+ $('wPic').onclick=()=>{store.set('wasl_welcome',true);setPic(true);W.classList.add('hidden')};
  $('wSos').onclick=()=>$('sosBtn').click();
  if(!ok())W.classList.remove('hidden');
 })();
@@ -1287,7 +1444,7 @@ function oDraw(){const o=oCur();if(!o){oSetup();return}
  const showExp=!!(o.explain||(o.cards&&o.cards.length))&&o.state!=='done';$('oExp').classList.toggle('hidden',!showExp);$('oExpT').innerHTML=nums(o.explain||'');drawCards('oCards',showExp?(o.cards||[]):[]);
  $('oDecide').classList.toggle('hidden',o.state!=='decide');$('oType').classList.add('hidden');
  if(o.state==='decide'){$('oQ').textContent=o.question||'تختار إيه؟';const opts=o.options&&o.options.length?o.options:['أيوه','لأ، شكراً'];
-  $('oOpts').innerHTML=opts.map(x=>`<button>${esc(x)}</button>`).join('');
+  $('oOpts').innerHTML=opts.map(x=>`<button>${optIc(x)}${esc(x)}</button>`).join('');
   $('oOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{const c=opts[i];if(/بنفسي|هكتب/.test(c)){$('oType').classList.remove('hidden');$('oTypeIn').focus();return}
    o.thread.push({from:'user',text:c,t:Date.now()});oSave(o);oStep({type:'decision',text:c})})}
  const canSend=o.state==='send'||(o.state==='done'&&!!o.draft);$('oSend').classList.toggle('hidden',!canSend);if(canSend)$('oMsg').value=o.draft||'';
