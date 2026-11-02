@@ -1809,7 +1809,8 @@ let heardBuf='',heardTimer=null;
 /* A short "one moment" so the other person isn't left in silence while Wasl prepares the reply. At most once every 15 s, never over someone talking. */
 let fillP=null,fillWanted=false,lastFill=0;
 function fillers(){return LANG==='en-US'?['One moment, please.','Just a second, please.']:['لحظة واحدة لو سمحت.','ثانية واحدة من فضلك.','لحظة بس لو سمحت.']}
-function prefetchFillers(){if(DEMO)return;const g=vg();fillers().forEach(t=>ttsBlob(mascTTS(t),LANG,g,true).catch(()=>{}))}
+/* One at a time: the voice service takes at most 3 requests at once, and the first real sentence must not be refused. */
+function prefetchFillers(){if(DEMO)return;const g=vg(),L=fillers().slice();(async()=>{for(const t of L){try{await ttsBlob(mascTTS(t),LANG,g,true)}catch(e){}}})()}
 function playFiller(){if(DEMO||!T||T.over||!fillWanted||player||fillP||Date.now()-lastFill<15000||Date.now()-lastVoiceAt<2000||heardBuf.trim())return;
  lastFill=Date.now();const l=fillers(),t=mascTTS(l[Math.floor(Math.random()*l.length)]);
  fillP=(async()=>{try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),2500);const b=await ttsBlob(t,LANG,vg(),true,ac.signal);clearTimeout(to);
@@ -1954,26 +1955,45 @@ const DL_EN={
  a3:"One moment, I'll ask him.",
  a4:"OK, we'll take the Klacid. Thank you so much.",
  a4no:"No, thank you, we won't take it now. Thank you."};
-const dl=()=>DEMO&&DEMO.vl==='en-US'?DL_EN:DL;
+/* The same scene in Gulf Arabic, for a Gulf conversation (LANG ar-SA): a pharmacy in Dubai, prices in dirhams.
+   The prices are demo numbers for the scene, not real price quotes. */
+const DL_GU={
+ a0:'صباح الخير، أنا منى، مساعدة محمد، وهو أصم، وأتكلم بالنيابة عنه. نبي المضاد الحيوي اللي في هالوصفة لو سمحت.',
+ p1:'إيه، هذا أوجمنتين 1 جرام. موجود، والعلبة بـ 45 درهم.',
+ a1:'لحظة لو سمحت، بسأله.',
+ a2:'محمد عنده حساسية من البنسلين. فيه بديل مناسب ما فيه بنسلين؟',
+ a2no:'تمام، بناخذ أوجمنتين. مشكور، الله يعطيك العافية.',
+ p2:'إيه، يقدر ياخذ كلاسيد 500. حبة كل 12 ساعة لمدة أسبوع، والعلبة بـ 38 درهم.',
+ a3:'لحظة، بسأله.',
+ a4:'تمام، بناخذ كلاسيد. مشكور، الله يعطيك العافية.',
+ a4no:'لا مشكور، ما بناخذه الحين. الله يعطيك العافية.'};
+/* What the user reads in the Gulf scene (the Egyptian scene's lines go through tr() as before). */
+const DU_GU={title:'صرف مضاد حيوي',goal:'أبي المضاد الحيوي اللي في الوصفة',
+ q1:'أوجمنتين فيه بنسلين، وأنت عندك حساسية منه. أسأله عن بديل؟',o1:['إيه، اسأله عن بديل','لا، خذه'],warn:'بنسلين',
+ s1:'اشتريت أوجمنتين 1 جرام بـ 45 درهم. انتبه: فيه بنسلين وأنت عندك حساسية منه.',
+ q2:'البديل كلاسيد 500 بـ 38 درهم. حبة كل 12 ساعة لمدة أسبوع. ناخذه؟',o2:['إيه، خذه','لا، مشكور'],alt:'كلاسيد 500',dose:'كل 12 ساعة',
+ s2:'اشتريت كلاسيد 500 بـ 38 درهم بدل أوجمنتين، لأن فيه بنسلين. الجرعة: حبة كل 12 ساعة لمدة 7 أيام.',
+ s3:'ما اشتريت شي. الصيدلي اقترح كلاسيد 500 بـ 38 درهم بديل عن أوجمنتين.'};
+const dl=()=>DEMO&&DEMO.vl==='en-US'?DL_EN:DEMO&&DEMO.vl==='ar-SA'?DL_GU:DL;
 const DLG={p1:'m',p2:'m'};
 function demoStep(ev){const D=DEMO;
- const DL=dl();
- if(ev.type==='start'){D.st=1;return{say:DL.a0,action:'speak',task_title:tr('صرف مضاد حيوي'),step:{n:1,total:4},cards:[]}}
- if(ev.type==='heard'&&D.st===1){D.st=2;return{say:DL.a1,action:'ask_user',question:tr('أوجمنتين فيه بنسلين، وإنت عندك حساسية منه. أسأله على بديل؟'),options:[tr('أيوه، اسأله على بديل'),tr('لأ، خده')],cards:[{k:'available',v:''},{k:'price',v:'180'},{k:'warn',v:tr('بنسلين')}],step:{n:2,total:4}}}
+ const DL=dl(),G=D.vl==='ar-SA'&&UI!=='en'?DU_GU:null;
+ if(ev.type==='start'){D.st=1;return{say:DL.a0,action:'speak',task_title:G?G.title:tr('صرف مضاد حيوي'),step:{n:1,total:4},cards:[]}}
+ if(ev.type==='heard'&&D.st===1){D.st=2;return{say:DL.a1,action:'ask_user',question:G?G.q1:tr('أوجمنتين فيه بنسلين، وإنت عندك حساسية منه. أسأله على بديل؟'),options:G?G.o1:[tr('أيوه، اسأله على بديل'),tr('لأ، خده')],cards:[{k:'available',v:''},{k:'price',v:G?'45':'180'},{k:'warn',v:G?G.warn:tr('بنسلين')}],step:{n:2,total:4}}}
  if(ev.type==='decision'&&D.st===2){if(/بديل|alternative/i.test(ev.text)){D.st=3;return{say:DL.a2,action:'speak',step:{n:3,total:4}}}
-  D.st=9;return{say:DL.a2no,action:'done',summary:tr('اشتريت أوجمنتين 1 جرام بـ 180 جنيه. تنبيه: فيه بنسلين وإنت عندك حساسية منه.')}}
- if(ev.type==='heard'&&D.st===3){D.st=4;return{say:DL.a3,action:'ask_user',question:tr('البديل كلاسيد 500 بـ 90 جنيه. قرص كل 12 ساعة لمدة أسبوع. ناخده؟'),options:[tr('أيوه، خده'),tr('لأ، شكراً')],cards:[{k:'alt',v:tr('كلاسيد 500')},{k:'dose',v:tr('كل 12 ساعة')},{k:'price',v:'90'}],step:{n:4,total:4}}}
- if(ev.type==='decision'&&D.st===4){D.st=9;if(/أيوه|^yes/i.test(ev.text))return{say:DL.a4,action:'done',med:tr('كلاسيد 500'),summary:tr('اشتريت كلاسيد 500 بـ 90 جنيه بدل أوجمنتين، لأنه فيه بنسلين. الجرعة: قرص كل 12 ساعة لمدة 7 أيام.')};
-  return{say:DL.a4no,action:'done',summary:tr('مشتريتش حاجة. الصيدلي اقترح كلاسيد 500 بـ 90 جنيه بديل لأوجمنتين.')}}
+  D.st=9;return{say:DL.a2no,action:'done',summary:G?G.s1:tr('اشتريت أوجمنتين 1 جرام بـ 180 جنيه. تنبيه: فيه بنسلين وإنت عندك حساسية منه.')}}
+ if(ev.type==='heard'&&D.st===3){D.st=4;return{say:DL.a3,action:'ask_user',question:G?G.q2:tr('البديل كلاسيد 500 بـ 90 جنيه. قرص كل 12 ساعة لمدة أسبوع. ناخده؟'),options:G?G.o2:[tr('أيوه، خده'),tr('لأ، شكراً')],cards:[{k:'alt',v:G?G.alt:tr('كلاسيد 500')},{k:'dose',v:G?G.dose:tr('كل 12 ساعة')},{k:'price',v:G?'38':'90'}],step:{n:4,total:4}}}
+ if(ev.type==='decision'&&D.st===4){D.st=9;if(/أيوه|^إيه|^yes/i.test(ev.text))return{say:DL.a4,action:'done',med:G?G.alt:tr('كلاسيد 500'),summary:G?G.s2:tr('اشتريت كلاسيد 500 بـ 90 جنيه بدل أوجمنتين، لأنه فيه بنسلين. الجرعة: قرص كل 12 ساعة لمدة 7 أيام.')};
+  return{say:DL.a4no,action:'done',summary:G?G.s3:tr('مشتريتش حاجة. الصيدلي اقترح كلاسيد 500 بـ 90 جنيه بديل لأوجمنتين.')}}
  return{say:'',action:'speak'}}
 function demoHear(){const D=DEMO;if(!D)return;const k=D.st===1?'p1':D.st===3?'p2':null;if(!k)return;
  const line=dl()[k],w=line.split(' ');let i=0;
  D.timers.push(setTimeout(()=>{if(DEMO!==D)return;
   const tick=setInterval(()=>{if(DEMO!==D||i>=w.length){clearInterval(tick);return}i++;onInterim&&onInterim(w.slice(0,i).join(' '))},260);D.timers.push(tick);
   speak(line,()=>{if(DEMO!==D)return;clearInterval(tick);onHeard&&onHeard(line);clearTimeout(heardTimer);D.timers.push(setTimeout(()=>{if(DEMO===D)flushHeard()},500))},{g:'m'})},1100))}
-function runDemo(){DEMO={profile:{name:tr('محمد'),sex:'m',allergies:tr('البنسلين'),voice:'f'},st:0,timers:[],vl:LANG==='en-US'?'en-US':'ar-EG'};$('demoBadge').classList.remove('hidden');
- taskPhoto=null;$('goal').value=tr('عايز المضاد الحيوي اللي في الروشتة');$('startTask').click()}
-async function prepDemo(){const btn=$('demoPrep'),en=LANG==='en-US',L=en?DL_EN:DL,vl=en?'en-US':'ar-EG',keys=Object.keys(L);let ok=0;btn.disabled=true;
+function runDemo(){DEMO={profile:{name:tr('محمد'),sex:'m',allergies:tr('البنسلين'),voice:'f'},st:0,timers:[],vl:LANG==='en-US'?'en-US':LANG==='ar-SA'?'ar-SA':'ar-EG'};$('demoBadge').classList.remove('hidden');
+ taskPhoto=null;$('goal').value=DEMO.vl==='ar-SA'&&UI!=='en'?DU_GU.goal:tr('عايز المضاد الحيوي اللي في الروشتة');$('startTask').click()}
+async function prepDemo(){const btn=$('demoPrep'),en=LANG==='en-US',gu=LANG==='ar-SA',L=en?DL_EN:gu?DL_GU:DL,vl=en?'en-US':gu?'ar-SA':'ar-EG',keys=Object.keys(L);let ok=0;btn.disabled=true;
  for(const k of keys){btn.textContent=tr('بحضّر الأصوات {n}/{m}...',{n:ok,m:keys.length});try{await ttsBlob(mascTTS(L[k]),vl,DLG[k]||'f',true);ok++}catch(e){}}
  btn.disabled=false;btn.textContent=ok===keys.length?tr('الأصوات جاهزة ✓ (يشتغل من غير نت)'):tr('اتحضّر {n} من {m}، جرّب تاني',{n:ok,m:keys.length});}
 $('demoRun').onclick=runDemo;$('demoPrep').onclick=prepDemo;$('demoFab').onclick=runDemo;
