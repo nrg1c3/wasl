@@ -141,7 +141,7 @@ nav svg{width:24px;height:24px}
 .pgrid i{font-style:normal;font-size:28px}
 .pclose{min-height:48px;border:0;border-radius:14px;background:var(--line);font-size:16px;font-weight:700;color:var(--ink)}
 #flip{position:fixed;inset:0;background:#fff;color:#000;display:none;align-items:center;justify-content:center;font-size:44px;font-weight:800;padding:30px;text-align:center;transform:rotate(180deg);z-index:30}
-.note{font-size:13px;color:var(--mute);line-height:1.6}
+.note{font-size:13px;color:var(--mute);line-height:1.6}.srvnote{display:none;margin:2px 0 6px}.srvlisten .srvnote{display:block}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 /* emergency */
 /* new home */
@@ -416,6 +416,7 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 <div class="thead"><div><small>المهمة</small><b id="tTitle">مهمة</b></div><span class="stepchip" id="tStep">خطوة 1</span></div>
 <div class="prog" id="tProg"></div>
 <div class="state"><span class="dot" id="tDot"></span><span id="tState">بيبدأ...</span></div>
+<p class="note srvnote">الموبايل ده بيسمع عن طريق سيرفر وصل، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.</p>
 <div class="log" id="tLog"></div>
 <div class="decide hidden" id="tDecide"><div class="q" id="tQ"></div><div class="opts" id="tOpts"></div></div>
 <div class="decide hidden" id="tOk" role="alertdialog" aria-labelledby="tOkQ"><div class="q" id="tOkQ">وصل هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:</div><p class="okline" id="tOkT"></p><div class="opts"><button id="tOkYes">قوله</button><button id="tOkNo">لأ، استنى</button></div></div>
@@ -437,6 +438,7 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 <div class="top"><button class="back" id="freeBack">→ رجوع</button><b style="font-size:18px">ترجمة</b><button class="back" id="freeGo">▶ ابدأ</button></div>
 <div class="body">
 <div class="state"><span class="dot" id="fDot"></span><span id="fState">دوس "ابدأ"، واسند الموبايل.</span></div>
+<p class="note srvnote">الموبايل ده بيسمع عن طريق سيرفر وصل، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.</p>
 <div id="cap" aria-live="polite">كلام اللي قدامك هيظهر هنا...</div>
 <div class="cards lg" id="fCards"></div>
 <div class="sug" id="fSug"></div>
@@ -648,9 +650,16 @@ document.addEventListener('pointerdown',unlockAudio,{capture:true});document.add
 function bestVoice(lang){const vs=speechSynthesis.getVoices().filter(v=>v.lang.replace('_','-').toLowerCase().startsWith(lang.slice(0,2)));if(!vs.length)return null;const ex=vs.filter(v=>v.lang.replace('_','-')===lang);const pool=ex.length?ex:vs;return pool.find(v=>/natural|neural|online|google/i.test(v.name))||pool[0]}
 /* The voice reads unvowelled حضرتك as feminine (حضرتِك). Wasl always talks to the other person in the masculine by default, so add the fatha. */
 function mascTTS(t){return String(t).replace(/حضرتك/g,'حضرتَك').replace(/(^|[\s،.؟!,])(و?(?:إن|ان|عند|بتاع|إذن|اذن|ذوق|سؤال|كلام|وقت|تعب|خدمت))ك(?=[\s،.؟!,]|$)/g,'$1$2َك')}
-async function ttsBlob(t,vl,g,useCache,signal){const key='https://wasl.voice/'+encodeURIComponent(g+'|'+vl+'|'+t);let c=null;
+/* Weak or slow network: ask the server for the quicker voice model (ElevenLabs Flash) instead of the richest one (v3).
+   Weak = the phone says 2G/3G, under 1.5 Mbps or data saver; or the last voice from the server took more than 4 seconds (then for 5 minutes). */
+let ttsSlowUntil=0;
+function netWeak(){try{const c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+ if(c){if(c.saveData)return true;if(/^(slow-2g|2g|3g)$/.test(c.effectiveType||''))return true;if(typeof c.downlink==='number'&&c.downlink>0&&c.downlink<1.5)return true}}catch(e){}
+ return Date.now()<ttsSlowUntil}
+function ttsTook(ms){if(ms>4000)ttsSlowUntil=Date.now()+5*60e3}
+async function ttsBlob(t,vl,g,useCache,signal,fast){const key='https://wasl.voice/'+encodeURIComponent(g+'|'+vl+'|'+t);let c=null;
  if(useCache&&window.caches){try{c=await caches.open('wasl-demo-v1');const m=await c.match(key);if(m)return await m.blob()}catch(e){c=null}}
- const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:API_K,text:t,lang:vl,gender:g}),signal});
+ const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:API_K,text:t,lang:vl,gender:g},fast&&!useCache?{fast:true}:{})),signal});
  if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;const b=await r.blob();
  if(c){try{await c.put(key,new Response(b,{headers:{'Content-Type':'audio/mpeg'}}))}catch(e){}}return b}
 /* Wasl's Egyptian voice comes from the server. Offline, or when it fails, the phone's own voice says it, so Wasl is never silent.
@@ -662,7 +671,7 @@ async function speak(t,done,o){t=mascTTS(String(t||'').replace('✨','').trim())
  const device=()=>{try{const u=new SpeechSynthesisUtterance(t);u.lang=vl;u.rate=Math.round(vRate()/1.15*110)/100;const bv=bestVoice(vl);if(bv)u.voice=bv;u.onend=finish;u.onerror=finish;player={pause(){speechSynthesis.cancel()}};speechSynthesis.speak(u)}catch(e){finish()}};
  if(navigator.onLine===false&&!DEMO){device();return}
  try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),o&&o.fast?4000:13000);
-  const blob=await ttsBlob(t,vl,g,!!DEMO,ac.signal);clearTimeout(to);
+  const t0=Date.now();let blob;try{blob=await ttsBlob(t,vl,g,!!DEMO,ac.signal,!DEMO&&netWeak())}finally{clearTimeout(to);ttsTook(Date.now()-t0)}
   const url=URL.createObjectURL(blob);player=AUD;AUD.defaultPlaybackRate=vRate();AUD.src=url;AUD.playbackRate=vRate();
   let started=false;AUD.onplaying=()=>{started=true};
   AUD.onended=()=>{URL.revokeObjectURL(url);finish()};AUD.onerror=()=>{URL.revokeObjectURL(url);if(started)finish();else device()};
@@ -676,7 +685,9 @@ async function micOk(){try{const s=await navigator.mediaDevices.getUserMedia({au
 /* One recognizer at a time. The old code aborted and recreated the recognizer whenever it was asked to listen,
    and the aborted one's onend started a new one: an endless restart loop (Android beeps on every start) that froze the app. */
 let lastRecErr='',recLive=false,recFails=0,recStartAt=0,restartT=null,lastVoiceAt=0;
-function startListening(){if(DEMO)return;if(!SR){onListenState&&onListenState('nosr');return}
+function startListening(){if(DEMO)return;
+ if(srvMode){if(!srvCan()){onListenState&&onListenState('nosr');return}wantListen=true;if(player||srv)return;srvStart();return}
+ if(!SR){onListenState&&onListenState('nosr');return}
  wantListen=true;if(player)return;if(rec&&recLive)return;
  clearTimeout(restartT);const me=new SR();rec=me;me.lang=LANG;me.continuous=true;me.interimResults=true;me.maxAlternatives=1;
  let sent='',pend='';
@@ -688,21 +699,65 @@ function startListening(){if(DEMO)return;if(!SR){onListenState&&onListenState('n
   if(fin.length>=sent.length)sent=fin;pend=int;me._pend=int;if(int||delta)lastVoiceAt=Date.now();
   if(delta.length>1){recFails=0;const h=onHeard;h&&h(delta)}
   if(int){recFails=0;onInterim&&onInterim(int)}};
- me.onerror=ev=>{if(rec!==me)return;lastRecErr=ev.error;if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){wantListen=false;onListenState&&onListenState('blocked')}
+ me.onerror=ev=>{if(rec!==me)return;lastRecErr=ev.error;if(ev.error==='service-not-allowed'&&srvCan()){toSrv(me);return}if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){wantListen=false;onListenState&&onListenState('blocked')}
   else if(ev.error==='language-not-supported'||ev.error==='audio-capture'){wantListen=false;onListenState&&onListenState(ev.error)}
   else if(ev.error!=='no-speech'&&ev.error!=='aborted')recFails++};
  me.onend=()=>{if(rec!==me)return;recLive=false;rec=null;
   if(pend.length>1){const t=pend;pend='';const h=onHeard;h&&h(t)} // words that never became "final" used to be lost
   if(!wantListen||player)return;
   if(Date.now()-recStartAt<1500)recFails++;
-  if(recFails>6){wantListen=false;onListenState&&onListenState(lastRecErr==='network'?'network':'stuck');return}
+  if(recFails>6){if(lastRecErr==='network'&&srvCan()&&navigator.onLine!==false){toSrv(me);return}wantListen=false;onListenState&&onListenState(lastRecErr==='network'?'network':'stuck');return}
   restartT=setTimeout(()=>{if(wantListen&&!player&&!rec)startListening()},recFails?Math.min(4000,400*recFails):150)};
  try{me.start()}catch(e){rec=null;recLive=false}}
+/* ---------- listening through Wasl's server (phones whose browser can't turn speech into text) ----------
+   Used only when the browser has no speech recognition, or it keeps failing (service-not-allowed, or network again and again).
+   Records each sentence of the person in front (starts on voice, stops after 1.2 s of quiet, at most 12 s) and sends it
+   to ElevenLabs speech to text through Wasl's server (wasl-stt, live:true). The words go to the same onHeard, so tasks and
+   translation work as before. Nothing is stored. It is only listening: it does not count as a task. */
+const LIVE_STT_URL=API_BASE+'wasl-stt';
+let srvMode=!SR,srv=null,srvQ=Promise.resolve(),srvFails=0;
+function srvCan(){return !!(window.MediaRecorder&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&(window.AudioContext||window.webkitAudioContext))}
+function srvMime(){for(const m of ['audio/webm;codecs=opus','audio/mp4','audio/ogg;codecs=opus','audio/webm','audio/aac']){try{if(MediaRecorder.isTypeSupported(m))return m}catch(e){}}return ''}
+function toSrv(me){srvMode=true;if(rec===me){rec=null;recLive=false}try{me.abort()}catch(e){}clearTimeout(restartT);if(wantListen&&!player)startListening()}
+function srvB64(blob){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]||'');r.onerror=no;r.readAsDataURL(blob)})}
+async function srvStart(){
+ if(!store.get('wasl_srv_ok',false)){if(!confirm('الموبايل ده مش بيحوّل الكلام لكتابة لوحده.\n\nعشان وصل يسمع اللي قدامك، صوت كلامه هيتبعت لسيرفر وصل وخدمة ElevenLabs تحوّله لكتابة. مفيش حاجة بتتحفظ، بس لازم يكون فيه نت.\n\nموافق؟')){wantListen=false;onListenState&&onListenState('nosr');return}store.set('wasl_srv_ok',true)}
+ if(srv||!wantListen||player)return;const me={stopped:false};srv=me;document.body.classList.add('srvlisten');
+ let stream;try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}})}
+ catch(e){if(srv===me)srv=null;wantListen=false;onListenState&&onListenState(e&&(e.name==='NotAllowedError'||e.name==='SecurityError')?'blocked':'audio-capture');return}
+ if(srv!==me||me.stopped){stream.getTracks().forEach(t=>t.stop());return}
+ const AC=window.AudioContext||window.webkitAudioContext;let ctx;try{ctx=new AC();await ctx.resume()}catch(e){}
+ me.stream=stream;me.ctx=ctx;if(!ctx){srvStop(false);wantListen=false;onListenState&&onListenState('nosr');return}
+ const an=ctx.createAnalyser();an.fftSize=1024;ctx.createMediaStreamSource(stream).connect(an);const buf=new Uint8Array(an.fftSize);
+ const mime=srvMime();let mr=null,parts=[],voiceMs=0,startAt=0,lastLoud=0,floor=0.008,on=0;
+ const begin=()=>{parts=[];voiceMs=100;startAt=Date.now();lastLoud=startAt;let r;
+  try{r=new MediaRecorder(stream,Object.assign({audioBitsPerSecond:24000},mime?{mimeType:mime}:{}))}catch(e){try{r=new MediaRecorder(stream)}catch(_){return}}
+  mr=r;const mine=parts;r.ondataavailable=e=>{if(e.data&&e.data.size)mine.push(e.data)};
+  r.onstop=()=>{if(r._keep&&mine.length)srvSend(new Blob(mine,{type:(r.mimeType||mime||'audio/webm').split(';')[0]}))};
+  try{r.start()}catch(e){mr=null;return}lastVoiceAt=Date.now();onInterim&&onInterim('…')};
+ me.end=keep=>{const r=mr;mr=null;on=0;if(!r)return;r._keep=!!keep&&voiceMs>=350;try{r.stop()}catch(e){}if(!r._keep&&onInterim)onInterim('')};
+ me.timer=setInterval(()=>{if(me.stopped)return;an.getByteTimeDomainData(buf);let s=0;for(let i=0;i<buf.length;i++){const v=(buf[i]-128)/128;s+=v*v}
+  const rms=Math.sqrt(s/buf.length),now=Date.now(),loud=rms>Math.max(0.02,floor*3);
+  if(!loud)floor=floor*0.95+rms*0.05;
+  if(!mr){if(loud){if(++on>=2)begin()}else on=0;return}
+  if(loud){lastLoud=now;voiceMs+=50;lastVoiceAt=now}
+  if(now-lastLoud>1200||now-startAt>12000)me.end(true)},50);
+ recFails=0;onListenState&&onListenState('listening')}
+function srvStop(keep){const me=srv;if(!me)return;srv=null;me.stopped=true;clearInterval(me.timer);try{me.end&&me.end(keep)}catch(e){}
+ setTimeout(()=>{try{me.stream&&me.stream.getTracks().forEach(t=>t.stop())}catch(e){}try{me.ctx&&me.ctx.close()}catch(e){}},150)}
+function srvSend(blob){const h0=onHeard;srvQ=srvQ.then(async()=>{
+ if(blob.size>290000||blob.size<800)return;
+ try{const audio=await srvB64(blob);const d=await postJSON(LIVE_STT_URL,{audio,mime:blob.type||'audio/webm',live:true,lang:LANG},20000);srvFails=0;
+  const t=String(d&&d.text||'').trim();if(onHeard!==h0||!h0)return;
+  if(t.length>1)h0(t);else onInterim&&onInterim('')}
+ catch(e){if(onHeard!==h0)return;onInterim&&onInterim('');
+  if(e&&e.status===429&&/rate|daily|device|size/.test(e.why||'')){wantListen=false;srvStop(false);onListenState&&onListenState('srvlimit');return}
+  if(++srvFails>=3){wantListen=false;srvStop(false);onListenState&&onListenState('network')}}})}
 const NOSR_MSG='الموبايل ده مش بيسمع الكلام. استخدم Chrome على أندرويد، أو آخر نسخة على الآيفون. الكتابة شغالة عادي.';
-const LISTEN_WHY={'language-not-supported':'الموبايل مش بيسمع عربي. حدّث تطبيق Google وفعّل العربي في «الكتابة بالصوت»','audio-capture':'المايك مشغول في تطبيق تاني. اقفله ودوس هنا','network':'السماع محتاج نت. اتأكد من النت ودوس هنا'};
-function stopListening(){clearTimeout(restartT);const r=rec;rec=null;recLive=false;const p=r&&r._pend;try{r&&r.abort()}catch(e){}if(p&&p.length>1&&onHeard){r._pend='';onHeard(p)}}
-function resumeListening(){recFails=0;startListening()}
-function haltListening(){wantListen=false;stopListening()}
+const LISTEN_WHY={'language-not-supported':'الموبايل مش بيسمع عربي. حدّث تطبيق Google وفعّل العربي في «الكتابة بالصوت»','audio-capture':'المايك مشغول في تطبيق تاني. اقفله ودوس هنا','network':'السماع محتاج نت. اتأكد من النت ودوس هنا','srvlimit':'السماع عن طريق السيرفر وصل لحده النهارده. اكتب، أو دوس هنا تجرّب تاني'};
+function stopListening(){if(srv)srvStop(true);clearTimeout(restartT);const r=rec;rec=null;recLive=false;const p=r&&r._pend;try{r&&r.abort()}catch(e){}if(p&&p.length>1&&onHeard){r._pend='';onHeard(p)}}
+function resumeListening(){recFails=0;srvFails=0;startListening()}
+function haltListening(){wantListen=false;if(srv)srvStop(false);stopListening()}
 
 /* ================= TASK MODE ================= */
 let T=null;
@@ -857,7 +912,7 @@ $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('
  setHear('وصل','أهلاً بيك','صاحب الموبايل أصم، وأنا مساعده.');show('task');
  heardBuf='';clearTimeout(heardTimer);
  onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,2600)};
- onInterim=t=>{if(!T||T.over)return;liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,3500)}};
+ onInterim=t=>{if(!T||T.over)return;if(!t){liveCap(heardBuf,false);return}liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,3500)}};
  onListenState=s=>{if(s==='blocked')setState('think','المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr'){setState('think',NOSR_MSG);$('tType').classList.remove('hidden')};if(LISTEN_WHY[s]||s==='stuck'){setState('think',LISTEN_WHY[s]||'السماع وقف. دوس هنا عشان أسمع تاني');$('tState').onclick=()=>{$('tState').onclick=null;setState('ok','بسمع اللي قدامك...');resumeListening()}}};
  agent({type:'start',tid:T.tid})};
 
@@ -955,7 +1010,7 @@ $('openFree').onclick=()=>{show('free');fSid=null;fNoSmart=false;drawReplies(DEF
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent='المايك مقفول ('+ok+'). اسمح بيه من إعدادات المتصفح';return}
  freeOn=true;bumpStat('free');if(!fSid){fSid=Date.now().toString(36);freeCount()}$('freeGo').textContent='⏸ وقف';$('fDot').className='dot';$('fState').textContent=fNoSmart?'خلصت مهام الشهر: الكلام هيفضل يتكتب، من غير ردود ذكية':'بسمع...';
- onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول. اسمح بيه من إعدادات المتصفح';if(s==='nosr')$('fState').textContent=NOSR_MSG;if(LISTEN_WHY[s]||s==='stuck'){$('fState').textContent=LISTEN_WHY[s]||'السماع وقف. دوس هنا';$('fState').onclick=()=>{$('fState').onclick=null;$('fState').textContent='بسمع...';resumeListening()}}};
+ onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');if(t==='…'||!t){c.textContent=c.textContent.replace(/\s*…$/,'')+(t?' …':'')}else c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول. اسمح بيه من إعدادات المتصفح';if(s==='nosr')$('fState').textContent=NOSR_MSG;if(LISTEN_WHY[s]||s==='stuck'){$('fState').textContent=LISTEN_WHY[s]||'السماع وقف. دوس هنا';$('fState').onclick=()=>{$('fState').onclick=null;$('fState').textContent='بسمع...';resumeListening()}}};
  startListening()};
 $('freeBack').onclick=()=>{freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';onHeard=onInterim=onListenState=null;show('home')};
 $('fSay').onclick=()=>{const t=$('fInput').value.trim();if(t){$('fInput').value='';fSpeak(t)}};
