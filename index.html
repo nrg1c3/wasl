@@ -293,6 +293,22 @@ html.pm .tfoot{gap:6px;padding-inline:10px}
 html.pm .tfoot button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:62px;font-size:13px;padding:4px 2px}
 html.pm .tfoot .end{flex:1;padding:4px 2px}
 .tfoot svg,#free .row svg{width:24px;height:24px}
+/* Face to face: a slimmer bottom bar, and while the user decides the top halves shrink so the question, the picture cards and every answer fit on the screen */
+.tfoot{padding:6px 10px calc(6px + env(safe-area-inset-bottom));gap:6px}
+.tfoot button{min-height:44px;font-size:14px;padding:2px 4px;border-radius:12px;white-space:nowrap}
+.tfoot .end{padding:0 12px}
+html.pm .tfoot button{min-height:50px;font-size:12px;gap:1px}html.pm .tfoot svg{width:22px;height:22px}
+#task.asking .hear{flex-basis:20%;padding:10px 16px;gap:4px}#task.asking .hear .sub,#task.asking .hear .lab{display:none}
+#task.asking .live{padding:6px 14px;min-height:0}#task.asking #tLiveLab{display:none}
+#task.asking .live p{font-size:19px;line-height:1.35}html.pm #task.asking .live p{font-size:22px}
+#task.asking #tCards{margin-top:4px;gap:6px}
+#task.asking #tCards .pcard,html.pm #task.asking #tCards .pcard{flex-direction:row;justify-content:center;gap:6px;padding:4px 8px;min-width:0;border-top-width:4px}
+#task.asking #tCards .pcard svg,html.pm #task.asking #tCards .pcard svg{width:26px;height:26px}
+#task.asking #tCards .pcard b,html.pm #task.asking #tCards .pcard b{font-size:20px}
+#task.asking #tCards .pcard small{font-size:12px}
+#task.asking .tbody{padding-top:8px;gap:8px}
+#task.asking .decide .opts button{min-height:52px}html.pm #task.asking .decide .opts button{min-height:56px;font-size:19px;padding:6px 12px}
+html.pm #task.asking .decide .ri{width:34px;height:34px}html.pm #task.asking #tOk .opts button{min-height:80px}
 html.pm #free .row .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:64px;font-size:14px}
 #flip.up{transform:none;flex-direction:column;gap:18px}#flip small{display:block;font-size:26px;font-weight:700;line-height:1.5}#flip .fx{position:absolute;bottom:24px;font-size:16px;font-weight:700;color:#5B6870}
 /* app language: English pages are left to right; hide the page until it is translated (never more than 1.5 s) */
@@ -1464,7 +1480,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
    else if(/اكتب|هكتب|أكتب|بنفسي|علامة|معلم|اسم المكان|العنوان|عنوان/.test(c)||/\btype\b|\bwrite\b|myself|landmark|address/i.test(c)){askType(c);return}
    T.history.push({role:'user',text:c});logMsg('user',c);agent({type:'decision',text:c})});
   $('tDecide').classList.remove('hidden');asking('tDecide');setState('talk',tr('وصل محتاج قرارك'));
-  if(d.say)speak(d.say,()=>{if(T&&!T.over)startListening()});else startListening();$('tbody').scrollTop=$('tbody').scrollHeight;return}
+  if(d.say)speak(d.say,()=>{if(T&&!T.over)startListening()});else startListening();showBox('tDecide');return}
  if(d.action==='done'){
   // The task stays open: only the user ends it with إنهاء. Keep listening and keep the controls.
   T.summary=d.summary||T.summary||'';buzz([300]);setHear(trH(hold?'لحظة واحدة':'وصل بيقول'),hold?trH('لحظة واحدة من فضلك'):(d.say||trH('شكراً جزيلاً')),trH('لو فيه كلام تاني كمّل، ودوس إنهاء لما تخلص.'));
@@ -1475,12 +1491,14 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  if(d.say&&hold)holdSay(d.say,listenForHearing);else if(d.say){setState('talk',tr('وصل بيتكلم...'));setHear(trH('وصل بيقول'),d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
 /* Lines with numbers, money or medicine are shown to the user first; Wasl says them only after «قوله». */
 /* Picture mode: while the user decides, the picture cards sit inside the question box, next to the answers. */
-function asking(box){$('task').classList.toggle('asking',!!box);const c=$('tCards'),to=box&&picOn()?$(box):$('tLive');
+function asking(box){$('task').classList.toggle('asking',!!box);setTimeout(()=>{try{fitHear()}catch(e){}},0);const c=$('tCards'),to=box&&picOn()?$(box):$('tLive');
  if(c.parentNode!==to){if(to===$('tLive'))to.appendChild(c);else to.insertBefore(c,to.querySelector('.opts'))}}
+/* Bring a question box into view from its top (the question first), not the bottom of the log. */
+function showBox(id){const tb=$('tbody'),b=$(id);if(!tb||!b)return;requestAnimationFrame(()=>{tb.scrollTop+=b.getBoundingClientRect().top-tb.getBoundingClientRect().top-8})}
 function needsOk(d){if(DEMO)return false;const t=String(d.say||'');
  return /[0-9\u0660-\u0669%٪]|جنيه|جنية|ج\.م|ريال|درهم|دولار|قرش/.test(t)||/pound|\bEGP\b|\bLE\b|dollar|riyal|dirham/i.test(t)||!!d.med||(d.cards||[]).some(c=>c&&c.k==='dose')}
 function holdSay(t,after){haltListening();buzz([200,100,200]);setHear(trH('لحظة واحدة'),trH('لحظة واحدة من فضلك'),trH('صاحب الموبايل بيراجع الكلام.'));
- $('tOkT').innerHTML=nums(t);$('tOk').classList.remove('hidden');asking('tOk');setState('talk',tr('راجع الجملة، ودوس «قوله»'));$('tbody').scrollTop=$('tbody').scrollHeight;
+ $('tOkT').innerHTML=nums(t);$('tOk').classList.remove('hidden');asking('tOk');setState('talk',tr('راجع الجملة، ودوس «قوله»'));showBox('tOk');
  $('tOkYes').onclick=()=>{$('tOk').classList.add('hidden');asking(null);if(!T||T.over)return;T.history.push({role:'wasl',text:t});T.lastSaid=t;logMsg('wasl',t);setHear(trH('وصل بيقول'),t,'');setState('talk',tr('وصل بيتكلم...'));speak(t,after)};
  $('tOkNo').onclick=()=>{$('tOk').classList.add('hidden');asking(null);if(!T||T.over)return;T.history.push({role:'user',text:tr('(صاحب الموبايل وقّف الجملة دي ومتقالتش: {s})',{s:t})});logMsg('user',tr('وقّفت الجملة، ومتقالتش'));
   setHear(trH('وصل سامعك · اتكلم عادي'),T.lastSaid||trH('لحظة واحدة من فضلك'),trH('صاحب الموبايل أصم، وأنا مساعده.'));$('tType').classList.remove('hidden');setState('ok',tr('الجملة متقالتش. اكتب اللي عايز وصل يقوله'));if(!DEMO)startListening()}}
@@ -1888,6 +1906,14 @@ $('lrnGo').onclick=async()=>{const g=$('lrnG').value;if(!alOn){await startAlerts
 $('alToggle').onclick=()=>{alOn?stopAlerts():startAlerts()};
 $('alBack').onclick=()=>{drawAlChip();show('home')};
 document.addEventListener('visibilitychange',async()=>{if(alOn&&!document.hidden){try{alWake=await navigator.wakeLock.request('screen')}catch(e){}}});
+/* The screen never turns off while Wasl is open: a Deaf user holding the phone up in a conversation must not lose it.
+   Browsers drop the lock when the app is hidden, so it is taken again when Wasl comes back, and on the first touch
+   (some browsers only allow it after one). */
+let keepWake=null;
+async function keepAwake(){if(document.hidden||!('wakeLock' in navigator))return;if(keepWake&&!keepWake.released)return;
+ try{keepWake=await navigator.wakeLock.request('screen');keepWake.addEventListener('release',()=>{keepWake=null;if(!document.hidden)setTimeout(keepAwake,1000)})}catch(e){keepWake=null}}
+keepAwake();document.addEventListener('visibilitychange',()=>{if(!document.hidden)keepAwake()});
+['pointerdown','keydown'].forEach(ev=>document.addEventListener(ev,()=>{if(!keepWake)keepAwake()},{passive:true}));
 window.__waslTestAlert=(id)=>fireAlert(GROUPS.find(g=>g.id===id)||GROUPS[0],0.9);
 
 /* ================= SIGNS ================= */
