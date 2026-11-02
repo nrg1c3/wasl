@@ -184,7 +184,10 @@ nav svg{width:24px;height:24px}
 .sosact:nth-of-type(2){background:#13262F}.sosact:nth-of-type(4){background:#2E7D5B}
 .nums{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .nums a{display:flex;justify-content:space-between;align-items:center;min-height:52px;border:1px solid var(--line);border-radius:12px;padding:0 14px;text-decoration:none;color:var(--ink);font-weight:700;background:var(--bg)}
-.nums a b{font-size:20px;color:#A3221A}
+.nums a b{font-size:20px;color:#A3221A}.nums a{gap:10px}.nums a.wide{grid-column:1/-1}.nums a span{line-height:1.3;padding:6px 0}.nums a b{white-space:nowrap;flex:0 0 auto}
+.sosc{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:52px;border:2px solid #E7C3BE;border-radius:14px;background:var(--card,#fff);padding:6px 14px;margin-bottom:12px;font-size:16px;color:var(--ink)}
+.sosc b{font-size:18px}.sosc-ch{flex:0 0 auto;font-weight:800;color:#A3221A;white-space:nowrap}.sosc:focus-within{outline:3px solid var(--or);outline-offset:2px}
+.sosc select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px}
 #sosBoard{position:fixed;inset:0;z-index:45;display:none;flex-direction:column;background:#C0261A;color:#fff;padding:16px;gap:12px}
 #sosBoard.on{display:flex}
 #sosBoard.blink{animation:sbflash .7s infinite}
@@ -375,6 +378,7 @@ html.en:not(.tr) body{visibility:hidden}
 <div class="top"><button class="back" id="meBack">→ رجوع</button><b style="font-size:18px">بياناتي</b><span style="width:70px"></span></div>
 <div class="body">
 <div class="card"><b id="uiT">لغة التطبيق</b><div class="seg" role="group" aria-labelledby="uiT"><button id="uiAr" lang="ar" dir="rtl">العربية</button><button id="uiEn" lang="en" dir="ltr">English</button></div><p class="lead" style="margin:0;font-size:14px">لغة الكلام مع اللي قدامك بتختارها من فوق في الرئيسية.</p></div>
+<div class="card"><div class="field"><label for="pCountry">البلد</label><select id="pCountry"></select></div><p class="lead" style="margin:0;font-size:14px">أرقام الطوارئ بتمشي على البلد ده.</p></div>
 <div class="card"><button class="psw" id="picSw" role="switch" aria-checked="false"><span class="si"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg></span><span class="tx"><b>وضع الصور</b><small>صور كبيرة وكلام أقل</small></span><span class="swl" id="picSwL">مقفول</span><span class="sw" aria-hidden="true"><i></i></span></button></div>
 <p class="lead">بنستخدمها عشان نرد عنك من غير ما نسألك كل مرة. محفوظة على الموبايل ده بس، وأرقام الطوارئ مش بتخرج منه أبداً.</p>
 <div class="card">
@@ -531,6 +535,7 @@ html.en:not(.tr) body{visibility:hidden}
 <div class="top" style="background:#A3221A"><button class="back" id="sosBack" style="background:#7E1912">→ رجوع</button><b style="font-size:20px">طوارئ</b><span style="width:70px"></span></div>
 <div class="body">
 <p class="sosnote">وصل بيساعدك تطلب المساعدة، لكنه مش بديل عن الإسعاف والشرطة. لو تقدر، اتصل بنفسك أو خلّي حد جنبك يتصل.</p>
+<div class="sosc"><span class="sosc-t"><span>أرقام الطوارئ في:</span> <b id="sosCtyName">مصر</b></span><span class="sosc-ch" aria-hidden="true">غيّر ▾</span><label class="sr" for="sosCty">البلد</label><select id="sosCty"></select></div>
 <div id="sosStep1">
 <h2 style="margin-bottom:10px">إيه اللي حصل؟</h2>
 <div class="sosgrid" id="sosTypes"></div>
@@ -544,7 +549,7 @@ html.en:not(.tr) body{visibility:hidden}
 <div class="card hidden" id="sosScript"><b>اللي وصل هيقوله:</b><p class="lead" id="sosScriptText" style="color:var(--ink)"></p><button class="btn or" id="sosSpeak">🔊 اتكلم دلوقتي</button><span class="note">لو الكلام ما طلعش في المكالمة، حط الموبايل قريب من السماعة ودوس تاني.</span></div>
 <button class="btn ghost" id="sosAgain">نوع تاني من الطوارئ</button>
 </div>
-<div class="card"><b>أرقام الطوارئ في مصر</b><div class="nums" id="sosNums"></div></div>
+<div class="card"><b id="sosNumsT">أرقام الطوارئ في مصر</b><div class="nums" id="sosNums"></div></div>
 <div class="card"><b>بطاقتي الطبية</b><div id="sosMed" class="lead"></div><button class="btn ghost" id="sosEdit">عدّل بياناتي</button></div>
 </div>
 </section>
@@ -905,11 +910,16 @@ const EN={
 'شغّل السبيكر وارجع هنا ودوس «اتكلم دلوقتي». الرد مش هيتكتب، فابعت لأهلك كمان':'Turn on the speaker, come back here and tap «Speak now». Their answer won\'t be written, so text your family too',
 'واتساب الهلال الأحمر':'Red Crescent WhatsApp',
 'رسالة مكتوبة من غير مكالمة':'A written message, no call',
-'اللي وصل هيقوله:':'What Wasl will say (in Arabic, for emergency services in Egypt):',
+'اللي وصل هيقوله:':'What Wasl will say on the call:',
 '🔊 اتكلم دلوقتي':'🔊 Speak now',
 'لو الكلام ما طلعش في المكالمة، حط الموبايل قريب من السماعة ودوس تاني.':'If they can\'t hear it on the call, hold the phone near the speaker and tap again.',
 'نوع تاني من الطوارئ':'A different emergency',
-'أرقام الطوارئ في مصر':'Emergency numbers in Egypt',
+'أرقام الطوارئ في مصر':'Emergency numbers in Egypt','أرقام الطوارئ في {c}':'Emergency numbers in {c}','أرقام الطوارئ في:':'Emergency numbers in:','غيّر ▾':'Change ▾','البلد':'Country',
+'أرقام الطوارئ بتمشي على البلد ده.':'The SOS screen uses this country\'s emergency numbers.','اتحفظ ✓ أرقام الطوارئ دلوقتي بتاعة {c}.':'Saved ✓ Emergency numbers are now for {c}.',
+'الدفاع المدني':'Civil defence','الحماية المدنية':'Civil protection','الطوارئ':'Emergency','الطوارئ الموحد':'Unified emergency','الطوارئ (إسعاف وشرطة ومطافي)':'Emergency (ambulance, police, fire)',
+'الطوارئ الموحد (الرياض ومكة والمدينة والشرقية)':'Unified emergency (Riyadh, Makkah, Madinah, Eastern Province)','إسعاف (الصليب الأحمر)':'Ambulance (Red Cross)','إسعاف ومطافي':'Ambulance and fire',
+'شرطة (في المدن)':'Police (in towns)','الحرس الوطني (في الأرياف)':'National Guard (rural areas)','إسعاف ووقاية مدنية':'Ambulance and civil protection','الدرك':'Gendarmerie',
+'999 بلغة الإشارة البريطانية (فيديو)':'999 in British Sign Language (video)','رسالة لـ999 (لازم تسجّل الأول: ابعت register لـ999)':'Text 999 (register first: text "register" to 999)',
 'بطاقتي الطبية':'My medical card',
 'عدّل بياناتي':'Edit my info',
 'رسالة طوارئ للناس':'Emergency message for people',
@@ -1234,7 +1244,7 @@ async function ttsBlob(t,vl,g,useCache,signal,fast){const key='https://wasl.voic
    o.fast (SOS): wait for the server at most 4 seconds. */
 async function speak(t,done,o){t=mascTTS(String(t||'').replace('✨','').trim());if(!t){done&&done();return}
  stopListening();try{speechSynthesis.cancel()}catch(e){}if(player){try{player.pause()}catch(e){}}player={pause(){}};
- const vl=DEMO?DEMO.vl:(/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':(/[؀-ۿ]/.test(t)&&!/^ar/.test(LANG)?'ar-EG':LANG));const g=(o&&o.g)||vg();
+ const vl=(o&&o.vl)||(DEMO?DEMO.vl:null)||(/[a-zA-Z]/.test(t)&&!/[؀-ۿ]/.test(t)?'en-US':(/[؀-ۿ]/.test(t)&&!/^ar/.test(LANG)?'ar-EG':LANG));const g=(o&&o.g)||vg();
  const finish=()=>{player=null;done&&done()};
  const device=()=>{try{const u=new SpeechSynthesisUtterance(t);u.lang=vl;u.rate=Math.round(vRate()/1.15*110)/100;const bv=bestVoice(vl);if(bv)u.voice=bv;u.onend=finish;u.onerror=finish;player={pause(){speechSynthesis.cancel()}};speechSynthesis.speak(u)}catch(e){finish()}};
  if(navigator.onLine===false&&!DEMO){device();return}
@@ -1628,20 +1638,93 @@ $('tPay').onclick=()=>openPay('task');$('fPay').onclick=()=>openPay('free');
 $('payClose').onclick=closePay;$('paySheet').onclick=e=>{if(e.target.id==='paySheet')closePay()};
 
 /* ================= EMERGENCY ================= */
+/* Emergency numbers by country. SAFETY: only numbers confirmed (Nov 2026) on an official government page, or on two independent sources.
+   Source URL next to each country. A country we could not confirm is left out (Syria, Libya, Mauritania: sources disagree or none).
+   amb ambulance, pol police, fire fire/civil defence, gas gas emergency, gen one number for everything.
+   d = how Wasl speaks on the call: eg Egyptian, gulf Gulf, msa simple standard Arabic, en English.
+   list = the quick-dial numbers shown on the SOS screen: [number, label]. */
+const COUNTRIES={
+ // gov.uk/foreign-travel-advice/egypt/getting-help (123, 122, 180, 126); travel.state.gov Egypt page (123, 122); elwatannews.com/news/details/8332349 and elbalad.news/4961333 (129 gas, 121 electricity, 15322 Red Crescent)
+ EG:{ar:'مصر',en:'Egypt',d:'eg',amb:'123',pol:'122',fire:'180',gas:'129',list:[['123','إسعاف'],['122','شرطة'],['180','مطافي'],['129','غاز'],['121','كهربا'],['15322','الهلال الأحمر']]},
+ // gov.uk/foreign-travel-advice/saudi-arabia/getting-help (911; 112 without a Saudi SIM); travel.gc.ca/destinations/saudi-arabia and gulfnews.com «19 telephone numbers» (999 police, 997 ambulance, 998 civil defence).
+ // 911 so far covers Riyadh, Makkah, Madinah and the Eastern Province only (ajel.sa, Jun 2026), so each situation dials its own service number.
+ SA:{ar:'السعودية',en:'Saudi Arabia',d:'gulf',amb:'997',pol:'999',fire:'998',list:[['997','إسعاف'],['999','شرطة'],['998','الدفاع المدني'],['911','الطوارئ الموحد (الرياض ومكة والمدينة والشرقية)']]},
+ // gov.uk/foreign-travel-advice/united-arab-emirates/getting-help; travel.gc.ca/destinations/united-arab-emirates
+ AE:{ar:'الإمارات',en:'UAE',d:'gulf',amb:'998',pol:'999',fire:'997',list:[['998','إسعاف'],['999','شرطة'],['997','الدفاع المدني']]},
+ // gov.uk/foreign-travel-advice/kuwait/getting-help; travel.gc.ca/destinations/kuwait
+ KW:{ar:'الكويت',en:'Kuwait',d:'gulf',gen:'112',list:[['112','الطوارئ (إسعاف وشرطة ومطافي)']]},
+ // gov.uk/foreign-travel-advice/qatar/getting-help; travel.gc.ca/destinations/qatar
+ QA:{ar:'قطر',en:'Qatar',d:'gulf',gen:'999',list:[['999','الطوارئ (إسعاف وشرطة ومطافي)']]},
+ // gov.uk/foreign-travel-advice/bahrain/getting-help; travel.gc.ca/destinations/bahrain
+ BH:{ar:'البحرين',en:'Bahrain',d:'gulf',gen:'999',list:[['999','الطوارئ (إسعاف وشرطة ومطافي)']]},
+ // gov.uk/foreign-travel-advice/oman/getting-help; travel.gc.ca/destinations/oman
+ OM:{ar:'عُمان',en:'Oman',d:'gulf',gen:'9999',list:[['9999','الطوارئ (إسعاف وشرطة ومطافي)']]},
+ // gov.uk/foreign-travel-advice/jordan/getting-help; travel.gc.ca/destinations/jordan
+ JO:{ar:'الأردن',en:'Jordan',d:'msa',gen:'911',list:[['911','الطوارئ (إسعاف وشرطة ومطافي)']]},
+ // gov.uk/foreign-travel-advice/lebanon/getting-help; travel.gc.ca/destinations/lebanon
+ LB:{ar:'لبنان',en:'Lebanon',d:'msa',amb:'140',pol:'112',fire:'175',list:[['140','إسعاف (الصليب الأحمر)'],['112','شرطة'],['175','الدفاع المدني']]},
+ // gov.uk/foreign-travel-advice/iraq/getting-help (911 police, 122 ambulance, 115 fire); shafaq.com «911 قناة اتصال موحدة» (911 nationwide for security, health, accidents and fires)
+ IQ:{ar:'العراق',en:'Iraq',d:'msa',gen:'911',amb:'122',fire:'115',list:[['911','الطوارئ الموحد'],['122','إسعاف'],['115','الدفاع المدني']]},
+ // gov.uk/foreign-travel-advice/palestine/getting-help; swedenabroad.se (Palestina, larmcentraler)
+ PS:{ar:'فلسطين',en:'Palestine',d:'msa',amb:'101',pol:'100',fire:'102',list:[['101','إسعاف'],['100','شرطة'],['102','الدفاع المدني']]},
+ // gov.uk/foreign-travel-advice/yemen/getting-help (191 ambulance and fire, 199 or 194 police); travel.gc.ca/destinations/yemen (199)
+ YE:{ar:'اليمن',en:'Yemen',d:'msa',amb:'191',pol:'199',fire:'191',list:[['191','إسعاف ومطافي'],['199','شرطة']]},
+ // gov.uk/foreign-travel-advice/sudan/getting-help (999 for all); travel.gc.ca/destinations/sudan (999 police)
+ SD:{ar:'السودان',en:'Sudan',d:'msa',gen:'999',list:[['999','الطوارئ']]},
+ // gov.uk/foreign-travel-advice/tunisia/getting-help; travel.gc.ca/destinations/tunisia; travel.state.gov Tunisia page (190, 197)
+ TN:{ar:'تونس',en:'Tunisia',d:'msa',amb:'190',pol:'197',fire:'198',list:[['190','إسعاف'],['197','شرطة (في المدن)'],['193','الحرس الوطني (في الأرياف)'],['198','الحماية المدنية']]},
+ // gov.uk/foreign-travel-advice/algeria/getting-help (1021 ambulance, 14 fire, 17 or 1548 police); travel.gc.ca/destinations/algeria (17, 14, 1548)
+ DZ:{ar:'الجزائر',en:'Algeria',d:'msa',amb:'1021',pol:'17',fire:'14',list:[['1021','إسعاف'],['17','شرطة'],['14','الحماية المدنية']]},
+ // gov.uk/foreign-travel-advice/morocco/getting-help (150, 190, 177); travel.gc.ca/destinations/morocco (190, 150); travel.state.gov Morocco page (190 mobile, 19 landline)
+ MA:{ar:'المغرب',en:'Morocco',d:'msa',amb:'150',pol:'190',fire:'150',list:[['150','إسعاف ووقاية مدنية'],['190','شرطة'],['177','الدرك']]},
+ // travel.gc.ca/destinations/united-kingdom (999); Ofcom (999). Deaf access: ofcom.org.uk/phones-and-broadband/accessibility/emergency-video-relay (999 BSL, free, 24h; emergency SMS stays);
+ // notts-fire.gov.uk/community/in-an-emergency/emergency-sms-service and lancashire.police.uk (text "register" to 999 first, then text 999)
+ GB:{ar:'بريطانيا',en:'United Kingdom',d:'en',gen:'999',list:[['999','الطوارئ (إسعاف وشرطة ومطافي)']],deaf:[['999 BSL','https://999bsl.co.uk/','999 بلغة الإشارة البريطانية (فيديو)'],['SMS 999','sms:999','رسالة لـ999 (لازم تسجّل الأول: ابعت register لـ999)']]},
+ // gov.uk/foreign-travel-advice/usa/getting-help
+ US:{ar:'أمريكا',en:'United States',d:'en',gen:'911',list:[['911','الطوارئ (إسعاف وشرطة ومطافي)']]}
+};
+/* First run: guess the country from the phone's time zone; Egypt when unknown. The user's own pick (بياناتي or the SOS screen) always wins. */
+const TZ_CC={'Africa/Cairo':'EG','Asia/Riyadh':'SA','Asia/Dubai':'AE','Asia/Kuwait':'KW','Asia/Qatar':'QA','Asia/Bahrain':'BH','Asia/Muscat':'OM','Asia/Amman':'JO','Asia/Beirut':'LB','Asia/Baghdad':'IQ','Asia/Gaza':'PS','Asia/Hebron':'PS','Asia/Jerusalem':'PS','Asia/Aden':'YE','Africa/Khartoum':'SD','Africa/Tunis':'TN','Africa/Algiers':'DZ','Africa/Casablanca':'MA','Africa/El_Aaiun':'MA','Europe/London':'GB','Europe/Belfast':'GB',
+ 'America/New_York':'US','America/Chicago':'US','America/Denver':'US','America/Phoenix':'US','America/Los_Angeles':'US','America/Anchorage':'US','America/Juneau':'US','America/Boise':'US','America/Detroit':'US','America/Adak':'US','America/Nome':'US','America/Sitka':'US','America/Yakutat':'US','America/Metlakatla':'US','America/Menominee':'US','Pacific/Honolulu':'US'};
+function guessCountry(){try{const z=Intl.DateTimeFormat().resolvedOptions().timeZone||'';if(TZ_CC[z])return TZ_CC[z];if(/^America\/(Indiana|Kentucky|North_Dakota)\//.test(z))return 'US'}catch(e){}return 'EG'}
+function countryCode(){const c=store.get('wasl_country',null);return COUNTRIES[c]?c:guessCountry()}
+function country(){return COUNTRIES[countryCode()]}
+const cName=c=>UI==='en'?c.en:c.ar;
+function countryOptions(sel){const cur=countryCode(),en=UI==='en';
+ const ks=Object.keys(COUNTRIES).sort((a,b)=>a==='EG'?-1:b==='EG'?1:cName(COUNTRIES[a]).localeCompare(cName(COUNTRIES[b]),en?'en':'ar'));
+ sel.innerHTML=ks.map(k=>`<option value="${k}"${k===cur?' selected':''}>${esc(cName(COUNTRIES[k]))}</option>`).join('')}
+function setCountry(k){if(!COUNTRIES[k])return;store.set('wasl_country',k);drawSosCountry();if($('pCountry'))$('pCountry').value=k}
+/* Each situation and the service it needs. If the country has no separate number, its one emergency number; gas falls back to fire / civil defence;
+   a situation with no number at all is hidden. say = what Wasl says on the call, in the call's dialect. */
 const SOS_TYPES=[
- {id:'med',icon:'🚑',ar:'تعبان ومحتاج إسعاف',num:'123',svc:'إسعاف',say:'تعبان جداً ومحتاج عربية إسعاف'},
- {id:'acc',icon:'💥',ar:'حادثة',num:'123',svc:'إسعاف',say:'حصلتله حادثة ومحتاج إسعاف'},
- {id:'fire',icon:'🔥',ar:'حريق',num:'180',svc:'مطافي',say:'فيه حريق ومحتاج المطافي'},
- {id:'danger',icon:'🚔',ar:'حرامي أو خطر',num:'122',svc:'شرطة',say:'في خطر ومحتاج الشرطة'},
- {id:'gas',icon:'⚠️',ar:'ريحة غاز أو كهربا',num:'129',svc:'طوارئ الغاز',say:'فيه ريحة غاز أو مشكلة كهربا خطيرة'},
- {id:'lost',icon:'🧭',ar:'تهت ومحتاج حد',num:'122',svc:'مساعدة',say:'تايه ومحتاج حد يساعده يوصل'}
+ {id:'med',icon:'🚑',ar:'تعبان ومحتاج إسعاف',need:'amb',say:{eg:'تعبان جداً ومحتاج عربية إسعاف',gulf:'تعبان واجد ويحتاج إسعاف',msa:'مريض جداً ويحتاج إلى سيارة إسعاف'}},
+ {id:'acc',icon:'💥',ar:'حادثة',need:'amb',say:{eg:'حصلتله حادثة ومحتاج إسعاف',gulf:'صار له حادث ويحتاج إسعاف',msa:'تعرّض لحادث ويحتاج إلى إسعاف'}},
+ {id:'fire',icon:'🔥',ar:'حريق',need:'fire',say:{eg:'فيه حريق ومحتاج المطافي',gulf:'عنده حريق ويحتاج الدفاع المدني',msa:'عنده حريق ويحتاج إلى الإطفاء'}},
+ {id:'danger',icon:'🚔',ar:'حرامي أو خطر',need:'pol',say:{eg:'في خطر ومحتاج الشرطة',gulf:'في خطر ويحتاج الشرطة',msa:'في خطر ويحتاج إلى الشرطة'}},
+ {id:'gas',icon:'⚠️',ar:'ريحة غاز أو كهربا',need:'gas',say:{eg:'فيه ريحة غاز أو مشكلة كهربا خطيرة',gulf:'عنده ريحة غاز أو مشكلة كهرباء خطيرة',msa:'عنده رائحة غاز أو خطر كهربائي'}},
+ {id:'lost',icon:'🧭',ar:'تهت ومحتاج حد',need:'pol',say:{eg:'تايه ومحتاج حد يساعده يوصل',gulf:'ضايع ويحتاج أحد يساعده يوصل',msa:'تائه ويحتاج إلى من يساعده'}}
 ];
-const SOS_NUMS=[['123','إسعاف'],['122','شرطة'],['180','مطافي'],['129','غاز'],['121','كهربا'],['15322','الهلال الأحمر']];
+const SVC={amb:'إسعاف',pol:'شرطة',fire:'مطافي',gas:'طوارئ الغاز',gen:'الطوارئ'};
+/* The number and service name to call for a situation in this country, or null. */
+function sosDial(ty,c){c=c||country();let k=ty.need,n=c[k];if(!n&&c.gen){k='gen';n=c.gen}if(!n&&ty.need==='gas'&&c.fire){k='fire';n=c.fire}
+ if(!n)return null;const svc=k==='fire'&&c.d!=='eg'?'الدفاع المدني':ty.id==='lost'&&k==='pol'&&c.d==='eg'?'مساعدة':SVC[k];return{num:n,svc}}
+// Egypt Red Crescent WhatsApp (still to be confirmed by the owner); shown only when the country is Egypt.
 const RC_WA='201152072077';
 let sosT=null,sosPos=null,sirenCtx=null,sirenOsc=null,torchTrack=null,torchT=null;
-$('sosNums').innerHTML=SOS_NUMS.map(([n,l])=>`<a href="tel:${n}"><span>${esc(tr(l))}</span><b>${n}</b></a>`).join('')+`<a href="https://wa.me/${RC_WA}" target="_blank" rel="noopener"><span>${tr('واتساب الهلال الأحمر')}</span><b>💬</b></a>`;
-$('sosTypes').innerHTML=SOS_TYPES.map(t=>`<button><span>${t.icon}</span>${esc(tr(t.ar))}</button>`).join('');
-$('sosTypes').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>pickSos(SOS_TYPES[i]));
+function drawSosCountry(){const c=country(),eg=countryCode()==='EG';
+ $('sosCtyName').textContent=cName(c);countryOptions($('sosCty'));
+ $('sosNumsT').textContent=tr('أرقام الطوارئ في {c}',{c:cName(c)});
+ $('sosNums').innerHTML=c.list.map(([n,l])=>`<a href="tel:${n}"${tr(l).length>14?' class="wide"':''}><span>${esc(tr(l))}</span><b dir="ltr">${n}</b></a>`).join('')+
+  (c.deaf||[]).map(([n,h,l])=>`<a href="${h}"${/^https/.test(h)?' target="_blank" rel="noopener"':''} class="wide"><span>${esc(tr(l))}</span><b dir="ltr">${esc(n)}</b></a>`).join('')+
+  (eg?`<a href="https://wa.me/${RC_WA}" target="_blank" rel="noopener"><span>${tr('واتساب الهلال الأحمر')}</span><b>💬</b></a>`:'');
+ $('sosRC').classList.toggle('hidden',!eg);
+ const ts=SOS_TYPES.filter(t=>sosDial(t,c));
+ $('sosTypes').innerHTML=ts.map(t=>`<button><span>${t.icon}</span>${esc(tr(t.ar))}</button>`).join('');
+ $('sosTypes').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>pickSos(ts[i]));
+ if(sosT&&!$('sosStep2').classList.contains('hidden')){if(sosDial(sosT,c))pickSos(sosT,true);else $('sosAgain').click()}}
+$('sosCty').onchange=()=>setCountry($('sosCty').value);
+if($('pCountry')){countryOptions($('pCountry'));$('pCountry').onchange=()=>{setCountry($('pCountry').value);$('savedNote').textContent=tr('اتحفظ ✓ أرقام الطوارئ دلوقتي بتاعة {c}.',{c:cName(country())})}}
+drawSosCountry();
 function mapLink(){return sosPos?`https://maps.google.com/?q=${sosPos.lat.toFixed(6)},${sosPos.lng.toFixed(6)}`:''}
 /* en: English labels (the app is in English); otherwise Arabic. */
 function medLines(p,en){const f=(s,x)=>tx(en,s,{x});return[p.blood?f('فصيلة الدم: {x}',p.blood):'',p.allergies?f('حساسية: {x}',p.allergies):'',p.conditions?f('أمراض: {x}',p.conditions):'',p.meds?f('أدوية: {x}',p.meds):''].filter(Boolean)}
@@ -1654,37 +1737,48 @@ function locate(){$('sosLoc').textContent=tr('بيحدد مكانك...');
 /* The text message to the family is in the app's language (en = English). */
 function sosMessage(en){const p=profile(),f=(s,v)=>tx(en,s,v);const who=p.name?p.name:f('شخص أصم');
  return[f('🚨 طوارئ من {w}: {s}.',{w:who,s:f(sosT.ar)}),f('أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.'),mapLink()?f('مكاني: {x}',{x:mapLink()}):'',p.address?f('العنوان: {x}',{x:p.address}):'',...medLines(p,en),f('(اتبعتت من وصل)')].filter(Boolean).join('\n')}
-/* What Wasl says on the call to Egypt's emergency services: always Arabic. In the English app the user also sees it in English. */
-function scriptText(en){const p=profile(),f=(s,v)=>tx(en,s,v);const who=p.name||f('شخص أصم');
- const an=/^ar/.test(LANG)?voiceName():(vg()==='m'?'ممدوح':'فاطمة'),nm=en?({'فاطمة':'Fatma','ممدوح':'Mamdouh','منى':'Mona','بندر':'Bandar'}[an]||an):an; // the call is in Arabic, so an Arabic name
+/* What Wasl says on the call, in the language of the country's emergency service (country().d):
+   eg Egyptian, gulf Gulf, msa simple standard Arabic, en English. The user also sees it in the app's language. */
+const CALL_AR={gulf:{t:'السلام عليكم، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} الله يخليكم أرسلوا أحد بسرعة. هو ما يقدر يسمعكم، وإذا تحتاجون شي أرسلوا رسالة على نفس الرقم.',addr:'العنوان: {x}.',loc:'موقعه انرسل برسالة.',al:' عنده حساسية من {x}.'},
+ msa:{t:'مرحباً، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم أرسلوا المساعدة بسرعة. هو لا يستطيع سماعكم، وإذا احتجتم شيئاً أرسلوا رسالة نصية إلى نفس الرقم.',addr:'العنوان: {x}.',loc:'أُرسل موقعه في رسالة.',al:' لديه حساسية من {x}.'}};
+const callVL=d=>d==='en'?'en-US':d==='eg'?'ar-EG':'ar-SA';
+function scriptText(m){const p=profile(),d=country().d,fill=(s,v)=>s.replace(/\{(\w+)\}/g,(x,k)=>v[k]!=null?v[k]:x);
+ const an={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[callVL(d)][vg()==='m'?1:0];
+ if(CALL_AR[m]){const T=CALL_AR[m];return fill(T.t,{n:an,w:p.name||'شخص أصم',s:sosT.say[m],a:p.address?fill(T.addr,{x:p.address}):(sosPos?T.loc:''),al:p.allergies?fill(T.al,{x:p.allergies}):''})}
+ const en=m==='en',f=(s,v)=>tx(en,s,v);const who=p.name||f('شخص أصم');
+ const nm=en?({'فاطمة':'Fatma','ممدوح':'Mamdouh','منى':'Mona','بندر':'Bandar'}[an]||an):an;
  const addr=p.address?f('العنوان: {x}.',{x:p.address}):(sosPos?f('مكانه اتبعت برسالة.'):'');
- return f('ألو، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.',{n:nm,w:who,s:f(sosT.say),a:addr,al:p.allergies?f(' عنده حساسية من {x}.',{x:p.allergies}):''})}
-function buildScript(){const s=scriptText(false);
- $('sosScriptText').textContent=UI==='en'?s+'\n\n'+tr('In English: {x}',{x:scriptText(true)}):s;return s}
-function pickSos(ty){sosT=ty;buzz([200,100,200]);$('sosStep1').classList.add('hidden');$('sosStep2').classList.remove('hidden');
- $('sosTitle').textContent=ty.icon+' '+tr(ty.ar);$('sosCallT').textContent=tr('اتصل بـ{s} {n}، ووصل يقرأ الرسالة',{s:tr(ty.svc),n:ty.num});
+ return f('ألو، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.',{n:nm,w:who,s:f(sosT.say.eg),a:addr,al:p.allergies?f(' عنده حساسية من {x}.',{x:p.allergies}):''})}
+function buildScript(){const d=country().d,s=scriptText(d);let shown=s;
+ if(UI==='en'&&d!=='en')shown+='\n\n'+tr('In English: {x}',{x:scriptText('en')});
+ if(UI!=='en'&&d==='en')shown+='\n\nبالعربي: '+scriptText('eg');
+ $('sosScriptText').textContent=shown;return s}
+function pickSos(ty,redraw){const dl=sosDial(ty);if(!dl)return;sosT=Object.assign({},ty,dl);if(!redraw)buzz([200,100,200]);$('sosStep1').classList.add('hidden');$('sosStep2').classList.remove('hidden');
+ $('sosTitle').textContent=ty.icon+' '+tr(ty.ar);$('sosCallT').textContent=tr('اتصل بـ{s} {n}، ووصل يقرأ الرسالة',{s:tr(sosT.svc),n:sosT.num});
  const p=profile();$('sosFamSub').textContent=p.c1phone?tr('لـ{x}، ومعاها مكانك',{x:[p.c1name||p.c1phone,p.c2phone?(p.c2name||p.c2phone):''].filter(Boolean).join(tr(' و'))}):tr('ضيف أرقام أهلك في بياناتي الأول');
- $('sosScript').classList.add('hidden');buildScript();locate()}
-$('sosBtn').onclick=()=>{show('sos');sosT=null;$('sosStep1').classList.remove('hidden');$('sosStep2').classList.add('hidden');drawMed()};
+ if(!redraw)$('sosScript').classList.add('hidden');buildScript();if(!redraw)locate()}
+$('sosBtn').onclick=()=>{show('sos');sosT=null;$('sosStep1').classList.remove('hidden');$('sosStep2').classList.add('hidden');try{drawSosCountry()}catch(e){}drawMed()};
 $('sosBack').onclick=()=>{stopSiren();stopTorch();show('home')};
 $('sosAgain').onclick=()=>{$('sosStep1').classList.remove('hidden');$('sosStep2').classList.add('hidden')};
 $('sosEdit').onclick=()=>{loadMe();show('me')};
-const intl=n=>{n=String(n||'').replace(/[^\d+]/g,'');if(n.startsWith('+'))return n;if(n.startsWith('00'))return '+'+n.slice(2);if(n.startsWith('0'))return '+2'+n;return n};
+const intl=n=>{n=String(n||'').replace(/[^\d+]/g,'');if(n.startsWith('+'))return n;if(n.startsWith('00'))return '+'+n.slice(2);if(n.startsWith('0')&&countryCode()==='EG')return '+2'+n;return n}; // other countries: the number as typed (local format works from a local SIM)
 $('sosFamily').onclick=()=>{const p=profile();const nums=[p.c1phone,p.c2phone].filter(Boolean).map(intl);
  if(!nums.length){alert(tr('ضيف رقم طوارئ واحد على الأقل في بياناتي.'));$('sosEdit').click();return}
  const body=encodeURIComponent(sosMessage(UI==='en'));const sep=/iPhone|iPad/.test(navigator.userAgent)?'&':'?';
  location.href='sms:'+nums.join(',')+sep+'body='+body};
 $('sosRC').onclick=()=>{window.open('https://wa.me/'+RC_WA+'?text='+encodeURIComponent(sosMessage(false)+(UI==='en'?'\n\n'+sosMessage(true):'')),'_blank','noopener')};
 $('sosCall').onclick=()=>{$('sosScript').classList.remove('hidden');buildScript();location.href='tel:'+sosT.num};
-$('sosSpeak').onclick=()=>speak(buildScript(),null,{fast:true});
+$('sosSpeak').onclick=()=>speak(buildScript(),null,{fast:true,vl:callVL(country().d)});
 /* show-to-people board */
-/* The board is for people around: Arabic (Egypt), plus English when the app or the conversation is in English. */
-$('sosShow').onclick=()=>{const p=profile(),bi=UI==='en'||LANG==='en-US';
- $('sbBig').innerHTML='أنا أصم<br>ومحتاج مساعدة'+(bi?'<span class="sb-en">I am Deaf and I need help</span>':'');
- $('sbWhat').textContent=sosT.icon+' '+sosT.ar+(bi?'\n'+tx(true,sosT.ar):'');
- const call=en=>tx(en,'من فضلك اتصل بـ{s}: {n}',{s:tx(en,sosT.svc),n:sosT.num});$('sbCall').textContent=call(false)+(bi?'\n'+call(true):'');
+/* The board is for people around: Arabic, plus English when the app or the conversation is in English. In an English-speaking country, English first. */
+$('sosShow').onclick=()=>{const p=profile(),enC=country().d==='en',bi=enC||UI==='en'||LANG==='en-US';
+ const AR_BIG='أنا أصم<br>ومحتاج مساعدة',EN_BIG='I am Deaf and I need help';
+ $('sbBig').innerHTML=enC?EN_BIG+'<span class="sb-en" lang="ar" dir="rtl">'+AR_BIG.replace('<br>',' ')+'</span>':AR_BIG+(bi?'<span class="sb-en" lang="en" dir="ltr">'+EN_BIG+'</span>':'');
+ const L=enC?[true,false]:bi?[false,true]:[false];
+ $('sbWhat').textContent=L.map(en=>(en?'':sosT.icon+' ')+tx(en,sosT.ar)).join('\n');
+ const call=en=>tx(en,'من فضلك اتصل بـ{s}: {n}',{s:tx(en,sosT.svc),n:sosT.num});$('sbCall').textContent=L.map(call).join('\n');
  const lines=en=>[p.name?tx(en,'الاسم: {x}',{x:p.name}):'',...medLines(p,en),p.c1phone?tx(en,'كلّم {n}: {x}',{n:p.c1name||tx(en,'أهلي'),x:p.c1phone}):'',p.address?tx(en,'العنوان: {x}',{x:p.address}):''].filter(Boolean);
- const info=lines(false).concat(bi&&lines(false).length?['',...lines(true)]:[]);
+ const info=L.reduce((o,en,i)=>{const l=lines(en);return l.length?o.concat(i&&o.length?['',...l]:l):o},[]);
  $('sbInfo').textContent=info.join('\n');$('sbInfo').classList.toggle('hidden',!info.length);
  $('sosBoard').classList.add('on','blink');buzz([500,200,500]);try{navigator.wakeLock&&navigator.wakeLock.request('screen').catch(()=>{})}catch(e){}};
 $('sbClose').onclick=()=>{$('sosBoard').classList.remove('on','blink');stopSiren();stopTorch()};
