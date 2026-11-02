@@ -929,6 +929,7 @@ const EN={
 'تعبان ومحتاج إسعاف':'I\'m sick and need an ambulance','حادثة':'Accident','حريق':'Fire','حرامي أو خطر':'Thief or danger','ريحة غاز أو كهربا':'Gas smell or electric danger','تهت ومحتاج حد':'I\'m lost and need someone',
 'إسعاف':'Ambulance','مطافي':'Fire service','شرطة':'Police','طوارئ الغاز':'Gas emergency','مساعدة':'Help','غاز':'Gas','كهربا':'Electricity','الهلال الأحمر':'Red Crescent',
 'تعبان جداً ومحتاج عربية إسعاف':'is very sick and needs an ambulance','حصلتله حادثة ومحتاج إسعاف':'had an accident and needs an ambulance','فيه حريق ومحتاج المطافي':'needs the fire service, there is a fire','في خطر ومحتاج الشرطة':'is in danger and needs the police','فيه ريحة غاز أو مشكلة كهربا خطيرة':'reports a gas smell or a dangerous electric problem','تايه ومحتاج حد يساعده يوصل':'is lost and needs someone to help him get there',
+'تعبانة جداً ومحتاجة عربية إسعاف':'is very sick and needs an ambulance','حصلتلها حادثة ومحتاجة إسعاف':'had an accident and needs an ambulance','فيه حريق ومحتاجة المطافي':'needs the fire service, there is a fire','في خطر ومحتاجة الشرطة':'is in danger and needs the police','عندها ريحة غاز أو مشكلة كهربا خطيرة':'reports a gas smell or a dangerous electric problem','تايهة ومحتاجة حد يساعدها توصل':'is lost and needs someone to help her get there',
 'فصيلة الدم: {x}':'Blood type: {x}','حساسية: {x}':'Allergy: {x}','أمراض: {x}':'Illnesses: {x}','أدوية: {x}':'Medicines: {x}','الاسم: {x}':'Name: {x}','طوارئ: {x}':'Emergency contact: {x}','العنوان: {x}':'Address: {x}','مكاني: {x}':'My location: {x}','كلّم {n}: {x}':'Call {n}: {x}','أهلي':'my family',
 'لسه ما كتبتش بياناتك. ضيف فصيلة الدم والحساسية وأرقام أهلك عشان تظهر للمسعفين.':'You haven\'t added your info yet. Add your blood type, allergies and family numbers so paramedics can see them.',
 'الموبايل مش بيدّي المكان. اكتب عنوانك في بياناتي.':'This phone doesn\'t give its location. Write your address in My info.',
@@ -942,6 +943,10 @@ const EN={
 'ألو، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.':'Hello, I\'m {n}, a voice assistant for a Deaf person named {w}. He {s}. {a}{al} Please send someone quickly. He can\'t hear you; if you need anything, send a text message to this same number.',
 'العنوان: {x}.':'Address: {x}.',
 ' عنده حساسية من {x}.':' He is allergic to {x}.',
+'ألو، أنا {n}، مساعد صوتي لواحدة صماء اسمها {w}. هي {s}. {a}{al} من فضلكم ابعتوا حد بسرعة. هي مش هتقدر تسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.':'Hello, I\'m {n}, a voice assistant for a Deaf woman named {w}. She {s}. {a}{al} Please send someone quickly. She can\'t hear you; if you need anything, send a text message to this same number.',
+' عندها حساسية من {x}.':' She is allergic to {x}.',
+'أنا صماء ومش بقدر أسمع التليفون، كلّموني رسالة.':'I am Deaf and can\'t hear calls. Please text me.',
+'واحدة صماء':'a Deaf woman',
 'In English: {x}':'In English: {x}',
 'اتصل بـ{s} {n}، ووصل يقرأ الرسالة':'Call {s} {n}, and Wasl reads the message',
 'لـ{x}، ومعاها مكانك':'To {x}, with your location',
@@ -1697,12 +1702,12 @@ function setCountry(k){if(!COUNTRIES[k])return;store.set('wasl_country',k);drawS
 /* Each situation and the service it needs. If the country has no separate number, its one emergency number; gas falls back to fire / civil defence;
    a situation with no number at all is hidden. say = what Wasl says on the call, in the call's dialect. */
 const SOS_TYPES=[
- {id:'med',icon:'🚑',ar:'تعبان ومحتاج إسعاف',need:'amb',say:{eg:'تعبان جداً ومحتاج عربية إسعاف',gulf:'تعبان واجد ويحتاج إسعاف',msa:'مريض جداً ويحتاج إلى سيارة إسعاف'}},
- {id:'acc',icon:'💥',ar:'حادثة',need:'amb',say:{eg:'حصلتله حادثة ومحتاج إسعاف',gulf:'صار له حادث ويحتاج إسعاف',msa:'تعرّض لحادث ويحتاج إلى إسعاف'}},
- {id:'fire',icon:'🔥',ar:'حريق',need:'fire',say:{eg:'فيه حريق ومحتاج المطافي',gulf:'عنده حريق ويحتاج الدفاع المدني',msa:'عنده حريق ويحتاج إلى الإطفاء'}},
- {id:'danger',icon:'🚔',ar:'حرامي أو خطر',need:'pol',say:{eg:'في خطر ومحتاج الشرطة',gulf:'في خطر ويحتاج الشرطة',msa:'في خطر ويحتاج إلى الشرطة'}},
- {id:'gas',icon:'⚠️',ar:'ريحة غاز أو كهربا',need:'gas',say:{eg:'فيه ريحة غاز أو مشكلة كهربا خطيرة',gulf:'عنده ريحة غاز أو مشكلة كهرباء خطيرة',msa:'عنده رائحة غاز أو خطر كهربائي'}},
- {id:'lost',icon:'🧭',ar:'تهت ومحتاج حد',need:'pol',say:{eg:'تايه ومحتاج حد يساعده يوصل',gulf:'ضايع ويحتاج أحد يساعده يوصل',msa:'تائه ويحتاج إلى من يساعده'}}
+ {id:'med',icon:'🚑',ar:'تعبان ومحتاج إسعاف',need:'amb',say:{eg:'تعبان جداً ومحتاج عربية إسعاف',gulf:'تعبان واجد ويحتاج إسعاف',msa:'مريض جداً ويحتاج إلى سيارة إسعاف'},sayF:{eg:'تعبانة جداً ومحتاجة عربية إسعاف',gulf:'تعبانة واجد وتحتاج إسعاف',msa:'مريضة جداً وتحتاج إلى سيارة إسعاف'}},
+ {id:'acc',icon:'💥',ar:'حادثة',need:'amb',say:{eg:'حصلتله حادثة ومحتاج إسعاف',gulf:'صار له حادث ويحتاج إسعاف',msa:'تعرّض لحادث ويحتاج إلى إسعاف'},sayF:{eg:'حصلتلها حادثة ومحتاجة إسعاف',gulf:'صار لها حادث وتحتاج إسعاف',msa:'تعرّضت لحادث وتحتاج إلى إسعاف'}},
+ {id:'fire',icon:'🔥',ar:'حريق',need:'fire',say:{eg:'فيه حريق ومحتاج المطافي',gulf:'عنده حريق ويحتاج الدفاع المدني',msa:'عنده حريق ويحتاج إلى الإطفاء'},sayF:{eg:'فيه حريق ومحتاجة المطافي',gulf:'عندها حريق وتحتاج الدفاع المدني',msa:'عندها حريق وتحتاج إلى الإطفاء'}},
+ {id:'danger',icon:'🚔',ar:'حرامي أو خطر',need:'pol',say:{eg:'في خطر ومحتاج الشرطة',gulf:'في خطر ويحتاج الشرطة',msa:'في خطر ويحتاج إلى الشرطة'},sayF:{eg:'في خطر ومحتاجة الشرطة',gulf:'في خطر وتحتاج الشرطة',msa:'في خطر وتحتاج إلى الشرطة'}},
+ {id:'gas',icon:'⚠️',ar:'ريحة غاز أو كهربا',need:'gas',say:{eg:'فيه ريحة غاز أو مشكلة كهربا خطيرة',gulf:'عنده ريحة غاز أو مشكلة كهرباء خطيرة',msa:'عنده رائحة غاز أو خطر كهربائي'},sayF:{eg:'عندها ريحة غاز أو مشكلة كهربا خطيرة',gulf:'عندها ريحة غاز أو مشكلة كهرباء خطيرة',msa:'عندها رائحة غاز أو خطر كهربائي'}},
+ {id:'lost',icon:'🧭',ar:'تهت ومحتاج حد',need:'pol',say:{eg:'تايه ومحتاج حد يساعده يوصل',gulf:'ضايع ويحتاج أحد يساعده يوصل',msa:'تائه ويحتاج إلى من يساعده'},sayF:{eg:'تايهة ومحتاجة حد يساعدها توصل',gulf:'ضايعة وتحتاج أحد يساعدها توصل',msa:'تائهة وتحتاج إلى من يساعدها'}}
 ];
 const SVC={amb:'إسعاف',pol:'شرطة',fire:'مطافي',gas:'طوارئ الغاز',gen:'الطوارئ'};
 /* The number and service name to call for a situation in this country, or null. */
@@ -1736,19 +1741,24 @@ function locate(){$('sosLoc').textContent=tr('بيحدد مكانك...');
   ()=>{$('sosLoc').textContent=tr('ما قدرتش أحدد المكان. اسمح بالموقع، وهستخدم العنوان المكتوب في بياناتك.')},{enableHighAccuracy:true,timeout:12000,maximumAge:60000})}
 /* The text message to the family is in the app's language (en = English). */
 function sosMessage(en){const p=profile(),f=(s,v)=>tx(en,s,v);const who=p.name?p.name:f('شخص أصم');
- return[f('🚨 طوارئ من {w}: {s}.',{w:who,s:f(sosT.ar)}),f('أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.'),mapLink()?f('مكاني: {x}',{x:mapLink()}):'',p.address?f('العنوان: {x}',{x:p.address}):'',...medLines(p,en),f('(اتبعتت من وصل)')].filter(Boolean).join('\n')}
+ return[f('🚨 طوارئ من {w}: {s}.',{w:who,s:f(sosT.ar)}),f(p.sex==='f'?'أنا صماء ومش بقدر أسمع التليفون، كلّموني رسالة.':'أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.'),mapLink()?f('مكاني: {x}',{x:mapLink()}):'',p.address?f('العنوان: {x}',{x:p.address}):'',...medLines(p,en),f('(اتبعتت من وصل)')].filter(Boolean).join('\n')}
 /* What Wasl says on the call, in the language of the country's emergency service (country().d):
    eg Egyptian, gulf Gulf, msa simple standard Arabic, en English. The user also sees it in the app's language. */
+const CALL_AR_F={gulf:{t:'السلام عليكم، أنا {n}، مساعد صوتي لوحدة صماء اسمها {w}. هي {s}. {a}{al} الله يخليكم أرسلوا أحد بسرعة. هي ما تقدر تسمعكم، وإذا تحتاجون شي أرسلوا رسالة على نفس الرقم.',addr:'العنوان: {x}.',loc:'إذا تحتاجون الموقع أرسلوا رسالة على نفس الرقم ونرسله لكم.',al:' عندها حساسية من {x}.'},
+ msa:{t:'مرحباً، أنا {n}، مساعد صوتي لامرأة صمّاء اسمها {w}. هي {s}. {a}{al} من فضلكم أرسلوا المساعدة بسرعة. هي لا تستطيع سماعكم، وإذا احتجتم شيئاً أرسلوا رسالة نصية إلى نفس الرقم.',addr:'العنوان: {x}.',loc:'إذا احتجتم الموقع، أرسلوا رسالة إلى نفس الرقم وسنرسله لكم.',al:' لديها حساسية من {x}.'}};
 const CALL_AR={gulf:{t:'السلام عليكم، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} الله يخليكم أرسلوا أحد بسرعة. هو ما يقدر يسمعكم، وإذا تحتاجون شي أرسلوا رسالة على نفس الرقم.',addr:'العنوان: {x}.',loc:'إذا تحتاجون الموقع أرسلوا رسالة على نفس الرقم ونرسله لكم.',al:' عنده حساسية من {x}.'},
  msa:{t:'مرحباً، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم أرسلوا المساعدة بسرعة. هو لا يستطيع سماعكم، وإذا احتجتم شيئاً أرسلوا رسالة نصية إلى نفس الرقم.',addr:'العنوان: {x}.',loc:'إذا احتجتم الموقع، أرسلوا رسالة إلى نفس الرقم وسنرسله لكم.',al:' لديه حساسية من {x}.'}};
 const callVL=d=>d==='en'?'en-US':d==='eg'?'ar-EG':'ar-SA';
-function scriptText(m){const p=profile(),d=country().d,fill=(s,v)=>s.replace(/\{(\w+)\}/g,(x,k)=>v[k]!=null?v[k]:x);
+/* No name in the profile: drop the name clause instead of saying 'named a Deaf person'. */
+const tidyScript=t=>t.replace(/ (اسمه|اسمها) \./g,'.').replace(/ named \./g,'.').replace(/ {2,}/g,' ');
+function scriptText(m){return tidyScript(scriptText0(m))}
+function scriptText0(m){const p=profile(),d=country().d,fem=p.sex==='f',SAY=fem&&sosT.sayF?sosT.sayF:sosT.say,fill=(s,v)=>s.replace(/\{(\w+)\}/g,(x,k)=>v[k]!=null?v[k]:x);
  const an={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[callVL(d)][vg()==='m'?1:0];
- if(CALL_AR[m]){const T=CALL_AR[m];return fill(T.t,{n:an,w:p.name||'شخص أصم',s:sosT.say[m],a:p.address?fill(T.addr,{x:p.address}):(sosPos?T.loc:''),al:p.allergies?fill(T.al,{x:p.allergies}):''})}
- const en=m==='en',f=(s,v)=>tx(en,s,v);const who=p.name||f('شخص أصم');
+ if(CALL_AR[m]){const T=(fem?CALL_AR_F:CALL_AR)[m];return fill(T.t,{n:an,w:p.name||'',s:SAY[m],a:p.address?fill(T.addr,{x:p.address}):(sosPos?T.loc:''),al:p.allergies?fill(T.al,{x:p.allergies}):''})}
+ const en=m==='en',f=(s,v)=>tx(en,s,v);const who=p.name||'';
  const nm=en?({'فاطمة':'Fatma','ممدوح':'Mamdouh','منى':'Mona','بندر':'Bandar'}[an]||an):an;
  const addr=p.address?f('العنوان: {x}.',{x:p.address}):(sosPos?f('لو محتاجين المكان، ابعتوا رسالة على نفس الرقم ونبعتهولكم.'):'');
- return f('ألو، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.',{n:nm,w:who,s:f(sosT.say.eg),a:addr,al:p.allergies?f(' عنده حساسية من {x}.',{x:p.allergies}):''})}
+ return f(fem?'ألو، أنا {n}، مساعد صوتي لواحدة صماء اسمها {w}. هي {s}. {a}{al} من فضلكم ابعتوا حد بسرعة. هي مش هتقدر تسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.':'ألو، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.',{n:nm,w:who,s:f(SAY.eg),a:addr,al:p.allergies?f(fem?' عندها حساسية من {x}.':' عنده حساسية من {x}.',{x:p.allergies}):''})}
 function buildScript(){const d=country().d,s=scriptText(d);let shown=s;
  if(UI==='en'&&d!=='en')shown+='\n\n'+tr('In English: {x}',{x:scriptText('en')});
  if(UI!=='en'&&d==='en')shown+='\n\nبالعربي: '+scriptText('eg');
