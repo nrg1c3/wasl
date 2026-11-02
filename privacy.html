@@ -22,10 +22,14 @@ h1{font-size:26px;margin:4px 0 2px}h2{font-size:20px;margin:0 0 8px}p{margin:6px
 ul{margin:6px 0;padding-inline-start:22px}li{margin:4px 0}
 table{width:100%;border-collapse:collapse;font-size:15px}td,th{border-top:1px solid var(--line);padding:8px 6px;text-align:start;vertical-align:top}th{color:var(--mute)}
 .en{direction:ltr;text-align:left}
+header .lang{margin-inline-start:auto}
+#en{scroll-margin-top:90px}
+/* English page: only the English section, left to right */
+html.ui-en main>*:not(.en){display:none}
 </style>
 </head>
 <body>
-<header><a href="./">→ رجوع</a><b>سياسة الخصوصية</b></header>
+<header><a href="./" id="back">→ رجوع</a><b id="ttl">سياسة الخصوصية</b><a href="#en" class="lang" id="lang" lang="en">English</a></header>
 <main>
 <h1>سياسة الخصوصية</h1>
 <p class="mute">آخر تحديث: 2 نوفمبر 2026</p>
@@ -65,7 +69,7 @@ table{width:100%;border-collapse:collapse;font-size:15px}td,th{border-top:1px so
 <li>مكانك: بيتحط في رسالة طوارئ إنت اللي بتبعتها من موبايلك.</li>
 <li>أرقام الطوارئ وفصيلة الدم والأمراض المزمنة: مش بتتبعت مع أي مهمة.</li>
 <li>تذكير الدوا: محفوظ على الموبايل بس. وزرار «ضيفه لتقويم الموبايل» بيعمل ملف تقويم إنت اللي بتفتحه.</li>
-<li>اختيارك لـ«وضع الصور»: محفوظ على الموبايل بس.</li>
+<li>اختيارك لـ«وضع الصور» ولغة التطبيق: محفوظ على الموبايل بس.</li>
 <li>تقييماتك للمهام (👍/👎): محفوظة على الموبايل، وما بتطلعش منه إلا لو إنت دوست «شارك التقييمات»، وساعتها بتطلع بالتاريخ والتقييم بس.</li>
 </ul></section>
 
@@ -74,9 +78,18 @@ table{width:100%;border-collapse:collapse;font-size:15px}td,th{border-top:1px so
 <p>نلتزم بمبادئ قانون حماية البيانات الشخصية المصري رقم 151 لسنة 2020. اللي أقل من 18 سنة يستخدم التطبيق بموافقة ولي أمره.</p>
 </section>
 
-<section class="en"><h2>In English</h2>
-<p>No account. Profile and emergency data stay in the browser on your phone. Conversations are not recorded, and our server stores no execution data. While a feature is in use, only what it needs is sent: task dialogue, basic profile fields and, if "remember my tasks" is on, short summaries of the last 5 tasks to Anthropic Claude via our n8n server; text to be spoken to ElevenLabs (Microsoft Azure as fallback); speech audio to your browser's speech service (on phones whose browser can't do speech recognition, the audio of what is said goes through Wasl's server to ElevenLabs speech-to-text instead, and is not stored); for pharmacy orders, the order details and the pharmacy messages you paste or share go to Claude, and voice notes you share go to ElevenLabs speech-to-text. Messages to the pharmacy are sent from your own WhatsApp by you. If you sign up for the pilot, your name, WhatsApp number, governorate and answers are kept by the Wasl team in a sheet used only to run the pilot; ask us on WhatsApp to delete them anytime. To count the 30 free tasks per month ("Speak for me", pharmacy orders, and each time you open translation, however long it lasts; when tasks run out translation keeps showing the words without smart replies; SOS is never counted), our server keeps a random phone ID, the month and the task count, with nothing from the conversation. If you enter a company or association code, the server records that this random ID belongs to that code; the organisation sees counts only. The "word said wrong?" button sends only the word you pick, Wasl's sentence and the dialect, and only when you press Send. Sound alerts, sign recognition, location and emergency contacts never leave the phone. No ads or tracking. Delete everything anytime from "My info". We follow Egypt's Personal Data Protection Law No. 151 of 2020.</p>
+<section class="en" id="en" lang="en"><h2>Privacy in English</h2>
+<p>No account. Profile and emergency data stay in the browser on your phone. Conversations are not recorded, and our server stores no execution data. While a feature is in use, only what it needs is sent: task dialogue, basic profile fields and, if "remember my tasks" is on, short summaries of the last 5 tasks to Anthropic Claude via our n8n server; text to be spoken to ElevenLabs (Microsoft Azure as fallback); speech audio to your browser's speech service (on phones whose browser can't do speech recognition, the audio of what is said goes through Wasl's server to ElevenLabs speech-to-text instead, and is not stored); for pharmacy orders, the order details and the pharmacy messages you paste or share go to Claude, and voice notes you share go to ElevenLabs speech-to-text. Messages to the pharmacy are sent from your own WhatsApp by you. If you sign up for the pilot, your name, WhatsApp number, governorate and answers are kept by the Wasl team in a sheet used only to run the pilot; ask us on WhatsApp to delete them anytime. To count the 30 free tasks per month ("Speak for me", pharmacy orders, and each time you open translation, however long it lasts; when tasks run out translation keeps showing the words without smart replies; SOS is never counted), our server keeps a random phone ID, the month and the task count, with nothing from the conversation. If you enter a company or association code, the server records that this random ID belongs to that code; the organisation sees counts only. The "word said wrong?" button sends only the word you pick, Wasl's sentence and the dialect, and only when you press Send. Sound alerts, sign recognition, location and emergency contacts never leave the phone. Your picture mode and app language choices stay on the phone. No ads or tracking. Delete everything anytime from "My info". We follow Egypt's Personal Data Protection Law No. 151 of 2020.</p>
 </section>
 </main>
+<script>
+/* English: when the link has #en, or the app language is English (saved choice, else the phone's language). */
+(function(){var h=document.documentElement;function ui(){var u=null;try{u=JSON.parse(localStorage.getItem('wasl_ui'))}catch(e){}
+ if(u!=='en'&&u!=='ar'){var l=(navigator.languages&&navigator.languages[0])||navigator.language||'';u=/^en\b/i.test(l)?'en':'ar'}return u}
+ function draw(){var en=location.hash==='#en'||(location.hash!=='#ar'&&ui()==='en');h.classList.toggle('ui-en',en);h.lang=en?'en':'ar';h.dir=en?'ltr':'rtl';
+  document.getElementById('back').textContent=en?'← Back':'→ رجوع';document.getElementById('ttl').textContent=en?'Privacy policy':'سياسة الخصوصية';
+  var a=document.getElementById('lang');a.textContent=en?'العربية':'English';a.href=en?'#ar':'#en';a.lang=en?'ar':'en';document.title=en?'Privacy | Wasl':'سياسة الخصوصية | وَصْل';if(en)scrollTo(0,0)}
+ addEventListener('hashchange',draw);draw()})();
+</script>
 </body>
 </html>
