@@ -938,7 +938,7 @@ const EN={
 '🚨 طوارئ من {w}: {s}.':'🚨 Emergency from {w}: {s}.',
 'أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.':'I am Deaf and can\'t hear calls. Please text me.',
 '(اتبعتت من وصل)':'(sent from Wasl)',
-'مكانه اتبعت برسالة.':'His location was sent by text message.',
+'لو محتاجين المكان، ابعتوا رسالة على نفس الرقم ونبعتهولكم.':'If you need the location, text this number and we will send it.',
 'ألو، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.':'Hello, I\'m {n}, a voice assistant for a Deaf person named {w}. He {s}. {a}{al} Please send someone quickly. He can\'t hear you; if you need anything, send a text message to this same number.',
 'العنوان: {x}.':'Address: {x}.',
 ' عنده حساسية من {x}.':' He is allergic to {x}.',
@@ -1739,15 +1739,15 @@ function sosMessage(en){const p=profile(),f=(s,v)=>tx(en,s,v);const who=p.name?p
  return[f('🚨 طوارئ من {w}: {s}.',{w:who,s:f(sosT.ar)}),f('أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.'),mapLink()?f('مكاني: {x}',{x:mapLink()}):'',p.address?f('العنوان: {x}',{x:p.address}):'',...medLines(p,en),f('(اتبعتت من وصل)')].filter(Boolean).join('\n')}
 /* What Wasl says on the call, in the language of the country's emergency service (country().d):
    eg Egyptian, gulf Gulf, msa simple standard Arabic, en English. The user also sees it in the app's language. */
-const CALL_AR={gulf:{t:'السلام عليكم، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} الله يخليكم أرسلوا أحد بسرعة. هو ما يقدر يسمعكم، وإذا تحتاجون شي أرسلوا رسالة على نفس الرقم.',addr:'العنوان: {x}.',loc:'موقعه انرسل برسالة.',al:' عنده حساسية من {x}.'},
- msa:{t:'مرحباً، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم أرسلوا المساعدة بسرعة. هو لا يستطيع سماعكم، وإذا احتجتم شيئاً أرسلوا رسالة نصية إلى نفس الرقم.',addr:'العنوان: {x}.',loc:'أُرسل موقعه في رسالة.',al:' لديه حساسية من {x}.'}};
+const CALL_AR={gulf:{t:'السلام عليكم، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} الله يخليكم أرسلوا أحد بسرعة. هو ما يقدر يسمعكم، وإذا تحتاجون شي أرسلوا رسالة على نفس الرقم.',addr:'العنوان: {x}.',loc:'إذا تحتاجون الموقع أرسلوا رسالة على نفس الرقم ونرسله لكم.',al:' عنده حساسية من {x}.'},
+ msa:{t:'مرحباً، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم أرسلوا المساعدة بسرعة. هو لا يستطيع سماعكم، وإذا احتجتم شيئاً أرسلوا رسالة نصية إلى نفس الرقم.',addr:'العنوان: {x}.',loc:'إذا احتجتم الموقع، أرسلوا رسالة إلى نفس الرقم وسنرسله لكم.',al:' لديه حساسية من {x}.'}};
 const callVL=d=>d==='en'?'en-US':d==='eg'?'ar-EG':'ar-SA';
 function scriptText(m){const p=profile(),d=country().d,fill=(s,v)=>s.replace(/\{(\w+)\}/g,(x,k)=>v[k]!=null?v[k]:x);
  const an={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[callVL(d)][vg()==='m'?1:0];
  if(CALL_AR[m]){const T=CALL_AR[m];return fill(T.t,{n:an,w:p.name||'شخص أصم',s:sosT.say[m],a:p.address?fill(T.addr,{x:p.address}):(sosPos?T.loc:''),al:p.allergies?fill(T.al,{x:p.allergies}):''})}
  const en=m==='en',f=(s,v)=>tx(en,s,v);const who=p.name||f('شخص أصم');
  const nm=en?({'فاطمة':'Fatma','ممدوح':'Mamdouh','منى':'Mona','بندر':'Bandar'}[an]||an):an;
- const addr=p.address?f('العنوان: {x}.',{x:p.address}):(sosPos?f('مكانه اتبعت برسالة.'):'');
+ const addr=p.address?f('العنوان: {x}.',{x:p.address}):(sosPos?f('لو محتاجين المكان، ابعتوا رسالة على نفس الرقم ونبعتهولكم.'):'');
  return f('ألو، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.',{n:nm,w:who,s:f(sosT.say.eg),a:addr,al:p.allergies?f(' عنده حساسية من {x}.',{x:p.allergies}):''})}
 function buildScript(){const d=country().d,s=scriptText(d);let shown=s;
  if(UI==='en'&&d!=='en')shown+='\n\n'+tr('In English: {x}',{x:scriptText('en')});
