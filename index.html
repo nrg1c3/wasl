@@ -496,7 +496,7 @@ nav svg{width:24px;height:24px}
 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D97A2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg>
 <h3 id="qbTitle">خلصت مهام الشهر ده</h3>
 <p class="lead" id="qbText" style="font-size:17px;color:var(--ink)"></p>
-<p class="lead">الترجمة والطوارئ شغالين عادي في أي وقت.</p>
+<p class="lead">الطوارئ شغالة في أي وقت. والترجمة بتفضل تكتب الكلام، بس من غير ردود ذكية.</p>
 <button class="btn" id="qbFree">افتح الترجمة</button>
 <button class="btn ghost" id="qbOk">تمام</button>
 </div></div>
@@ -688,7 +688,7 @@ function logMsg(role,text){if(!text)return;const d=document.createElement('div')
  d.innerHTML='<b>'+(role==='hearing'?'اللي قدامك':role==='wasl'?'وصل قال':'إنت قررت')+'</b>'+nums(text);
  if(role==='wasl'&&!DEMO){const fb=document.createElement('button');fb.className='sayfix';fb.type='button';fb.textContent='كلمة اتنطقت غلط؟';fb.onclick=()=>sayFixOpen(text);d.appendChild(fb)}
  const log=$('tLog');log.appendChild(d);while(log.children.length>4)log.removeChild(log.firstChild);$('tbody').scrollTop=$('tbody').scrollHeight}
-/* ---------- monthly tasks: 30 free a month per phone (or the company's number). Translation and SOS are never counted. ---------- */
+/* ---------- monthly tasks: 30 free a month per phone (or the company's number). SOS is never counted; each translation visit counts once. ---------- */
 let QS=null;
 async function quotaGet(ms){if(DEMO)return null;try{const q=await postJSON(QUOTA_URL,{op:'status'},ms||5000);if(q&&typeof q.left==='number'){QS=q;quotaDraw();return q}}catch(e){if(e&&e.data&&typeof e.data.left==='number'){QS=e.data;quotaDraw();return QS}}return null}
 function arDate(iso){try{return new Date(String(iso)+'T12:00:00').toLocaleDateString('ar-EG-u-nu-latn',{day:'numeric',month:'long'})}catch(e){return String(iso||'')}}
@@ -697,7 +697,7 @@ function quotaDraw(){const q=QS;if(q)store.set('wasl_company',q.company||'');con
  $('coLead').textContent=co?'الموبايل ده متفعّل مع '+co+'.':'لو شغلك أو جمعيتك إدّتك كود، اكتبه هنا.';
  if(!q)return;
  $('qLeft').textContent=q.left===0?'خلصت مهام الشهر ده':'فاضلك '+q.left+' مهمة الشهر ده';$('qLeft').classList.toggle('hidden',q.left>5);
- $('qLine').textContent='مهامك الشهر ده: '+q.used+' من '+q.limit+'. بتتجدد يوم '+arDate(q.renews)+'. الترجمة والطوارئ مش بيتحسبوا.'}
+ $('qLine').textContent='مهامك الشهر ده: '+q.used+' من '+q.limit+'. بتتجدد يوم '+arDate(q.renews)+'. الطوارئ مش بتتحسب، وكل مرة تفتح فيها الترجمة بتتحسب مهمة.'}
 function quotaShow(q){q=q||QS||{};const n=q.limit||30,co=q.company||'';
  $('qbText').textContent=(co?'استخدمت الـ '+n+' مهمة بتوعك مع '+co+' الشهر ده.':'استخدمت الـ '+n+' مهمة المجانية بتاعة الشهر ده.')+(q.renews?' هيرجعوا تاني يوم '+arDate(q.renews)+'.':'');
  $('quotaBox').classList.remove('hidden');buzz([200,100,200])}
@@ -901,18 +901,22 @@ $('demoRun').onclick=runDemo;$('demoPrep').onclick=prepDemo;$('demoFab').onclick
 if(/[?&]demo\b/.test(location.search))$('demoFab').classList.remove('hidden');
 
 /* ================= FREE MODE ================= */
-let freeOn=false,fSeq=0;
+let freeOn=false,fSeq=0,fSid=null,fNoSmart=false;
+/* each visit to the translation screen counts once. Out of tasks: the words keep showing, only the smart replies stop. */
+async function freeCount(){if(DEMO)return;const sid=fSid;
+ try{const r=await postJSON(QUOTA_URL,{op:'translate',tid:sid},6000);if(r&&typeof r.left==='number'){QS=r;quotaDraw()}}
+ catch(e){if(e&&e.why==='quota'&&sid===fSid){fNoSmart=true;if(e.data&&typeof e.data.left==='number'){QS=e.data;quotaDraw()}$('fState').textContent='خلصت مهام الشهر: الكلام هيفضل يتكتب، من غير ردود ذكية'}}}
 const DEFAULT_REPLIES=['ممكن تتكلم أبطأ شوية؟','أنا أصم، اقرا كلامي من الشاشة','ممكن تكتبلي؟','شكراً جزيلاً'];
 function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${smart?'✨ ':''}${esc(t)}</button>`).join('');
  $('fSug').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>fSpeak(list[i]))}
 function fSpeak(t){$('fSaid').textContent='اتقال: '+t;speak(t,()=>{if(freeOn)startListening()})}
-async function smartReplies(text){const n=++fSeq;$('fState').textContent='✨ بيجهّز ردود...';
+async function smartReplies(text){if(fNoSmart)return;const n=++fSeq;$('fState').textContent='✨ بيجهّز ردود...';
  try{const d=await postJSON(REPLY_URL,{text,situation:'عام',lang:LANG},12000);
   if(n!==fSeq)return;drawCards('fCards',d.cards||[]);if(d.replies&&d.replies.length){drawReplies(d.replies,true);$('fState').textContent='✨ ردود على حسب الكلام'+(d.situation&&d.situation!=='عام'?' · '+d.situation:'')}}catch(e){if(n===fSeq)$('fState').textContent='بسمع...'}}
-$('openFree').onclick=()=>{show('free');drawReplies(DEFAULT_REPLIES,false)};
+$('openFree').onclick=()=>{show('free');fSid=null;fNoSmart=false;drawReplies(DEFAULT_REPLIES,false)};
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';$('fState').textContent='متوقف';$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent='المايك مقفول ('+ok+'). اسمح بيه من إعدادات المتصفح';return}
- freeOn=true;bumpStat('free');$('freeGo').textContent='⏸ وقف';$('fDot').className='dot';$('fState').textContent='بسمع...';
+ freeOn=true;bumpStat('free');if(!fSid){fSid=Date.now().toString(36);freeCount()}$('freeGo').textContent='⏸ وقف';$('fDot').className='dot';$('fState').textContent=fNoSmart?'خلصت مهام الشهر: الكلام هيفضل يتكتب، من غير ردود ذكية':'بسمع...';
  onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent='المايك مقفول. اسمح بيه من إعدادات المتصفح';if(s==='nosr')$('fState').textContent='السماع محتاج Chrome';if(LISTEN_WHY[s]||s==='stuck'){$('fState').textContent=LISTEN_WHY[s]||'السماع وقف. دوس هنا';$('fState').onclick=()=>{$('fState').onclick=null;$('fState').textContent='بسمع...';resumeListening()}}};
  startListening()};
 $('freeBack').onclick=()=>{freeOn=false;haltListening();$('freeGo').textContent='▶ ابدأ';onHeard=onInterim=onListenState=null;show('home')};
