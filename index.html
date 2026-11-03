@@ -715,6 +715,7 @@ html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.to
 </div></div>
 <script>
 const EN={
+'عرض بالإشارة':'Show in sign',
 // ---- offline banner, welcome
 'مفيش نت.':'No internet.',
 'شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.':'Still works: SOS (call, and a text to your family), «Show people», and typing.',
@@ -1272,6 +1273,7 @@ wList:'<li>Wasl is <b>free</b>.</li><li>Your words are <b>not recorded</b>. They
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
+'عرض بالإشارة':'عرض بالإشارة',
 "مفيش نت.": "ما فيه نت.",
 "شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.": "يشتغل: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.",
 "مش شغّال: «اتكلم بدالي»، والردود الذكية، والسماع، والصوت المصري.": "ما يشتغل: «تكلّم عني»، والردود الذكية، والسماع، والصوت.",
@@ -3194,7 +3196,7 @@ async function signShow(where,text){text=String(text||'').trim();if(!text)return
  WaslSigns.play(items,box,{});vsDraw();
  if(where==='task'&&$('task').classList.contains('asking'))['tDecide','tOk'].forEach(id=>{if(!$(id).classList.contains('hidden'))showBox(id)})} // the player took some room: keep the question in view
 (function(){
- const btn=id=>`<button type="button" class="sgt" id="${id}" aria-pressed="false" aria-label="${esc(tr('اعرض الكلام بالإشارة'))}"><span aria-hidden="true">🤟</span>${esc(tr('إشارة'))}<i aria-hidden="true"></i></button>`;
+ const btn=id=>`<button type="button" class="sgt" id="${id}" aria-pressed="false" aria-label="${esc(tr('اعرض الكلام بالإشارة'))}"><span aria-hidden="true">🤟</span>${esc(tr('عرض بالإشارة'))}<i aria-hidden="true"></i></button>`;
  const tl=$('tLive');if(tl){tl.insertAdjacentHTML('afterbegin',btn('tSgT'));$('tLiveText').insertAdjacentHTML('beforebegin','<div class="sgbox hidden" id="tSg" aria-label="'+esc(tr('كلام اللي قدامك بالإشارة'))+'"></div>')}
  const cap=$('cap');if(cap){cap.insertAdjacentHTML('beforebegin','<div class="sgrow">'+btn('fSgT')+'</div><div class="sgbox hidden" id="fSg" aria-label="'+esc(tr('كلام اللي قدامك بالإشارة'))+'"></div>')}
  $('tSgT').onclick=()=>vsToggle('task');$('fSgT').onclick=()=>vsToggle('free');
