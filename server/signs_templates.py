@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Wasl — build sign templates for sign → voice from the expert's clips.
 
-For every clip in signs/clips/ named <ID>__<signer>.mp4 (published) or <ID>__<signer>__<take>.mp4 (raw takes),
+For every published clip signs/clips/<ID>__<signer>.mp4 (made by server/signs_build.py; with --takes DIR also the
+raw takes <ID>__<signer>__<take>.webm/.mp4 from record.html, which gives more templates per sign),
 run MediaPipe Hand + Pose (the same two models the app uses on the phone), turn each frame into the same 96 numbers
 the app computes (signs/s2v.js, frameFeatures — keep the two identical), cut the part between «hands down» and
 «hands down», resample it to 32 frames, and write:
@@ -20,7 +21,8 @@ Setup (once, on a PC or the server — not needed by the app):
   pip install mediapipe opencv-python        (add --break-system-packages on Debian/Ubuntu's system Python)
   python3 server/signs_templates.py           # models are downloaded to server/models/ on first run
 Options:
-  --clips DIR   (default signs/clips)   --out DIR (default signs/templates)   --only ID,ID   --published-only
+  --clips DIR   (default signs/clips)   --out DIR (default signs/templates)   --only ID,ID
+  --takes DIR   also use raw takes (unpacked record.html ZIPs); run after signs_build.py so the IDs match
   --selftest FIXTURE.json   check this file's feature code against the app's (used by the tests; no MediaPipe needed)
 """
 import argparse, base64, csv, datetime, glob, json, math, os, re, sys, urllib.request
@@ -155,7 +157,11 @@ def models_dir():
         p = os.path.join(d, name)
         if not os.path.exists(p):
             print('downloading', name, '...')
-            urllib.request.urlretrieve(url, p)
+            try:
+                urllib.request.urlretrieve(url, p + '.part')
+                os.replace(p + '.part', p)
+            except Exception as e:
+                sys.exit(f'could not download {name} ({e}).\nDownload it by hand from\n  {url}\ninto {d}/ and run again.')
     return d
 
 
@@ -216,7 +222,7 @@ def main():
     ap.add_argument('--out', default=os.path.join(REPO, 'signs', 'templates'))
     ap.add_argument('--vocab', default=os.path.join(REPO, 'signs', 'vocab.csv'))
     ap.add_argument('--only', default='')
-    ap.add_argument('--published-only', action='store_true')
+    ap.add_argument('--takes', default='', help='folder with raw takes ID__signer__take.ext (optional)')
     ap.add_argument('--selftest', default='')
     a = ap.parse_args()
 
@@ -238,16 +244,21 @@ def main():
 
     allowed = vocab_ids(a.vocab) if os.path.exists(a.vocab) else None
     only = set(x.strip().replace('/', '_') for x in a.only.split(',') if x.strip())
-    pat = re.compile(r'^(?P<id>[A-Z0-9][A-Z0-9_-]*)__(?P<signer>[a-z0-9]+)(?:__(?P<take>[a-z0-9]+))?\.mp4$', re.I)
+    # same names as server/signs_build.py: published <ID>__<signer>.mp4, raw <ID>__<signer>__<take>.<ext>
+    clip_re = re.compile(r'^(?P<id>.+?)__(?P<signer>[a-z]\d{1,2})\.mp4$', re.I)
+    raw_re = re.compile(r'^(?P<id>.+?)__(?P<signer>[a-z]\d{1,2})__(?P<take>\d+)\.(webm|mp4|mov|mkv|m4v)$', re.I)
+    found = [(clip_re, p) for p in sorted(glob.glob(os.path.join(a.clips, '*.mp4')))]
+    if a.takes:
+        found += [(raw_re, p) for p in sorted(glob.glob(os.path.join(a.takes, '**', '*'), recursive=True))]
     clips = {}
-    for p in sorted(glob.glob(os.path.join(a.clips, '*.mp4'))):
-        m = pat.match(os.path.basename(p))
-        if not m or (a.published_only and m.group('take')):
+    for rx, p in found:
+        m = rx.match(os.path.basename(p))
+        if not m:
             continue
-        sid = m.group('id').upper()
+        sid = m.group('id').replace('/', '_')
         if (only and sid not in only) or (allowed is not None and sid not in allowed):
             continue
-        clips.setdefault(sid, []).append((m.group('signer'), p))
+        clips.setdefault(sid, []).append((m.group('signer').lower(), p))
     if not clips:
         print('no clips found in', a.clips)
         return
