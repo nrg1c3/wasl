@@ -1,0 +1,168 @@
+group,arabic,english_gloss,direction,priority
+greetings,السلام عليكم / أهلاً,HELLO,both,P1
+greetings,صباح الخير,GOOD-MORNING,both,P2
+greetings,شكراً,THANK-YOU,both,P1
+greetings,لو سمحت / من فضلك,PLEASE,both,P1
+greetings,آسف,SORRY,both,P1
+greetings,مع السلامة,GOODBYE,both,P2
+greetings,اسمي...,MY-NAME,sign2voice,P2
+greetings,أنا أصم,I-AM-DEAF,sign2voice,P1
+greetings,اتكلم مع الموبايل,SPEAK-TO-PHONE,sign2voice,P1
+greetings,تمام / ماشي,OK,both,P1
+basic,أيوه,YES,both,P1
+basic,لأ,NO,both,P1
+basic,استنى / لحظة,WAIT,both,P1
+basic,تاني / كرر,REPEAT,both,P1
+basic,مش فاهم,NOT-UNDERSTAND,both,P1
+basic,فاهم,UNDERSTAND,both,P1
+basic,بالراحة,SLOWLY,sign2voice,P1
+basic,مش عارف,DONT-KNOW,both,P2
+basic,ممكن؟,CAN/POSSIBLE,both,P2
+basic,خلاص / خلصت,FINISHED,both,P1
+questions,فين؟,WHERE,both,P1
+questions,إمتى؟,WHEN,both,P1
+questions,إيه؟,WHAT,both,P1
+questions,مين؟,WHO,both,P2
+questions,ليه؟,WHY,both,P3
+questions,كام؟,HOW-MANY/HOW-MUCH,both,P1
+pharmacy,صيدلية,PHARMACY,both,P1
+pharmacy,دوا,MEDICINE,both,P1
+pharmacy,روشتة,PRESCRIPTION,both,P1
+pharmacy,أقراص / حبوب,PILLS,both,P1
+pharmacy,شراب,SYRUP,both,P2
+pharmacy,حقنة,INJECTION,both,P2
+pharmacy,مرة في اليوم,TIMES-PER-DAY,voice2sign,P1
+pharmacy,قبل الأكل,BEFORE-FOOD,voice2sign,P1
+pharmacy,بعد الأكل,AFTER-FOOD,voice2sign,P1
+pharmacy,بديل / نوع تاني,ALTERNATIVE,both,P2
+pharmacy,مش موجود / خلصان,NOT-AVAILABLE,voice2sign,P1
+doctor,دكتور,DOCTOR,both,P1
+doctor,مستشفى,HOSPITAL,both,P1
+doctor,عيادة,CLINIC,both,P2
+doctor,ميعاد / حجز,APPOINTMENT,both,P1
+doctor,كشف,CHECKUP,both,P2
+doctor,تحليل,LAB-TEST,both,P2
+doctor,أشعة,X-RAY,both,P2
+doctor,سخونية,FEVER,both,P1
+doctor,ضغط,BLOOD-PRESSURE,both,P2
+doctor,سكر,DIABETES,both,P2
+doctor,حامل,PREGNANT,both,P2
+doctor,حساسية,ALLERGY,both,P1
+body,وجع / بيوجعني,PAIN,both,P1
+body,راس,HEAD,both,P1
+body,بطن,STOMACH,both,P1
+body,سنان,TOOTH,both,P2
+body,ضهر,BACK,both,P2
+body,صدر,CHEST,both,P1
+body,عين,EYE,both,P2
+body,ودن,EAR,both,P2
+body,رجل,LEG,both,P2
+body,إيد,HAND/ARM,both,P2
+feelings,دايخ,DIZZY,both,P1
+feelings,تعبان / عيان,SICK/TIRED,both,P1
+feelings,خايف,SCARED,both,P2
+feelings,كويس,FINE/GOOD,both,P1
+transport,تاكسي,TAXI,both,P1
+transport,أتوبيس,BUS,both,P2
+transport,مترو,METRO,both,P2
+transport,ميكروباص,MICROBUS,both,P1
+transport,توكتوك,TUKTUK,both,P2
+transport,عايز أروح...,WANT-GO,sign2voice,P1
+transport,وقف هنا,STOP-HERE,sign2voice,P1
+transport,يمين,RIGHT,both,P1
+transport,شمال,LEFT,both,P1
+transport,على طول,STRAIGHT,both,P1
+transport,قريب,NEAR,both,P2
+transport,بعيد,FAR,both,P2
+transport,محطة,STATION,both,P2
+places,بيت,HOME,both,P1
+places,شغل,WORK,both,P2
+places,مدرسة,SCHOOL,both,P1
+places,بنك,BANK,both,P2
+places,قسم شرطة,POLICE-STATION,both,P2
+places,سوق,MARKET,both,P3
+places,جامع,MOSQUE,both,P3
+places,كنيسة,CHURCH,both,P3
+places,حمّام,TOILET,both,P1
+shop,عايز / محتاج,WANT/NEED,both,P1
+shop,ده / دي,THIS,both,P1
+shop,غالي,EXPENSIVE,both,P2
+shop,أرخص,CHEAPER,both,P2
+shop,كيس,BAG,both,P3
+shop,واحد تاني,ANOTHER,both,P2
+shop,مقاس,SIZE,both,P3
+money,فلوس,MONEY,both,P1
+money,جنيه,POUND,both,P1
+money,فكّة,SMALL-CHANGE,both,P2
+money,الباقي,CHANGE-DUE,both,P1
+money,كارت فيزا,CARD,both,P2
+money,كاش,CASH,both,P2
+money,إيصال,RECEIPT,both,P2
+money,ادفع,PAY,both,P1
+money,محفظة موبايل,MOBILE-WALLET,both,P3
+government,بطاقة رقم قومي,ID-CARD,both,P1
+government,شهادة ميلاد,BIRTH-CERTIFICATE,both,P2
+government,ورق,PAPERS,both,P1
+government,ختم,STAMP,voice2sign,P2
+government,استمارة,FORM,both,P2
+government,صورة / تصوير ورق,PHOTOCOPY,both,P2
+government,شبّاك,COUNTER-WINDOW,voice2sign,P1
+government,طابور / دورك,QUEUE/YOUR-TURN,voice2sign,P1
+government,إمضا,SIGNATURE,both,P2
+government,كارت الخدمات المتكاملة,DISABILITY-CARD,both,P2
+numbers,صفر,0,both,P1
+numbers,واحد,1,both,P1
+numbers,اتنين,2,both,P1
+numbers,تلاتة,3,both,P1
+numbers,أربعة,4,both,P1
+numbers,خمسة,5,both,P1
+numbers,ستة,6,both,P1
+numbers,سبعة,7,both,P1
+numbers,تمانية,8,both,P1
+numbers,تسعة,9,both,P1
+numbers,عشرة,10,both,P1
+numbers,حداشر,11,both,P2
+numbers,اتناشر,12,both,P2
+numbers,تلاتاشر,13,both,P2
+numbers,أربعتاشر,14,both,P2
+numbers,خمستاشر,15,both,P2
+numbers,ستاشر,16,both,P2
+numbers,سبعتاشر,17,both,P2
+numbers,تمنتاشر,18,both,P2
+numbers,تسعتاشر,19,both,P2
+numbers,عشرين,20,both,P1
+numbers,تلاتين,30,both,P2
+numbers,أربعين,40,both,P2
+numbers,خمسين,50,both,P1
+numbers,ستين,60,both,P2
+numbers,سبعين,70,both,P2
+numbers,تمانين,80,both,P2
+numbers,تسعين,90,both,P2
+numbers,مية,100,both,P1
+numbers,ميتين,200,both,P2
+numbers,خمسمية,500,both,P2
+numbers,ألف,1000,both,P1
+time,النهارده,TODAY,both,P1
+time,بكرة,TOMORROW,both,P1
+time,إمبارح,YESTERDAY,both,P2
+time,دلوقتي,NOW,both,P1
+time,ساعة,HOUR/O-CLOCK,both,P1
+time,الصبح,MORNING,both,P2
+time,بالليل,NIGHT,both,P2
+time,السبت,SATURDAY,both,P2
+time,الحد,SUNDAY,both,P2
+time,الاتنين,MONDAY,both,P2
+time,التلات,TUESDAY,both,P2
+time,الأربع,WEDNESDAY,both,P2
+time,الخميس,THURSDAY,both,P2
+time,الجمعة,FRIDAY,both,P2
+sos,الحقوني / ساعدني,HELP,both,P1
+sos,إسعاف,AMBULANCE,both,P1
+sos,شرطة,POLICE,both,P1
+sos,حريقة,FIRE,both,P1
+sos,حادثة,ACCIDENT,both,P1
+sos,خطر,DANGER,both,P2
+sos,اتسرق مني,ROBBED,sign2voice,P2
+sos,تايه,LOST,sign2voice,P1
+sos,كلّم أهلي,CALL-MY-FAMILY,sign2voice,P1
+sos,نزيف / دم,BLEEDING,both,P1
