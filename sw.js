@@ -6,7 +6,7 @@ const SHELL = 'wasl-shell-v45';
 const RUNTIME = 'wasl-rt-v1';
 const KEEP = [SHELL, RUNTIME, 'wasl-demo-v1', 'wasl-share'];
 const FILES = ['./', 'index.html', 'privacy.html', 'manifest.webmanifest',
-  'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
+  'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png', 'signs/s2v.js'];
 const RUNTIME_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdn.jsdelivr.net',
   'storage.googleapis.com', 'tfhub.dev'];
 

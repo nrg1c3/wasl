@@ -122,17 +122,38 @@ nav svg{width:24px;height:24px}
 .sug{display:flex;flex-direction:column;gap:8px}
 .sug button{min-height:56px;border:2px solid var(--or);border-radius:14px;background:var(--card);font-size:19px;font-weight:700;text-align:start;padding:10px 14px;color:var(--ink)}
 .back{min-height:44px;border:0;border-radius:999px;background:var(--ink2);color:var(--bg);padding:0 16px;font-size:15px;font-weight:700}
-/* signs */
-#signs{position:fixed;inset:0;background:rgba(19,38,47,.96);display:none;flex-direction:column;padding:16px;gap:12px;z-index:20;color:var(--bg);overflow-y:auto}
+/* signs: sign → voice */
+#signs{position:fixed;inset:0;background:#13262F;display:none;flex-direction:column;padding:12px 16px calc(12px + env(safe-area-inset-bottom));gap:10px;z-index:20;color:var(--bg);overflow-y:auto}
 #signs.on{display:flex}
-.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;max-height:46vh}
+#signs .shead{display:flex;justify-content:space-between;align-items:center}#signs .shead b{font-size:21px;display:flex;align-items:center;gap:6px}#signs .shead svg{width:26px;height:26px}
+#signs .snote{margin:0;font-size:14px;color:#cfe3ea;background:var(--ink2);border-radius:10px;padding:6px 10px}
+.srow{display:flex;gap:10px;align-items:stretch}
+.cam{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:3/4;width:52%;max-height:36vh;flex:0 0 auto}
 .cam video,.cam canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
-#slive{position:absolute;bottom:10px;right:10px;left:10px;background:rgba(0,0,0,.7);padding:8px;border-radius:10px;font-size:20px;text-align:center}
-#sentence{font-size:26px;min-height:40px;color:#ffd7b0;font-weight:700}
-#signs details{background:var(--ink2);border-radius:14px;padding:10px 14px}
-#signs summary{font-size:16px;font-weight:700;cursor:pointer;min-height:36px;display:flex;align-items:center}
-.tags span{display:inline-block;background:var(--ink);border-radius:8px;padding:4px 10px;margin:3px;font-size:14px}
-#signs input{flex:1;min-width:0;min-height:48px;border:0;border-radius:12px;padding:0 12px;font-size:16px}
+.cam .sguide{position:absolute;inset:8% 10% 0;width:80%;height:92%;fill:none;stroke:rgba(255,255,255,.55);stroke-width:2.5;stroke-dasharray:6 5;pointer-events:none}
+.cam.err .sguide{display:none}
+#slive{position:absolute;bottom:6px;right:6px;left:6px;background:rgba(0,0,0,.72);padding:6px;border-radius:10px;font-size:16px;line-height:1.35;text-align:center;font-weight:700}
+.cam.err{aspect-ratio:auto;width:100%;max-height:none;min-height:150px}.cam.err #slive{position:static;margin:8px;font-size:17px}
+.srow:has(.cam.err) .shold{display:none}
+.shold{flex:1;min-height:120px;border:3px dashed var(--or);border-radius:16px;background:var(--ink2);color:var(--bg);font-size:17px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px;touch-action:none;user-select:none;-webkit-user-select:none}
+.shold .sgi{font-size:40px;line-height:1}.shold.on{background:var(--or);border-style:solid;color:#fff}
+.shint{margin:0;font-size:15px;color:#cfe3ea}
+.scards{display:flex;flex-wrap:wrap;gap:8px;min-height:64px;align-items:flex-start}
+.scard{background:#fff;color:#13262F;border:0;border-radius:14px;border-top:5px solid var(--or);padding:6px 10px;min-width:84px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:inherit}
+.scard .sgi{font-size:28px;line-height:1}.scard b{font-size:20px;line-height:1.2;unicode-bidi:plaintext}
+.scard.x{position:relative;padding-inline-end:22px}.scard.x::after{content:'✕';position:absolute;top:4px;inset-inline-end:6px;font-size:13px;color:#5b6870}
+.scards.lg .scard{min-width:96px;min-height:96px;flex:1 1 96px}.scards.lg .scard .sgi{font-size:40px}.scards.lg .scard b{font-size:24px}
+.scards.sm{max-height:40vh;overflow-y:auto;padding-top:8px}.scards.sm .scard{min-width:76px;min-height:64px}.scards.sm .scard b{font-size:16px}
+.sempty{color:#9fb6bf;font-size:15px;align-self:center}
+.spick{background:var(--ink2);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px}.spick>b{font-size:19px}
+#signs details{background:var(--ink2);border-radius:14px;padding:8px 14px}
+#signs summary{font-size:16px;font-weight:700;cursor:pointer;min-height:44px;display:flex;align-items:center}
+#signs input{width:100%;min-height:48px;border:0;border-radius:12px;padding:0 12px;font-size:17px}
+.sdots{display:flex;gap:8px;justify-content:center;margin:8px 0}.sdots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--bg)}.sdots i.on{background:var(--or);border-color:var(--or)}.sdots i.ok{background:#2E7D5B;border-color:#2E7D5B}
+.tags span{display:inline-flex;align-items:center;gap:4px;background:var(--ink);border-radius:8px;padding:4px 10px;margin:3px;font-size:15px}
+.sdel{min-width:44px;min-height:44px;border:0;background:transparent;color:#ffd7b0;font-size:16px}
+html.pm .shint{display:none}html.pm .scard b{font-size:22px}
+@media (max-height:700px){.cam{max-height:30vh}.shold{min-height:96px}}
 #paySheet{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;z-index:25}
 .pbox{background:var(--card);width:100%;border-radius:20px 20px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px}
 .pbox b{font-size:20px}.pbox small{color:var(--mute);font-size:14px}
@@ -626,18 +647,7 @@ html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.to
 </div>
 
 <!-- ============ SIGNS ============ -->
-<div id="signs" role="dialog" aria-label="الإشارات">
-<div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:20px">الإشارات</b><button class="back" id="sClose">إقفل</button></div>
-<div class="cam"><video id="v" playsinline muted></video><canvas id="c"></canvas><div id="slive">بيشغّل الكاميرا...</div></div>
-<div id="sentence"></div>
-<div class="row"><button class="btn or" id="sUse">ابعت الجملة</button><button class="btn ghost" id="sClear">امسح</button></div>
-<details><summary>علّم وصل إشارة جديدة</summary>
-<div class="row" style="margin-top:8px"><label class="sr" for="label">معنى الإشارة</label><input id="label" placeholder="معنى الإشارة، مثلاً: محتاج دكتور"><button class="btn" id="rec" style="flex:0 0 auto;min-height:48px;font-size:15px">سجّل 3 ثواني</button></div>
-<div class="tags" id="tags"></div>
-<button class="back" id="sWipe" style="margin-top:6px">امسح كل الإشارات</button>
-<p class="note" style="color:var(--soft)">سجّل كل إشارة 3 مرات على الأقل. الإشارات بتتحفظ على الموبايل ده بس.</p>
-</details>
-</div>
+<div id="signs" role="dialog" aria-modal="true" aria-label="الإشارات"></div>
 <div id="flip"></div>
 <div id="readOv" role="status"><img id="readImg" alt=""><b id="readT">بقرا الصورة...</b><button class="btn ghost" id="readCancel" style="min-width:160px">إلغاء</button></div>
 <div id="paySheet" role="dialog" aria-label="طريقة الدفع"><div class="pbox"><b>هتدفع إزاي؟</b><small>وصل هيقول طريقة الدفع للي قدامك</small><div class="pgrid" id="payOpts"></div><button class="pclose" id="payClose">إلغاء</button></div></div>
@@ -1176,7 +1186,43 @@ const EN={
 'مكالمة: وصل يتصل بدالك':'Call: Wasl phones for you',
 'اكتب الرقم واللي عايزه، ووصل يكلمهم ويكتبلك ردهم':'Write the number and what you need. Wasl talks to them and writes their answer for you',
 'الطرف التاني':'Them',
-'إنت':'You'
+'إنت':'You',
+// ---- sign → voice
+'اتعلمتها ✓ جرّبها دلوقتي':'Learned ✓ Try it now',
+'استعد... {n}':'Get ready... {n}',
+'اعمل الإشارة دلوقتي ({k} من 3)':'Make the sign now ({k} of 3)',
+'الإشارات القديمة محتاجة تتسجّل تاني بالطريقة الجديدة.':'Your old signs need to be recorded again the new way.',
+'الإشارات اللي وصل يفهمها هتظهر هنا':'The signs Wasl understands show here',
+'الكاميرا بتشتغل على الموبايل بس، ومفيش فيديو بيتبعت':'The camera works on the phone only. No video is sent',
+'الكاميرا شغّالة في تطبيق تاني. اقفله وجرّب تاني.':'Another app is using the camera. Close it and try again.',
+'الكاميرا ما اشتغلتش. اقفل الشاشة دي وافتحها تاني.':'The camera didn\'t start. Close this screen and open it again.',
+'الكاميرا مش متاحة هنا. افتح وصل من المتصفح (Chrome) بالرابط اللي بيبدأ بـ https':'The camera isn\'t available here. Open Wasl in the browser (Chrome) with the link that starts with https',
+'الكاميرا مقفولة. افتح إعدادات المتصفح، واختار «الأذونات» ثم «الكاميرا»، وخليها «سماح». وبعدين اقفل الشاشة دي وافتحها تاني.':'The camera is blocked. Open the browser settings, choose «Permissions», then «Camera», and set it to «Allow». Then close this screen and open it again.',
+'امسح {w}':'Delete {w}',
+'امسح كل إشاراتي':'Delete all my signs',
+'برنامج الإشارات ما نزلش. اتأكد إن فيه نت وجرّب تاني. وتقدر تختار بالصور.':'The sign program didn\'t download. Check the internet and try again. You can also pick from pictures.',
+'بشوف... ✋':'Watching... ✋',
+'بعّد الموبايل شوية عشان راسك وكتافك يبانوا':'Move the phone back a little so your head and shoulders show',
+'بيحمّل برنامج الإشارات... (أول مرة بس، محتاج نت)':'Loading the sign program... (first time only, needs internet)',
+'تمام ✓':'Done ✓',
+'تمسح إشارة «{w}»؟':'Delete the sign «{w}»?',
+'تمسح كل إشاراتك من الموبايل ده؟':'Delete all your signs from this phone?',
+'جرّب تاني، أو اختار بالصور':'Try again, or pick from pictures',
+'دوس وخليك دايس وإنت بتعمل الإشارة':'Press and hold while you sign',
+'سجّلها 3 مرات':'Record it 3 times',
+'شيل {w}':'Remove {w}',
+'قصدك أنهي؟':'Which one do you mean?',
+'كل إشارة بتتسجّل 3 مرات، كل مرة تلت ثواني. الإشارات بتتحفظ على الموبايل ده بس.':'Each sign is recorded 3 times, 3 seconds each. Signs are saved on this phone only.',
+'ما اتسجلتش. جرّب تاني في مكان فيه نور':'Not recorded. Try again somewhere with more light',
+'مش فاهمها. جرّب تاني، أو اختار بالصور':'I don\'t understand it. Try again, or pick from pictures',
+'مش فاهمها. يمكن واحدة من دول؟':'I don\'t understand it. Maybe one of these?',
+'مش لاقي كاميرا أمامية في الموبايل ده.':'No front camera found on this phone.',
+'مش متأكد. اختار الصح':'Not sure. Pick the right one',
+'مشفتش إيدك. خلّي إيدك جوه الصورة':'I didn\'t see your hand. Keep your hand inside the picture',
+'نزّل إيدك، اعمل الإشارة، ونزّل إيدك تاني.':'Hands down, make the sign, then hands down again.',
+'نزّل إيدك، وبعدين اعمل الإشارة':'Hands down, then make the sign',
+'وصل لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور':'Wasl hasn\'t learned any signs yet. Teach it below, or pick from pictures',
+'ولا واحدة':'None of these'
 };
 /* Mixed text and bold words: the whole block in English. */
 const EN_HTML={
@@ -1581,7 +1627,35 @@ const GU={
 "✓ المكالمة خلصت": "✓ خلصت المكالمة",
 "المكالمة اتقفلت": "تسكّرت المكالمة",
 "وصل هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:": "وصل بيقول هالجملة. فيها أرقام أو فلوس، تأكد منها:",
-"قبل أول مكالمة:\n\nوصل هيتصل بالرقم ده، ويقول للطرف التاني في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nصوت الطرف التاني بيعدّي على خدمة المكالمات (Twilio) عشان يتحول لكتابة، وكلامه وطلبك واسمك بيتبعتوا لخدمة ذكاء اصطناعي (Claude من Anthropic)، وجمل وصل بتتبعت لخدمة الصوت (ElevenLabs).\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح من عندنا أول ما المكالمة تخلص.\n\nموافق؟": "قبل أول مكالمة:\n\nوصل بيتصل بهالرقم، ويقول للطرف الثاني في البداية إنه مساعد بالذكاء الاصطناعي يتكلم بالنيابة عنك.\n\nصوت الطرف الثاني يمر على خدمة المكالمات (Twilio) عشان يتحول لكتابة، وكلامه وطلبك واسمك ينرسلون لخدمة ذكاء اصطناعي (Claude من Anthropic)، وجمل وصل تنرسل لخدمة الصوت (ElevenLabs).\n\nالمكالمة ما تتسجّل، والكلام ينمسح عندنا أول ما تخلص المكالمة.\n\nموافق؟"
+"قبل أول مكالمة:\n\nوصل هيتصل بالرقم ده، ويقول للطرف التاني في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nصوت الطرف التاني بيعدّي على خدمة المكالمات (Twilio) عشان يتحول لكتابة، وكلامه وطلبك واسمك بيتبعتوا لخدمة ذكاء اصطناعي (Claude من Anthropic)، وجمل وصل بتتبعت لخدمة الصوت (ElevenLabs).\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح من عندنا أول ما المكالمة تخلص.\n\nموافق؟": "قبل أول مكالمة:\n\nوصل بيتصل بهالرقم، ويقول للطرف الثاني في البداية إنه مساعد بالذكاء الاصطناعي يتكلم بالنيابة عنك.\n\nصوت الطرف الثاني يمر على خدمة المكالمات (Twilio) عشان يتحول لكتابة، وكلامه وطلبك واسمك ينرسلون لخدمة ذكاء اصطناعي (Claude من Anthropic)، وجمل وصل تنرسل لخدمة الصوت (ElevenLabs).\n\nالمكالمة ما تتسجّل، والكلام ينمسح عندنا أول ما تخلص المكالمة.\n\nموافق؟",
+"اتعلمتها ✓ جرّبها دلوقتي": "تعلّمتها ✓ جرّبها الحين",
+"اعمل الإشارة دلوقتي ({k} من 3)": "سوّ الإشارة الحين ({k} من 3)",
+"الإشارات القديمة محتاجة تتسجّل تاني بالطريقة الجديدة.": "الإشارات القديمة تحتاج تتسجّل مرة ثانية بالطريقة الجديدة.",
+"الإشارات اللي وصل يفهمها هتظهر هنا": "الإشارات اللي يفهمها وصل بتطلع هنا",
+"الكاميرا بتشتغل على الموبايل بس، ومفيش فيديو بيتبعت": "الكاميرا تشتغل على الجوال بس، وما ينرسل أي فيديو",
+"الكاميرا شغّالة في تطبيق تاني. اقفله وجرّب تاني.": "الكاميرا شغّالة في تطبيق ثاني. سكّره وجرّب مرة ثانية.",
+"الكاميرا ما اشتغلتش. اقفل الشاشة دي وافتحها تاني.": "الكاميرا ما اشتغلت. سكّر هالشاشة وافتحها مرة ثانية.",
+"الكاميرا مش متاحة هنا. افتح وصل من المتصفح (Chrome) بالرابط اللي بيبدأ بـ https": "الكاميرا مو متاحة هنا. افتح وصل من المتصفح (Chrome) بالرابط اللي يبدأ بـ https",
+"الكاميرا مقفولة. افتح إعدادات المتصفح، واختار «الأذونات» ثم «الكاميرا»، وخليها «سماح». وبعدين اقفل الشاشة دي وافتحها تاني.": "الكاميرا مقفلة. افتح إعدادات المتصفح، واختار «الأذونات» بعدين «الكاميرا»، وخلّها «سماح». وبعدين سكّر هالشاشة وافتحها مرة ثانية.",
+"برنامج الإشارات ما نزلش. اتأكد إن فيه نت وجرّب تاني. وتقدر تختار بالصور.": "برنامج الإشارات ما نزل. تأكد إن فيه نت وجرّب مرة ثانية. وتقدر تختار من الصور.",
+"بشوف... ✋": "أشوف... ✋",
+"بعّد الموبايل شوية عشان راسك وكتافك يبانوا": "بعّد الجوال شوي عشان يبان راسك وكتوفك",
+"بيحمّل برنامج الإشارات... (أول مرة بس، محتاج نت)": "يحمّل برنامج الإشارات... (أول مرة بس، يحتاج نت)",
+"تمسح كل إشاراتك من الموبايل ده؟": "تمسح كل إشاراتك من هذا الجوال؟",
+"جرّب تاني، أو اختار بالصور": "جرّب مرة ثانية، أو اختار من الصور",
+"دوس وخليك دايس وإنت بتعمل الإشارة": "اضغط وخلّك ضاغط وإنت تسوي الإشارة",
+"قصدك أنهي؟": "قصدك أي وحدة؟",
+"كل إشارة بتتسجّل 3 مرات، كل مرة تلت ثواني. الإشارات بتتحفظ على الموبايل ده بس.": "كل إشارة تتسجّل 3 مرات، كل مرة ثلاث ثواني. الإشارات تنحفظ على هذا الجوال بس.",
+"ما اتسجلتش. جرّب تاني في مكان فيه نور": "ما تسجّلت. جرّب مرة ثانية في مكان فيه نور",
+"مش فاهمها. جرّب تاني، أو اختار بالصور": "ما فهمتها. جرّب مرة ثانية، أو اختار من الصور",
+"مش فاهمها. يمكن واحدة من دول؟": "ما فهمتها. يمكن وحدة من هذول؟",
+"مش لاقي كاميرا أمامية في الموبايل ده.": "ما لقيت كاميرا أمامية في هذا الجوال.",
+"مش متأكد. اختار الصح": "مو متأكد. اختار الصح",
+"مشفتش إيدك. خلّي إيدك جوه الصورة": "ما شفت يدك. خلّ يدك داخل الصورة",
+"نزّل إيدك، اعمل الإشارة، ونزّل إيدك تاني.": "نزّل يدك، سوّ الإشارة، ونزّل يدك مرة ثانية.",
+"نزّل إيدك، وبعدين اعمل الإشارة": "نزّل يدك، وبعدين سوّ الإشارة",
+"وصل لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور": "وصل للحين ما تعلّم إشارات. علّمه من تحت، أو اختار من الصور",
+"ولا واحدة": "ولا وحدة"
 };
 const GU_HTML={wList:'<li>وصل <b>مجاني</b>.</li><li>كلامك <b>ما ينسجل</b>. يمر بس على الخدمات اللي يشتغل عليها وصل. <a href="privacy.html">اقرا صفحة الخصوصية</a></li><li>الطوارئ في وصل <b>مساعدة</b>، مو بديل عن الإسعاف أو الشرطة.</li><li>إذا عمرك <b>أقل من 18</b>، لازم أهلك يوافقون.</li>'};
 
@@ -1703,7 +1777,8 @@ function vg(){const p=profile();return p.voice==='m'||p.voice==='f'?p.voice:(p.s
 function vRate(){const r=parseFloat(profile().rate);return r>=0.8&&r<=1.6?r:1.15}
 function voiceName(){const m=vg()==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
 function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='auto';if(!$('pRate').value)$('pRate').value='1.15';if(!$('pMem').value)$('pMem').value='on';if(!$('pSex').value)$('pSex').value='m'}
-$('wipeMe').onclick=()=>{if(!confirm(tr('هتتمسح بياناتك ومهامك وإشاراتك من الموبايل ده. متأكد؟')))return;try{Object.keys(localStorage).filter(k=>k.startsWith('wasl_')||k==='signs').forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()};
+$('wipeMe').onclick=()=>{if(!confirm(tr('هتتمسح بياناتك ومهامك وإشاراتك من الموبايل ده. متأكد؟')))return;try{Object.keys(localStorage).filter(k=>k.startsWith('wasl_')||k==='signs').forEach(k=>localStorage.removeItem(k))}catch(e){}
+ let done=false;const go=()=>{if(!done){done=true;location.reload()}};try{const r=indexedDB.deleteDatabase('wasl-signs');r.onsuccess=r.onerror=r.onblocked=go;setTimeout(go,1500)}catch(e){go()}};
 $('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent=tr('اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.')};
 /* App language switch: saved on this phone; the page reloads in the new language and comes back here with what was typed. */
 function drawUiSw(){$('uiAr').setAttribute('aria-pressed',String(UI!=='en'));$('uiEn').setAttribute('aria-pressed',String(UI==='en'))}
@@ -2418,29 +2493,133 @@ keepAwake();document.addEventListener('visibilitychange',()=>{if(!document.hidde
 ['pointerdown','keydown'].forEach(ev=>document.addEventListener(ev,()=>{if(!keepWake)keepAwake()},{passive:true}));
 window.__waslTestAlert=(id)=>fireAlert(GROUPS.find(g=>g.id===id)||GROUPS[0],0.9);
 
-/* ================= SIGNS ================= */
-const v=$('v'),c=$('c'),ctx=c.getContext('2d');
-let hl=null,camOn=false,stream=null,signMode='me',data=store.get('signs',[]),recording=null,last='',stable=0,cooldown=0;
-function tags(){const m={};data.forEach(d=>m[d.l]=(m[d.l]||0)+1);const e=Object.entries(m);$('tags').innerHTML=e.length?e.map(([k,n])=>`<span>${esc(k)} (${n})</span>`).join(''):'<span>'+tr('لسه مفيش إشارات')+'</span>'}
-function feat(res){const f=new Array(126).fill(0);(res.landmarks||[]).slice(0,2).forEach((lm,h)=>{const w=lm[0],s=Math.hypot(lm[9].x-w.x,lm[9].y-w.y)||1;const side=(res.handedness?.[h]?.[0]?.categoryName==='Left')?0:63;lm.forEach((p,i)=>{f[side+i*3]=(p.x-w.x)/s;f[side+i*3+1]=(p.y-w.y)/s;f[side+i*3+2]=(p.z-w.z)/s})});return f}
-function classify(f){if(data.length<3)return null;const d=data.map(x=>({l:x.l,d:Math.sqrt(x.f.reduce((a,val,i)=>a+(val-f[i])**2,0))})).sort((a,b)=>a.d-b.d).slice(0,5);const votes={};d.forEach(x=>votes[x.l]=(votes[x.l]||0)+1);const [l,n]=Object.entries(votes).sort((a,b)=>b[1]-a[1])[0];return(n>=4&&d[0].d<2.5)?l:null}
-async function startCam(){$('slive').textContent=tr('بيحمّل الموديل...');
- try{if(!hl){const{FilesetResolver,HandLandmarker}=await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs");const fs=await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm");hl=await HandLandmarker.createFromOptions(fs,{baseOptions:{modelAssetPath:"https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",delegate:"GPU"},runningMode:"VIDEO",numHands:2})}
-  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"}});v.srcObject=stream;await v.play();camOn=true;$('slive').textContent=data.length?tr('جاهز، اعمل إشارة'):tr('علّم وصل أول إشارة من تحت');loop()}
- catch(e){$('slive').textContent=tr('الكاميرا ما اشتغلتش، اسمح بالكاميرا من المتصفح')}}
-function stopCam(){camOn=false;stream&&stream.getTracks().forEach(t=>t.stop())}
-function loop(){if(!camOn)return;if(v.videoWidth){c.width=v.videoWidth;c.height=v.videoHeight;const res=hl.detectForVideo(v,performance.now());ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#D97A2B';(res.landmarks||[]).forEach(lm=>lm.forEach(p=>{ctx.beginPath();ctx.arc(p.x*c.width,p.y*c.height,5,0,7);ctx.fill()}));
- if(res.landmarks?.length){const f=feat(res);if(recording){data.push({l:recording,f})}else{const l=classify(f);if(l&&l===last)stable++;else{stable=0;last=l}if(cooldown>0)cooldown--;$('slive').textContent=l?('« '+l+' »'):tr('مش متعرف عليها');if(l&&stable===12&&cooldown===0){$('sentence').textContent+=(($('sentence').textContent?' ':'')+l);buzz(60);cooldown=40}}}
- else if(!recording){$('slive').textContent=tr('مفيش إيد قدام الكاميرا');stable=0}}requestAnimationFrame(loop)}
-function openSigns(mode){signMode=mode;$('sentence').textContent='';$('sUse').textContent=tr(mode==='task'?'ابعتها لوصل':mode==='free'?'انطقها':'تمام');tags();$('signs').classList.add('on');if(mode!=='me')haltListening();startCam()}
-function closeSigns(){$('signs').classList.remove('on');stopCam();if(signMode==='free'&&freeOn)startListening();if(signMode==='task'&&T&&!T.over&&!player)listenForHearing()}
-$('sClose').onclick=closeSigns;$('openSignsMe').onclick=()=>openSigns('me');
-$('sClear').onclick=()=>$('sentence').textContent='';
-$('sUse').onclick=()=>{const t=$('sentence').textContent.trim();const m=signMode;closeSigns();if(!t)return;
- if(m==='task'&&T&&!T.over){T.history.push({role:'user',text:t});logMsg('user',t);agent({type:'typed',text:t})}
- else if(m==='free')fSpeak(t)};
-$('rec').onclick=()=>{const l=$('label').value.trim();if(!l)return alert(tr('اكتب معنى الإشارة الأول'));if(!camOn)return alert(tr('الكاميرا لسه ما اشتغلتش'));let n=3;$('slive').textContent=tr('استعد...');setTimeout(()=>{recording=l;const t=setInterval(()=>{$('slive').textContent=tr('بيسجل: {l} ({n})',{l,n:n--});if(n<0){clearInterval(t);recording=null;store.set('signs',data);tags();$('slive').textContent=tr('اتسجلت ✓ سجّلها مرتين كمان')}},1000)},1000)};
-$('sWipe').onclick=()=>{if(confirm(tr('تمسح كل الإشارات؟'))){data=[];store.set('signs',[]);tags()}};
+/* ================= SIGNS: sign → voice =================
+   «إشارة» in the task and translation screens (and بياناتي) opens the front camera. signs/s2v.js finds the hands and the
+   body ON THE PHONE (MediaPipe), cuts each sign («hands down → sign → hands down», or the hold button), and compares it
+   with the user's own takes (IndexedDB) and the library templates (signs/templates/). A sure match becomes a picture
+   card; when unsure the user taps one of the top 3. «قوله» sends the words to the Task Agent (task) or speaks them
+   (translation). No video or picture leaves the phone. */
+const SG={mode:'me',open:false,ready:false,cards:[],meta:{},list:[],mineN:{},lib:0,libP:null,metaP:null,seg:null,teach:null,noPose:0,busy:false,shown:false,ui:false};
+function loadS2V(){if(window.WaslS2V)return Promise.resolve(window.WaslS2V);return SG.s2vP||(SG.s2vP=new Promise((res,rej)=>{const s=document.createElement('script');s.src='signs/s2v.js';s.onload=()=>res(window.WaslS2V);s.onerror=()=>{SG.s2vP=null;rej(new Error('s2v'))};document.head.appendChild(s)}))}
+const sgArFirst=s=>String(s||'').split(' / ')[0].replace(/\.\.\.|…/g,'').trim();
+function sgEnWord(id){id=String(id||'').split('_')[0];return/^\d+$/.test(id)?id:id.split('-').map(w=>w==='I'?'I':w.toLowerCase()).join(' ')}
+/* the word on a card: Arabic (Gulf via tr when listed), English UI → the gloss in plain words; the user's own signs as typed */
+function sgWord(id){const m=SG.meta[id];if(!m)return String(id).replace(/^me:/,'');if(m.mine)return m.ar;const a=sgArFirst(m.ar);return UI==='en'?(EN[a]||sgEnWord(id)):tr(a)}
+function sgIcon(id){const m=SG.meta[id];return(m&&m.icon)||'✋'}
+/* library list: the voice→sign manifest (WaslSigns / signs/index.json), else signs/vocab.csv */
+function sgMeta(){return SG.metaP||(SG.metaP=(async()=>{let man=null;
+  try{if(window.WaslSigns&&WaslSigns.load)man=await WaslSigns.load()}catch(e){}
+  if(!man||!man.signs)try{const r=await fetch('signs/index.json');if(r.ok)man=await r.json()}catch(e){}
+  let list=[];if(man&&man.signs)list=man.signs.map(s=>({id:s.id,ar:s.ar,group:s.group,dir:s.dir,pri:s.pri,icon:s.icon}));
+  else try{const t=await(await fetch('signs/vocab.csv')).text();t.split(/\r?\n/).slice(1).forEach(l=>{const c=l.split(',');if(c.length>=5&&c[2])list.push({id:c[2].trim().replace(/\//g,'_'),ar:c[1].trim(),group:c[0].trim(),dir:c[3].trim(),pri:c[4].trim()})})}catch(e){}
+  list=list.filter(s=>s.dir!=='voice2sign');list.forEach(s=>{SG.meta[s.id]=Object.assign(SG.meta[s.id]||{},s)});SG.list=list;return list})())}
+/* library templates: signs/templates/index.json lists the IDs that have one */
+function sgLib(S){return SG.libP||(SG.libP=(async()=>{let ids=[];try{const r=await fetch('signs/templates/index.json');if(r.ok){const j=await r.json();if(j.feat===S.FEAT)ids=j.ids||[]}}catch(e){}
+  const out=[];let i=0;const one=async()=>{while(i<ids.length){const id=ids[i++];try{const r=await fetch('signs/templates/'+encodeURIComponent(id)+'.json');if(r.ok)out.push(...S.fromTemplateFile(await r.json()))}catch(e){}}};
+  await Promise.all([one(),one(),one(),one()]);SG.lib=new Set(out.map(t=>t.id)).size;return out})())}
+async function sgTemplates(){const S=await loadS2V();const[lib,me]=await Promise.all([sgLib(S),S.mine.templates()]);SG.mineN={};
+ me.forEach(t=>{SG.mineN[t.label]=(SG.mineN[t.label]||0)+1;if(!SG.meta[t.id]||SG.meta[t.id].mine)SG.meta[t.id]={id:t.id,ar:t.label,icon:t.icon||'✋',mine:true}});
+ S.setTemplates(lib.concat(me));return lib.length+me.length}
+/* old signs (one frame each, localStorage) can't be used any more */
+let sgOld=false;try{if(localStorage.getItem('signs')){const o=JSON.parse(localStorage.getItem('signs'));sgOld=Array.isArray(o)&&o.length>0;localStorage.removeItem('signs')}}catch(e){}
+
+const SG_GUIDE='<svg class="sguide" viewBox="0 0 120 160" aria-hidden="true"><circle cx="60" cy="48" r="20"/><path d="M14 132c4-26 22-40 46-40s42 14 46 40"/></svg>';
+function sgBuild(){if(SG.ui)return;SG.ui=true;const b=$('signs');
+ b.innerHTML=`<div class="shead"><b>${svgI('hand')} ${tr('إشارة')}</b><button class="back" id="sClose">${tr('إقفل')}</button></div>
+<p class="snote">🔒 ${tr('الكاميرا بتشتغل على الموبايل بس، ومفيش فيديو بيتبعت')}</p>
+<div class="srow"><div class="cam" id="sCam"><video id="sv" playsinline muted></video><canvas id="sc"></canvas>${SG_GUIDE}<div id="slive" role="status" aria-live="polite">${tr('بيشغّل الكاميرا...')}</div></div>
+<button class="shold" id="sHold" aria-pressed="false"><span class="sgi" aria-hidden="true">✋</span><span>${tr('دوس وخليك دايس وإنت بتعمل الإشارة')}</span></button></div>
+<p class="shint no-pic" id="sHint">${tr('نزّل إيدك، اعمل الإشارة، ونزّل إيدك تاني.')}</p>
+<div id="sPick" class="spick hidden" role="group" aria-labelledby="sPickQ"><b id="sPickQ">${tr('قصدك أنهي؟')}</b><div class="scards lg" id="sPickC"></div><button class="back" id="sPickNo">${tr('ولا واحدة')}</button></div>
+<div class="scards" id="sSent" aria-live="polite"></div>
+<div class="row"><button class="btn or" id="sUse">${tr('قوله')}</button><button class="btn ghost" id="sClear">${tr('امسح')}</button></div>
+<details id="sGridD"><summary>🖼 ${tr('اختار بالصور')}</summary><div class="scards sm" id="sGrid"></div></details>
+<details id="sTeach"><summary>${tr('علّم وصل إشارة جديدة')}</summary>
+<p class="note" id="sOld" style="color:#ffd7b0" hidden>${tr('الإشارات القديمة محتاجة تتسجّل تاني بالطريقة الجديدة.')}</p>
+<label for="sLabel" style="display:block;margin:8px 0 4px;font-weight:700">${tr('معنى الإشارة')}</label>
+<input id="sLabel" placeholder="${esc(tr('معنى الإشارة، مثلاً: محتاج دكتور'))}">
+<button class="btn" id="sRec" style="margin-top:8px">${tr('سجّلها 3 مرات')}</button>
+<div class="sdots" id="sDots" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="tags" id="sMine"></div>
+<button class="back" id="sWipe" style="margin-top:6px">${tr('امسح كل إشاراتي')}</button>
+<p class="note" style="color:var(--soft)">${tr('كل إشارة بتتسجّل 3 مرات، كل مرة تلت ثواني. الإشارات بتتحفظ على الموبايل ده بس.')}</p></details>`;
+ $('sOld').hidden=!sgOld;
+ $('sClose').onclick=closeSigns;$('sClear').onclick=()=>{SG.cards=[];sgDraw()};
+ $('sUse').onclick=sgUse;$('sPickNo').onclick=()=>{sgPick(null);sgLive(tr('جرّب تاني، أو اختار بالصور'))};
+ $('sRec').onclick=sgTeach;$('sWipe').onclick=async()=>{if(!confirm(tr('تمسح كل إشاراتك من الموبايل ده؟')))return;const S=await loadS2V();await S.mine.clear();Object.keys(SG.meta).forEach(k=>{if(SG.meta[k].mine)delete SG.meta[k]});await sgTemplates();sgMineDraw()};
+ $('sGridD').ontoggle=()=>{if($('sGridD').open)sgGrid()};
+ const h=$('sHold');let held=false;const on=e=>{e&&e.preventDefault();if(held||!SG.seg||SG.teach)return;held=true;h.classList.add('on');h.setAttribute('aria-pressed','true');SG.seg.hold(true);sgLive(tr('بشوف... ✋'))};
+ const off=()=>{if(!held)return;held=false;h.classList.remove('on');h.setAttribute('aria-pressed','false');const r=SG.seg&&SG.seg.hold(false);if(r)sgGot(r);else sgLive(tr('مشفتش إيدك. خلّي إيدك جوه الصورة'))};
+ h.addEventListener('pointerdown',on);['pointerup','pointercancel','pointerleave'].forEach(ev=>h.addEventListener(ev,off));h.oncontextmenu=e=>e.preventDefault();
+ h.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();held?off():on()}});
+ }
+function sgLive(t){const e=$('slive');if(e)e.textContent=t}
+function sgCard(id,extra){return `<button class="scard${extra||''}" data-id="${esc(id)}"><span class="sgi" aria-hidden="true">${esc(sgIcon(id))}</span><b>${esc(sgWord(id))}</b></button>`}
+function sgDraw(){const s=$('sSent');s.innerHTML=SG.cards.length?SG.cards.map((id,i)=>sgCard(id,' x').replace('<button ',`<button data-i="${i}" aria-label="${esc(tr('شيل {w}',{w:sgWord(id)}))}" `)).join(''):`<span class="sempty">${tr('الإشارات اللي وصل يفهمها هتظهر هنا')}</span>`;
+ s.querySelectorAll('button').forEach(x=>x.onclick=()=>{SG.cards.splice(+x.dataset.i,1);sgDraw()});$('sUse').disabled=!SG.cards.length}
+function sgAdd(id){if(!id)return;if(SG.cards.length>=8)SG.cards.shift();SG.cards.push(id);buzz(60);sgDraw();sgPick(null)}
+function sgPick(top){const p=$('sPick');if(!top){p.classList.add('hidden');return}
+ $('sPickC').innerHTML=top.map(x=>sgCard(x.id)).join('');$('sPickC').querySelectorAll('button').forEach(x=>x.onclick=()=>{sgAdd(x.dataset.id);sgLive('« '+sgWord(x.dataset.id)+' »')});p.classList.remove('hidden')}
+function sgGrid(){const g=$('sGrid');const mine=Object.values(SG.meta).filter(m=>m.mine).map(m=>m.id);const lib=SG.list.filter(s=>s.pri==='P1').map(s=>s.id);
+ g.innerHTML=mine.concat(lib).map(id=>sgCard(id)).join('');g.querySelectorAll('button').forEach(x=>x.onclick=()=>sgAdd(x.dataset.id))}
+function sgMineDraw(){const e=Object.entries(SG.mineN);$('sMine').innerHTML=e.length?e.map(([k,n])=>`<span>${esc(k)} (${n}) <button class="sdel" data-l="${esc(k)}" aria-label="${esc(tr('امسح {w}',{w:k}))}">✕</button></span>`).join(''):'<span>'+tr('لسه مفيش إشارات')+'</span>';
+ $('sMine').querySelectorAll('.sdel').forEach(x=>x.onclick=async()=>{if(!confirm(tr('تمسح إشارة «{w}»؟',{w:x.dataset.l})))return;const S=await loadS2V();await S.mine.delLabel(x.dataset.l);Object.keys(SG.meta).forEach(k=>{if(SG.meta[k].mine&&SG.meta[k].ar===x.dataset.l)delete SG.meta[k]});await sgTemplates();sgMineDraw()})}
+async function sgGot(r){if(SG.teach)return;const S=await loadS2V();if(!S.dtw_recognizer.tpl.length&&!S.hasClassifier()){sgLive(tr('وصل لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور'));return}
+ const res=await S.recognize(r.seq);SG.last=res;if(!res.top.length){sgLive(tr('مش فاهمها. جرّب تاني، أو اختار بالصور'));return}
+ if(res.sure){sgAdd(res.top[0].id);sgLive('« '+sgWord(res.top[0].id)+' »')}
+ else{sgPick(res.top.slice(0,3));sgLive(res.none?tr('مش فاهمها. يمكن واحدة من دول؟'):tr('مش متأكد. اختار الصح'))}}
+function sgFrame(o){const c=$('sc'),v=$('sv'),x=c.getContext('2d');if(c.width!==v.videoWidth){c.width=v.videoWidth||480;c.height=v.videoHeight||640}
+ x.clearRect(0,0,c.width,c.height);x.fillStyle='#D97A2B';(o.hands||[]).forEach(lm=>lm.forEach(p=>{x.beginPath();x.arc(p.x*c.width,p.y*c.height,4,0,7);x.fill()}));
+ if(o.pose){x.strokeStyle='rgba(255,255,255,.6)';x.lineWidth=3;x.beginPath();x.moveTo(o.pose[11].x*c.width,o.pose[11].y*c.height);x.lineTo(o.pose[12].x*c.width,o.pose[12].y*c.height);x.stroke()}
+ SG.noPose=o.pose?0:SG.noPose+1;
+ if(SG.teach){SG.teach.f.push(o.feat);SG.teach.t.push(o.t);return}
+ const was=SG.seg.state,r=SG.seg.push(o.feat,o.t);
+ if(r){sgGot(r);return}
+ if(SG.seg.state==='sign'&&was!=='sign')sgLive(tr('بشوف... ✋'));
+ else if(SG.seg.state!=='sign'&&SG.noPose===30)sgLive(tr('بعّد الموبايل شوية عشان راسك وكتافك يبانوا'))}
+/* «علّم وصل»: 3 takes, 3 seconds each, then saved on this phone (IndexedDB) */
+async function sgTeach(){const l=$('sLabel').value.trim();if(!l){$('sLabel').focus();return alert(tr('اكتب معنى الإشارة الأول'))}if(!SG.ready)return alert(tr('الكاميرا لسه ما اشتغلتش'));if(SG.teach)return;
+ $('sRec').disabled=true;const S=await loadS2V();const norm=s=>String(s).replace(/[؟?.!،]/g,'').replace(/\s+/g,' ').trim();
+ const lib=SG.list.find(s=>String(s.ar).split(' / ').some(a=>norm(sgArFirst(a))===norm(l)));const id=lib?lib.id:'me:'+l,icon=lib&&lib.icon||'✋';
+ const dots=[...$('sDots').children];dots.forEach(d=>d.className='');$('sRec').disabled=true;sgPick(null);const takes=[];let tries=0;
+ const wait=ms=>new Promise(r=>setTimeout(r,ms));
+ for(let k=0;k<3&&tries<6;){for(const n of[3,2,1]){sgLive(tr('استعد... {n}',{n}));await wait(650)}
+  SG.teach={f:[],t:[]};dots[k].className='on';sgLive(tr('اعمل الإشارة دلوقتي ({k} من 3)',{k:k+1}));buzz(40);await wait(3000);
+  const tk=SG.teach;SG.teach=null;const a=S.trimActive(tk.f,tk.t);
+  if(!a||a.frames.length<6){tries++;dots[k].className='';sgLive(tr('مشفتش إيدك. خلّي إيدك جوه الصورة'));await wait(1400);continue}
+  takes.push(S.resample(a.frames,a.ts,S.T_LEN));dots[k].className='ok';k++;tries=0;sgLive(tr('تمام ✓'));await wait(700)}
+ SG.seg&&SG.seg.reset();$('sRec').disabled=false;
+ if(takes.length<3){sgLive(tr('ما اتسجلتش. جرّب تاني في مكان فيه نور'));return}
+ for(const seq of takes)await S.mine.add({id,label:l,icon,seq});
+ await sgTemplates();sgMineDraw();$('sLabel').value='';sgLive(tr('اتعلمتها ✓ جرّبها دلوقتي'));buzz([60,60,60])}
+/* camera problems in simple words */
+function sgCamErr(e){const n=e&&e.name||'';
+ if(!window.isSecureContext||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return tr('الكاميرا مش متاحة هنا. افتح وصل من المتصفح (Chrome) بالرابط اللي بيبدأ بـ https');
+ if(n==='NotAllowedError'||n==='SecurityError')return tr('الكاميرا مقفولة. افتح إعدادات المتصفح، واختار «الأذونات» ثم «الكاميرا»، وخليها «سماح». وبعدين اقفل الشاشة دي وافتحها تاني.');
+ if(n==='NotFoundError'||n==='OverconstrainedError')return tr('مش لاقي كاميرا أمامية في الموبايل ده.');
+ if(n==='NotReadableError'||n==='AbortError')return tr('الكاميرا شغّالة في تطبيق تاني. اقفله وجرّب تاني.');
+ return tr('الكاميرا ما اشتغلتش. اقفل الشاشة دي وافتحها تاني.')}
+async function sgStart(){SG.ready=false;sgLive(tr('بيحمّل برنامج الإشارات... (أول مرة بس، محتاج نت)'));let S;
+ try{S=await loadS2V();sgTemplates().then(()=>{sgMineDraw();if(SG.ready&&!S.dtw_recognizer.tpl.length)sgLive(tr('وصل لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور'))});await S.Engine.load()}
+ catch(e){if(SG.open)sgLive(tr('برنامج الإشارات ما نزلش. اتأكد إن فيه نت وجرّب تاني. وتقدر تختار بالصور.'));return}
+ if(!SG.open)return;
+ try{SG.seg=new S.Segmenter();await S.Engine.start($('sv'),o=>{if(SG.open)sgFrame(o)})}
+ catch(e){S.Engine.stop();if(SG.open){sgLive(sgCamErr(e));$('sCam').classList.add('err')}return}
+ if(!SG.open){S.Engine.stop();return}
+ SG.ready=true;$('sCam').classList.remove('err');sgLive(S.dtw_recognizer.tpl.length||S.hasClassifier()?tr('نزّل إيدك، وبعدين اعمل الإشارة'):tr('وصل لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور'))}
+function openSigns(mode){sgBuild();SG.mode=mode;SG.open=true;SG.cards=[];sgDraw();sgPick(null);
+ $('sUse').hidden=mode==='me';$('sUse').textContent=tr('قوله');$('sTeach').open=mode==='me';
+ $('signs').classList.add('on');if(mode!=='me')haltListening();sgMeta().then(()=>{if($('sGridD').open)sgGrid()});sgStart()}
+function closeSigns(){SG.open=false;SG.teach=null;$('signs').classList.remove('on');if(window.WaslS2V)WaslS2V.Engine.stop();
+ if(SG.mode==='free'&&freeOn)startListening();if(SG.mode==='task'&&T&&!T.over&&!player)listenForHearing()}
+/* «قوله»: task → the Task Agent gets the words as a typed message, marked as sign language; translation → spoken */
+function sgUse(){const ids=SG.cards.slice();if(!ids.length)return;const m=SG.mode;
+ const ar=ids.map(id=>{const x=SG.meta[id];return x?(x.mine?x.ar:sgArFirst(x.ar)):id});const shown=ids.map(sgWord);
+ closeSigns();
+ if(m==='task'&&T&&!T.over){const text='(من لغة الإشارة، الكلمات بالترتيب) '+ar.join('، ')+'. اعملها جملة واحدة واضحة وقولها.';
+  T.history.push({role:'user',text});logMsg('user','🤟 '+shown.join(' · '));agent({type:'typed',text,via:'sign',signs:ids})}
+ else if(m==='free')fSpeak(LANG==='en-US'?ids.map(id=>SG.meta[id]&&SG.meta[id].mine?SG.meta[id].ar:sgEnWord(id)).join(' '):ar.join(' '))}
+$('openSignsMe').onclick=()=>openSigns('me');
 
 drawStats();drawRefills();
 /* ================= INSTALL + OFFLINE ================= */
