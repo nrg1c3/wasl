@@ -234,7 +234,8 @@ def build_index(vocab, signer_names):
     signers = {}
     used = sorted({c['signer'] for cs in clips.values() for c in cs})
     for s in used:
-        name = signer_names.get(s) or (old.get(s) or {}).get('name') or s
+        # Names stay private by default (index.json is public on the site); --public-names publishes them.
+        name = (signer_names.get(s) or (old.get(s) or {}).get('name') or s) if PUBLIC_NAMES else s
         signers[s] = {'name': name}
     ids = {v['id'] for v in vocab}
     for sid in clips:
@@ -252,6 +253,9 @@ def build_index(vocab, signer_names):
     return man
 
 
+PUBLIC_NAMES = False
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--in', dest='inputs', nargs='*', default=[], help='folders, ZIPs or video files from record.html')
@@ -261,7 +265,10 @@ def main():
     ap.add_argument('--list', action='store_true', help='only list the takes and the default choice')
     ap.add_argument('--skip-existing', action='store_true', help='keep clips that already exist')
     ap.add_argument('--force', action='store_true', help='publish even without "use in the app" consent')
+    ap.add_argument('--public-names', action='store_true', help='put signer names from consent.json in the public index.json (default: codes only)')
     a = ap.parse_args()
+    global PUBLIC_NAMES
+    PUBLIC_NAMES = a.public_names
 
     vocab = read_vocab()
     vocab_ids = {v['id'] for v in vocab}
