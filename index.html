@@ -393,8 +393,64 @@ html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.to
 #task.asking .ws-cap{font-size:22px;align-self:center}#task.asking .ws>.sgt{min-height:40px}
 #task.asking.sgon #tLiveText{display:none} /* the question box already says the whole sentence */
 @media (max-height:720px){#task .ws{--wsh:19vh}#task .ws-cap{font-size:24px}#task .ws-seq{display:none}#task .ws{grid-template-areas:"stage tog" "stage cap" "stage ctl";grid-template-rows:auto 1fr auto}#free .ws{--wsh:30vh}#task.asking .ws{--wsh:11vh;grid-template-areas:"stage tog" "stage cap";grid-template-rows:auto 1fr}#task.sgon #tLiveLab{display:none}}
+/* ---- InnoCaption-style helpers: speech alert, ظبّطها, جملي, كلماتي, text size, high contrast ---- */
+#edgeFlash{position:fixed;inset:0;z-index:70;pointer-events:none;opacity:0;box-shadow:inset 0 0 0 10px var(--or),inset 0 0 28px 10px rgba(217,122,43,.55)}
+#edgeFlash.go{animation:edgefl 1.2s ease-out}
+@keyframes edgefl{0%,35%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){#edgeFlash{box-shadow:inset 0 0 0 6px var(--or);transition:none}#edgeFlash.go{animation:none;opacity:.9}}
+.seg.seg3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.phr{display:flex;gap:8px;align-items:center;overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:2px;flex-shrink:0;scrollbar-width:thin}
+.phr>small{flex:0 0 auto;font-size:13px;font-weight:800;color:var(--mute)}
+.phr button{flex:0 0 auto;max-width:76vw;min-height:48px;border:2px solid var(--ink);border-radius:14px;background:var(--card);color:var(--ink);font-size:16px;font-weight:700;padding:6px 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.phr button:active{background:var(--orl)}
+#tType.hidden+.phr{display:none!important}
+.typerow .fix{min-width:0;background:var(--card);border:2px solid var(--or);color:var(--ord);padding:0 10px;white-space:nowrap}
+.typerow .fix:disabled{opacity:.6}
+.fixbox{border:2px solid var(--or)}.fixbox label b{font-size:16px}.fixbox textarea{min-height:64px}.fixbox .note:empty{display:none}
+.phit{display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--line);padding-bottom:10px}.phit:last-child{border-bottom:0;padding-bottom:0}
+.phit p{margin:0;font-size:17px;font-weight:700;line-height:1.5;word-break:break-word}
+.phb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.phb button{min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font-size:14px;font-weight:700;padding:0 4px}
+.phb button:disabled{opacity:.35}.phb .rm{color:#B3261E}
+.wlist{display:flex;flex-wrap:wrap;gap:8px}.wlist:empty{display:none}
+.wchip{display:inline-flex;align-items:center;gap:4px;max-width:100%;border:1px solid var(--line);border-radius:999px;background:var(--bg);padding:0 4px 0 0;padding-inline-start:14px}
+.wchip b{font-size:16px;word-break:break-word}
+.wchip button{min-height:44px;min-width:44px;border:0;background:none;color:#B3261E;font-weight:800;font-size:14px;padding:0 8px}
+.addrow{display:flex;gap:8px}.addrow input{flex:1 1 auto}.addrow .btn{flex:0 0 auto;min-height:48px;font-size:17px;padding:0 16px}
+.chips .sugg{border-style:dashed}
+/* حجم الكلام: the other person's words, the cards and the captions grow; the question box in a task stays compact */
+html{--fz:1}html.fsl{--fz:1.2}html.fsx{--fz:1.4}
+html.fsl #cap,html.fsx #cap{font-size:calc(28px*var(--fz))}
+html.fsl .live p,html.fsx .live p{font-size:calc(clamp(20px,6vw,26px)*var(--fz))}
+html.fsl.pm .live p,html.fsx.pm .live p{font-size:calc(clamp(26px,8vw,34px)*1.12)}
+html.fsl .msg,html.fsx .msg{font-size:calc(16px*var(--fz))}html.fsl .msg.h,html.fsx .msg.h{font-size:calc(18px*var(--fz))}
+html.fsl .pcard b,html.fsx .pcard b{font-size:min(calc(24px*var(--fz)),32px)}html.fsl .pcard.long b,html.fsx .pcard.long b{font-size:calc(18px*var(--fz))}
+html.fsl .cards.lg .pcard b,html.fsx .cards.lg .pcard b{font-size:min(calc(30px*var(--fz)),38px)}
+html.fsl .pcard small,html.fsx .pcard small{font-size:calc(13px*var(--fz))}
+html.fsl .sug button,html.fsx .sug button{font-size:calc(19px*min(var(--fz),1.2))}
+html.fsl .decide .q,html.fsx .decide .q{font-size:20px}
+html.fsl .okline,html.fsx .okline{font-size:22px}
+html.fsl #task.asking .live p{font-size:21px}html.fsx #task.asking .live p{font-size:22px}
+html.fsl.pm #task.asking .live p,html.fsx.pm #task.asking .live p{font-size:23px}
+html.fsl .ws-cap,html.fsx .ws-cap{font-size:calc(clamp(26px,8vw,34px)*min(var(--fz),1.2))}
+html.fsl #task.asking .ws-cap,html.fsx #task.asking .ws-cap{font-size:22px}
+@media (max-height:720px){html.fsx #task.asking .live p,html.fsl #task.asking .live p{font-size:20px}html.fsx #task.asking .decide .q,html.fsl #task.asking .decide .q{font-size:18px}html.fsx #task .ws-cap,html.fsl #task .ws-cap{font-size:26px}html.fsx #task.asking .ws-cap,html.fsl #task.asking .ws-cap{font-size:22px}}
+/* تباين عالي: stronger colours, the other person's words white on black */
+html.hc{--ink:#000;--ink2:#1A1A1A;--mute:#2B3237;--line:#5E574C;--bg:#FFFFFF;--card:#FFFFFF;--ord:#6A3008;--orl:#FFE2C7}
+html.hc #cap,html.hc .live{background:#000;color:#fff}
+html.hc #cap,html.hc .live p{font-weight:800}
+html.hc .live small{color:#F0F0F0}
+html.hc .msg.h{background:#000;color:#fff;border-color:#000}
+html.hc .msg.w{border:2px solid #000}
+html.hc .pcard{border:2px solid #000;border-top-width:6px}html.hc .pcard small{color:#000}
+html.hc .lead,html.hc .note,html.hc .state{color:#1C2328}
+html.hc .btn.ghost,html.hc .chip,html.hc .tfoot button,html.hc .field input,html.hc .field select,html.hc .field textarea{border:2px solid #000}
+html.hc .card{border:2px solid #000}
+html.hc :focus-visible{outline:3px solid #000;outline-offset:2px}
 </style>
 <script>try{if(localStorage.getItem('wasl_pic')==='true')document.documentElement.classList.add('pm')}catch(e){}
+/* حجم الكلام and تباين عالي (بياناتي), before the first paint */
+try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')document.documentElement.classList.add('fs'+fz);if(localStorage.getItem('wasl_hc')==='true')document.documentElement.classList.add('hc')}catch(e){}
 /* App language (UI): the user's choice in بياناتي, else the phone's language: English phones get English, every other language Arabic. */
 (function(){var u=null,h=document.documentElement;try{u=JSON.parse(localStorage.getItem('wasl_ui'))}catch(e){}
  if(u!=='en'&&u!=='ar'){var l=(navigator.languages&&navigator.languages[0])||navigator.language||'';u=/^en\b/i.test(l)?'en':'ar'}
@@ -602,7 +658,7 @@ html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.to
 <div class="log" id="tLog"></div>
 <div class="decide hidden" id="tDecide"><div class="q" id="tQ"></div><div class="opts" id="tOpts"></div></div>
 <div class="decide hidden" id="tOk" role="alertdialog" aria-labelledby="tOkQ"><div class="q" id="tOkQ"><span class="no-pic">وصل هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:</span><span class="only-pic">اتأكد الأول:</span></div><p class="okline" id="tOkT"></p><div class="opts"><button id="tOkYes"><span class="pi" aria-hidden="true">✓</span>قوله</button><button id="tOkNo"><span class="pi" aria-hidden="true">✋</span>لأ، استنى</button></div></div>
-<div class="typerow hidden" id="tType"><label class="sr" for="tInput">اكتب لوصل</label><input id="tInput" placeholder="اكتب اللي عايز وصل يقوله أو يعرفه"><button id="tSend">ابعت</button></div>
+<div class="typerow hidden" id="tType"><label class="sr" for="tInput">اكتب لوصل</label><input id="tInput" placeholder="اكتب اللي عايز وصل يقوله أو يعرفه"><button id="tSend">ابعت</button></div><div class="phr hidden" id="tPhr"></div>
 <div class="summary hidden" id="tSum"><b>✓ المهمة خلصت</b><p id="tSumText"></p><div class="rate" id="tRate"><span>وَصْل ساعدك؟</span><button data-r="up" aria-label="ساعدني">👍</button><button data-r="down" aria-label="ماساعدنيش">👎</button></div><div class="refill hidden" id="tRefill" style="background:var(--orl);border-radius:14px;padding:12px;margin:0 0 10px"><b id="tRefQ" style="display:block;margin-bottom:8px"></b><div class="why" id="tRefOpts" style="margin:0"><button data-d="7">أسبوع</button><button data-d="14">أسبوعين</button><button data-d="30">شهر</button><button data-d="0">مش عايز</button></div><p id="tRefOk" class="hidden" style="margin:8px 0 0;font-weight:700"></p><button class="btn ghost hidden" id="tRefCal" style="min-height:44px;font-size:16px;margin-top:8px;width:100%">📅 ضيفه لتقويم الموبايل</button></div>
 <div class="why hidden" id="tWhy"><button>مفهمش اللي قدامي</button><button>بطيء</button><button>الصوت مش واضح</button><button>قال حاجة غلط</button><button>حاجة تانية</button></div><button class="btn ghost" id="tShare" style="margin-bottom:8px">ابعت الملخص</button><button class="btn" id="tHome">رجوع للرئيسية</button></div>
 </div>
@@ -624,7 +680,9 @@ html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.to
 <div id="cap" aria-live="polite">كلام اللي قدامك هيظهر هنا...</div>
 <div class="cards lg" id="fCards"></div>
 <div class="sug" id="fSug"></div>
-<div class="typerow"><label class="sr" for="fInput">اكتب كلامك</label><input id="fInput" placeholder="أو اكتب كلامك هنا..."><button id="fSay">انطق</button></div>
+<div class="phr hidden" id="fPhr"></div>
+<div class="typerow"><label class="sr" for="fInput">اكتب كلامك</label><input id="fInput" placeholder="أو اكتب كلامك هنا..."><button class="fix" id="fFix" type="button">✨ ظبّطها</button><button id="fSay">انطق</button></div>
+<div class="card fixbox hidden" id="fFixBox" aria-live="polite"><label for="fFixT"><b>وصل هيقول كده. تقدر تعدّل:</b></label><textarea id="fFixT" class="goal" rows="2"></textarea><small class="note" id="fFixNote"></small><div class="row"><button class="btn or" id="fFixSay" type="button">انطق</button><button class="btn ghost" id="fFixMine" type="button">رجّع كلامي</button><button class="btn ghost" id="fFixNo" type="button">إلغاء</button></div></div>
 <div class="row"><button class="btn ghost" id="fSign">إشارة</button><button class="btn ghost" id="fPay">الدفع</button><button class="btn ghost" id="fFlip">اعرض للي قدامي</button></div>
 <div class="note" id="fSaid"></div>
 </div>
@@ -689,6 +747,7 @@ html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.to
 <!-- ============ SIGNS ============ -->
 <div id="signs" role="dialog" aria-modal="true" aria-label="الإشارات"></div>
 <div id="flip"></div>
+<div id="edgeFlash" aria-hidden="true"></div>
 <div id="readOv" role="status"><img id="readImg" alt=""><b id="readT">بقرا الصورة...</b><button class="btn ghost" id="readCancel" style="min-width:160px">إلغاء</button></div>
 <div id="paySheet" role="dialog" aria-label="طريقة الدفع"><div class="pbox"><b>هتدفع إزاي؟</b><small>وصل هيقول طريقة الدفع للي قدامك</small><div class="pgrid" id="payOpts"></div><button class="pclose" id="payClose">إلغاء</button></div></div>
 
@@ -1886,14 +1945,14 @@ function startListening(){if(DEMO)return;
  if(srvMode){if(!srvCan()){onListenState&&onListenState('nosr');return}wantListen=true;if(player||srv)return;srvStart();return}
  if(!SR){onListenState&&onListenState('nosr');return}
  wantListen=true;if(player)return;if(rec&&recLive)return;
- clearTimeout(restartT);const me=new SR();rec=me;me.lang=LANG;me.continuous=true;me.interimResults=true;me.maxAlternatives=1;
+ clearTimeout(restartT);const me=new SR();rec=me;me.lang=LANG;me.continuous=true;me.interimResults=true;me.maxAlternatives=1;if(typeof srHints==='function')srHints(me);
  let sent='',pend='';
  me.onstart=()=>{if(rec!==me)return;recLive=true;recStartAt=Date.now();onListenState&&onListenState('listening')};
  me.onresult=e=>{if(rec!==me)return;const fins=[];let int='';
   for(let i=0;i<e.results.length;i++){const r=e.results[i],t=(r[0]&&r[0].transcript||'').trim();if(!t)continue;
    if(r.isFinal){const p=fins[fins.length-1];if(p&&t.startsWith(p))fins[fins.length-1]=t;else if(!(p&&p.startsWith(t)))fins.push(t)}else int=t}
   const fin=fins.join(' ');let delta=fin.startsWith(sent)?fin.slice(sent.length).trim():(sent.includes(fin)?'':fin);
-  if(fin.length>=sent.length)sent=fin;pend=int;me._pend=int;if(int||delta)lastVoiceAt=Date.now();
+  if(fin.length>=sent.length)sent=fin;pend=int;me._pend=int;if(int||delta){if(Date.now()-lastVoiceAt>=4000&&typeof speechAlert==='function')speechAlert();lastVoiceAt=Date.now()}
   if(delta.length>1){recFails=0;const h=onHeard;h&&h(delta)}
   if(int){recFails=0;onInterim&&onInterim(int)}};
  me.onerror=ev=>{if(rec!==me)return;lastRecErr=ev.error;if(ev.error==='service-not-allowed'&&srvCan()){toSrv(me);return}if(ev.error==='not-allowed'||ev.error==='service-not-allowed'){wantListen=false;onListenState&&onListenState('blocked')}
@@ -1931,7 +1990,7 @@ async function srvStart(){
   try{r=new MediaRecorder(stream,Object.assign({audioBitsPerSecond:24000},mime?{mimeType:mime}:{}))}catch(e){try{r=new MediaRecorder(stream)}catch(_){return}}
   mr=r;const mine=parts;r.ondataavailable=e=>{if(e.data&&e.data.size)mine.push(e.data)};
   r.onstop=()=>{if(r._keep&&mine.length)srvSend(new Blob(mine,{type:(r.mimeType||mime||'audio/webm').split(';')[0]}))};
-  try{r.start()}catch(e){mr=null;return}lastVoiceAt=Date.now();onInterim&&onInterim('…')};
+  try{r.start()}catch(e){mr=null;return}if(Date.now()-lastVoiceAt>=4000&&typeof speechAlert==='function')speechAlert();lastVoiceAt=Date.now();onInterim&&onInterim('…')};
  me.end=keep=>{const r=mr;mr=null;on=0;if(!r)return;r._keep=!!keep&&voiceMs>=350;try{r.stop()}catch(e){}if(!r._keep&&onInterim)onInterim('')};
  me.timer=setInterval(()=>{if(me.stopped)return;an.getByteTimeDomainData(buf);let s=0;for(let i=0;i<buf.length;i++){const v=(buf[i]-128)/128;s+=v*v}
   const rms=Math.sqrt(s/buf.length),now=Date.now(),loud=rms>Math.max(0.02,floor*3);
@@ -3211,6 +3270,163 @@ async function signShow(where,text){text=String(text||'').trim();if(!text)return
  vsDraw();
  // load the library early (small file; the service worker keeps it for offline use)
  setTimeout(()=>{WaslSigns.load().catch(()=>{})},1500);
+})();
+</script>
+<script>
+/* ================= HELPERS FROM INNOCAPTION, FOR FACE TO FACE =================
+   «تنبيه الكلام»: when the other person starts talking again after 4 s or more of quiet, the phone vibrates and the
+   screen edge lights up (task and translation). «ظبّطها»: a short typed note becomes one polite sentence (Wasl - Refine),
+   the user checks it before it is said. «جملي»: the user's own frequent sentences, as buttons. «كلماتي»: the user's own
+   names and words, sent with requests so the AI spells them right, and given to the phone's recognizer as hints.
+   «حجم الكلام» and «تباين عالي». Everything is kept on this phone only (wasl_* keys, so «امسح كل بياناتي» clears it). */
+Object.assign(EN,{
+'عرض الكلام':'How words look','حجم الكلام':'Text size','كبير':'Large','أكبر':'Larger',
+'كلام اللي قدامك والكروت بيكبروا.':"The other person's words and the cards get bigger.",
+'تباين عالي':'High contrast','ألوان أقوى، وكلام أبيض على أسود':'Stronger colours, white words on black',
+'تنبيه الكلام':'Speech alert','اهتزاز ونور على جنب الشاشة لما اللي قدامك يبدأ يتكلم':'A vibration and a light on the screen edge when the other person starts talking',
+'جملي':'My sentences','جملي:':'My sentences:',
+'جمل بتقولها كتير، زي اسمك أو عنوانك. بتظهر زراير في الترجمة وجوه المهمة. محفوظة على الموبايل ده بس.':'Sentences you say often, like your name or address. They show as buttons in Translate and in a task. Saved on this phone only.',
+'جملة جديدة':'New sentence','مثلاً: أنا أصم، اكتبلي لو سمحت':"e.g. I'm Deaf, please write it down",'ضيف':'Add','احفظ التعديل':'Save change',
+'↑ فوق':'↑ Up','↓ تحت':'↓ Down','✎ عدّل':'✎ Edit','✕ امسح':'✕ Delete',
+'لسه مفيش جمل. اكتب جملة وضيفها، أو اختار واحدة من دول:':'No sentences yet. Type one and add it, or pick one of these:',
+'أنا أصم، اكتبلي لو سمحت':"I'm Deaf. Please write it down for me.",'ممكن تكتبلي العنوان؟':'Could you write the address down for me?',
+'وصلت لأقصى عدد ({n}). امسح جملة الأول.':'You reached the limit ({n}). Delete a sentence first.',
+'وصلت لأقصى عدد ({n}). امسح كلمة الأول.':'You reached the limit ({n}). Delete a word first.',
+'الجملة دي موجودة.':'That sentence is already saved.','الكلمة دي موجودة.':'That word is already saved.','اتحفظت ✓':'Saved ✓',
+'كلماتي':'My words',
+'أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدوا اللي بتاخده، أسماء أهلك. وصل بيبعتها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على الموبايل ده.':"Names and words of yours: your doctor, your street, the medicine you take, your family's names. Wasl sends them with requests so the AI spells them right. Saved on this phone.",
+'كلمة جديدة':'New word','مثلاً: د. سامي، شارع التحرير':'e.g. Dr. Samy, Tahrir Street','امسح {w}':'Delete {w}',
+'✨ ظبّطها':'✨ Polish','خلّي وصل يظبط الجملة':'Let Wasl polish the sentence',
+'وصل هيقول كده. تقدر تعدّل:':'Wasl will say this. You can edit it:','رجّع كلامي':'Use my words',
+'النت ضعيف. سيبت كلامك زي ما هو.':'Weak connection. Your words are kept as you typed them.',
+'اكتب كلامك الأول':'Type your words first','وصل سابها زي ما هي':'Wasl kept it as it is','لحظة...':'One moment...'
+});
+Object.assign(GU,{
+'عرض الكلام':'عرض الكلام','كلام اللي قدامك والكروت بيكبروا.':'كلام اللي قدامك والكروت يكبرون.',
+'اهتزاز ونور على جنب الشاشة لما اللي قدامك يبدأ يتكلم':'اهتزاز ونور على طرف الشاشة لما اللي قدامك يبدأ يتكلم',
+'جمل بتقولها كتير، زي اسمك أو عنوانك. بتظهر زراير في الترجمة وجوه المهمة. محفوظة على الموبايل ده بس.':'جمل تقولها وايد، مثل اسمك أو عنوانك. تطلع أزرار في الترجمة وداخل المهمة. محفوظة على هذا الجوال بس.',
+'مثلاً: أنا أصم، اكتبلي لو سمحت':'مثلاً: أنا أصم، اكتب لي لو سمحت','ضيف':'أضف',
+'لسه مفيش جمل. اكتب جملة وضيفها، أو اختار واحدة من دول:':'للحين ما فيه جمل. اكتب جملة وأضفها، أو اختر وحدة من هذي:',
+'أنا أصم، اكتبلي لو سمحت':'أنا أصم، اكتب لي لو سمحت','ممكن تكتبلي العنوان؟':'ممكن تكتب لي العنوان؟',
+'وصلت لأقصى عدد ({n}). امسح جملة الأول.':'وصلت للحد ({n}). امسح جملة أول.','وصلت لأقصى عدد ({n}). امسح كلمة الأول.':'وصلت للحد ({n}). امسح كلمة أول.',
+'الجملة دي موجودة.':'هذي الجملة موجودة.','الكلمة دي موجودة.':'هذي الكلمة موجودة.','اتحفظت ✓':'انحفظت ✓',
+'أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدوا اللي بتاخده، أسماء أهلك. وصل بيبعتها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على الموبايل ده.':'أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدواء اللي تاخذه، أسماء أهلك. وصل يرسلها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على هذا الجوال.',
+'✨ ظبّطها':'✨ رتّبها','خلّي وصل يظبط الجملة':'خلّ وصل يرتّب الجملة',
+'وصل هيقول كده. تقدر تعدّل:':'وصل بيقول كذا. تقدر تعدّل:',
+'النت ضعيف. سيبت كلامك زي ما هو.':'النت ضعيف. خلّيت كلامك مثل ما هو.',
+'اكتب كلامك الأول':'اكتب كلامك أول','وصل سابها زي ما هي':'وصل خلّاها مثل ما هي'
+});
+(function(){
+const REFINE_URL=API_BASE+'wasl-refine';
+const PH_MAX=20,PH_LEN=120,W_MAX=30,W_LEN=40;
+const clean=(s,n)=>String(s==null?'':s).replace(/[\u0000-\u001F]+/g,' ').replace(/\s+/g,' ').trim().slice(0,n);
+const list=(k,max,len)=>{const a=store.get(k,[]);return Array.isArray(a)?a.map(x=>clean(x,len)).filter(Boolean).slice(0,max):[]};
+const myPhr=()=>list('wasl_phr',PH_MAX,PH_LEN);
+const myWords=()=>DEMO?[]:list('wasl_words',W_MAX,W_LEN);
+window.myWords=myWords;
+// the static parts added to the page (translation screen) follow the app language too
+try{trDom($('fFixBox'));$('fFix').textContent=tr('✨ ظبّطها');$('fFix').setAttribute('aria-label',tr('خلّي وصل يظبط الجملة'))}catch(e){}
+
+/* ---------- كلماتي go with the AI requests (task agent, smart replies, refine) ---------- */
+const _pj=postJSON;
+postJSON=function(url,body,ms){
+ if(!DEMO&&body&&!body.words&&(url===AGENT_URL||url===REPLY_URL||url===REFINE_URL)){const w=myWords();if(w.length)body=Object.assign({},body,{words:w})}
+ return _pj(url,body,ms)};
+/* ... and to the phone's recognizer as phrase hints, where the browser supports it (most ignore it; that's fine). */
+window.srHints=function(me){const w=myWords();if(!w.length)return;const G=window.SpeechGrammarList||window.webkitSpeechGrammarList;if(!G)return;
+ try{const alts=w.map(x=>x.replace(/[;|<>*()\[\]{}=\/#"+]/g,' ').replace(/\s+/g,' ').trim()).filter(Boolean);if(!alts.length)return;
+  const g=new G();g.addFromString('#JSGF V1.0; grammar wasl; public <w> = '+alts.join(' | ')+' ;',1);me.grammars=g}catch(e){}};
+
+/* ---------- تنبيه الكلام ---------- */
+let saLast=0;
+window.speechAlert=function(){if(DEMO||!store.get('wasl_alert',true))return;if(!($('task').classList.contains('on')||$('free').classList.contains('on')))return;
+ const n=Date.now();if(n-saLast<2000)return;saLast=n;buzz([90,60,90]);
+ const f=$('edgeFlash');f.classList.remove('go');void f.offsetWidth;f.classList.add('go');clearTimeout(f._t);f._t=setTimeout(()=>f.classList.remove('go'),1300)};
+
+/* ---------- بياناتي: the new cards ---------- */
+const sw=(id,ic,t,sm)=>`<button class="psw" id="${id}" role="switch" aria-checked="false"><span class="si"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic}</svg></span><span class="tx"><b>${esc(tr(t))}</b><small>${esc(tr(sm))}</small></span><span class="swl" id="${id}L"></span><span class="sw" aria-hidden="true"><i></i></span></button>`;
+const html=`<div class="card" id="viewCard"><b id="fsT">${esc(tr('حجم الكلام'))}</b><div class="seg seg3" role="group" aria-labelledby="fsT"><button id="fsN" data-v="n">${esc(tr('عادي'))}</button><button id="fsL" data-v="l" style="font-size:20px">${esc(tr('كبير'))}</button><button id="fsX" data-v="x" style="font-size:22px">${esc(tr('أكبر'))}</button></div>
+<p class="lead" style="margin:0;font-size:14px">${esc(tr('كلام اللي قدامك والكروت بيكبروا.'))}</p>
+${sw('hcSw','<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>','تباين عالي','ألوان أقوى، وكلام أبيض على أسود')}
+${sw('saSw','<path d="M3 12h2M7 8v8M11 5v14M15 8v8M19 11v2"/>','تنبيه الكلام','اهتزاز ونور على جنب الشاشة لما اللي قدامك يبدأ يتكلم')}</div>
+<div class="card" id="phCard"><b>${esc(tr('جملي'))}</b><p class="lead" style="margin:0;font-size:14px">${esc(tr('جمل بتقولها كتير، زي اسمك أو عنوانك. بتظهر زراير في الترجمة وجوه المهمة. محفوظة على الموبايل ده بس.'))}</p>
+<div id="phList"></div><div class="field"><label for="phIn">${esc(tr('جملة جديدة'))}</label><div class="addrow"><input id="phIn" maxlength="${PH_LEN}" placeholder="${esc(tr('مثلاً: أنا أصم، اكتبلي لو سمحت'))}"><button class="btn" id="phAdd" type="button">${esc(tr('ضيف'))}</button></div></div><div class="note" id="phNote" aria-live="polite"></div></div>
+<div class="card" id="wdCard"><b>${esc(tr('كلماتي'))}</b><p class="lead" style="margin:0;font-size:14px">${esc(tr('أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدوا اللي بتاخده، أسماء أهلك. وصل بيبعتها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على الموبايل ده.'))}</p>
+<div class="wlist" id="wdList"></div><div class="field"><label for="wdIn">${esc(tr('كلمة جديدة'))}</label><div class="addrow"><input id="wdIn" maxlength="${W_LEN}" placeholder="${esc(tr('مثلاً: د. سامي، شارع التحرير'))}"><button class="btn" id="wdAdd" type="button">${esc(tr('ضيف'))}</button></div></div><div class="note" id="wdNote" aria-live="polite"></div></div>`;
+$('picSw').closest('.card').insertAdjacentHTML('afterend',html);
+
+function setFs(v){const h=document.documentElement;h.classList.remove('fsl','fsx');if(v==='l'||v==='x')h.classList.add('fs'+v);store.set('wasl_fs',v==='l'||v==='x'?v:'n');drawView();try{fitHear()}catch(e){}}
+function setSw(id,on){$(id).setAttribute('aria-checked',String(on));$(id+'L').textContent=tr(on?'شغّال':'مقفول')}
+function drawView(){const v=store.get('wasl_fs','n');['fsN','fsL','fsX'].forEach(id=>$(id).setAttribute('aria-pressed',String($(id).dataset.v===v||(id==='fsN'&&v!=='l'&&v!=='x'))));
+ setSw('hcSw',document.documentElement.classList.contains('hc'));setSw('saSw',!!store.get('wasl_alert',true))}
+['fsN','fsL','fsX'].forEach(id=>$(id).onclick=()=>{buzz([30]);setFs($(id).dataset.v)});
+$('hcSw').onclick=()=>{buzz([30]);const on=!document.documentElement.classList.contains('hc');document.documentElement.classList.toggle('hc',on);store.set('wasl_hc',on);drawView()};
+$('saSw').onclick=()=>{buzz([30]);store.set('wasl_alert',!store.get('wasl_alert',true));drawView()};
+
+/* جملي: add / edit / delete / reorder */
+let phEdit=-1;
+function drawPh(){const L=myPhr(),el=$('phList');
+ el.innerHTML=L.length?L.map((t,i)=>`<div class="phit"><p>${esc(t)}</p><div class="phb"><button type="button" data-a="up" ${i===0?'disabled':''}>${esc(tr('↑ فوق'))}</button><button type="button" data-a="dn" ${i===L.length-1?'disabled':''}>${esc(tr('↓ تحت'))}</button><button type="button" data-a="ed">${esc(tr('✎ عدّل'))}</button><button type="button" data-a="rm" class="rm">${esc(tr('✕ امسح'))}</button></div></div>`).join('')
+  :`<p class="lead" style="margin:0;font-size:14px">${esc(tr('لسه مفيش جمل. اكتب جملة وضيفها، أو اختار واحدة من دول:'))}</p><div class="chips">${['أنا أصم، اكتبلي لو سمحت','ممكن تكتبلي العنوان؟'].map(s=>`<button type="button" class="chip sugg">+ ${esc(tr(s))}</button>`).join('')}</div>`;
+ el.querySelectorAll('.sugg').forEach((b,i)=>b.onclick=()=>{buzz([30]);phSave([tr(['أنا أصم، اكتبلي لو سمحت','ممكن تكتبلي العنوان؟'][i])])});
+ el.querySelectorAll('.phit').forEach((row,i)=>row.querySelectorAll('button').forEach(b=>b.onclick=()=>{buzz([30]);const a=b.dataset.a,M=myPhr();
+  if(a==='up'&&i>0){[M[i-1],M[i]]=[M[i],M[i-1]];phSave(M,true)}
+  else if(a==='dn'&&i<M.length-1){[M[i+1],M[i]]=[M[i],M[i+1]];phSave(M,true)}
+  else if(a==='rm'){M.splice(i,1);if(phEdit===i)phEditEnd();phSave(M,true)}
+  else if(a==='ed'){phEdit=i;$('phIn').value=M[i];$('phAdd').textContent=tr('احفظ التعديل');$('phIn').focus()}}));
+ drawPhrBtns()}
+function phEditEnd(){phEdit=-1;$('phAdd').textContent=tr('ضيف')}
+function phSave(M,quiet){store.set('wasl_phr',M.slice(0,PH_MAX));drawPh();if(!quiet)$('phNote').textContent=tr('اتحفظت ✓')}
+$('phAdd').onclick=()=>{const t=clean($('phIn').value,PH_LEN);if(!t){$('phIn').focus();return}const M=myPhr();$('phNote').textContent='';
+ if(phEdit>=0&&phEdit<M.length){M[phEdit]=t;phEditEnd();$('phIn').value='';phSave(M);return}
+ if(M.includes(t)){$('phNote').textContent=tr('الجملة دي موجودة.');return}
+ if(M.length>=PH_MAX){$('phNote').textContent=tr('وصلت لأقصى عدد ({n}). امسح جملة الأول.',{n:PH_MAX});return}
+ M.push(t);$('phIn').value='';phSave(M)};
+$('phIn').onkeydown=e=>{if(e.key==='Enter')$('phAdd').click()};
+
+/* كلماتي: add / delete */
+function drawWd(){const L=list('wasl_words',W_MAX,W_LEN);
+ $('wdList').innerHTML=L.map(w=>`<span class="wchip"><b>${esc(w)}</b><button type="button" aria-label="${esc(tr('امسح {w}',{w}))}">${esc(tr('✕ امسح'))}</button></span>`).join('');
+ $('wdList').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{buzz([30]);const M=list('wasl_words',W_MAX,W_LEN);M.splice(i,1);store.set('wasl_words',M);drawWd()})}
+$('wdAdd').onclick=()=>{const t=clean($('wdIn').value,W_LEN);if(!t){$('wdIn').focus();return}const M=list('wasl_words',W_MAX,W_LEN);$('wdNote').textContent='';
+ if(M.includes(t)){$('wdNote').textContent=tr('الكلمة دي موجودة.');return}
+ if(M.length>=W_MAX){$('wdNote').textContent=tr('وصلت لأقصى عدد ({n}). امسح كلمة الأول.',{n:W_MAX});return}
+ M.push(t);store.set('wasl_words',M);$('wdIn').value='';$('wdNote').textContent=tr('اتحفظت ✓');drawWd()};
+$('wdIn').onkeydown=e=>{if(e.key==='Enter')$('wdAdd').click()};
+function meDraw(){drawView();phEditEnd();$('phIn').value='';$('wdIn').value='';$('phNote').textContent='';$('wdNote').textContent='';drawPh();drawWd()}
+const om=$('openMe').onclick;$('openMe').onclick=function(){const r=om&&om.apply(this,arguments);meDraw();return r};
+
+/* ---------- جملي as quick buttons: translation (said aloud) and the task's type row (sent as typed) ---------- */
+function drawPhrBtns(){const L=DEMO?[]:myPhr();
+ ['fPhr','tPhr'].forEach(id=>{const el=$(id);if(!el)return;el.classList.toggle('hidden',!L.length);
+  el.innerHTML=L.length?`<small>${esc(tr('جملي:'))}</small>`+L.map(t=>`<button type="button">${esc(t)}</button>`).join(''):'';
+  el.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{buzz([30]);const t=L[i];
+   if(id==='fPhr'){$('fFixBox').classList.add('hidden');fSpeak(t)}else{if(!T||T.over)return;$('tInput').value=t;$('tSend').click()}})})}
+window.drawPhrBtns=drawPhrBtns;
+
+/* ---------- ظبّطها (translation screen) ---------- */
+let fHeard=[],fixSeq=0,fixOrig='';
+const fg=$('freeGo').onclick;$('freeGo').onclick=async function(){const r=await fg.apply(this,arguments);
+ if(freeOn&&typeof onHeard==='function'&&!onHeard.__rf){const oh=onHeard;onHeard=function(t){const s=clean(t,300);if(s){fHeard.push(s);if(fHeard.length>6)fHeard.shift()}return oh.apply(this,arguments)};onHeard.__rf=true;onHeard.__sg=oh.__sg}
+ return r};
+const ofr=$('openFree').onclick;$('openFree').onclick=function(){fHeard=[];fixSeq++;$('fFixBox').classList.add('hidden');$('fFix').disabled=false;$('fFix').textContent=tr('✨ ظبّطها');drawPhrBtns();return ofr&&ofr.apply(this,arguments)};
+const st=$('startTask').onclick;$('startTask').onclick=function(){drawPhrBtns();return st&&st.apply(this,arguments)};
+function fixKeep(){$('fSaid').textContent=tr('النت ضعيف. سيبت كلامك زي ما هو.')}
+$('fFix').onclick=async()=>{const t=clean($('fInput').value,300),b=$('fFix');if(!t){$('fSaid').textContent=tr('اكتب كلامك الأول');$('fInput').focus();return}
+ buzz([30]);if(navigator.onLine===false||DEMO){fixKeep();return}
+ const my=++fixSeq;b.disabled=true;b.textContent=tr('لحظة...');
+ try{const d=await postJSON(REFINE_URL,{text:t,heard:fHeard.slice(-4),lang:LANG,ui:UI,sex:profile().sex==='f'?'f':'m',words:myWords()},8000);
+  if(my!==fixSeq)return;const out=clean(d&&d.text,300);if(!out){fixKeep();return}
+  fixOrig=t;$('fFixT').value=out;$('fFixNote').textContent=d.refined===false?tr('وصل سابها زي ما هي'):'';$('fFixBox').classList.remove('hidden');
+  requestAnimationFrame(()=>{try{$('fFixBox').scrollIntoView({block:'nearest'})}catch(e){}})}
+ catch(e){if(my===fixSeq)fixKeep()}
+ finally{if(my===fixSeq){b.disabled=false;b.textContent=tr('✨ ظبّطها')}}};
+$('fFixSay').onclick=()=>{const t=clean($('fFixT').value,300);if(!t){$('fFixT').focus();return}buzz([30]);$('fFixBox').classList.add('hidden');$('fInput').value='';fSpeak(t)};
+$('fFixMine').onclick=()=>{$('fFixBox').classList.add('hidden');$('fInput').value=fixOrig;$('fInput').focus()};
+$('fFixNo').onclick=()=>{$('fFixBox').classList.add('hidden')};
+$('fInput').addEventListener('input',()=>{if(!$('fFixBox').classList.contains('hidden')&&!$('fInput').value.trim())$('fFixBox').classList.add('hidden')});
+
+drawPhrBtns();
 })();
 </script>
 </body>
