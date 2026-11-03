@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script>/* On wasl.nrg-egypt.com over http (GitHub's certificate can take a while), switch to https as soon as it works. */
+(function(){var l=location;if(l.protocol!=='http:'||!/(^|\.)nrg-egypt\.com$/.test(l.hostname))return;var u='https://'+l.host+l.pathname+l.search+l.hash;
+function go(){fetch('https://'+l.host+'/manifest.webmanifest',{mode:'no-cors',cache:'no-store'}).then(function(){l.replace(u)}).catch(function(){setTimeout(go,30000)})}go()})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#13262F">
+<meta name="robots" content="noindex">
+<title>تصوير الإشارات | وَصْل</title>
+<meta name="description" content="صفحة تصوير إشارات لغة الإشارة المصرية لمكتبة وَصْل. الفيديوهات بتفضل على الموبايل لحد ما تتبعت.">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#13262F;--ink2:#1E3A47;--bg:#F6F3EE;--card:#fff;--line:#E3DCCF;--or:#D97A2B;--orl:#FBE6D4;--ord:#8F4612;--mute:#5B6870;--ok:#1F7A4D;--okl:#DDF0E5;--bad:#B3261E;--badl:#F9E0DE;--rec:#D0261C}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',Tahoma,sans-serif;-webkit-text-size-adjust:100%}
+button{font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+button:active{transform:scale(.97)}
+.hidden{display:none!important}
+header{background:var(--ink);color:var(--bg);padding:16px 16px 18px}
+.brand{display:flex;align-items:center;gap:12px}.brand svg{width:44px;height:44px;flex-shrink:0}.brand b{font-size:24px;font-weight:800}.brand small{display:block;color:#BFD3D8;font-size:14px}
+header h1{font-size:22px;line-height:1.4;margin:12px 0 2px}header p{margin:0;color:#BFD3D8;font-size:15px;line-height:1.6}
+main{max-width:560px;margin:0 auto;padding:14px 16px 40px;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.card h2{margin:0;font-size:19px}
+.q{font-size:16px;font-weight:800;line-height:1.5;margin:0}
+.note{color:var(--mute);font-size:14.5px;line-height:1.6;margin:0}.note a{color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{min-height:48px;min-width:48px;border:1px solid var(--line);border-radius:999px;background:var(--bg);padding:0 16px;font:700 16px Cairo,Tahoma,sans-serif;color:var(--ink)}
+.chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chips button small{font-weight:600;font-size:13px;opacity:.8}
+.code{direction:ltr;font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700}
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;color:var(--mute)}
+input[type=text],input[type=search]{min-height:52px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:600 17px Cairo,Tahoma,sans-serif;background:var(--bg);color:var(--ink);width:100%}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.55;font-weight:600}.check input{width:26px;height:26px;flex-shrink:0;margin-top:2px;accent-color:var(--ink)}
+.go{min-height:60px;border:0;border-radius:16px;background:var(--ok);color:#fff;font:800 20px Cairo,Tahoma,sans-serif;width:100%}
+.go:disabled{opacity:.55}
+.btn{min-height:52px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);font:700 16px Cairo,Tahoma,sans-serif;padding:6px 14px}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.warn{background:var(--badl);color:var(--bad);border-color:#EDB9B4}
+.btn:disabled{opacity:.5}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1 1 140px}
+.err{color:var(--bad);font-weight:700;font-size:15px;margin:0}
+.stepper{display:flex;align-items:center;gap:10px}.stepper button{width:52px;height:52px;border-radius:14px;border:1px solid var(--line);background:var(--bg);font:800 24px Cairo,Tahoma,sans-serif;color:var(--ink)}
+.stepper output{font:800 22px Cairo,Tahoma,sans-serif;min-width:70px;text-align:center}
+.badge{display:inline-block;background:var(--orl);color:var(--ord);border-radius:999px;padding:2px 10px;font-size:13px;font-weight:800}
+.status{display:flex;gap:8px;align-items:center;font-weight:700;font-size:15px}.status .dot{width:12px;height:12px;border-radius:50%;background:var(--bad);flex-shrink:0}.status.okay .dot{background:var(--ok)}
+.meter{height:12px;border-radius:6px;background:var(--line);overflow:hidden}.meter i{display:block;height:100%;background:var(--ok);width:0}
+.meter.low i{background:var(--or)}.meter.full i{background:var(--bad)}
+.alert{border-radius:12px;padding:10px 12px;font-weight:700;font-size:15px;line-height:1.55}
+.alert.low{background:var(--orl);color:var(--ord)}.alert.full{background:var(--badl);color:var(--bad)}
+.parts{display:flex;flex-direction:column;gap:8px}.part{display:flex;gap:8px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:8px}.part b{flex:1 1 100%;font-size:15px}.part .btn{flex:1 1 120px;min-height:48px}
+details.guide{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:4px 16px}
+details.guide summary{min-height:56px;display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;list-style:none;cursor:pointer}
+details.guide summary::-webkit-details-marker{display:none}
+details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22px;color:var(--mute)}details.guide[open] summary::after{content:'－'}
+.guide h3{font-size:17px;margin:14px 0 4px}.guide ul{margin:0 0 6px;padding-inline-start:22px;font-size:16px;line-height:1.7}.guide li{margin:3px 0}
+.lawyer{border:2px dashed var(--or);border-radius:14px;padding:10px 12px;font-size:15.5px;line-height:1.7;background:#FFFBF6}
+
+/* ---- studio (full screen, portrait) ---- */
+#studio{position:fixed;inset:0;display:flex;flex-direction:column;background:#0D1B21;color:#fff;height:100vh;height:100dvh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.top{display:flex;align-items:center;gap:8px;padding:6px 10px;flex-shrink:0}
+.top .tb{min-height:44px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font:700 15px Cairo,Tahoma,sans-serif;padding:0 12px;white-space:nowrap}
+.top .prog{flex:1;text-align:center;font-weight:800;font-size:15px;line-height:1.25;min-width:0}.top .prog small{display:block;font-weight:600;color:#A9C1C8;font-size:12.5px}
+.word{text-align:center;padding:0 12px 4px;flex-shrink:0}
+.word .ar{font-size:30px;font-weight:800;line-height:1.3;margin:0;overflow-wrap:anywhere}
+.word .meta{font-size:13px;color:#A9C1C8;font-weight:600;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.stagewrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 10px}
+.stage{position:relative;background:#000;border-radius:14px;overflow:hidden;border:3px solid transparent;width:200px;height:356px;max-height:100%;max-width:100%}
+.stage.recording{border-color:var(--rec)}.stage.recording .res{display:none}
+.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.stage video.mirror{transform:scaleX(-1)}
+.stage svg.guide{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.stage .msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px;font-weight:700;font-size:16px;line-height:1.6;background:rgba(0,0,0,.6)}
+.stage .count{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.35);pointer-events:none}
+.stage .count b{font-size:110px;line-height:1;font-weight:800;text-shadow:0 2px 12px #000}
+.pill{position:absolute;inset-inline:0;margin:auto;width:max-content;max-width:92%;padding:6px 14px;border-radius:999px;font-weight:800;font-size:16px;text-align:center}
+.pill.hands{bottom:12px;background:#FFD54A;color:#13262F}
+.pill.recp{top:10px;background:var(--rec);color:#fff}
+.pill.res{top:10px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;font-weight:600;direction:ltr}
+.tbar{position:absolute;bottom:0;inset-inline-start:0;height:6px;background:var(--rec);width:100%}
+.strip{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:6px 10px 0;flex-shrink:0;min-height:50px;align-items:center}
+.strip button{min-height:44px;min-width:52px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font:800 15px Cairo,Tahoma,sans-serif;padding:0 10px}
+.strip button.ok{background:rgba(31,122,77,.35);border-color:#3DAA74}
+.strip button.cur{outline:3px solid #FFD54A}
+.strip .hint{font-size:13px;color:#A9C1C8;font-weight:600}
+.ctl{display:flex;gap:8px;padding:8px 10px 10px;flex-shrink:0;align-items:stretch}
+.ctl button{flex:1;min-width:0;min-height:64px;border-radius:16px;border:0;font:800 16px Cairo,Tahoma,sans-serif;color:#fff;background:rgba(255,255,255,.14);padding:4px 6px;line-height:1.2}
+.ctl .recb{flex:1.6;background:var(--rec);font-size:22px}
+.ctl .okb{flex:1.4;background:var(--ok);font-size:20px}
+.ctl .again{background:var(--or)}
+.ctl .stopb{background:#fff;color:var(--rec);font-size:20px}
+.ctl .next.strong{background:#2D6A86}
+.ctl button:disabled{opacity:.45}
+.toast{position:fixed;inset-inline:16px;bottom:96px;margin:auto;max-width:420px;background:#FFD54A;color:#13262F;border-radius:14px;padding:10px 14px;font-weight:800;text-align:center;z-index:30;font-size:15.5px}
+/* search */
+#search{position:fixed;inset:0;background:var(--bg);color:var(--ink);z-index:20;display:flex;flex-direction:column}
+#search .sh{display:flex;gap:8px;padding:10px;background:var(--ink)}
+#search .sh input{flex:1;min-width:0}
+#search .sh button{min-height:52px;border:0;border-radius:12px;background:rgba(255,255,255,.14);color:#fff;font:700 16px Cairo,Tahoma,sans-serif;padding:0 14px}
+#sres{flex:1;overflow:auto;padding:8px 10px 20px;display:flex;flex-direction:column;gap:6px}
+#sres button{display:flex;gap:10px;align-items:center;min-height:52px;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:6px 12px;text-align:start;font:700 17px Cairo,Tahoma,sans-serif;color:var(--ink);width:100%}
+#sres button small{font-size:12.5px;color:var(--mute);font-weight:600;direction:ltr;margin-inline-start:auto;text-align:end}
+#sres button .ic{font-size:22px}
+@media (prefers-reduced-motion:reduce){button:active{transform:none}}
+</style>
+</head>
+<body>
+
+<!-- ============ setup ============ -->
+<div id="setup">
+<header>
+<div class="brand"><svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#1E3A47"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>وَصْل</b><small>تصوير مكتبة الإشارات</small></div></div>
+<h1>تصوير إشارات لغة الإشارة المصرية</h1>
+<p>الفيديوهات بتتحفظ على الموبايل ده بس، لحد ما تحمّلها وتبعتها لمحمد.</p>
+</header>
+<main>
+<section class="card" id="whoCard">
+<h2>١. مين بيعمل الإشارة؟</h2>
+<div class="chips" id="codes"></div>
+<label class="f">كود تاني (حرف ورقم، زي m3)<input type="text" id="codeIn" dir="ltr" maxlength="3" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="m3"></label>
+<p class="note"><bdi class="code">m</bdi> راجل · <bdi class="code">f</bdi> ست · <bdi class="code">d</bdi> أصم أو صمّاء. كل شخص ليه كود واحد طول التصوير.</p>
+<div class="status" id="cStat"><span class="dot"></span><span id="cTxt"></span></div>
+<button class="btn" type="button" id="cEdit">الموافقة على التصوير</button>
+</section>
+
+<section class="card">
+<h2>٢. القايمة</h2>
+<div class="chips" id="lists"></div>
+<p class="note">ابدأوا بـ P1 (الأهم)، وبعدين P2، وبعدين P3.</p>
+</section>
+
+<section class="card">
+<h2>٣. الكاميرا والمدة</h2>
+<div><p class="q">الكاميرا:</p><div class="chips" id="cams"><button type="button" data-v="environment">الخلفية (أوضح)</button><button type="button" data-v="user">الأمامية (سيلفي)</button></div></div>
+<div><p class="q">مدة كل أخدة:</p>
+<div class="stepper"><button type="button" id="dMinus" aria-label="أقل">−</button><output id="dOut">4 ثواني</output><button type="button" id="dPlus" aria-label="أكتر">+</button></div>
+<p class="note">4 ثواني كفاية لأغلب الإشارات. زوّد لو الإشارة طويلة (لحد 6).</p></div>
+</section>
+
+<p class="err hidden" id="sErr"></p>
+<button class="go" type="button" id="start">ابدأ التصوير</button>
+
+<section class="card" id="storeCard">
+<h2>التسجيلات والمساحة</h2>
+<div class="meter" id="meter"><i></i></div>
+<p class="q" id="stTxt" style="font-weight:700">لحظة...</p>
+<p class="note" id="stTxt2"></p>
+<div class="alert hidden" id="stWarn"></div>
+<div class="row"><button class="btn dark" type="button" id="expAll">⬇ حمّل الكل (ZIP)</button><button class="btn" type="button" id="expNew">⬇ حمّل الجديد بس</button></div>
+<p class="note" id="expMsg"></p>
+<div class="parts" id="parts"></div>
+<button class="btn warn" type="button" id="freeBtn">امسح اللي اتحمّل من الموبايل</button>
+<p class="note">امسح بس بعد ما محمد يقولك إن الملفات وصلته.</p>
+</section>
+
+<details class="guide" id="guide">
+<summary>📖 إزاي نصوّر</summary>
+<h3>التجهيز</h3>
+<ul>
+<li>الموبايل على حامل (ترايبود) <b>بالطول</b>، على ارتفاع الصدر، وبعيد حوالي متر ونص لمترين.</li>
+<li>امسح عدسة الكاميرا. شغّل «عدم الإزعاج»، والموبايل مشحون أو على الشاحن.</li>
+<li>الخلفية: حيطة سادة فاتحة، ومفيش ناس بتعدّي ورا.</li>
+<li>أندرويد: افتح الصفحة من Chrome. آيفون: من Safari.</li>
+</ul>
+<h3>النور</h3>
+<ul>
+<li>النور ييجي من قدام اللي بيعمل الإشارة، مش من وراه. مفيش شباك ورا ضهره.</li>
+<li>نور النهار من شباك جنب الكاميرا، أو لمبة بيضا. مفيش ضل على الوش والإيدين.</li>
+</ul>
+<h3>اللبس</h3>
+<ul>
+<li>هدوم سادة غامقة بكُم، لونها مختلف عن الحيطة. من غير نقوش.</li>
+<li>من غير خواتم أو أساور كبيرة أو ساعة بتلمع. الشعر بعيد عن الوش.</li>
+<li>الوش لازم يبان كويس، لأن تعبيرات الوش جزء من الإشارة.</li>
+</ul>
+<h3>الإطار</h3>
+<ul>
+<li>من فوق الراس لحد الوسط جوه المربع اللي على الشاشة.</li>
+<li>الكوعين جوه الخطين اللي على الجنب، حتى والإيد مفرودة.</li>
+<li>نفس المكان ونفس البُعد لكل الإشارات. ما تحرّكوش الحامل.</li>
+</ul>
+<h3>كل إشارة</h3>
+<ul>
+<li>دوس «سجّل»، وبعد 3-2-1 التسجيل بيبدأ لوحده ويقف لوحده.</li>
+<li>ابدأ وإيديك تحت (مرتاحة جنبك)، اعمل الإشارة مرة واحدة بسرعتك العادية، ورجّع إيديك تحت. بُص للكاميرا.</li>
+<li>من 3 لـ 5 أخدات لكل إشارة. «تمام» للأخدة الكويسة، و«تاني» لو فيها غلط.</li>
+<li>لو مش متأكدين من الإشارة: «تخطّى» وارجعوا لها بعدين.</li>
+<li>ريّحوا كل 20 إشارة تقريباً.</li>
+</ul>
+<h3>مين يصوّر</h3>
+<ul>
+<li>2 لـ 3 أشخاص، منهم <b>واحد أصم على الأقل</b> لغته الأولى الإشارة المصرية (كود d1).</li>
+<li>كل شخص يوافق على التصوير الأول من زرار «الموافقة على التصوير».</li>
+</ul>
+<h3>إزاي تبعت الفيديوهات لمحمد</h3>
+<ul>
+<li>في آخر كل يوم تصوير: دوس «حمّل الكل». هيطلع ملف ZIP أو أكتر (كل ملف حوالي 50 ميجا)، فيه الفيديوهات وملف الموافقة.</li>
+<li>دوس «شارك» جنب كل ملف وابعته لمحمد على واتساب <b>كمستند</b> (مش كفيديو، عشان الجودة ما تقلّش)، أو ارفعه على Google Drive وابعتله الرابط.</li>
+<li>لما محمد يقول إنه وصل: دوس «امسح اللي اتحمّل» عشان تفضّي مساحة.</li>
+<li>ما تمسحش بيانات المتصفح، وما تفتحش الصفحة في التصفح المتخفي: الفيديوهات محفوظة جوه المتصفح.</li>
+</ul>
+</details>
+<p class="note">الصفحة دي مش بترفع أي فيديو على أي سيرفر. <a href="privacy.html#rec">سياسة الخصوصية</a></p>
+</main>
+</div>
+
+<!-- ============ consent ============ -->
+<div id="consent" class="hidden">
+<header><div class="brand"><div><b>موافقة على التصوير</b><small>لكل شخص هيظهر في الفيديوهات</small></div></div></header>
+<main>
+<section class="card">
+<p><span class="badge">مسودة — يتراجع من محامي</span></p>
+<div class="lawyer" id="cText">
+<p style="margin:0 0 8px">بنصوّر فيديوهات قصيرة لإشارات لغة الإشارة المصرية، عشان تطبيق <b>وَصْل</b> المجاني للصم وضعاف السمع، من شركة NRG. الفيديو بيظهر فيه وشك وإيديك.</p>
+<p style="margin:0 0 8px">الفيديوهات بتتحفظ على الموبايل ده بس، لحد ما تتبعت لفريق وَصْل. مش بنبيعها لحد.</p>
+<p style="margin:0">تقدر ترجع في موافقتك في أي وقت برسالة لفريق وَصْل: هنشيل فيديوهاتك من التطبيق في التحديث اللي بعده، ومش هنستخدمها في حاجة جديدة. الحاجات اللي اتنشرت قبل كده ممكن ما نقدرش نمسحها من كل مكان.</p>
+</div>
+<label class="f">الكود<input type="text" id="kCode" dir="ltr" readonly></label>
+<label class="f">اسم اللي بيعمل الإشارة<input type="text" id="kName" maxlength="60" autocomplete="off"></label>
+<div><p class="q">هو/هي:</p><div class="chips" id="kHear"><button type="button" data-v="deaf">أصم / صمّاء</button><button type="button" data-v="hoh">ضعيف سمع</button><button type="button" data-v="hearing">سامع</button></div></div>
+<label class="check"><input type="checkbox" id="kAdult">سني 18 سنة أو أكتر.</label>
+<p class="q">موافق إن الفيديوهات تتستخدم في:</p>
+<label class="check"><input type="checkbox" id="uApp">تطبيق وَصْل: تظهر للناس اللي بتستخدم التطبيق. (لازم عشان نصوّر)</label>
+<label class="check"><input type="checkbox" id="uTrain">تعليم الموبايل يفهم الإشارات (التعرّف على الإشارة). الفيديوهات بتفضل عندنا.</label>
+<label class="check"><input type="checkbox" id="uComp">مسابقات وعروض للشركاء والرعاة.</label>
+<label class="check"><input type="checkbox" id="uSocial">السوشيال ميديا (فيسبوك، إنستجرام، يوتيوب، تيك توك).</label>
+<p class="err hidden" id="kErr"></p>
+<button class="go" type="button" id="kOk">موافق</button>
+<button class="btn" type="button" id="kBack">رجوع</button>
+</section>
+</main>
+</div>
+
+<!-- ============ studio ============ -->
+<div id="studio" class="hidden">
+<div class="top">
+<button class="tb" type="button" id="toSetup">→ الإعدادات</button>
+<div class="prog" id="prog"></div>
+<button class="tb" type="button" id="toSearch">🔍 دوّر</button>
+</div>
+<div class="word"><p class="ar" id="wAr"></p><div class="meta"><span class="code" id="wId"></span><span id="wInfo"></span></div></div>
+<div class="stagewrap" id="wrap"><div class="stage" id="stage">
+<video id="live" playsinline muted autoplay></video>
+<video id="rv" class="hidden" playsinline muted loop></video>
+<svg class="guide" id="frameG" viewBox="0 0 90 160" preserveAspectRatio="none" aria-hidden="true">
+ <rect x="13" y="6" width="64" height="146" rx="3" fill="none" stroke="#FFD54A" stroke-width=".7" stroke-dasharray="3 2" vector-effect="non-scaling-stroke"/>
+ <ellipse cx="45" cy="28" rx="11" ry="14" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.5" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"/>
+ <line x1="6" y1="40" x2="6" y2="150" stroke="#7FE0FF" stroke-width="2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke"/>
+ <line x1="84" y1="40" x2="84" y2="150" stroke="#7FE0FF" stroke-width="2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke"/>
+ <line x1="13" y1="140" x2="77" y2="140" stroke="#FFD54A" stroke-width="1.5" stroke-dasharray="2 3" vector-effect="non-scaling-stroke"/>
+</svg>
+<div class="pill res" id="resP"></div>
+<div class="pill hands hidden" id="handsP">✋ إيديك تحت</div>
+<div class="pill recp hidden" id="recP">● بيسجّل</div>
+<div class="tbar hidden" id="tbar"></div>
+<div class="count hidden" id="countO"><b id="countN">3</b></div>
+<div class="msg hidden" id="stageMsg"></div>
+</div></div>
+<div class="strip" id="strip"></div>
+<div class="ctl" id="ctl"></div>
+</div>
+
+<!-- ============ search ============ -->
+<div id="search" class="hidden">
+<div class="sh"><input type="search" id="sIn" placeholder="اكتب الكلمة أو الكود" aria-label="دوّر على إشارة"><button type="button" id="sClose">رجوع</button></div>
+<div id="sres"></div>
+</div>
+
+<div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const MAX_TAKES=5, PART_BYTES=50*1024*1024, CONSENT_VER='2026-11-03-draft (يتراجع من محامي)';
+const LISTS=[['P1','P1 الأهم'],['P2','P2'],['P3','P3'],['ALL','الكل']];
+const CODES=['m1','m2','f1','f2','d1','d2'];
+const GROUP_AR={greetings:'تحية',basic:'أساسي',questions:'أسئلة',pharmacy:'صيدلية',doctor:'دكتور',body:'الجسم',feelings:'إحساس',transport:'مواصلات',places:'أماكن',shop:'شرا',money:'فلوس',government:'مصالح حكومية',numbers:'أرقام',time:'وقت',sos:'طوارئ'};
+const S={vocab:[],takes:[],consent:{},signer:'m1',list:'P1',pos:{},cam:'environment',dur:4,state:'setup',stream:null,view:null,newTake:false,parts:[],wake:null,free:null};
+
+/* ---------- small helpers ---------- */
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const mb=b=>b>=1e9?(b/1073741824).toFixed(1)+' جيجا':Math.max(0,Math.round(b/1048576))+' ميجا';
+let toastT;function toast(t,ms){const e=$('toast');e.textContent=t;e.classList.remove('hidden');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.add('hidden'),ms||2600)}
+const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function el(tag,attrs,html){const e=document.createElement(tag);for(const k in attrs||{}){if(k==='on')for(const ev in attrs.on)e.addEventListener(ev,attrs.on[ev]);else e.setAttribute(k,attrs[k])}if(html!=null)e.innerHTML=html;return e}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function chips(box,items,cur,onPick){box.innerHTML='';items.forEach(([v,label])=>{const b=el('button',{type:'button','data-v':v},label);if(v===cur)b.classList.add('on');b.onclick=()=>onPick(v);box.appendChild(b)})}
+
+/* ---------- IndexedDB: takes metadata, video blobs, consent, take counters ---------- */
+let dbp;
+function db(){return dbp||(dbp=new Promise((res,rej)=>{const r=indexedDB.open('wasl-rec',1);
+ r.onupgradeneeded=()=>{const d=r.result;['meta','blobs','consent','seq'].forEach(n=>{if(!d.objectStoreNames.contains(n))d.createObjectStore(n)})};
+ r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}))}
+async function tx(store,mode,fn){const d=await db();return new Promise((res,rej)=>{const t=d.transaction(store,mode);let out;const s=Array.isArray(store)?store.map(n=>t.objectStore(n)):t.objectStore(store);
+ Promise.resolve(fn(s)).then(v=>out=v);t.oncomplete=()=>res(out);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error||new Error('abort'))})}
+const rq=r=>new Promise((res,rej)=>{r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+async function getAll(store){return tx(store,'readonly',s=>rq(s.getAll()))}
+async function loadAll(){S.takes=await getAll('meta');const cs=await getAll('consent');S.consent={};cs.forEach(c=>S.consent[c.signer]=c)}
+async function putTake(m,blob){await tx(['meta','blobs'],'readwrite',([a,b])=>{a.put(m,m.name);if(blob)b.put(blob,m.name)})}
+async function saveMeta(m){await tx('meta','readwrite',s=>{s.put(m,m.name)})}
+async function dropTake(m){await tx(['meta','blobs'],'readwrite',([a,b])=>{a.delete(m.name);b.delete(m.name)});S.takes=S.takes.filter(t=>t!==m)}
+async function getBlob(name){return tx('blobs','readonly',s=>rq(s.get(name)))}
+async function nextSeq(key){return tx('seq','readwrite',async s=>{const n=((await rq(s.get(key)))||0)+1;s.put(n,key);return n})}
+
+/* ---------- vocabulary ---------- */
+function parseCSV(t){const rows=[];let row=[],f='',q=false;t=t.replace(/^﻿/,'');
+ for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+  else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);rows.push(row);row=[];f=''}else f+=c}
+ if(f||row.length){row.push(f);rows.push(row)}
+ const h=rows.shift().map(x=>x.trim());return rows.filter(r=>r.length>=h.length&&r.join('').trim()).map(r=>Object.fromEntries(h.map((k,i)=>[k,(r[i]||'').trim()])))}
+async function loadVocab(){const r=await fetch('signs/vocab.csv',{cache:'no-cache'});if(!r.ok)throw new Error('vocab '+r.status);
+ S.vocab=parseCSV(await r.text()).filter(x=>x.english_gloss).map(x=>({id:x.english_gloss.replace(/\//g,'_'),ar:x.arabic,group:x.group,dir:x.direction,pri:x.priority}))}
+const listOf=l=>l==='ALL'?S.vocab:S.vocab.filter(v=>v.pri===l);
+const takesFor=(id,sg)=>S.takes.filter(t=>t.id===id&&t.signer===sg).sort((a,b)=>a.take-b.take);
+const doneFor=(id,sg)=>takesFor(id,sg).some(t=>t.status==='ok');
+function cur(){const L=listOf(S.list);const i=Math.min(Math.max(0,(S.pos[S.signer]||{})[S.list]||0),L.length-1);return {L,i,v:L[i]}}
+function setPos(i){S.pos[S.signer]=S.pos[S.signer]||{};S.pos[S.signer][S.list]=i;ls.set('wasl_rec_pos',S.pos)}
+
+/* ---------- storage indicator ---------- */
+async function storage(){
+ const kept=S.takes.filter(t=>!t.freed),bytes=kept.reduce((a,t)=>a+(t.size||0),0),notExp=kept.filter(t=>!t.exported);
+ let free=null,quota=null;try{if(navigator.storage&&navigator.storage.estimate){const e=await navigator.storage.estimate();quota=e.quota;free=e.quota-e.usage}}catch(e){}
+ S.free=free;
+ $('stTxt').textContent=`التسجيلات على الموبايل: ${mb(bytes)} (${kept.length} أخدة)`+(free!=null?` · فاضي حوالي ${mb(free)}`:'');
+ $('stTxt2').textContent=kept.length?`لسه ما اتحمّلتش: ${notExp.length} أخدة.`:'لسه مفيش تسجيلات.';
+ const m=$('meter'),w=$('stWarn');m.className='meter';w.className='alert hidden';
+ if(quota){const used=Math.min(1,(quota-free)/quota);m.firstElementChild.style.width=Math.max(2,used*100)+'%';
+  if(free<150e6){m.classList.add('full');w.className='alert full';w.textContent='⛔ المساحة خلصت تقريباً. حمّل الملفات وابعتها، وبعدين امسح اللي اتحمّل قبل ما تكمّل.'}
+  else if(free<500e6){m.classList.add('low');w.className='alert low';w.textContent='⚠️ المساحة قرّبت تخلص. حمّل الملفات دلوقتي، وامسح اللي اتحمّل بعد ما محمد يأكد إنه وصله.'}}
+ else m.firstElementChild.style.width='0';
+ const freeable=S.takes.filter(t=>t.exported&&!t.freed);
+ $('freeBtn').disabled=!freeable.length;$('freeBtn').textContent=freeable.length?`امسح اللي اتحمّل من الموبايل (${freeable.length} أخدة، ${mb(freeable.reduce((a,t)=>a+t.size,0))})`:'امسح اللي اتحمّل من الموبايل';
+ $('expAll').disabled=!kept.length;$('expNew').disabled=!notExp.length;
+ return free}
+
+/* ---------- setup screen ---------- */
+function drawSetup(){
+ const codes=[...new Set([...CODES,...Object.keys(S.consent),...S.takes.map(t=>t.signer),S.signer])];
+ chips($('codes'),codes.map(c=>{const n=S.consent[c]&&S.consent[c].name;return [c,`<span class="code">${c}</span>${n?' <small>'+esc(n)+'</small>':''}`]}),S.signer,v=>{S.signer=v;ls.set('wasl_rec_signer',v);$('codeIn').value='';drawSetup()});
+ const c=S.consent[S.signer];$('cStat').classList.toggle('okay',!!c);
+ $('cTxt').textContent=c?`الموافقة متسجّلة: ${c.name} (${new Date(c.date).toLocaleDateString('ar-EG')})`:`لسه مفيش موافقة للكود ${S.signer}. هتظهر لما تدوس «ابدأ».`;
+ $('cEdit').textContent=c?'غيّر الموافقة':'الموافقة على التصوير';
+ chips($('lists'),LISTS.map(([k,l])=>{const L=listOf(k);const d=L.filter(v=>doneFor(v.id,S.signer)).length;return [k,`${l} <small>${d}/${L.length}</small>`]}),S.list,v=>{S.list=v;ls.set('wasl_rec_list',v);drawSetup()});
+ chips($('cams'),[['environment','الخلفية (أوضح)'],['user','الأمامية (سيلفي)']],S.cam,v=>{S.cam=v;ls.set('wasl_rec_cam',v);drawSetup()});
+ $('dOut').textContent=S.dur+' ثواني';$('dMinus').disabled=S.dur<=3;$('dPlus').disabled=S.dur>=6;
+ storage()}
+$('codeIn').addEventListener('input',()=>{const v=$('codeIn').value.trim().toLowerCase();if(/^[a-z]\d{1,2}$/.test(v)){S.signer=v;ls.set('wasl_rec_signer',v);drawSetup()}});
+$('dMinus').onclick=()=>{S.dur=Math.max(3,S.dur-1);ls.set('wasl_rec_dur',S.dur);drawSetup()};
+$('dPlus').onclick=()=>{S.dur=Math.min(6,S.dur+1);ls.set('wasl_rec_dur',S.dur);drawSetup()};
+$('cEdit').onclick=()=>openConsent(false);
+$('start').onclick=async()=>{const e=$('sErr');e.classList.add('hidden');
+ if(!S.vocab.length){e.textContent='قايمة الإشارات ما اتحمّلتش. اتأكد من النت وافتح الصفحة تاني.';e.classList.remove('hidden');return}
+ if(!S.consent[S.signer]||!S.consent[S.signer].uses.app)return openConsent(true);
+ openStudio()};
+function show(id){['setup','consent','studio','search'].forEach(x=>$(x).classList.toggle('hidden',x!==id&&!(id==='search'&&x==='studio')));scrollTo(0,0)}
+
+/* ---------- consent ---------- */
+let afterConsent=false,kHear='';
+function openConsent(go){afterConsent=go;const c=S.consent[S.signer]||{};show('consent');
+ $('kCode').value=S.signer;$('kName').value=c.name||'';kHear=c.hearing||'';$('kAdult').checked=!!c.adult;
+ const u=c.uses||{};$('uApp').checked=!!u.app;$('uTrain').checked=!!u.training;$('uComp').checked=!!u.competitions;$('uSocial').checked=!!u.social;
+ $('kErr').classList.add('hidden');drawHear()}
+function drawHear(){chips($('kHear'),[['deaf','أصم / صمّاء'],['hoh','ضعيف سمع'],['hearing','سامع']],kHear,v=>{kHear=v;drawHear()})}
+$('kBack').onclick=()=>{show('setup');drawSetup()};
+$('kOk').onclick=async()=>{const say=t=>{$('kErr').textContent=t;$('kErr').classList.remove('hidden');$('kErr').scrollIntoView({block:'center'})};
+ const name=$('kName').value.trim();
+ if(!name)return say('اكتب اسم اللي بيعمل الإشارة.');
+ if(!kHear)return say('اختار: أصم، ضعيف سمع، أو سامع.');
+ if(!$('kAdult').checked)return say('التصوير ده للي سنهم 18 سنة أو أكتر.');
+ if(!$('uApp').checked)return say('محتاجين الموافقة على ظهور الفيديوهات في تطبيق وَصْل عشان نصوّر.');
+ const c={signer:S.signer,name,hearing:kHear,adult:true,uses:{app:true,training:$('uTrain').checked,competitions:$('uComp').checked,social:$('uSocial').checked},
+  date:new Date().toISOString(),version:CONSENT_VER,text:$('cText').innerText.trim()};
+ await tx('consent','readwrite',s=>{s.put(c,c.signer)});S.consent[c.signer]=c;
+ if(afterConsent)openStudio();else{show('setup');drawSetup();toast('اتسجّلت الموافقة')}};
+
+/* ---------- camera ---------- */
+async function startCam(){stopCam();const msg=$('stageMsg');msg.classList.add('hidden');
+ try{S.stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:S.cam},width:{ideal:1080},height:{ideal:1920},frameRate:{ideal:30,max:30}}});
+  const v=$('live');v.srcObject=S.stream;v.classList.toggle('mirror',S.cam==='user');try{await v.play()}catch(e){}
+  const st=S.stream.getVideoTracks()[0].getSettings();$('resP').textContent=`${st.width||'?'}×${st.height||'?'} · ${Math.round(st.frameRate||30)}fps`;
+  if(st.width&&st.height&&st.width>st.height)toast('الكاميرا بتصوّر بالعرض. لفّ الموبايل بالطول.',4000);
+ }catch(e){S.stream=null;msg.innerHTML='📷 الكاميرا مش شغالة.<br>اسمح للصفحة تستخدم الكاميرا من إعدادات المتصفح، وبعدين دوس «جرّب تاني».';msg.appendChild(el('button',{type:'button',class:'btn',style:'margin-top:10px',on:{click:startCam}},'جرّب تاني'));msg.classList.remove('hidden')}
+ draw()}
+function stopCam(){if(S.stream){S.stream.getTracks().forEach(t=>t.stop());S.stream=null}}
+function pickMime(){const M=['video/mp4;codecs=avc1.42E01E','video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'];
+ if(!window.MediaRecorder)return null;for(const m of M){try{if(MediaRecorder.isTypeSupported(m))return m}catch(e){}}return ''}
+async function wake(){try{if('wakeLock' in navigator&&!S.wake&&S.state!=='setup'){S.wake=await navigator.wakeLock.request('screen');S.wake.addEventListener('release',()=>S.wake=null)}}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&!$('studio').classList.contains('hidden'))wake()});
+
+/* ---------- studio ---------- */
+async function openStudio(){show('studio');S.state='live';S.view=null;fit();
+ try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+ await startCam();wake()}
+$('toSetup').onclick=()=>{if(S.state==='count'||S.state==='rec')return;stopCam();closeReview();S.state='setup';try{S.wake&&S.wake.release()}catch(e){}show('setup');drawSetup()};
+function fit(){const w=$('wrap'),s=$('stage');s.style.height='0';s.style.width='0';const W=w.clientWidth-20,H=w.clientHeight;if(W<=0||H<=0)return;let h=H,wd=h*9/16;if(wd>W){wd=W;h=wd*16/9}s.style.width=Math.floor(wd)+'px';s.style.height=Math.floor(h)+'px'}
+addEventListener('resize',fit);
+function draw(){const {L,i,v}=cur();if(!v)return;
+ const done=L.filter(x=>doneFor(x.id,S.signer)).length;
+ $('prog').innerHTML=`${i+1} من ${L.length}<small>${esc(S.list==='ALL'?'الكل':S.list)} · خلص ${done} · <span class="code">${esc(S.signer)}</span></small>`;
+ $('wAr').textContent=v.ar;$('wId').textContent=v.id;
+ const ts=takesFor(v.id,S.signer),ok=ts.filter(t=>t.status==='ok').length;
+ $('wInfo').textContent=`${GROUP_AR[v.group]||v.group} · ${v.pri} · تمام ${ok}`;
+ requestAnimationFrame(fit);
+ const strip=$('strip');strip.innerHTML='';
+ if(!ts.length)strip.appendChild(el('span',{class:'hint'},'لسه مفيش أخدات للإشارة دي. اعمل من 3 لـ 5.'));
+ ts.forEach(t=>{const b=el('button',{type:'button','aria-label':'أخدة '+t.take},`${t.take} ${t.status==='ok'?'✓':'؟'}${t.freed?' ⬇':''}`);if(t.status==='ok')b.classList.add('ok');if(S.view===t)b.classList.add('cur');
+  b.onclick=()=>{if(S.state==='live'||S.state==='review')openReview(t,false)};strip.appendChild(b)});
+ const c=$('ctl');c.innerHTML='';const B=(cls,txt,fn,dis)=>{const b=el('button',{type:'button',class:cls},txt);b.onclick=fn;b.disabled=!!dis;c.appendChild(b);return b};
+ const full=ts.length>=MAX_TAKES;
+ if(S.state==='live'){
+  B('prev','→ اللي فات',()=>go(-1),i===0);
+  B('recb',full?'5 أخدات خلاص':'● سجّل',record,full||!S.stream);
+  B('next'+(ok>=3?' strong':''),ok?'اللي بعده ←':'تخطّى ←',()=>go(1),i>=L.length-1);
+ }else if(S.state==='count'||S.state==='rec'){B('stopb',S.state==='count'?'✕ إلغاء':'■ وقّف',stopNow)}
+ else if(S.state==='review'){const t=S.view;
+  if(S.newTake){B('again','↺ تاني',retake);B('','▶ شوف تاني',replay);B('okb','✓ تمام',keep)}
+  else{B('again','🗑 امسح',()=>delTake(t));if(!t.freed)B('','▶ شوف',replay);if(t.status!=='ok')B('okb','✓ تمام',keep);else B('','📷 رجوع للكاميرا',closeReview)}}
+}
+function go(d){const {L,i}=cur();const n=Math.min(L.length-1,Math.max(0,i+d));setPos(n);closeReview();S.state='live';draw()}
+addEventListener('keydown',e=>{if($('studio').classList.contains('hidden')||!$('search').classList.contains('hidden'))return;
+ if((e.key==='Enter'||e.key===' '||e.key==='AudioVolumeUp')&&S.state==='live'){e.preventDefault();record()}});
+
+let recT=[],rec=null,cancelled=false;
+function clearT(){recT.forEach(clearTimeout);recT=[]}
+async function record(){const {v}=cur();if(!v||!S.stream||S.state!=='live')return;
+ if(takesFor(v.id,S.signer).length>=MAX_TAKES)return toast('وصلت 5 أخدات. امسح واحدة أو روح للي بعدها.');
+ const free=await storage();if(free!=null&&free<150e6)return toast('المساحة خلصت تقريباً. ارجع للإعدادات وحمّل الملفات وامسح اللي اتحمّل.',5000);
+ const mime=pickMime();if(mime===null)return toast('المتصفح ده ما بيسجّلش فيديو. استخدم Chrome على أندرويد أو Safari على آيفون.',5000);
+ closeReview();S.state='count';cancelled=false;draw();
+ const co=$('countO'),cn=$('countN'),hp=$('handsP');co.classList.remove('hidden');hp.classList.remove('hidden');hp.textContent='✋ ابدأ وإيديك تحت';
+ for(const n of [3,2,1]){if(cancelled)break;cn.textContent=n;buzz(60);await sleep(1000)}
+ co.classList.add('hidden');if(cancelled){hp.classList.add('hidden');S.state='live';draw();return}
+ const chunks=[];let t0=0,t1=0;
+ try{rec=new MediaRecorder(S.stream,Object.assign({videoBitsPerSecond:5000000},mime?{mimeType:mime}:{}))}catch(e){try{rec=new MediaRecorder(S.stream)}catch(e2){hp.classList.add('hidden');S.state='live';draw();return toast('التسجيل ما اشتغلش. جرّب تاني.')}}
+ rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+ const stopped=new Promise(r=>rec.onstop=r);
+ rec.onstart=()=>{t0=performance.now()};
+ S.state='rec';draw();buzz(150);
+ const stage=$('stage'),tb=$('tbar'),D=S.dur*1000;stage.classList.add('recording');$('recP').classList.remove('hidden');
+ hp.textContent='✋ ابدأ وإيديك تحت';tb.classList.remove('hidden');tb.style.transition='none';tb.style.width='100%';
+ rec.start();t0=performance.now();
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{tb.style.transition=`width ${D}ms linear`;tb.style.width='0%'}));
+ recT.push(setTimeout(()=>hp.classList.add('hidden'),800));
+ recT.push(setTimeout(()=>{hp.textContent='✋ خلّص وإيديك تحت';hp.classList.remove('hidden')},Math.max(900,D-1000)));
+ recT.push(setTimeout(()=>{try{rec.state!=='inactive'&&rec.stop()}catch(e){}},D));
+ await stopped;t1=performance.now();clearT();
+ stage.classList.remove('recording');$('recP').classList.add('hidden');hp.classList.add('hidden');tb.classList.add('hidden');buzz([80,60,80]);
+ const type=(rec.mimeType||mime||'video/webm').split(';')[0];const blob=new Blob(chunks,{type});rec=null;
+ if(cancelled||!blob.size){S.state='live';draw();if(!blob.size&&!cancelled)toast('الأخدة طلعت فاضية. جرّب تاني.');return}
+ const st=(S.stream&&S.stream.getVideoTracks()[0].getSettings())||{};
+ const take=await nextSeq(v.id+'__'+S.signer),ext=/mp4/.test(type)?'mp4':'webm';
+ const m={name:`${v.id}__${S.signer}__${take}.${ext}`,id:v.id,signer:S.signer,take,ext,mime:type,size:blob.size,dur:Math.round((t1-t0)/100)/10,w:st.width||0,h:st.height||0,cam:S.cam,status:'pending',at:new Date().toISOString(),exported:false,freed:false};
+ try{await putTake(m,blob)}catch(e){S.state='live';draw();return toast('ما قدرناش نحفظ الأخدة: المساحة ممكن تكون خلصت. حمّل وامسح اللي اتحمّل.',5000)}
+ S.takes.push(m);openReview(m,true,blob);storage()}
+function stopNow(){if(S.state==='count'){cancelled=true;return}if(rec&&rec.state!=='inactive'){clearT();try{rec.stop()}catch(e){}}}
+
+let rvURL=null;
+async function openReview(t,isNew,blob){S.view=t;S.newTake=isNew;S.state='review';const rv=$('rv'),live=$('live');
+ if(rvURL){URL.revokeObjectURL(rvURL);rvURL=null}
+ if(!t.freed){blob=blob||await getBlob(t.name);if(blob){rvURL=URL.createObjectURL(blob);rv.src=rvURL;rv.classList.toggle('mirror',t.cam==='user');rv.classList.remove('hidden');live.classList.add('hidden');try{await rv.play()}catch(e){}}}
+ else toast('الأخدة دي اتحمّلت واتمسحت من الموبايل.');
+ $('frameG').classList.add('hidden');draw()}
+function closeReview(){const rv=$('rv');try{rv.pause()}catch(e){}rv.removeAttribute('src');rv.load&&rv.load();rv.classList.add('hidden');$('live').classList.remove('hidden');$('frameG').classList.remove('hidden');
+ if(rvURL){URL.revokeObjectURL(rvURL);rvURL=null}S.view=null;S.newTake=false;if(S.state==='review')S.state='live'}
+function replay(){const rv=$('rv');try{rv.currentTime=0;rv.play()}catch(e){}}
+async function keep(){const t=S.view;if(!t)return;t.status='ok';await saveMeta(t);closeReview();draw();
+ const ok=takesFor(t.id,t.signer).filter(x=>x.status==='ok').length;toast(ok>=3?`✓ ${ok} أخدات تمام. ممكن تروح للي بعدها.`:`✓ اتحفظت (${ok} تمام)`)}
+async function retake(){const t=S.view;if(t){await dropTake(t)}closeReview();draw();record()}
+async function delTake(t){const b=$('ctl').querySelector('.again');if(b&&!b.dataset.sure){b.dataset.sure='1';b.textContent='متأكد؟ دوس تاني';setTimeout(()=>{if(b.isConnected){delete b.dataset.sure;b.textContent='🗑 امسح'}},4000);return}
+ await dropTake(t);closeReview();draw();storage();toast('اتمسحت')}
+
+/* ---------- search ---------- */
+$('toSearch').onclick=()=>{if(S.state==='count'||S.state==='rec')return;$('search').classList.remove('hidden');$('sIn').value='';drawSearch();setTimeout(()=>$('sIn').focus(),50)};
+$('sClose').onclick=()=>$('search').classList.add('hidden');
+$('sIn').addEventListener('input',drawSearch);
+const normAr=s=>s.toLowerCase().replace(/[ً-ْـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه');
+function drawSearch(){const q=normAr($('sIn').value.trim()),box=$('sres');box.innerHTML='';
+ const res=S.vocab.filter(v=>!q||normAr(v.ar).includes(q)||v.id.toLowerCase().includes(q));
+ if(!res.length){box.appendChild(el('p',{class:'note'},'مفيش إشارة بالاسم ده في القايمة.'));return}
+ res.slice(0,200).forEach(v=>{const ok=takesFor(v.id,S.signer).filter(t=>t.status==='ok').length;
+  const b=el('button',{type:'button'},`<span class="ic">${ok?'✅':'⬜'}</span><span>${esc(v.ar)}</span><small>${esc(v.id)} · ${v.pri}</small>`);
+  b.onclick=()=>{if(S.list!=='ALL'&&v.pri!==S.list){S.list=v.pri;ls.set('wasl_rec_list',S.list)}const L=listOf(S.list);setPos(L.indexOf(v));$('search').classList.add('hidden');closeReview();S.state='live';draw()};box.appendChild(b)})}
+
+/* ---------- ZIP export (store-only, no library) ---------- */
+const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(u8){let c=0xFFFFFFFF;for(let i=0;i<u8.length;i++)c=CRC[(c^u8[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+async function makeZip(files){/* files: [{name, blob}] */
+ const enc=new TextEncoder(),parts=[],cen=[];let off=0;const d=new Date();
+ const dt=((d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1))&0xFFFF,dd=(((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate())&0xFFFF;
+ for(const f of files){const nm=enc.encode(f.name),data=new Uint8Array(await f.blob.arrayBuffer()),crc=crc32(data),sz=data.length;
+  const h=new DataView(new ArrayBuffer(30));h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint16(8,0,true);h.setUint16(10,dt,true);h.setUint16(12,dd,true);
+  h.setUint32(14,crc,true);h.setUint32(18,sz,true);h.setUint32(22,sz,true);h.setUint16(26,nm.length,true);h.setUint16(28,0,true);
+  parts.push(h.buffer,nm,f.blob);
+  const c=new DataView(new ArrayBuffer(46));c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint16(10,0,true);c.setUint16(12,dt,true);c.setUint16(14,dd,true);
+  c.setUint32(16,crc,true);c.setUint32(20,sz,true);c.setUint32(24,sz,true);c.setUint16(28,nm.length,true);c.setUint32(42,off,true);cen.push(c.buffer,nm);
+  off+=30+nm.length+sz}
+ const cs=cen.reduce((a,b)=>a+b.byteLength,0),e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cs,true);e.setUint32(16,off,true);
+ return new Blob([...parts,...cen,e.buffer],{type:'application/zip'})}
+const jsonBlob=o=>new Blob([JSON.stringify(o,null,1)],{type:'application/json'});
+async function exportZips(onlyNew){const msg=$('expMsg');
+ const ts=S.takes.filter(t=>!t.freed&&(!onlyNew||!t.exported));if(!ts.length){msg.textContent='مفيش أخدات جديدة.';return}
+ const order=new Map(S.vocab.map((v,i)=>[v.id,i]));ts.sort((a,b)=>(order.get(a.id)??999)-(order.get(b.id)??999)||a.signer.localeCompare(b.signer)||a.take-b.take);
+ const batches=[];let curB=[],sz=0;for(const t of ts){if(curB.length&&sz+t.size>PART_BYTES){batches.push(curB);curB=[];sz=0}curB.push(t);sz+=t.size}if(curB.length)batches.push(curB);
+ [$('expAll'),$('expNew')].forEach(b=>b.disabled=true);
+ const stamp=new Date().toISOString().slice(0,16).replace(/[-:]/g,'').replace('T','-'),signers=[...new Set(ts.map(t=>t.signer))].sort().join('-');
+ S.parts.forEach(p=>URL.revokeObjectURL(p.url));S.parts=[];$('parts').innerHTML='';
+ try{for(let i=0;i<batches.length;i++){msg.textContent=`بيجهّز الملف ${i+1} من ${batches.length}...`;
+   const files=[];for(const t of batches[i]){const b=await getBlob(t.name);if(b)files.push({name:t.name,blob:b,t})}
+   const takesJson={version:1,app:'wasl-record',made:new Date().toISOString(),part:i+1,parts:batches.length,
+    files:files.map(f=>({file:f.t.name,id:f.t.id,signer:f.t.signer,take:f.t.take,status:f.t.status,dur:f.t.dur,mime:f.t.mime,size:f.t.size,width:f.t.w,height:f.t.h,camera:f.t.cam,recorded:f.t.at}))};
+   const consent={version:CONSENT_VER,note:'مسودة — يتراجع من محامي',signers:Object.values(S.consent)};
+   const zip=await makeZip([...files.map(f=>({name:f.name,blob:f.blob})),{name:'takes.json',blob:jsonBlob(takesJson)},{name:'consent.json',blob:jsonBlob(consent)}]);
+   const name=`wasl-signs_${signers}_${stamp}_${i+1}of${batches.length}.zip`;S.parts.push({name,zip,url:URL.createObjectURL(zip),takes:files.map(f=>f.t)})}
+  drawParts();msg.textContent=`جاهز: ${S.parts.length} ملف. لو التحميل ما بدأش، دوس «حمّل» جنب كل ملف.`;
+  for(const p of S.parts){await download(p);await sleep(800)}
+ }catch(e){msg.textContent='حصلت مشكلة وإحنا بنجهّز الملف. جرّب «حمّل الجديد بس» أو قفّل تابات تانية وجرّب تاني.'}
+ storage()}
+async function download(p){const a=el('a',{href:p.url,download:p.name});document.body.appendChild(a);a.click();a.remove();await markExported(p)}
+async function markExported(p){for(const t of p.takes){if(!t.exported){t.exported=true;await saveMeta(t)}}p.done=true;drawParts();storage()}
+function drawParts(){const box=$('parts');box.innerHTML='';S.parts.forEach((p,i)=>{const d=el('div',{class:'part'});d.appendChild(el('b',{},`${p.done?'✅ ':''}ملف ${i+1} من ${S.parts.length} · ${p.takes.length} أخدة · ${mb(p.zip.size)}`));
+ d.appendChild(el('button',{type:'button',class:'btn dark',on:{click:()=>download(p)}},'⬇ حمّل'));
+ const f=new File([p.zip],p.name,{type:'application/zip'});
+ if(navigator.canShare&&(()=>{try{return navigator.canShare({files:[f]})}catch(e){return false}})())d.appendChild(el('button',{type:'button',class:'btn',on:{click:async()=>{try{await navigator.share({files:[f],title:p.name,text:'تسجيلات إشارات وَصْل'});await markExported(p)}catch(e){}}}},'↗ شارك (واتساب / درايف)'));
+ box.appendChild(d)})}
+$('expAll').onclick=()=>exportZips(false);$('expNew').onclick=()=>exportZips(true);
+$('freeBtn').onclick=async()=>{const b=$('freeBtn');if(!b.dataset.sure){b.dataset.sure='1';b.textContent='متأكد إن محمد استلم الملفات؟ دوس تاني للمسح';setTimeout(()=>{delete b.dataset.sure;storage()},5000);return}
+ delete b.dataset.sure;const fr=S.takes.filter(t=>t.exported&&!t.freed);
+ await tx(['meta','blobs'],'readwrite',([a,bl])=>{fr.forEach(t=>{t.freed=true;a.put(t,t.name);bl.delete(t.name)})});
+ S.parts.forEach(p=>URL.revokeObjectURL(p.url));S.parts=[];drawParts();$('expMsg').textContent='';toast(`اتمسحت ${fr.length} أخدة من الموبايل`);drawSetup()};
+
+/* ---------- start ---------- */
+(async function init(){
+ S.signer=ls.get('wasl_rec_signer','m1');S.list=ls.get('wasl_rec_list','P1');S.pos=ls.get('wasl_rec_pos',{})||{};S.cam=ls.get('wasl_rec_cam','environment');S.dur=Math.min(6,Math.max(3,+ls.get('wasl_rec_dur',4)||4));
+ if(!LISTS.some(l=>l[0]===S.list))S.list='P1';
+ try{await loadAll()}catch(e){$('sErr').textContent='المتصفح ده مش بيحفظ الفيديوهات (ممكن يكون تصفح متخفي). افتح الصفحة في Chrome أو Safari العادي.';$('sErr').classList.remove('hidden')}
+ try{await loadVocab()}catch(e){$('sErr').textContent='قايمة الإشارات ما اتحمّلتش. اتأكد من النت وافتح الصفحة تاني.';$('sErr').classList.remove('hidden')}
+ drawSetup();
+ if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+})();
+</script>
+</body>
+</html>

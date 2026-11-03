@@ -1,0 +1,1510 @@
+{
+ "version": 1,
+ "updated": "2026-11-03",
+ "signers": {},
+ "signs": [
+  {
+   "id": "HELLO",
+   "ar": "السلام عليكم / أهلاً",
+   "group": "greetings",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "👋",
+   "clips": []
+  },
+  {
+   "id": "GOOD-MORNING",
+   "ar": "صباح الخير",
+   "group": "greetings",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🌅",
+   "clips": []
+  },
+  {
+   "id": "THANK-YOU",
+   "ar": "شكراً",
+   "group": "greetings",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🙏",
+   "clips": []
+  },
+  {
+   "id": "PLEASE",
+   "ar": "لو سمحت / من فضلك",
+   "group": "greetings",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🤲",
+   "clips": []
+  },
+  {
+   "id": "SORRY",
+   "ar": "آسف",
+   "group": "greetings",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "😔",
+   "clips": []
+  },
+  {
+   "id": "GOODBYE",
+   "ar": "مع السلامة",
+   "group": "greetings",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "👋",
+   "clips": []
+  },
+  {
+   "id": "MY-NAME",
+   "ar": "اسمي...",
+   "group": "greetings",
+   "dir": "sign2voice",
+   "pri": "P2",
+   "icon": "🪪",
+   "clips": []
+  },
+  {
+   "id": "I-AM-DEAF",
+   "ar": "أنا أصم",
+   "group": "greetings",
+   "dir": "sign2voice",
+   "pri": "P1",
+   "icon": "🧏",
+   "clips": []
+  },
+  {
+   "id": "SPEAK-TO-PHONE",
+   "ar": "اتكلم مع الموبايل",
+   "group": "greetings",
+   "dir": "sign2voice",
+   "pri": "P1",
+   "icon": "📱",
+   "clips": []
+  },
+  {
+   "id": "OK",
+   "ar": "تمام / ماشي",
+   "group": "greetings",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "👌",
+   "clips": []
+  },
+  {
+   "id": "YES",
+   "ar": "أيوه",
+   "group": "basic",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "✅",
+   "clips": []
+  },
+  {
+   "id": "NO",
+   "ar": "لأ",
+   "group": "basic",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "❌",
+   "clips": []
+  },
+  {
+   "id": "WAIT",
+   "ar": "استنى / لحظة",
+   "group": "basic",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "✋",
+   "clips": []
+  },
+  {
+   "id": "REPEAT",
+   "ar": "تاني / كرر",
+   "group": "basic",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🔁",
+   "clips": []
+  },
+  {
+   "id": "NOT-UNDERSTAND",
+   "ar": "مش فاهم",
+   "group": "basic",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "😕",
+   "clips": []
+  },
+  {
+   "id": "UNDERSTAND",
+   "ar": "فاهم",
+   "group": "basic",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💡",
+   "clips": []
+  },
+  {
+   "id": "SLOWLY",
+   "ar": "بالراحة",
+   "group": "basic",
+   "dir": "sign2voice",
+   "pri": "P1",
+   "icon": "🐢",
+   "clips": []
+  },
+  {
+   "id": "DONT-KNOW",
+   "ar": "مش عارف",
+   "group": "basic",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🤷",
+   "clips": []
+  },
+  {
+   "id": "CAN_POSSIBLE",
+   "ar": "ممكن؟",
+   "group": "basic",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🙆",
+   "clips": []
+  },
+  {
+   "id": "FINISHED",
+   "ar": "خلاص / خلصت",
+   "group": "basic",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🏁",
+   "clips": []
+  },
+  {
+   "id": "WHERE",
+   "ar": "فين؟",
+   "group": "questions",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📍",
+   "clips": []
+  },
+  {
+   "id": "WHEN",
+   "ar": "إمتى؟",
+   "group": "questions",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🕒",
+   "clips": []
+  },
+  {
+   "id": "WHAT",
+   "ar": "إيه؟",
+   "group": "questions",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "❓",
+   "clips": []
+  },
+  {
+   "id": "WHO",
+   "ar": "مين؟",
+   "group": "questions",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "👤",
+   "clips": []
+  },
+  {
+   "id": "WHY",
+   "ar": "ليه؟",
+   "group": "questions",
+   "dir": "both",
+   "pri": "P3",
+   "icon": "🤔",
+   "clips": []
+  },
+  {
+   "id": "HOW-MANY_HOW-MUCH",
+   "ar": "كام؟",
+   "group": "questions",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🧮",
+   "clips": []
+  },
+  {
+   "id": "PHARMACY",
+   "ar": "صيدلية",
+   "group": "pharmacy",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🏪",
+   "clips": []
+  },
+  {
+   "id": "MEDICINE",
+   "ar": "دوا",
+   "group": "pharmacy",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💊",
+   "clips": []
+  },
+  {
+   "id": "PRESCRIPTION",
+   "ar": "روشتة",
+   "group": "pharmacy",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📝",
+   "clips": []
+  },
+  {
+   "id": "PILLS",
+   "ar": "أقراص / حبوب",
+   "group": "pharmacy",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💊",
+   "clips": []
+  },
+  {
+   "id": "SYRUP",
+   "ar": "شراب",
+   "group": "pharmacy",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🧴",
+   "clips": []
+  },
+  {
+   "id": "INJECTION",
+   "ar": "حقنة",
+   "group": "pharmacy",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "💉",
+   "clips": []
+  },
+  {
+   "id": "TIMES-PER-DAY",
+   "ar": "مرة في اليوم",
+   "group": "pharmacy",
+   "dir": "voice2sign",
+   "pri": "P1",
+   "icon": "🔂",
+   "clips": []
+  },
+  {
+   "id": "BEFORE-FOOD",
+   "ar": "قبل الأكل",
+   "group": "pharmacy",
+   "dir": "voice2sign",
+   "pri": "P1",
+   "icon": "🍽️",
+   "clips": []
+  },
+  {
+   "id": "AFTER-FOOD",
+   "ar": "بعد الأكل",
+   "group": "pharmacy",
+   "dir": "voice2sign",
+   "pri": "P1",
+   "icon": "🍽️",
+   "clips": []
+  },
+  {
+   "id": "ALTERNATIVE",
+   "ar": "بديل / نوع تاني",
+   "group": "pharmacy",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔄",
+   "clips": []
+  },
+  {
+   "id": "NOT-AVAILABLE",
+   "ar": "مش موجود / خلصان",
+   "group": "pharmacy",
+   "dir": "voice2sign",
+   "pri": "P1",
+   "icon": "🚫",
+   "clips": []
+  },
+  {
+   "id": "DOCTOR",
+   "ar": "دكتور",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🧑‍⚕️",
+   "clips": []
+  },
+  {
+   "id": "HOSPITAL",
+   "ar": "مستشفى",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🏥",
+   "clips": []
+  },
+  {
+   "id": "CLINIC",
+   "ar": "عيادة",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🩺",
+   "clips": []
+  },
+  {
+   "id": "APPOINTMENT",
+   "ar": "ميعاد / حجز",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📅",
+   "clips": []
+  },
+  {
+   "id": "CHECKUP",
+   "ar": "كشف",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🩺",
+   "clips": []
+  },
+  {
+   "id": "LAB-TEST",
+   "ar": "تحليل",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🧪",
+   "clips": []
+  },
+  {
+   "id": "X-RAY",
+   "ar": "أشعة",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🩻",
+   "clips": []
+  },
+  {
+   "id": "FEVER",
+   "ar": "سخونية",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🤒",
+   "clips": []
+  },
+  {
+   "id": "BLOOD-PRESSURE",
+   "ar": "ضغط",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🩸",
+   "clips": []
+  },
+  {
+   "id": "DIABETES",
+   "ar": "سكر",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🍬",
+   "clips": []
+  },
+  {
+   "id": "PREGNANT",
+   "ar": "حامل",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🤰",
+   "clips": []
+  },
+  {
+   "id": "ALLERGY",
+   "ar": "حساسية",
+   "group": "doctor",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "⚠️",
+   "clips": []
+  },
+  {
+   "id": "PAIN",
+   "ar": "وجع / بيوجعني",
+   "group": "body",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🤕",
+   "clips": []
+  },
+  {
+   "id": "HEAD",
+   "ar": "راس",
+   "group": "body",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🗣️",
+   "clips": []
+  },
+  {
+   "id": "STOMACH",
+   "ar": "بطن",
+   "group": "body",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🫃",
+   "clips": []
+  },
+  {
+   "id": "TOOTH",
+   "ar": "سنان",
+   "group": "body",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🦷",
+   "clips": []
+  },
+  {
+   "id": "BACK",
+   "ar": "ضهر",
+   "group": "body",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🧍",
+   "clips": []
+  },
+  {
+   "id": "CHEST",
+   "ar": "صدر",
+   "group": "body",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🫁",
+   "clips": []
+  },
+  {
+   "id": "EYE",
+   "ar": "عين",
+   "group": "body",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "👁️",
+   "clips": []
+  },
+  {
+   "id": "EAR",
+   "ar": "ودن",
+   "group": "body",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "👂",
+   "clips": []
+  },
+  {
+   "id": "LEG",
+   "ar": "رجل",
+   "group": "body",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🦵",
+   "clips": []
+  },
+  {
+   "id": "HAND_ARM",
+   "ar": "إيد",
+   "group": "body",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "💪",
+   "clips": []
+  },
+  {
+   "id": "DIZZY",
+   "ar": "دايخ",
+   "group": "feelings",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "😵‍💫",
+   "clips": []
+  },
+  {
+   "id": "SICK_TIRED",
+   "ar": "تعبان / عيان",
+   "group": "feelings",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🤢",
+   "clips": []
+  },
+  {
+   "id": "SCARED",
+   "ar": "خايف",
+   "group": "feelings",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "😨",
+   "clips": []
+  },
+  {
+   "id": "FINE_GOOD",
+   "ar": "كويس",
+   "group": "feelings",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🙂",
+   "clips": []
+  },
+  {
+   "id": "TAXI",
+   "ar": "تاكسي",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🚕",
+   "clips": []
+  },
+  {
+   "id": "BUS",
+   "ar": "أتوبيس",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🚌",
+   "clips": []
+  },
+  {
+   "id": "METRO",
+   "ar": "مترو",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🚇",
+   "clips": []
+  },
+  {
+   "id": "MICROBUS",
+   "ar": "ميكروباص",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🚐",
+   "clips": []
+  },
+  {
+   "id": "TUKTUK",
+   "ar": "توكتوك",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🛺",
+   "clips": []
+  },
+  {
+   "id": "WANT-GO",
+   "ar": "عايز أروح...",
+   "group": "transport",
+   "dir": "sign2voice",
+   "pri": "P1",
+   "icon": "🚶",
+   "clips": []
+  },
+  {
+   "id": "STOP-HERE",
+   "ar": "وقف هنا",
+   "group": "transport",
+   "dir": "sign2voice",
+   "pri": "P1",
+   "icon": "🛑",
+   "clips": []
+  },
+  {
+   "id": "RIGHT",
+   "ar": "يمين",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "➡️",
+   "clips": []
+  },
+  {
+   "id": "LEFT",
+   "ar": "شمال",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "⬅️",
+   "clips": []
+  },
+  {
+   "id": "STRAIGHT",
+   "ar": "على طول",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "⬆️",
+   "clips": []
+  },
+  {
+   "id": "NEAR",
+   "ar": "قريب",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🤏",
+   "clips": []
+  },
+  {
+   "id": "FAR",
+   "ar": "بعيد",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🛣️",
+   "clips": []
+  },
+  {
+   "id": "STATION",
+   "ar": "محطة",
+   "group": "transport",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🚏",
+   "clips": []
+  },
+  {
+   "id": "HOME",
+   "ar": "بيت",
+   "group": "places",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🏠",
+   "clips": []
+  },
+  {
+   "id": "WORK",
+   "ar": "شغل",
+   "group": "places",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "💼",
+   "clips": []
+  },
+  {
+   "id": "SCHOOL",
+   "ar": "مدرسة",
+   "group": "places",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🏫",
+   "clips": []
+  },
+  {
+   "id": "BANK",
+   "ar": "بنك",
+   "group": "places",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🏦",
+   "clips": []
+  },
+  {
+   "id": "POLICE-STATION",
+   "ar": "قسم شرطة",
+   "group": "places",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🚓",
+   "clips": []
+  },
+  {
+   "id": "MARKET",
+   "ar": "سوق",
+   "group": "places",
+   "dir": "both",
+   "pri": "P3",
+   "icon": "🛒",
+   "clips": []
+  },
+  {
+   "id": "MOSQUE",
+   "ar": "جامع",
+   "group": "places",
+   "dir": "both",
+   "pri": "P3",
+   "icon": "🕌",
+   "clips": []
+  },
+  {
+   "id": "CHURCH",
+   "ar": "كنيسة",
+   "group": "places",
+   "dir": "both",
+   "pri": "P3",
+   "icon": "⛪",
+   "clips": []
+  },
+  {
+   "id": "TOILET",
+   "ar": "حمّام",
+   "group": "places",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🚻",
+   "clips": []
+  },
+  {
+   "id": "WANT_NEED",
+   "ar": "عايز / محتاج",
+   "group": "shop",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🫴",
+   "clips": []
+  },
+  {
+   "id": "THIS",
+   "ar": "ده / دي",
+   "group": "shop",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "👉",
+   "clips": []
+  },
+  {
+   "id": "EXPENSIVE",
+   "ar": "غالي",
+   "group": "shop",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "💸",
+   "clips": []
+  },
+  {
+   "id": "CHEAPER",
+   "ar": "أرخص",
+   "group": "shop",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🏷️",
+   "clips": []
+  },
+  {
+   "id": "BAG",
+   "ar": "كيس",
+   "group": "shop",
+   "dir": "both",
+   "pri": "P3",
+   "icon": "🛍️",
+   "clips": []
+  },
+  {
+   "id": "ANOTHER",
+   "ar": "واحد تاني",
+   "group": "shop",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "➕",
+   "clips": []
+  },
+  {
+   "id": "SIZE",
+   "ar": "مقاس",
+   "group": "shop",
+   "dir": "both",
+   "pri": "P3",
+   "icon": "📏",
+   "clips": []
+  },
+  {
+   "id": "MONEY",
+   "ar": "فلوس",
+   "group": "money",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💵",
+   "clips": []
+  },
+  {
+   "id": "POUND",
+   "ar": "جنيه",
+   "group": "money",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💷",
+   "clips": []
+  },
+  {
+   "id": "SMALL-CHANGE",
+   "ar": "فكّة",
+   "group": "money",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🪙",
+   "clips": []
+  },
+  {
+   "id": "CHANGE-DUE",
+   "ar": "الباقي",
+   "group": "money",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💱",
+   "clips": []
+  },
+  {
+   "id": "CARD",
+   "ar": "كارت فيزا",
+   "group": "money",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "💳",
+   "clips": []
+  },
+  {
+   "id": "CASH",
+   "ar": "كاش",
+   "group": "money",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "💵",
+   "clips": []
+  },
+  {
+   "id": "RECEIPT",
+   "ar": "إيصال",
+   "group": "money",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🧾",
+   "clips": []
+  },
+  {
+   "id": "PAY",
+   "ar": "ادفع",
+   "group": "money",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🤝",
+   "clips": []
+  },
+  {
+   "id": "MOBILE-WALLET",
+   "ar": "محفظة موبايل",
+   "group": "money",
+   "dir": "both",
+   "pri": "P3",
+   "icon": "📲",
+   "clips": []
+  },
+  {
+   "id": "ID-CARD",
+   "ar": "بطاقة رقم قومي",
+   "group": "government",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🪪",
+   "clips": []
+  },
+  {
+   "id": "BIRTH-CERTIFICATE",
+   "ar": "شهادة ميلاد",
+   "group": "government",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "👶",
+   "clips": []
+  },
+  {
+   "id": "PAPERS",
+   "ar": "ورق",
+   "group": "government",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📄",
+   "clips": []
+  },
+  {
+   "id": "STAMP",
+   "ar": "ختم",
+   "group": "government",
+   "dir": "voice2sign",
+   "pri": "P2",
+   "icon": "🔏",
+   "clips": []
+  },
+  {
+   "id": "FORM",
+   "ar": "استمارة",
+   "group": "government",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "📋",
+   "clips": []
+  },
+  {
+   "id": "PHOTOCOPY",
+   "ar": "صورة / تصوير ورق",
+   "group": "government",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🖨️",
+   "clips": []
+  },
+  {
+   "id": "COUNTER-WINDOW",
+   "ar": "شبّاك",
+   "group": "government",
+   "dir": "voice2sign",
+   "pri": "P1",
+   "icon": "🪟",
+   "clips": []
+  },
+  {
+   "id": "QUEUE_YOUR-TURN",
+   "ar": "طابور / دورك",
+   "group": "government",
+   "dir": "voice2sign",
+   "pri": "P1",
+   "icon": "🧍‍♂️",
+   "clips": []
+  },
+  {
+   "id": "SIGNATURE",
+   "ar": "إمضا",
+   "group": "government",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "✍️",
+   "clips": []
+  },
+  {
+   "id": "DISABILITY-CARD",
+   "ar": "كارت الخدمات المتكاملة",
+   "group": "government",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "♿",
+   "clips": []
+  },
+  {
+   "id": "0",
+   "ar": "صفر",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "0️⃣",
+   "clips": []
+  },
+  {
+   "id": "1",
+   "ar": "واحد",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "1️⃣",
+   "clips": []
+  },
+  {
+   "id": "2",
+   "ar": "اتنين",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "2️⃣",
+   "clips": []
+  },
+  {
+   "id": "3",
+   "ar": "تلاتة",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "3️⃣",
+   "clips": []
+  },
+  {
+   "id": "4",
+   "ar": "أربعة",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "4️⃣",
+   "clips": []
+  },
+  {
+   "id": "5",
+   "ar": "خمسة",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "5️⃣",
+   "clips": []
+  },
+  {
+   "id": "6",
+   "ar": "ستة",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "6️⃣",
+   "clips": []
+  },
+  {
+   "id": "7",
+   "ar": "سبعة",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "7️⃣",
+   "clips": []
+  },
+  {
+   "id": "8",
+   "ar": "تمانية",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "8️⃣",
+   "clips": []
+  },
+  {
+   "id": "9",
+   "ar": "تسعة",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "9️⃣",
+   "clips": []
+  },
+  {
+   "id": "10",
+   "ar": "عشرة",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🔟",
+   "clips": []
+  },
+  {
+   "id": "11",
+   "ar": "حداشر",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "12",
+   "ar": "اتناشر",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "13",
+   "ar": "تلاتاشر",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "14",
+   "ar": "أربعتاشر",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "15",
+   "ar": "خمستاشر",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "16",
+   "ar": "ستاشر",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "17",
+   "ar": "سبعتاشر",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "18",
+   "ar": "تمنتاشر",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "19",
+   "ar": "تسعتاشر",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "20",
+   "ar": "عشرين",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "30",
+   "ar": "تلاتين",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "40",
+   "ar": "أربعين",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "50",
+   "ar": "خمسين",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "60",
+   "ar": "ستين",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "70",
+   "ar": "سبعين",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "80",
+   "ar": "تمانين",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "90",
+   "ar": "تسعين",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "100",
+   "ar": "مية",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💯",
+   "clips": []
+  },
+  {
+   "id": "200",
+   "ar": "ميتين",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "500",
+   "ar": "خمسمية",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "1000",
+   "ar": "ألف",
+   "group": "numbers",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🔢",
+   "clips": []
+  },
+  {
+   "id": "TODAY",
+   "ar": "النهارده",
+   "group": "time",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📆",
+   "clips": []
+  },
+  {
+   "id": "TOMORROW",
+   "ar": "بكرة",
+   "group": "time",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "⏭️",
+   "clips": []
+  },
+  {
+   "id": "YESTERDAY",
+   "ar": "إمبارح",
+   "group": "time",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "⏮️",
+   "clips": []
+  },
+  {
+   "id": "NOW",
+   "ar": "دلوقتي",
+   "group": "time",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "⏱️",
+   "clips": []
+  },
+  {
+   "id": "HOUR_O-CLOCK",
+   "ar": "ساعة",
+   "group": "time",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🕐",
+   "clips": []
+  },
+  {
+   "id": "MORNING",
+   "ar": "الصبح",
+   "group": "time",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "☀️",
+   "clips": []
+  },
+  {
+   "id": "NIGHT",
+   "ar": "بالليل",
+   "group": "time",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🌙",
+   "clips": []
+  },
+  {
+   "id": "SATURDAY",
+   "ar": "السبت",
+   "group": "time",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "📅",
+   "clips": []
+  },
+  {
+   "id": "SUNDAY",
+   "ar": "الحد",
+   "group": "time",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "📅",
+   "clips": []
+  },
+  {
+   "id": "MONDAY",
+   "ar": "الاتنين",
+   "group": "time",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "📅",
+   "clips": []
+  },
+  {
+   "id": "TUESDAY",
+   "ar": "التلات",
+   "group": "time",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "📅",
+   "clips": []
+  },
+  {
+   "id": "WEDNESDAY",
+   "ar": "الأربع",
+   "group": "time",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "📅",
+   "clips": []
+  },
+  {
+   "id": "THURSDAY",
+   "ar": "الخميس",
+   "group": "time",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "📅",
+   "clips": []
+  },
+  {
+   "id": "FRIDAY",
+   "ar": "الجمعة",
+   "group": "time",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "📅",
+   "clips": []
+  },
+  {
+   "id": "HELP",
+   "ar": "الحقوني / ساعدني",
+   "group": "sos",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🆘",
+   "clips": []
+  },
+  {
+   "id": "AMBULANCE",
+   "ar": "إسعاف",
+   "group": "sos",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🚑",
+   "clips": []
+  },
+  {
+   "id": "POLICE",
+   "ar": "شرطة",
+   "group": "sos",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "👮",
+   "clips": []
+  },
+  {
+   "id": "FIRE",
+   "ar": "حريقة",
+   "group": "sos",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🔥",
+   "clips": []
+  },
+  {
+   "id": "ACCIDENT",
+   "ar": "حادثة",
+   "group": "sos",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💥",
+   "clips": []
+  },
+  {
+   "id": "DANGER",
+   "ar": "خطر",
+   "group": "sos",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "⚠️",
+   "clips": []
+  },
+  {
+   "id": "ROBBED",
+   "ar": "اتسرق مني",
+   "group": "sos",
+   "dir": "sign2voice",
+   "pri": "P2",
+   "icon": "👛",
+   "clips": []
+  },
+  {
+   "id": "LOST",
+   "ar": "تايه",
+   "group": "sos",
+   "dir": "sign2voice",
+   "pri": "P1",
+   "icon": "🧭",
+   "clips": []
+  },
+  {
+   "id": "CALL-MY-FAMILY",
+   "ar": "كلّم أهلي",
+   "group": "sos",
+   "dir": "sign2voice",
+   "pri": "P1",
+   "icon": "📞",
+   "clips": []
+  },
+  {
+   "id": "BLEEDING",
+   "ar": "نزيف / دم",
+   "group": "sos",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🩸",
+   "clips": []
+  }
+ ]
+}
