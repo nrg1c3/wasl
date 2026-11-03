@@ -4,14 +4,25 @@
    - POST requests (AI, voice) are never cached. */
 const SHELL = 'wasl-shell-v46';
 const RUNTIME = 'wasl-rt-v1';
-const KEEP = [SHELL, RUNTIME, 'wasl-demo-v1', 'wasl-share'];
+const SIGNS = 'wasl-signs-v1'; // sign-language clips: kept across app updates (a clip's file name changes when it is re-recorded)
+const KEEP = [SHELL, RUNTIME, SIGNS, 'wasl-demo-v1', 'wasl-share'];
 const FILES = ['./', 'index.html', 'privacy.html', 'manifest.webmanifest',
-  'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png', 'signs/s2v.js'];
+  'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png', 'signs/s2v.js', 'signs/index.json'];
 const RUNTIME_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdn.jsdelivr.net',
   'storage.googleapis.com', 'tfhub.dev'];
 
+/* The most used signs (P1) are saved at install, so they play offline from the start. Best effort: never blocks the install. */
+async function precacheSigns() {
+  try {
+    const m = await (await fetch('signs/index.json', { cache: 'no-cache' })).json();
+    const c = await caches.open(SIGNS);
+    const want = (m.signs || []).filter(s => s.pri === 'P1').flatMap(s => (s.clips || []).slice(0, 1).map(x => x.src));
+    for (const src of want) { if (!(await c.match(src))) { try { const r = await fetch(src); if (r.ok) await c.put(src, r); } catch (e) {} } }
+  } catch (e) {}
+}
+
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(SHELL).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(SHELL).then(c => c.addAll(FILES)).then(() => { precacheSigns(); return self.skipWaiting(); }));
 });
 
 self.addEventListener('activate', e => {
@@ -45,6 +56,16 @@ async function cacheFirst(req) {
   return res;
 }
 
+/* Sign clips: from the phone once saved (other signs are saved the first time they play). */
+async function signClip(req) {
+  const c = await caches.open(SIGNS);
+  const hit = await c.match(req, { ignoreSearch: true });
+  if (hit) return hit;
+  const res = await fetch(req);
+  if (res && res.status === 200) c.put(req, res.clone()).catch(() => {});
+  return res;
+}
+
 /* WhatsApp replies shared to Wasl (text or a voice note) arrive here as a POST.
    Keep them in a small cache and open the app, which picks them up. */
 async function takeShare(req) {
@@ -65,6 +86,7 @@ self.addEventListener('fetch', e => {
   if (req.method === 'POST' && new URL(req.url).pathname.endsWith('/share-target')) { e.respondWith(takeShare(req)); return; }
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
+  if (url.origin === self.location.origin && url.pathname.includes('/signs/clips/') && !req.headers.has('range')) { e.respondWith(signClip(req)); return; }
   if (url.origin === self.location.origin) { e.respondWith(networkFirst(req)); return; }
   if (RUNTIME_HOSTS.includes(url.hostname)) { e.respondWith(cacheFirst(req)); }
 });

@@ -353,6 +353,46 @@ html.pm .cheard p{font-size:clamp(26px,8vw,34px)}html.pm #call.asking .cheard p{
 html.pm #cOk .opts{grid-template-columns:1fr 1fr}html.pm #cOk .opts button{min-height:96px;flex-direction:column;justify-content:center;text-align:center;gap:4px;font-size:22px}html.pm #cOkYes{background:#2E7D5B;color:#fff}
 @media (max-height:720px){#call.asking .cbody{gap:8px;padding-top:8px}#call.asking .state{display:none}#call.asking .cheard{padding:8px 12px}#call.asking .cheard p,html.pm #call.asking .cheard p{font-size:18px;max-height:14vh}#call.asking #cCards{margin-top:4px}#call.asking #cCards .pcard{padding:3px 8px;min-width:76px;border-top-width:4px}#call.asking #cCards .pcard svg{width:24px;height:24px}#call.asking #cCards .pcard b{font-size:19px}#call.asking .decide{padding:10px;gap:8px}#call.asking .decide .q{font-size:16px;line-height:1.45}html.pm #call.asking .opts button{min-height:52px;font-size:18px}html.pm #call.asking .opts .ri{width:32px;height:32px}html.pm #call.asking #cOk .opts button{min-height:76px}}
 html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.tools button{font-size:15px;padding:8px 2px}
+/* voice → sign: the «إشارة» switch and the sign player (task + translation screens) */
+.sgt{float:left;margin:0 8px 4px 0;min-height:44px;display:inline-flex;align-items:center;gap:6px;border:1px solid #4A5A62;background:#1B2A31;color:#FFD7B0;border-radius:999px;padding:0 8px 0 12px;font-size:15px;font-weight:800}
+.sgt i{display:inline-block;width:36px;height:22px;border-radius:999px;background:#59656B;position:relative;flex:0 0 auto}
+.sgt i::after{content:'';position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#fff}
+.sgt[aria-pressed=true]{border-color:var(--or)}.sgt[aria-pressed=true] i{background:var(--or)}.sgt[aria-pressed=true] i::after{right:17px}
+.sgt:focus-visible,.ws-ctl button:focus-visible{outline:3px solid var(--or2);outline-offset:2px}
+.sgrow{display:flex;justify-content:flex-end}.sgrow .sgt{float:none;margin:0;background:var(--ink);color:var(--bg)}
+.sgbox{clear:both}
+/* the player: clip on one side; the «إشارة» switch, the word, the whole sentence and the buttons on the other */
+.ws{background:#0B1418;border-radius:14px;padding:8px;margin:2px 0 6px;color:#fff;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"stage tog" "stage cap" "stage seq" "stage ctl";grid-template-rows:auto auto 1fr auto;column-gap:8px;row-gap:6px}
+.ws>.sgt{grid-area:tog;justify-self:start;float:none;margin:0}
+.ws-stage{grid-area:stage;position:relative;height:var(--wsh,26vh);aspect-ratio:9/16;background:#1E3A47;border-radius:10px;overflow:hidden;cursor:zoom-in}
+.ws-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;background:#000}
+.ws-stage video.on{opacity:1}
+.ws-card{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:4px;background:#1E3A47}
+.ws-card.on{display:flex}
+.ws-card .ic{font-size:clamp(30px,10vw,56px);line-height:1.1}
+.ws-card b{font-size:16px;line-height:1.25;word-break:break-word;color:#FFD7B0}.ws-card small{font-size:11px;color:#BFD3D8;line-height:1.3}
+.ws-card.num .ic{display:none}.ws-card.num b{font-size:clamp(26px,9vw,52px);direction:ltr;unicode-bidi:isolate;color:#fff}
+.ws-wait{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(11,20,24,.75);font-weight:800;font-size:14px}
+.ws.busy .ws-wait{display:flex}
+.ws-cap{grid-area:cap;font-size:clamp(26px,8vw,34px);font-weight:800;line-height:1.2;color:#fff;min-height:1.2em;word-break:break-word}
+.ws-seq{grid-area:seq;display:flex;flex-wrap:wrap;gap:4px;overflow:hidden;align-content:flex-start;min-height:0}
+.ws-seq span{font-size:14px;line-height:1.5;background:#24343B;color:#E3E9EB;border-radius:999px;padding:1px 8px;white-space:nowrap}.ws-seq span.now{background:var(--or);color:#1A0E05;font-weight:800}
+.ws-seq i{font-style:normal}
+.ws-ctl{grid-area:ctl;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.ws-ctl button{min-height:44px;border:0;border-radius:10px;background:#24343B;color:#fff;font-size:13px;font-weight:800;padding:2px;line-height:1.15;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.ws-ctl button[aria-pressed=true]{background:var(--or);color:#1A0E05}
+/* translation screen: room for a bigger clip, and the word under it */
+#free .ws{--wsh:34vh;grid-template-areas:"tog tog" "stage seq" "stage ctl" "cap cap";grid-template-rows:auto 1fr auto auto}#free .ws-ctl{grid-template-columns:1fr 1fr}#free .ws-cap{text-align:center}
+.ws.full{position:fixed;inset:0;z-index:60;border-radius:0;margin:0;padding:16px;grid-template-columns:1fr;grid-template-areas:"stage" "cap" "seq" "ctl";grid-template-rows:auto auto auto auto;align-content:center;justify-items:center}
+.ws.full .ws-stage{height:min(60vh,150vw);cursor:zoom-out}.ws.full>.sgt{display:none}.ws.full .ws-seq{justify-content:center}.ws.full .ws-cap{font-size:40px;text-align:center}.ws.full .ws-ctl{width:100%;grid-template-columns:repeat(4,minmax(0,1fr))}
+/* task screen: the sign above the heard text (the text stays, two lines, it scrolls) */
+#task.sgon .live{max-height:none;flex:0 1 auto}#task.sgon .live p{max-height:2.9em;overflow-y:auto}
+#task.sgon .tbody{min-height:120px}
+/* while deciding: a small clip and the word only, so the question and every answer stay on screen */
+#task.asking .ws{--wsh:11vh;padding:6px;row-gap:4px;grid-template-areas:"stage tog" "stage cap";grid-template-rows:auto 1fr}#task.asking .ws-seq,#task.asking .ws-ctl{display:none}
+#task.asking .ws-cap{font-size:22px;align-self:center}#task.asking .ws>.sgt{min-height:40px}
+#task.asking.sgon #tLiveText{display:none} /* the question box already says the whole sentence */
+@media (max-height:720px){#task .ws{--wsh:19vh}#task .ws-cap{font-size:24px}#task .ws-seq{display:none}#task .ws{grid-template-areas:"stage tog" "stage cap" "stage ctl";grid-template-rows:auto 1fr auto}#free .ws{--wsh:30vh}#task.asking .ws{--wsh:11vh;grid-template-areas:"stage tog" "stage cap";grid-template-rows:auto 1fr}#task.sgon #tLiveLab{display:none}}
 </style>
 <script>try{if(localStorage.getItem('wasl_pic')==='true')document.documentElement.classList.add('pm')}catch(e){}
 /* App language (UI): the user's choice in بياناتي, else the phone's language: English phones get English, every other language Arabic. */
@@ -2992,6 +3032,184 @@ function oDemoReply(o){const declined=o.thread.some(m=>m.from==='user'&&!/هاخ
   else oGotReply('تمام يا فندم، الطلب خرج مع الطيار وهيوصلك خلال ساعة، والحساب 60 جنيه كاش. ألف سلامة.')},2200)}
 oTakeShared();
 if(new URLSearchParams(location.search).get('go')==='order')setTimeout(oOpen,300);
+</script>
+<script>
+/* ================= VOICE → SIGN =================
+   What the hearing person says is shown to the Deaf user as Egyptian Sign Language: short clips of a real signer
+   (signs/index.json lists them), played back to back. A sign with no clip yet shows its picture card; numbers are built
+   from number signs (250 = 200 + 50) or shown big; medicine names are never signed, only written.
+   window.WaslSigns is the shared library: load(), get(id), has(id), play(items, el, opts) (+ clip, numberIds, gloss, stop). */
+Object.assign(EN,{
+'إشارة':'Sign',
+'تاني':'Again','أبطأ':'Slower','عادي':'Normal','وقف':'Stop','كبّر':'Bigger','صغّر':'Smaller',
+'كلام اللي قدامك بالإشارة':'What they said, in sign language',
+'لحظة...':'One moment...',
+'اسم دوا (مكتوب بس)':'Medicine name (written only)',
+'رقم':'Number',
+'مفيش إشارة للكلام ده لسه':'No signs for this yet',
+'اعرض الكلام بالإشارة':'Show what they say in sign language'
+});
+Object.assign(GU,{
+'تاني':'مرة ثانية','عادي':'عادي','وقف':'وقّف','كبّر':'كبّر','صغّر':'صغّر',
+'لحظة...':'لحظة...','اسم دوا (مكتوب بس)':'اسم دواء (مكتوب بس)',
+'مفيش إشارة للكلام ده لسه':'ما فيه إشارة لهالكلام للحين',
+'اعرض الكلام بالإشارة':'اعرض الكلام بالإشارة',
+'عايز / محتاج':'أبي / محتاج','فين؟':'وين؟','إمتى؟':'متى؟','إيه؟':'وش؟','ليه؟':'ليش؟','دوا':'دواء','كويس':'زين',
+'مش فاهم':'ما فهمت','مش عارف':'ما أدري','دلوقتي':'الحين','النهارده':'اليوم','بكرة':'باجر','إمبارح':'أمس',
+'لأ':'لا','أيوه':'إيه','تاني / كرر':'مرة ثانية','استنى / لحظة':'انتظر / لحظة','مش موجود / خلصان':'مو موجود / خلصان',
+'تعبان / عيان':'تعبان / مريض','وجع / بيوجعني':'وجع / يعورني','راس':'راس','سنان':'أسنان','ضهر':'ظهر','رجل':'رجل'
+});
+window.WaslSigns=(function(){
+ const IDX='signs/index.json';
+ let M=null,P=null,byId={},phr=[],gen=0,cur=null;
+ const blobs=new Map(); // clip src -> Promise<object URL> (each clip downloaded once, then played from memory)
+ const NUMW={}; // number words -> ID
+ const nrm=s=>String(s||'').replace(/[ً-ْـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/ؤ/g,'و').replace(/ئ/g,'ي')
+  .replace(/[٠-٩]/g,d=>String(d.charCodeAt(0)-0x660)).replace(/[۰-۹]/g,d=>String(d.charCodeAt(0)-0x6F0)).toLowerCase();
+ const strip=t=>{const m=t.match(/^(و|ف)?(بال|لل|ال|ب|ل|ك)?(.+)$/);return m&&m[3].length>=3?m[3]:t};
+ // Common spoken words that mean a library sign (the vocabulary lists one form; people say others).
+ const ALIAS={WANT_NEED:['عاوز','عاوزه','عايزه','عايزين','محتاجه','محتاجين','عاوزين'],'HOW-MANY_HOW-MUCH':['بكام','كم','قد ايه'],MEDICINE:['دواء','علاج','ادويه'],
+  POUND:['جنيه','جنيهات','جنية'],PHARMACY:['اجزخانه'],PILLS:['حبه','حبايه','برشام','قرص'],DOCTOR:['دكتوره','الطبيب','طبيب'],HOSPITAL:['مستشفي'],
+  'NOT-AVAILABLE':['مفيش','مش موجوده','خلصت','ناقص'],WAIT:['استني','استنا','ثانيه'],WHEN:['امتي'],WHERE:['فين'],WHAT:['ايه'],WHY:['ليه'],WHO:['مين'],
+  'THANK-YOU':['شكرا','متشكر','متشكرين','مرسي'],PAY:['الدفع','تدفع','هتدفع','دفع'],CARD:['فيزا','كارت'],CASH:['كاش','نقدي'],'CHANGE-DUE':['الباقي','باقي'],
+  'HOUR_O-CLOCK':['الساعه','ساعه'],TODAY:['انهارده','النهارده'],TOMORROW:['بكره'],NOW:['دلوقت','حالا'],YES:['ايوه','اه','ايوا','نعم','اكيد'],NO:['لا','لاء'],
+  OK:['تمام','ماشي','حاضر','اوكي'],SORRY:['اسف','معلش','اسفين'],PLEASE:['لوسمحت','فضلك'],ALTERNATIVE:['بديل','البديل'],PRESCRIPTION:['روشته','الروشته','وصفه'],
+  APPOINTMENT:['ميعاد','حجز','موعد'],'ID-CARD':['البطاقه','بطاقه'],PAPERS:['ورق','الورق','اوراق'],FINISHED:['خلاص'],PAIN:['وجع','بيوجعك','بيوجعه','الم'],
+  REPEAT:['تاني','كرر','اعيد'],SLOWLY:['بالراحه'],TAXI:['تاكسي'],RIGHT:['يمين'],LEFT:['شمال'],STRAIGHT:['طول','دغري'],'STOP-HERE':['هنا']};
+ const QW=['WHERE','WHEN','WHAT','WHO','WHY','HOW-MANY_HOW-MUCH'];
+ function index(m){byId={};phr=[];for(const k in NUMW)delete NUMW[k];
+  (m.signs||[]).forEach(s=>{byId[s.id]=s;if(s.dir==='sign2voice')return; // signs only the Deaf user makes are not used for the hearing side
+   const forms=String(s.ar||'').split('/').map(x=>x.replace(/\.\.\.|…|؟|\?/g,'').trim()).filter(Boolean);
+   (ALIAS[s.id]||[]).forEach(a=>forms.push(a));
+   forms.forEach(f=>{const w=nrm(f).split(/\s+/).filter(Boolean);if(!w.length)return;if(/^\d+$/.test(s.id)&&w.length===1)NUMW[w[0]]=s.id;phr.push({id:s.id,w})})});
+  phr.sort((a,b)=>b.w.length-a.w.length)}
+ function load(url){if(P&&!url)return P;
+  P=fetch(url||IDX).then(r=>{if(!r.ok)throw new Error('signs '+r.status);return r.json()}).then(m=>{M=m;index(m);return m}).catch(e=>{P=null;throw e});return P}
+ const get=id=>byId[String(id)]||null;
+ const has=id=>!!byId[String(id)];
+ const clip=(id,signer)=>{const s=get(id);if(!s||!s.clips||!s.clips.length)return null;return(signer&&s.clips.find(c=>c.signer===signer))||s.clips[0]};
+ const label=s=>{if(!s)return'';if(typeof UI!=='undefined'&&UI==='en')return String(s.id).replace(/_/g,' / ').replace(/-/g,' ').toLowerCase();
+  const t=tr(String(s.ar||'')),f=t.split('/')[0].replace(/\.\.\.|…/g,'').trim();return f||t};
+ // 250 -> ['200','50'] when every part has a clip, else null (the number is then shown big).
+ function numberIds(n){n=Math.floor(Number(n));if(!isFinite(n)||n<0||n>999999)return null;const ok=id=>!!clip(String(id));
+  const parts=(function f(x){if(ok(x))return[String(x)];if(x>=1000){const t=Math.floor(x/1000),r=x%1000;const a=t===1?['1000']:f(t)&&f(t).concat(['1000']);if(!a)return null;if(!r)return a;const b=f(r);return b?a.concat(b):null}
+   if(x>=100){const h=Math.floor(x/100)*100,r=x%100;let a=ok(h)?[String(h)]:(ok(h/100)&&ok(100)?[String(h/100),'100']:null);if(!a)return null;if(!r)return a;const b=f(r);return b?a.concat(b):null}
+   if(x>=20){const t=Math.floor(x/10)*10,u=x%10;if(!ok(t))return null;if(!u)return[String(t)];return ok(u)?[String(t),String(u)]:null}
+   if(x>10&&ok(10)&&ok(x-10))return['10',String(x-10)];return null})(n);
+  return parts&&parts.every(ok)?parts:null}
+ /* Offline / fallback gloss: words that match the library, in the order said, question words moved to the end (ESL order).
+    Words not in the library (articles, names, medicine names) are not signed. */
+ function gloss(text){const out=[],numbers=[];if(!M)return{glosses:out,missing:[],numbers};
+  const toks=nrm(text).replace(/(\d)[,٬](\d{3})/g,'$1$2').replace(/[^ء-يa-z0-9.\s]/g,' ').split(/\s+/).filter(Boolean);
+  for(let i=0;i<toks.length;){const t=toks[i];
+   if(/^\d+(\.\d+)?$/.test(t)){const v=Number(t);numbers.push(v);out.push('#'+t);i++;continue}
+   let hit=null;for(const p of phr){if(i+p.w.length>toks.length)continue;let ok=true;for(let j=0;j<p.w.length;j++){const a=toks[i+j],b=p.w[j];if(a!==b&&strip(a)!==b&&strip(a)!==strip(b)){ok=false;break}}if(ok){hit=p;break}}
+   if(hit){if(/^\d+$/.test(hit.id)){numbers.push(Number(hit.id));out.push('#'+hit.id)}else if(out[out.length-1]!==hit.id)out.push(hit.id);i+=hit.w.length}else i++}
+  const q=out.filter(x=>QW.includes(x)),r=out.filter(x=>!QW.includes(x));return{glosses:r.concat(q.filter((x,i)=>q.indexOf(x)===i)),missing:[],numbers}}
+ // items: 'ID' | '#250' | {w:'بنادول',type:'med'|'name'|'place'|'word'} -> steps to show
+ function steps(items,signer){const S=[];(items||[]).forEach(it=>{
+  if(it&&typeof it==='object'){const w=String(it.w||'').trim();if(!w)return;S.push({card:true,icon:it.type==='med'?'💊':it.type==='place'?'📍':it.type==='name'?'👤':'📝',big:w,cap:w,small:it.type==='med'?tr('اسم دوا (مكتوب بس)'):''});return}
+  const s=String(it||'');
+  if(s[0]==='#'){const v=s.slice(1),ids=/^\d+$/.test(v)?numberIds(v):null;
+   if(ids)ids.forEach(id=>{const c=clip(id,signer);S.push({src:c.src,cap:id,id})});else S.push({card:true,icon:'🔢',big:v,cap:v,small:tr('رقم'),num:true});return}
+  const g=get(s);if(!g)return;const c=clip(s,signer);
+  if(c)S.push({src:c.src,cap:label(g),id:s});else S.push({card:true,icon:g.icon||'🤟',cap:label(g),id:s})});return S}
+ function blobUrl(src){if(!blobs.has(src))blobs.set(src,fetch(src).then(r=>{if(!r.ok)throw new Error('clip '+r.status);return r.blob()}).then(b=>URL.createObjectURL(b)).catch(e=>{blobs.delete(src);throw e}));return blobs.get(src)}
+ function rateNow(){try{const v=Number(localStorage.getItem('wasl_sign_rate'));return v===0.75?0.75:1}catch(e){return 1}}
+ function ui(el){if(el.__ws)return el.__ws;el.innerHTML=`<div class="ws"><div class="ws-stage" role="img"><video playsinline muted preload="auto"></video><video playsinline muted preload="auto"></video><div class="ws-card"><span class="ic" aria-hidden="true"></span><b></b><small></small></div><div class="ws-wait">${esc(tr('لحظة...'))}</div></div>
+<div class="ws-cap" aria-live="polite"></div><div class="ws-seq"></div><div class="ws-ctl"><button type="button" data-a="again"><span aria-hidden="true">🔁</span>${esc(tr('تاني'))}</button><button type="button" data-a="rate"></button><button type="button" data-a="stop"><span aria-hidden="true">⏹</span>${esc(tr('وقف'))}</button><button type="button" data-a="big"></button></div></div>`;
+  const w={root:el.querySelector('.ws'),v:[...el.querySelectorAll('video')],card:el.querySelector('.ws-card'),cap:el.querySelector('.ws-cap'),seq:el.querySelector('.ws-seq'),stage:el.querySelector('.ws-stage'),last:null,opts:{}};
+  w.v.forEach(v=>{v.muted=true;v.setAttribute('muted','');v.disablePictureInPicture=true});
+  const rb=el.querySelector('[data-a=rate]'),bb=el.querySelector('[data-a=big]');
+  w.drawCtl=()=>{const r=rateNow();rb.innerHTML=`<span aria-hidden="true">🐢</span>${esc(r<1?tr('عادي'):tr('أبطأ'))}`;rb.setAttribute('aria-pressed',r<1?'true':'false');
+   const f=w.root.classList.contains('full');bb.innerHTML=`<span aria-hidden="true">⛶</span>${esc(f?tr('صغّر'):tr('كبّر'))}`};w.drawCtl();
+  el.querySelector('[data-a=again]').onclick=()=>{if(w.last)play(w.last,el,w.opts)};
+  rb.onclick=()=>{const r=rateNow()<1?1:0.75;try{localStorage.setItem('wasl_sign_rate',String(r))}catch(e){}w.v.forEach(v=>v.playbackRate=r);w.drawCtl()};
+  el.querySelector('[data-a=stop]').onclick=()=>stop(el);
+  const big=()=>{w.root.classList.toggle('full');w.drawCtl()};bb.onclick=big;w.stage.onclick=big;
+  el.__ws=w;return w}
+ function stop(el){gen++;const w=(el||cur||{}).__ws;if(w){w.v.forEach(v=>{try{v.pause()}catch(e){}});w.root.classList.remove('busy')}if(cur&&cur.__wsDone){const d=cur.__wsDone;cur.__wsDone=null;d()}}
+ function wait(el,on){const w=ui(el);w.root.classList.toggle('busy',!!on)}
+ /* Plays the steps one after another in two stacked <video>s: while one plays, the next clip is already loaded in the other. */
+ function play(items,el,opts){opts=opts||{};if(!el)return Promise.resolve();if(cur&&cur!==el)stop(cur);else stop(el);const my=++gen;cur=el;
+  const w=ui(el);w.last=items;w.opts=opts;w.root.classList.remove('busy');const S=steps(items,opts.signer);
+  w.seq.innerHTML=S.map((s,i)=>`<span data-i="${i}">${s.icon&&!s.src?`<i aria-hidden="true">${esc(s.icon)}</i> `:''}${esc(s.cap)}</span>`).join('');
+  if(!S.length){w.v.forEach(v=>v.classList.remove('on'));w.card.classList.add('on');w.card.querySelector('.ic').textContent='🤟';w.card.querySelector('b').textContent='';w.card.querySelector('small').textContent='';w.cap.textContent=tr('مفيش إشارة للكلام ده لسه');return Promise.resolve()}
+  S.forEach(s=>{if(s.src)blobUrl(s.src).catch(()=>{})}); // fetch every clip of the sentence now
+  return new Promise(res=>{el.__wsDone=res;let k=0;
+   const done=()=>{if(my!==gen)return;el.__wsDone=null;w.seq.querySelectorAll('.now').forEach(x=>x.classList.remove('now'));if(opts.onEnd)opts.onEnd();res()};
+   const prep=i=>{const s=S[i];if(!s||!s.src)return;const v=w.v[k%2];blobUrl(s.src).then(u=>{if(my!==gen)return;if(v.dataset.src!==s.src){v.dataset.src=s.src;v.src=u;v.load()}}).catch(()=>{})};
+   const step=async i=>{if(my!==gen)return;if(i>=S.length)return done();const s=S[i];
+    w.seq.querySelectorAll('span').forEach(x=>x.classList.toggle('now',+x.dataset.i===i));
+    w.cap.textContent=s.cap;w.stage.setAttribute('aria-label',s.cap);if(opts.onStep)try{opts.onStep(i,s)}catch(e){}
+    const r=rateNow();
+    if(s.src){let u=null;try{u=await blobUrl(s.src)}catch(e){}if(my!==gen)return;
+     if(u){const v=w.v[k%2],o=w.v[(k+1)%2];
+      if(v.dataset.src!==s.src){v.dataset.src=s.src;v.src=u}
+      v.playbackRate=r;v.defaultPlaybackRate=r;
+      const ok=await new Promise(go=>{let t=null;const fin=x=>{clearTimeout(t);v.onended=v.onerror=null;go(x)};v.onended=()=>fin(true);v.onerror=()=>fin(false);
+       t=setTimeout(()=>fin(true),((s.dur||clip(s.id)&&clip(s.id).dur||4)*1000+2500)/r);
+       try{v.currentTime=0}catch(e){}const p=v.play();
+       v.classList.add('on');o.classList.remove('on');w.card.classList.remove('on');
+       if(p&&p.catch)p.catch(()=>fin(false));k++;prep(i+1)});
+      if(my!==gen)return;if(ok)return step(i+1);
+     }
+     s.card=true;s.icon=(get(s.id)||{}).icon||'🤟'} // a clip that can't play shows its picture card
+    // picture / number / written card
+    w.v.forEach(v=>v.classList.remove('on'));w.card.classList.add('on');w.card.classList.toggle('num',!!s.num);w.card.classList.toggle('txt',!!s.big&&!s.num);
+    w.card.querySelector('.ic').textContent=s.icon||'';w.card.querySelector('b').textContent=s.big||'';w.card.querySelector('small').textContent=s.small||'';
+    prep(i+1);setTimeout(()=>step(i+1),(s.num||s.big?1800:1300)/r)};
+   step(0)})}
+ return{load,get,has,clip,numberIds,gloss,play,stop,wait,steps,label,get manifest(){return M}};
+})();
+
+/* ---------- sign view in the task and translation screens ---------- */
+const SIGN_URL=API_BASE+'wasl-sign';
+// On by default in picture mode, off in text mode; the user's own choice is remembered.
+function signOn(){const v=store.get('wasl_signview',null);return v==null?picOn():!!v}
+let vsSeq=0;const vsLast={task:'',free:''};
+function vsBox(where){return $(where==='task'?'tSg':'fSg')}
+function vsHome(id,where){const b=$(id);if(!b)return;const ws=vsBox(where).querySelector('.ws'),inPlayer=signOn()&&!!vsLast[where]&&ws;
+ const home=where==='task'?$('tLive'):document.querySelector('#free .sgrow');const to=inPlayer?ws:home;if(b.parentNode!==to)to.insertBefore(b,to.firstChild)} // the switch sits in the player while it shows, so it costs no extra row
+function vsDraw(){const on=signOn();['tSgT','fSgT'].forEach(id=>{const b=$(id);if(b){b.setAttribute('aria-pressed',on?'true':'false')}});
+ ['task','free'].forEach(w=>{const b=vsBox(w);if(!b)return;const show=on&&!!vsLast[w];b.classList.toggle('hidden',!show);if(!on)WaslSigns.stop(b)});
+ const t=$('task');if(t)t.classList.toggle('sgon',on&&!!vsLast.task);const f=$('free');if(f)f.classList.toggle('sgon',on&&!!vsLast.free);vsHome('tSgT','task');vsHome('fSgT','free')}
+function vsToggle(where){store.set('wasl_signview',!signOn());vsDraw();if(signOn()&&vsLast[where])signShow(where,vsLast[where])}
+/* The AI turns the sentence into sign IDs from our library (ESL order). Slow or no network: the local word matcher. */
+async function signGloss(text){let man=null;try{man=await WaslSigns.load()}catch(e){return null}
+ const local=()=>WaslSigns.gloss(text);
+ if(DEMO||navigator.onLine===false)return local();
+ try{const d=await postJSON(SIGN_URL,{text:String(text).slice(0,600),lang:LANG,ui:UI},7000);
+  if(d&&Array.isArray(d.glosses)){const g=d.glosses.filter(x=>typeof x==='string'&&(WaslSigns.has(x)||/^#\d+(\.\d+)?$/.test(x)));
+   const miss=(Array.isArray(d.missing)?d.missing:[]).filter(m=>m&&typeof m.w==='string'&&m.w.trim()).slice(0,4);
+   if(g.length||miss.length)return{glosses:g,missing:miss,numbers:Array.isArray(d.numbers)?d.numbers:[]}}}catch(e){}
+ return local()}
+async function signShow(where,text){text=String(text||'').trim();if(!text)return;vsLast[where]=text;if(!signOn()){vsDraw();return}
+ const box=vsBox(where);if(!box)return;const my=++vsSeq;WaslSigns.wait(box,true);vsDraw();
+ const g=await signGloss(text);if(my!==vsSeq||!signOn())return;
+ if(!g){WaslSigns.wait(box,false);return}
+ // medicine names are written, never signed; names and places are written too
+ const written=g.missing.filter(m=>m.type!=='word').map(m=>({w:m.w.slice(0,30),type:m.type})),meds=written.filter(m=>m.type==='med'),rest=written.filter(m=>m.type!=='med');
+ const items=g.glosses.slice(),at=items.indexOf('MEDICINE');items.splice(at>=0?at+1:0,0,...meds);items.push(...rest); // a medicine name comes right after the sign «دوا»
+ WaslSigns.play(items,box,{});vsDraw();
+ if(where==='task'&&$('task').classList.contains('asking'))['tDecide','tOk'].forEach(id=>{if(!$(id).classList.contains('hidden'))showBox(id)})} // the player took some room: keep the question in view
+(function(){
+ const btn=id=>`<button type="button" class="sgt" id="${id}" aria-pressed="false" aria-label="${esc(tr('اعرض الكلام بالإشارة'))}"><span aria-hidden="true">🤟</span>${esc(tr('إشارة'))}<i aria-hidden="true"></i></button>`;
+ const tl=$('tLive');if(tl){tl.insertAdjacentHTML('afterbegin',btn('tSgT'));$('tLiveText').insertAdjacentHTML('beforebegin','<div class="sgbox hidden" id="tSg" aria-label="'+esc(tr('كلام اللي قدامك بالإشارة'))+'"></div>')}
+ const cap=$('cap');if(cap){cap.insertAdjacentHTML('beforebegin','<div class="sgrow">'+btn('fSgT')+'</div><div class="sgbox hidden" id="fSg" aria-label="'+esc(tr('كلام اللي قدامك بالإشارة'))+'"></div>')}
+ $('tSgT').onclick=()=>vsToggle('task');$('fSgT').onclick=()=>vsToggle('free');
+ // the hearing person's finished sentence: task (flushHeard) and translation (onHeard)
+ const fh=flushHeard;flushHeard=function(){const t=heardBuf.trim();if(T&&!T.over&&t)signShow('task',t);return fh.apply(this,arguments)};
+ const fg=$('freeGo').onclick;$('freeGo').onclick=async function(){const r=await fg.apply(this,arguments);if(freeOn&&typeof onHeard==='function'&&!onHeard.__sg){const oh=onHeard;onHeard=function(t){signShow('free',t);return oh.apply(this,arguments)};onHeard.__sg=true}return r};
+ // a new task / leaving the screen: nothing old stays on screen
+ const st=$('startTask').onclick;$('startTask').onclick=function(){vsLast.task='';WaslSigns.stop($('tSg'));vsDraw();return st&&st.apply(this,arguments)};
+ const fb=$('freeBack').onclick;$('freeBack').onclick=function(){WaslSigns.stop($('fSg'));return fb.apply(this,arguments)};
+ const of=$('openFree').onclick;$('openFree').onclick=function(){vsLast.free='';WaslSigns.stop($('fSg'));vsDraw();return of&&of.apply(this,arguments)};
+ const sp=window.setPic;if(typeof sp==='function')window.setPic=function(){const r=sp.apply(this,arguments);vsDraw();return r};
+ vsDraw();
+ // load the library early (small file; the service worker keeps it for offline use)
+ setTimeout(()=>{WaslSigns.load().catch(()=>{})},1500);
+})();
 </script>
 </body>
 </html>
