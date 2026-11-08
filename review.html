@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#13262F">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>مراجعة الإشارات | وَصْل</title>
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#13262F;--ink2:#1E3A47;--bg:#F6F3EE;--card:#fff;--line:#E3DCCF;--or:#D97A2B;--orl:#FBE6D4;--ord:#8F4612;--mute:#5B6870;--ok:#1F7A4D;--okl:#DDF0E5;--bad:#B3261E;--badl:#F9E0DE}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',Tahoma,sans-serif;-webkit-text-size-adjust:100%}
+button,textarea{font-family:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,textarea:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+button:active{transform:scale(.97)}
+.hidden{display:none!important}
+header{background:var(--ink);color:var(--bg);padding:14px 16px}
+.brand{display:flex;align-items:center;gap:12px}.brand svg{width:40px;height:40px;flex-shrink:0}.brand b{font-size:21px;font-weight:800}.brand small{display:block;color:#BFD3D8;font-size:14px}
+main{max-width:560px;margin:0 auto;padding:12px 16px 120px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.note{color:var(--mute);font-size:15px;line-height:1.6;margin:0}
+.prog{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+.meter{flex:1;height:10px;border-radius:5px;background:var(--line);overflow:hidden}.meter i{display:block;height:100%;background:var(--ok);width:0}
+.vid{position:relative;background:#0D1B21;border-radius:16px;overflow:hidden;aspect-ratio:9/16;max-height:52vh;width:100%;margin:0 auto}
+.vid video{width:100%;height:100%;object-fit:contain;display:block}
+.vid .wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#BFD3D8;font-weight:700;font-size:16px;text-align:center;padding:16px}
+.meaning{font-size:28px;font-weight:800;line-height:1.35;margin:0;text-align:center}
+.who{text-align:center;color:var(--mute);font-weight:700;font-size:15px;margin:-6px 0 0}
+.tools{display:flex;gap:8px}.tools button{flex:1;min-height:48px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:700 15px Cairo,Tahoma,sans-serif}
+.tools button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.verdict{display:flex;gap:10px}.verdict button{flex:1;min-height:64px;border-radius:16px;font:800 20px Cairo,Tahoma,sans-serif;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+.verdict .ok.on{background:var(--ok);border-color:var(--ok);color:#fff}.verdict .redo.on{background:var(--bad);border-color:var(--bad);color:#fff}
+textarea{width:100%;min-height:72px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:600 16px Cairo,Tahoma,sans-serif;background:var(--bg);color:var(--ink);resize:vertical}
+.nav{display:flex;gap:8px}.nav button{flex:1;min-height:52px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);font:700 16px Cairo,Tahoma,sans-serif}
+.nav button:disabled{opacity:.4}
+.dots{display:flex;flex-wrap:wrap;gap:6px}
+.dots button{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--bg);font:700 13px Cairo,Tahoma,sans-serif;color:var(--mute);padding:0}
+.dots button.ok{background:var(--okl);border-color:#A9D8BD;color:var(--ok)}.dots button.redo{background:var(--badl);border-color:#EDB9B4;color:var(--bad)}
+.dots button.cur{outline:3px solid var(--or);outline-offset:1px}
+.bar{position:fixed;inset:auto 0 0 0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:5}
+.bar div{max-width:560px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.send{flex:1;min-height:56px;border:0;border-radius:16px;background:var(--ink);color:#fff;font:800 18px Cairo,Tahoma,sans-serif}
+.send:disabled{opacity:.5}
+.barMsg{font-size:14px;color:var(--mute);font-weight:700;max-width:40%}
+.big{font-size:20px;font-weight:800;margin:0;line-height:1.5}
+details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:2px 14px}
+summary{min-height:52px;display:flex;align-items:center;font-weight:800;font-size:17px;cursor:pointer}
+details ul{margin:0 0 10px;padding-inline-start:22px;font-size:16px;line-height:1.7}
+@media (prefers-reduced-motion:reduce){button:active{transform:none}}
+</style>
+</head>
+<body>
+<header>
+<div class="brand"><svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#1E3A47"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>وَصْل</b><small>مراجعة إشارات المكتبة</small></div></div>
+</header>
+<main>
+<div class="card" id="loading"><p class="big">لحظة، بنجيب الإشارات...</p></div>
+<div class="card hidden" id="fail"><p class="big" id="failTxt"></p><p class="note">لو محتاجة لينك جديد، كلّمي محمد.</p></div>
+
+<div id="app" class="hidden" style="display:flex;flex-direction:column;gap:12px">
+<details id="how"><summary>إزاي أراجع؟ (دوسي هنا)</summary>
+<ul>
+<li>اتفرّجي على الفيديو، وبصّي على المعنى المكتوب تحته.</li>
+<li>لو الإشارة صح: دوسي <b>«صح»</b>. لو فيها غلط: دوسي <b>«تتعاد»</b> واكتبي الصح في الملاحظة.</li>
+<li>زرار «بطيء» بيعيد الفيديو بنص السرعة.</li>
+<li>في الآخر دوسي <b>«ابعتي المراجعة»</b>. ممكن تبعتي أكتر من مرة، وكل مرة بتحدّث اللي فات.</li>
+</ul>
+</details>
+
+<div class="card">
+<div class="prog"><span id="pos"></span><div class="meter"><i id="meter"></i></div><span id="done"></span></div>
+<div class="vid"><video id="v" playsinline muted loop autoplay preload="auto"></video><div class="wait" id="wait">بيحمّل الفيديو...</div></div>
+<p class="meaning" id="meaning"></p>
+<p class="who" id="who"></p>
+<div class="tools"><button type="button" id="replay">↻ تاني</button><button type="button" id="slow">🐢 بطيء</button></div>
+<div class="verdict"><button type="button" class="ok" id="vOk">✓ صح</button><button type="button" class="redo" id="vRedo">↺ تتعاد</button></div>
+<textarea id="noteIn" maxlength="300" placeholder="ملاحظة (لو فيه حاجة غلط أو إشارة تانية أصح)"></textarea>
+<div class="nav"><button type="button" id="prev">→ اللي قبلها</button><button type="button" id="next">اللي بعدها ←</button></div>
+</div>
+
+<div class="card"><p class="note" style="font-weight:700">كل الإشارات (دوسي على رقم تروحي له):</p><div class="dots" id="dots"></div></div>
+</div>
+</main>
+<div class="bar hidden" id="bar"><div><button class="send" type="button" id="send">ابعتي المراجعة</button><span class="barMsg" id="barMsg"></span></div></div>
+
+<script>
+const API='https://api.nrg-egypt.com/webhook/wasl-review', FILE='https://api.nrg-egypt.com/webhook/wasl-review-file';
+const $=id=>document.getElementById(id);
+const B=(location.hash||'').replace('#','').trim();
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const S={items:[],i:0,dec:{},urls:{},loading:{},sent:''};
+async function call(body){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:'wasl-nrg-2026',b:B},body))});let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw new Error(j.error||('http '+r.status));return j}
+function fail(t){$('loading').classList.add('hidden');$('app').classList.add('hidden');$('bar').classList.add('hidden');$('fail').classList.remove('hidden');$('failTxt').textContent=t}
+const KEY='wasl_review_'+B;
+function save(){ls.set(KEY,{dec:S.dec,i:S.i})}
+
+function clipUrl(it){
+ if(S.urls[it.r])return Promise.resolve(S.urls[it.r]);
+ if(S.loading[it.r])return S.loading[it.r];
+ return S.loading[it.r]=fetch(FILE+'?b='+encodeURIComponent(B)+'&r='+it.r).then(r=>{if(!r.ok)throw new Error('clip');return r.blob()}).then(bl=>{const u=URL.createObjectURL(bl);S.urls[it.r]=u;return u}).finally(()=>{delete S.loading[it.r]})}
+
+async function show(i){
+ S.i=Math.max(0,Math.min(S.items.length-1,i));save();
+ const it=S.items[S.i],d=S.dec[it.r]||{};
+ $('pos').textContent=(S.i+1)+' من '+S.items.length;
+ $('meaning').textContent=it.meaning;$('who').textContent=it.who?('بيعملها: '+it.who):'';
+ $('vOk').classList.toggle('on',d.v==='ok');$('vRedo').classList.toggle('on',d.v==='redo');
+ $('noteIn').value=d.n||'';$('prev').disabled=S.i===0;$('next').disabled=S.i===S.items.length-1;
+ drawDots();
+ const v=$('v');v.removeAttribute('src');v.load();$('wait').textContent='بيحمّل الفيديو...';$('wait').classList.remove('hidden');
+ try{const u=await clipUrl(it);if(S.items[S.i]!==it)return;v.src=u;v.playbackRate=$('slow').classList.contains('on')?.5:1;$('wait').classList.add('hidden');try{await v.play()}catch(e){}}
+ catch(e){if(S.items[S.i]===it)$('wait').textContent='الفيديو ما اتحمّلش. اتأكدي من النت وارجعي له.'}
+ const nx=S.items[S.i+1];if(nx)clipUrl(nx).catch(()=>{});
+}
+function drawDots(){
+ const box=$('dots');box.innerHTML='';
+ S.items.forEach((it,k)=>{const b=document.createElement('button');b.type='button';b.textContent=k+1;const d=S.dec[it.r]||{};
+  if(d.v)b.classList.add(d.v);if(k===S.i)b.classList.add('cur');b.setAttribute('aria-label',(k+1)+' '+it.meaning+(d.v==='ok'?' صح':d.v==='redo'?' تتعاد':''));b.onclick=()=>show(k);box.appendChild(b)});
+ const n=S.items.filter(it=>(S.dec[it.r]||{}).v).length;
+ $('done').textContent='خلص '+n;$('meter').style.width=(S.items.length?n/S.items.length*100:0)+'%';
+ const pending=Object.keys(S.dec).length;$('send').disabled=!pending;
+}
+function setV(v){const it=S.items[S.i];const d=S.dec[it.r]=S.dec[it.r]||{};d.v=d.v===v?'':v;d.n=$('noteIn').value.trim();if(!d.v&&!d.n)delete S.dec[it.r];save();
+ $('vOk').classList.toggle('on',d.v==='ok');$('vRedo').classList.toggle('on',d.v==='redo');drawDots();
+ if(d.v==='ok'&&S.i<S.items.length-1)setTimeout(()=>show(S.i+1),350);
+ if(d.v==='redo')$('noteIn').focus()}
+$('vOk').onclick=()=>setV('ok');$('vRedo').onclick=()=>setV('redo');
+$('noteIn').addEventListener('input',()=>{const it=S.items[S.i];const d=S.dec[it.r]=S.dec[it.r]||{};d.n=$('noteIn').value.trim();if(!d.v&&!d.n)delete S.dec[it.r];save();drawDots()});
+$('prev').onclick=()=>show(S.i-1);$('next').onclick=()=>show(S.i+1);
+$('replay').onclick=()=>{const v=$('v');v.currentTime=0;v.play().catch(()=>{})};
+$('slow').onclick=()=>{const on=$('slow').classList.toggle('on');$('v').playbackRate=on?.5:1};
+$('send').onclick=async()=>{
+ const verdicts=Object.entries(S.dec).map(([r,d])=>({r:+r,v:d.v||'',n:d.n||''}));if(!verdicts.length)return;
+ const btn=$('send');btn.disabled=true;$('barMsg').textContent='بيتبعت...';
+ try{const j=await call({action:'save',verdicts});const c=j.counts||{};
+  const left=S.items.length-S.items.filter(it=>(S.dec[it.r]||{}).v).length;
+  $('barMsg').textContent='✓ وصلت'+(left?(' · فاضل '+left):' · شكراً!');}
+ catch(e){$('barMsg').textContent=e.message==='closed'?'اللينك اتقفل.':'ما اتبعتتش. جرّبي تاني.'}
+ finally{btn.disabled=false}};
+
+(async function init(){
+ if(!/^[a-z0-9]{20,40}$/.test(B))return fail('اللينك ده ناقص أو غلط.');
+ try{const j=await call({action:'list'});S.items=j.items||[];}
+ catch(e){return fail(e.message==='closed'?'المراجعة دي خلصت واللينك اتقفل. شكراً!':e.message==='link'?'اللينك ده مش موجود.':'مش قادرين نوصل للسيرفر. اتأكدي من النت وافتحي اللينك تاني.')}
+ if(!S.items.length)return fail('لسه مفيش إشارات اتبعتت للمراجعة.');
+ const st=ls.get(KEY,{})||{};S.dec=st.dec||{};
+ S.items.forEach(it=>{if(it.v&&!S.dec[it.r])S.dec[it.r]={v:it.v,n:it.n||''}});
+ $('loading').classList.add('hidden');$('app').classList.remove('hidden');$('bar').classList.remove('hidden');
+ show(Number.isInteger(st.i)?st.i:0);
+})();
+</script>
+</body>
+</html>

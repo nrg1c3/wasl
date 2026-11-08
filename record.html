@@ -159,6 +159,20 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <p class="note">امسح بس بعد ما محمد يقولك إن الملفات وصلته.</p>
 </section>
 
+<section class="card" id="revCard">
+<h2>ابعت لأ. ميادة تراجع</h2>
+<p class="note">بيتبعت آخر أخدة «تمام» لكل إشارة من كل شخص. أ. ميادة بتفتح لينك على موبايلها وتقول صح ولا تتعاد.</p>
+<label class="f">كود الفريق<input type="text" id="revCode" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="الكود اللي معاك من محمد"></label>
+<button class="btn dark" type="button" id="revSend">ابعت للمراجعة</button>
+<p class="note" id="revMsg"></p>
+<div class="hidden" id="revLinkBox" style="display:flex;flex-direction:column;gap:8px">
+<p class="q" style="font-weight:700;margin:0">لينك المراجعة:</p>
+<input type="text" id="revLink" dir="ltr" readonly>
+<div class="row"><button class="btn" type="button" id="revCopy">انسخ اللينك</button><a class="btn" id="revWa" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;text-decoration:none">ابعته على واتساب</a></div>
+<button class="btn" type="button" id="revNew">ابدأ لينك جديد</button>
+</div>
+</section>
+
 <details class="guide" id="guide">
 <summary>📖 إزاي نصوّر</summary>
 <h3>التجهيز</h3>
@@ -218,7 +232,7 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <p><span class="badge">مسودة — يتراجع من محامي</span></p>
 <div class="lawyer" id="cText">
 <p style="margin:0 0 8px">بنصوّر فيديوهات قصيرة لإشارات لغة الإشارة المصرية، عشان تطبيق <b>وَصْل</b> المجاني للصم وضعاف السمع، من شركة NRG. الفيديو بيظهر فيه وشك وإيديك.</p>
-<p style="margin:0 0 8px">الفيديوهات بتتحفظ على الموبايل ده بس، لحد ما تتبعت لفريق وَصْل. مش بنبيعها لحد.</p>
+<p style="margin:0 0 8px">الفيديوهات بتتحفظ على الموبايل ده بس، لحد ما تتبعت لفريق وَصْل، وممكن تتبعت لخبيرة لغة الإشارة بتاعة الفريق عشان تراجعها. مش بنبيعها لحد.</p>
 <p style="margin:0">تقدر ترجع في موافقتك في أي وقت برسالة لفريق وَصْل: هنشيل فيديوهاتك من التطبيق في التحديث اللي بعده، ومش هنستخدمها في حاجة جديدة. الحاجات اللي اتنشرت قبل كده ممكن ما نقدرش نمسحها من كل مكان.</p>
 </div>
 <input type="hidden" id="kCode">
@@ -493,6 +507,34 @@ function drawSearch(){const q=normAr($('sIn').value.trim()),box=$('sres');box.in
   const b=el('button',{type:'button'},`<span class="ic">${ok?'✅':'⬜'}</span><span>${esc(v.ar)}</span><small>${esc(LNAME(v.pri))}</small>`);
   b.onclick=()=>{if(S.list!=='ALL'&&v.pri!==S.list){S.list=v.pri;ls.set('wasl_rec_list',S.list)}const L=listOf(S.list);setPos(L.indexOf(v));$('search').classList.add('hidden');closeReview();S.state='live';draw()};box.appendChild(b)})}
 
+
+/* ---------- send for review (Wasl - Sign Review on the NRG server) ---------- */
+const REV_API='https://api.nrg-egypt.com/webhook/wasl-review';
+async function revCall(body){const r=await fetch(REV_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:'wasl-nrg-2026'},body))});let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw new Error(j.error||j.why||('http '+r.status));return j}
+const b64=blob=>new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(String(fr.result).split(',')[1]||'');fr.onerror=()=>rej(fr.error);fr.readAsDataURL(blob)});
+const REV_ERR={code:'الكود غلط. اتأكد منه مع محمد.',closed:'اللينك ده اتقفل. دوس «ابدأ لينك جديد».',file:'فيديو منهم كبير أو بايظ.','code-tries':'محاولات كتير بكود غلط. جرّب بكره.',rate:'استنى شوية وجرّب تاني.',blocked:'السيرفر رفض الطلب.'};
+function revLinkUrl(b){return 'https://wasl.nrg-egypt.com/review.html#'+b}
+function drawRev(){const b=ls.get('wasl_rev_batch','');$('revCode').value=$('revCode').value||ls.get('wasl_rev_code','');
+ const box=$('revLinkBox');box.classList.toggle('hidden',!b);if(!b)return;const u=revLinkUrl(b);$('revLink').value=u;
+ $('revWa').href='https://wa.me/?text='+encodeURIComponent('أهلاً أ. ميادة، دي إشارات وَصْل للمراجعة. افتحي اللينك وقولي على كل إشارة صح ولا تتعاد:\n'+u)}
+function revPending(b){const best={};S.takes.filter(t=>t.status==='ok'&&!t.freed).forEach(t=>{const k=t.id+'__'+t.signer;if(!best[k]||t.take>best[k].take)best[k]=t});
+ return Object.values(best).filter(t=>t.rev!==b)}
+$('revSend').onclick=async()=>{const code=$('revCode').value.trim();if(!code){$('revCode').focus();return toast('اكتب كود الفريق الأول')}
+ ls.set('wasl_rev_code',code);const btn=$('revSend'),msg=$('revMsg');btn.disabled=true;
+ try{let b=ls.get('wasl_rev_batch','');
+  if(!b){msg.textContent='بنعمل لينك مراجعة...';const j=await revCall({action:'new',code,title:'إشارات وَصْل'});b=j.batch;ls.set('wasl_rev_batch',b);drawRev()}
+  const list=revPending(b);if(!list.length){msg.textContent='مفيش تسجيلات «تمام» جديدة تتبعت.';return}
+  const byId=Object.fromEntries(S.vocab.map(v=>[v.id,v]));let n=0;
+  for(const t of list){msg.textContent=`بيتبعت ${n+1} من ${list.length}... سيب الصفحة مفتوحة.`;
+   const blob=await getBlob(t.name);if(!blob){n++;continue}
+   await revCall({action:'up',code,b,sign_id:t.id,meaning:(byId[t.id]||{}).ar||t.id,who:pname(t.signer),take:t.take,mime:t.mime||blob.type,data:await b64(blob)});
+   t.rev=b;await saveMeta(t);n++}
+  msg.textContent=`✓ اتبعت ${n}. ابعت اللينك لأ. ميادة.`;
+ }catch(e){msg.textContent='ما اتبعتش: '+(REV_ERR[e.message]||'فيه مشكلة في النت أو السيرفر. جرّب تاني.')}
+ finally{btn.disabled=false}};
+$('revCopy').onclick=async()=>{try{await navigator.clipboard.writeText($('revLink').value);toast('اتنسخ')}catch(e){$('revLink').select()}};
+$('revNew').onclick=()=>{ls.set('wasl_rev_batch','');$('revMsg').textContent='';drawRev()};
+
 /* ---------- ZIP export (store-only, no library) ---------- */
 const CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
 function crc32(u8){let c=0xFFFFFFFF;for(let i=0;i<u8.length;i++)c=CRC[(c^u8[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
@@ -546,7 +588,7 @@ $('freeBtn').onclick=async()=>{const b=$('freeBtn');if(!b.dataset.sure){b.datase
  if(!LISTS.some(l=>l[0]===S.list))S.list='P1';
  try{await loadAll()}catch(e){$('sErr').textContent='المتصفح ده مش بيحفظ الفيديوهات (ممكن يكون تصفح متخفي). افتح الصفحة في Chrome أو Safari العادي.';$('sErr').classList.remove('hidden')}
  try{await loadVocab()}catch(e){$('sErr').textContent='قايمة الإشارات ما اتحمّلتش. اتأكد من النت وافتح الصفحة تاني.';$('sErr').classList.remove('hidden')}
- drawSetup();
+ drawSetup();drawRev();
  if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 })();
 </script>
