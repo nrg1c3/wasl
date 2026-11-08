@@ -122,8 +122,9 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <section class="card" id="whoCard">
 <h2>١. مين بيعمل الإشارة؟</h2>
 <div class="chips" id="codes"></div>
-<label class="f">كود تاني (حرف ورقم، زي m3)<input type="text" id="codeIn" dir="ltr" maxlength="3" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="m3"></label>
-<p class="note"><bdi class="code">m</bdi> راجل · <bdi class="code">f</bdi> ست · <bdi class="code">d</bdi> أصم أو صمّاء. كل شخص ليه كود واحد طول التصوير.</p>
+<label class="f">حد تاني؟ اكتب اسمه<input type="text" id="codeIn" maxlength="40" autocomplete="off" placeholder="الاسم"></label>
+<button class="btn" type="button" id="addP">ضيفه</button>
+<p class="note">اختار اسم اللي هيصوّر دلوقتي. كل شخص يفضل على اسمه طول التصوير.</p>
 <div class="status" id="cStat"><span class="dot"></span><span id="cTxt"></span></div>
 <button class="btn" type="button" id="cEdit">الموافقة على التصوير</button>
 </section>
@@ -131,7 +132,7 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <section class="card">
 <h2>٢. القايمة</h2>
 <div class="chips" id="lists"></div>
-<p class="note">ابدأوا بـ P1 (الأهم)، وبعدين P2، وبعدين P3.</p>
+<p class="note">ابدأوا بـ«الأهم»، وبعدين «المهم»، وبعدين «الباقي».</p>
 </section>
 
 <section class="card">
@@ -194,7 +195,7 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 </ul>
 <h3>مين يصوّر</h3>
 <ul>
-<li>2 لـ 3 أشخاص، منهم <b>واحد أصم على الأقل</b> لغته الأولى الإشارة المصرية (كود d1).</li>
+<li>2 لـ 3 أشخاص، منهم <b>واحد أصم على الأقل</b> لغته الأولى الإشارة المصرية.</li>
 <li>كل شخص يوافق على التصوير الأول من زرار «الموافقة على التصوير».</li>
 </ul>
 <h3>إزاي تبعت الفيديوهات لمحمد</h3>
@@ -220,7 +221,7 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <p style="margin:0 0 8px">الفيديوهات بتتحفظ على الموبايل ده بس، لحد ما تتبعت لفريق وَصْل. مش بنبيعها لحد.</p>
 <p style="margin:0">تقدر ترجع في موافقتك في أي وقت برسالة لفريق وَصْل: هنشيل فيديوهاتك من التطبيق في التحديث اللي بعده، ومش هنستخدمها في حاجة جديدة. الحاجات اللي اتنشرت قبل كده ممكن ما نقدرش نمسحها من كل مكان.</p>
 </div>
-<label class="f">الكود<input type="text" id="kCode" dir="ltr" readonly></label>
+<input type="hidden" id="kCode">
 <label class="f">اسم اللي بيعمل الإشارة<input type="text" id="kName" maxlength="60" autocomplete="off"></label>
 <div><p class="q">هو/هي:</p><div class="chips" id="kHear"><button type="button" data-v="deaf">أصم / صمّاء</button><button type="button" data-v="hoh">ضعيف سمع</button><button type="button" data-v="hearing">سامع</button></div></div>
 <label class="check"><input type="checkbox" id="kAdult">سني 18 سنة أو أكتر.</label>
@@ -267,7 +268,7 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 
 <!-- ============ search ============ -->
 <div id="search" class="hidden">
-<div class="sh"><input type="search" id="sIn" placeholder="اكتب الكلمة أو الكود" aria-label="دوّر على إشارة"><button type="button" id="sClose">رجوع</button></div>
+<div class="sh"><input type="search" id="sIn" placeholder="اكتب الكلمة" aria-label="دوّر على إشارة"><button type="button" id="sClose">رجوع</button></div>
 <div id="sres"></div>
 </div>
 
@@ -277,10 +278,14 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 'use strict';
 const $=id=>document.getElementById(id);
 const MAX_TAKES=5, PART_BYTES=50*1024*1024, CONSENT_VER='2026-11-03-draft (يتراجع من محامي)';
-const LISTS=[['P1','P1 الأهم'],['P2','P2'],['P3','P3'],['ALL','الكل']];
-const CODES=['m1','m2','f1','f2','d1','d2'];
+const LISTS=[['P1','الأهم'],['P2','المهم'],['P3','الباقي'],['ALL','الكل']];
+const LNAME=k=>(LISTS.find(l=>l[0]===k)||[k,k])[1];
+/* internal ids stay in file names only; the screen shows names */
+const PEOPLE=[['f1','أ. ميادة'],['d1','الأخت الصمّاء'],['d2','جوزها'],['f2','أختها']];
+let EXTRA=[];
+const pname=c=>(S.consent[c]&&S.consent[c].name)||((PEOPLE.concat(EXTRA)).find(p=>p[0]===c)||[c,'شخص '+c.replace(/\D/g,'')])[1];
 const GROUP_AR={greetings:'تحية',basic:'أساسي',questions:'أسئلة',pharmacy:'صيدلية',doctor:'دكتور',body:'الجسم',feelings:'إحساس',transport:'مواصلات',places:'أماكن',shop:'شرا',money:'فلوس',government:'مصالح حكومية',numbers:'أرقام',time:'وقت',sos:'طوارئ'};
-const S={vocab:[],takes:[],consent:{},signer:'m1',list:'P1',pos:{},cam:'environment',dur:4,state:'setup',stream:null,view:null,newTake:false,parts:[],wake:null,free:null};
+const S={vocab:[],takes:[],consent:{},signer:'f1',list:'P1',pos:{},cam:'environment',dur:4,state:'setup',stream:null,view:null,newTake:false,parts:[],wake:null,free:null};
 
 /* ---------- small helpers ---------- */
 const ls={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
@@ -341,16 +346,17 @@ async function storage(){
 
 /* ---------- setup screen ---------- */
 function drawSetup(){
- const codes=[...new Set([...CODES,...Object.keys(S.consent),...S.takes.map(t=>t.signer),S.signer])];
- chips($('codes'),codes.map(c=>{const n=S.consent[c]&&S.consent[c].name;return [c,`<span class="code">${c}</span>${n?' <small>'+esc(n)+'</small>':''}`]}),S.signer,v=>{S.signer=v;ls.set('wasl_rec_signer',v);$('codeIn').value='';drawSetup()});
+ const codes=[...new Set([...PEOPLE.map(p=>p[0]),...EXTRA.map(p=>p[0]),...Object.keys(S.consent),...S.takes.map(t=>t.signer),S.signer])];
+ chips($('codes'),codes.map(c=>[c,esc(pname(c))]),S.signer,v=>{S.signer=v;ls.set('wasl_rec_signer',v);$('codeIn').value='';drawSetup()});
  const c=S.consent[S.signer];$('cStat').classList.toggle('okay',!!c);
- $('cTxt').textContent=c?`الموافقة متسجّلة: ${c.name} (${new Date(c.date).toLocaleDateString('ar-EG')})`:`لسه مفيش موافقة للكود ${S.signer}. هتظهر لما تدوس «ابدأ».`;
+ $('cTxt').textContent=c?`الموافقة متسجّلة: ${c.name} (${new Date(c.date).toLocaleDateString('ar-EG')})`:`لسه مفيش موافقة من ${pname(S.signer)}. هتظهر لما تدوس «ابدأ».`;
  $('cEdit').textContent=c?'غيّر الموافقة':'الموافقة على التصوير';
  chips($('lists'),LISTS.map(([k,l])=>{const L=listOf(k);const d=L.filter(v=>doneFor(v.id,S.signer)).length;return [k,`${l} <small>${d}/${L.length}</small>`]}),S.list,v=>{S.list=v;ls.set('wasl_rec_list',v);drawSetup()});
  chips($('cams'),[['environment','الخلفية (أوضح)'],['user','الأمامية (سيلفي)']],S.cam,v=>{S.cam=v;ls.set('wasl_rec_cam',v);drawSetup()});
  $('dOut').textContent=S.dur+' ثواني';$('dMinus').disabled=S.dur<=3;$('dPlus').disabled=S.dur>=6;
  storage()}
-$('codeIn').addEventListener('input',()=>{const v=$('codeIn').value.trim().toLowerCase();if(/^[a-z]\d{1,2}$/.test(v)){S.signer=v;ls.set('wasl_rec_signer',v);drawSetup()}});
+$('addP').onclick=()=>{const n=$('codeIn').value.trim();if(!n)return $('codeIn').focus();let k=1;const used=new Set([...PEOPLE,...EXTRA].map(p=>p[0]).concat(Object.keys(S.consent),S.takes.map(t=>t.signer)));while(used.has('p'+k))k++;
+ EXTRA.push(['p'+k,n]);ls.set('wasl_rec_people',EXTRA);S.signer='p'+k;ls.set('wasl_rec_signer',S.signer);$('codeIn').value='';drawSetup()};
 $('dMinus').onclick=()=>{S.dur=Math.max(3,S.dur-1);ls.set('wasl_rec_dur',S.dur);drawSetup()};
 $('dPlus').onclick=()=>{S.dur=Math.min(6,S.dur+1);ls.set('wasl_rec_dur',S.dur);drawSetup()};
 $('cEdit').onclick=()=>openConsent(false);
@@ -363,7 +369,7 @@ function show(id){['setup','consent','studio','search'].forEach(x=>$(x).classLis
 /* ---------- consent ---------- */
 let afterConsent=false,kHear='';
 function openConsent(go){afterConsent=go;const c=S.consent[S.signer]||{};show('consent');
- $('kCode').value=S.signer;$('kName').value=c.name||'';kHear=c.hearing||'';$('kAdult').checked=!!c.adult;
+ $('kCode').value=S.signer;$('kName').value=c.name||(pname(S.signer).startsWith('شخص ')?'':pname(S.signer));kHear=c.hearing||'';$('kAdult').checked=!!c.adult;
  const u=c.uses||{};$('uApp').checked=!!u.app;$('uTrain').checked=!!u.training;$('uComp').checked=!!u.competitions;$('uSocial').checked=!!u.social;
  $('kErr').classList.add('hidden');drawHear()}
 function drawHear(){chips($('kHear'),[['deaf','أصم / صمّاء'],['hoh','ضعيف سمع'],['hearing','سامع']],kHear,v=>{kHear=v;drawHear()})}
@@ -402,8 +408,8 @@ function fit(){const w=$('wrap'),s=$('stage');s.style.height='0';s.style.width='
 addEventListener('resize',fit);
 function draw(){const {L,i,v}=cur();if(!v)return;
  const done=L.filter(x=>doneFor(x.id,S.signer)).length;
- $('prog').innerHTML=`${i+1} من ${L.length}<small>${esc(S.list==='ALL'?'الكل':S.list)} · خلص ${done} · <span class="code">${esc(S.signer)}</span></small>`;
- $('wAr').textContent=v.ar;$('wId').textContent=v.id;
+ $('prog').innerHTML=`${i+1} من ${L.length}<small>${esc(LNAME(S.list))} · خلص ${done} · ${esc(pname(S.signer))}</small>`;
+ $('wAr').textContent=v.ar;$('wId').textContent='';
  const ts=takesFor(v.id,S.signer),ok=ts.filter(t=>t.status==='ok').length;
  $('wInfo').textContent=`${GROUP_AR[v.group]||v.group} · ${v.pri} · تمام ${ok}`;
  requestAnimationFrame(fit);
@@ -484,7 +490,7 @@ function drawSearch(){const q=normAr($('sIn').value.trim()),box=$('sres');box.in
  const res=S.vocab.filter(v=>!q||normAr(v.ar).includes(q)||v.id.toLowerCase().includes(q));
  if(!res.length){box.appendChild(el('p',{class:'note'},'مفيش إشارة بالاسم ده في القايمة.'));return}
  res.slice(0,200).forEach(v=>{const ok=takesFor(v.id,S.signer).filter(t=>t.status==='ok').length;
-  const b=el('button',{type:'button'},`<span class="ic">${ok?'✅':'⬜'}</span><span>${esc(v.ar)}</span><small>${esc(v.id)} · ${v.pri}</small>`);
+  const b=el('button',{type:'button'},`<span class="ic">${ok?'✅':'⬜'}</span><span>${esc(v.ar)}</span><small>${esc(LNAME(v.pri))}</small>`);
   b.onclick=()=>{if(S.list!=='ALL'&&v.pri!==S.list){S.list=v.pri;ls.set('wasl_rec_list',S.list)}const L=listOf(S.list);setPos(L.indexOf(v));$('search').classList.add('hidden');closeReview();S.state='live';draw()};box.appendChild(b)})}
 
 /* ---------- ZIP export (store-only, no library) ---------- */
@@ -536,7 +542,7 @@ $('freeBtn').onclick=async()=>{const b=$('freeBtn');if(!b.dataset.sure){b.datase
 
 /* ---------- start ---------- */
 (async function init(){
- S.signer=ls.get('wasl_rec_signer','m1');S.list=ls.get('wasl_rec_list','P1');S.pos=ls.get('wasl_rec_pos',{})||{};S.cam=ls.get('wasl_rec_cam','environment');S.dur=Math.min(6,Math.max(3,+ls.get('wasl_rec_dur',4)||4));
+ EXTRA=ls.get('wasl_rec_people',[])||[];S.signer=ls.get('wasl_rec_signer','f1');S.list=ls.get('wasl_rec_list','P1');S.pos=ls.get('wasl_rec_pos',{})||{};S.cam=ls.get('wasl_rec_cam','environment');S.dur=Math.min(6,Math.max(3,+ls.get('wasl_rec_dur',4)||4));
  if(!LISTS.some(l=>l[0]===S.list))S.list='P1';
  try{await loadAll()}catch(e){$('sErr').textContent='المتصفح ده مش بيحفظ الفيديوهات (ممكن يكون تصفح متخفي). افتح الصفحة في Chrome أو Safari العادي.';$('sErr').classList.remove('hidden')}
  try{await loadVocab()}catch(e){$('sErr').textContent='قايمة الإشارات ما اتحمّلتش. اتأكد من النت وافتح الصفحة تاني.';$('sErr').classList.remove('hidden')}
