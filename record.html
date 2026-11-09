@@ -229,7 +229,6 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <header><div class="brand"><div><b>موافقة على التصوير</b><small>لكل شخص هيظهر في الفيديوهات</small></div></div></header>
 <main>
 <section class="card">
-<p><span class="badge">مسودة — يتراجع من محامي</span></p>
 <div class="lawyer" id="cText">
 <p style="margin:0 0 8px">بنصوّر فيديوهات قصيرة لإشارات لغة الإشارة المصرية، عشان تطبيق <b>وَصْل</b> المجاني للصم وضعاف السمع، من شركة NRG. الفيديو بيظهر فيه وشك وإيديك.</p>
 <p style="margin:0 0 8px">الفيديوهات بتتحفظ على الموبايل ده بس، لحد ما تتبعت لفريق وَصْل، وممكن تتبعت لخبيرة لغة الإشارة بتاعة الفريق عشان تراجعها. مش بنبيعها لحد.</p>
@@ -291,7 +290,7 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const MAX_TAKES=5, PART_BYTES=50*1024*1024, CONSENT_VER='2026-11-09-draft (يتراجع من محامي)';
+const MAX_TAKES=5, PART_BYTES=50*1024*1024, CONSENT_VER='2026-11-09';
 const LISTS=[['P1','الأهم'],['P2','المهم'],['P3','الباقي'],['ALL','الكل']];
 const LNAME=k=>(LISTS.find(l=>l[0]===k)||[k,k])[1];
 /* internal ids stay in file names only; the screen shows names */
@@ -562,7 +561,7 @@ async function exportZips(onlyNew){const msg=$('expMsg');
    const files=[];for(const t of batches[i]){const b=await getBlob(t.name);if(b)files.push({name:t.name,blob:b,t})}
    const takesJson={version:1,app:'wasl-record',made:new Date().toISOString(),part:i+1,parts:batches.length,
     files:files.map(f=>({file:f.t.name,id:f.t.id,signer:f.t.signer,take:f.t.take,status:f.t.status,dur:f.t.dur,mime:f.t.mime,size:f.t.size,width:f.t.w,height:f.t.h,camera:f.t.cam,recorded:f.t.at}))};
-   const consent={version:CONSENT_VER,note:'مسودة — يتراجع من محامي',signers:Object.values(S.consent)};
+   const consent={version:CONSENT_VER,signers:Object.values(S.consent)};
    const zip=await makeZip([...files.map(f=>({name:f.name,blob:f.blob})),{name:'takes.json',blob:jsonBlob(takesJson)},{name:'consent.json',blob:jsonBlob(consent)}]);
    const name=`wasl-signs_${signers}_${stamp}_${i+1}of${batches.length}.zip`;S.parts.push({name,zip,url:URL.createObjectURL(zip),takes:files.map(f=>f.t)})}
   drawParts();msg.textContent=`جاهز: ${S.parts.length} ملف. لو التحميل ما بدأش، دوس «حمّل» جنب كل ملف.`;
