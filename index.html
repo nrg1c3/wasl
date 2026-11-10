@@ -352,7 +352,7 @@ html.en:not(.tr) body{visibility:hidden}
 html.pm .cheard p{font-size:clamp(26px,8vw,34px)}html.pm #call.asking .cheard p{font-size:22px}
 html.pm #cOk .opts{grid-template-columns:1fr 1fr}html.pm #cOk .opts button{min-height:96px;flex-direction:column;justify-content:center;text-align:center;gap:4px;font-size:22px}html.pm #cOkYes{background:#2E7D5B;color:#fff}
 @media (max-height:720px){#call.asking .cbody{gap:8px;padding-top:8px}#call.asking .state{display:none}#call.asking .cheard{padding:8px 12px}#call.asking .cheard p,html.pm #call.asking .cheard p{font-size:18px;max-height:14vh}#call.asking #cCards{margin-top:4px}#call.asking #cCards .pcard{padding:3px 8px;min-width:76px;border-top-width:4px}#call.asking #cCards .pcard svg{width:24px;height:24px}#call.asking #cCards .pcard b{font-size:19px}#call.asking .decide{padding:10px;gap:8px}#call.asking .decide .q{font-size:16px;line-height:1.45}html.pm #call.asking .opts button{min-height:52px;font-size:18px}html.pm #call.asking .opts .ri{width:32px;height:32px}html.pm #call.asking #cOk .opts button{min-height:76px}}
-html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.tools button{font-size:15px;padding:8px 2px}
+html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.tools button:nth-child(5){grid-column:1/-1;flex-direction:row;justify-content:center;gap:10px;min-height:64px;font-size:17px}html.pm .sit.tools button:nth-child(5) .si{width:40px;height:40px}html.pm .sit.tools button{font-size:15px;padding:8px 2px}
 /* voice → sign: the «إشارة» switch and the sign player (task + translation screens) */
 .sgt{float:left;margin:0 8px 4px 0;min-height:44px;display:inline-flex;align-items:center;gap:6px;border:1px solid #4A5A62;background:#1B2A31;color:#FFD7B0;border-radius:999px;padding:0 8px 0 12px;font-size:15px;font-weight:800}
 .sgt i{display:inline-block;width:36px;height:22px;border-radius:999px;background:#59656B;position:relative;flex:0 0 auto}
@@ -518,6 +518,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 </details>
 <button class="ordlink hidden" id="openOrder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M12 8v6M9 11h6"/></svg><span><b>مش في الصيدلية؟ اطلب دوا للبيت</b><small>أكتب للصيدلية على واتساب، وأقرالك ردهم</small></span></button>
 <button class="ordlink calllink" id="openCall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span><b>مكالمة: وصل يتصل بدالك</b><small>اكتب الرقم واللي عايزه، ووصل يكلمهم ويكتبلك ردهم</small></span></button>
+<button class="ordlink calllink" id="openCounter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg><span><b>وصل في المكان: الموظف يكلمك</b><small>وريه كود على موبايلك، يعمل سكان ويتكلم، وإنت تقرا كلامه</small></span></button>
 <div style="flex:1"></div>
 <div class="tip no-pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><span>حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.</span></div>
 <p class="qleft hidden" id="qLeft" aria-live="polite"></p>
@@ -1274,6 +1275,7 @@ const EN={
 'محدش رد على المكالمة.':'Nobody answered the call.',
 'مقدرتش أبعت. جرّب تاني.':'Couldn\'t send. Try again.',
 'مكالمة':'Call',
+'وصل في المكان':'Wasl at the counter',
 'مكالمة: {g}':'Call: {g}',
 'وصل بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.':'For now Wasl can only call numbers in Egypt, the UAE, Saudi Arabia, the UK and the US.',
 'وصل بيفكر في الرد...':'Wasl is thinking of a reply...',
@@ -1284,6 +1286,8 @@ const EN={
 '✓ المكالمة خلصت':'✓ The call is done',
 '📞 اتصل':'📞 Call',
 'مكالمة: وصل يتصل بدالك':'Call: Wasl phones for you',
+'وصل في المكان: الموظف يكلمك':'At the counter: staff talk to you',
+'وريه كود على موبايلك، يعمل سكان ويتكلم، وإنت تقرا كلامه':'Show a code on your phone; staff scan it and talk, you read their words',
 'اكتب الرقم واللي عايزه، ووصل يكلمهم ويكتبلك ردهم':'Write the number and what you need. Wasl talks to them and writes their answer for you',
 'الطرف التاني':'Them',
 'إنت':'You',
@@ -1332,6 +1336,9 @@ wList:'<li>Wasl is <b>free</b>.</li><li>Your words are <b>not recorded</b>. They
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
+'وصل في المكان: الموظف يكلمك':'وصل في المكان: الموظف يكلمك',
+'وريه كود على موبايلك، يعمل سكان ويتكلم، وإنت تقرا كلامه':'وريه كود على جوالك، يمسحه ويتكلم، وأنت تقرأ كلامه',
+'وصل في المكان':'وصل في المكان',
 'عرض بالإشارة':'عرض بالإشارة',
 "مفيش نت.": "ما فيه نت.",
 "شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.": "يشتغل: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.",
@@ -2769,6 +2776,7 @@ const IC={
  hand:'<path d="M18 11V6a1.5 1.5 0 0 0-3 0M15 10V4.5a1.5 1.5 0 0 0-3 0V10M12 10V5.5a1.5 1.5 0 0 0-3 0V12M9 12V8.5a1.5 1.5 0 0 0-3 0V15a7 7 0 0 0 14 0v-4a1.5 1.5 0 0 0-3 0"/>',
  x:'<path d="M6 6l12 12M18 6L6 18"/>',
  flip:'<rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 7h4M10 11h4"/>',
+ qr:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/>',
  phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>'};
 const svgI=(k,cls)=>`<svg${cls?` class="${cls}"`:''} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]||IC.talk}</svg>`;
 function picOn(){return document.documentElement.classList.contains('pm')}
@@ -2799,7 +2807,7 @@ const SIT=[
  {k:'bus',l:'مواصلات',c:'#7A5A00',t:'#F5EDD3',g:'عايز أركب مواصلة، وأعرف أنزل فين والأجرة كام'},
  {k:'bank',l:'بنك',c:'#13262F',t:'#E4EAEC',g:'عايز أخلّص حاجة في البنك'},
  {k:'where',l:'فين المكان؟',c:'#8F4612',t:'#F6E6D8',g:'عايز أسأل عن مكان'}];
-const TOOLS=[{k:'chat',l:'ترجمة',go:()=>$('openFree').click()},{k:'homeRx',l:'دوا للبيت',go:()=>oOpen()},{k:'deaf',l:'أنا أصم',go:showDeaf},{k:'phone',l:'مكالمة',go:()=>callOpen()}];
+const TOOLS=[{k:'chat',l:'ترجمة',go:()=>$('openFree').click()},{k:'homeRx',l:'دوا للبيت',go:()=>oOpen()},{k:'deaf',l:'أنا أصم',go:showDeaf},{k:'phone',l:'مكالمة',go:()=>callOpen()},{k:'qr',l:'وصل في المكان',go:()=>{location.href='counter.html'+(GULF?'?l=ar-SA':UI==='en'?'?l=en-US':'')}}];
 if(UI==='en'||GULF){SIT.forEach(x=>{x.l=tr(x.l);if(x.g)x.g=tr(x.g)});TOOLS.forEach(x=>x.l=tr(x.l))}
 const welcomed=()=>store.get('wasl_welcome',false)===true;
 const gated=fn=>()=>{buzz([30]);if(!welcomed()){$('welcome').classList.remove('hidden');return}fn()};
@@ -2949,6 +2957,7 @@ function callFinish(st){if(!CL||CL.over)return;CL.over=true;clearTimeout(CL.time
  callState('ok',tr('المكالمة اتقفلت'));buzz([300]);showBox('cSum');
  const t=store.get('wasl_tasks',[]);t.push({id:Date.now(),done:!!CL.summary,title:tr('مكالمة: {g}',{g:CL.goal}).slice(0,80),goal:'',summary:CL.summary||'',date:new Date().toLocaleString(LOC,{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
 $('openCall').onclick=()=>{buzz([30]);callOpen()};
+$('openCounter').onclick=()=>{buzz([30]);location.href='counter.html'+(GULF?'?l=ar-SA':UI==='en'?'?l=en-US':'')};
 /* «أنا أصم»: a big sign to show the person in front (phone held toward them, not flipped). */
 /* the sign is for the person in front: conversation language; the close hint is for the user: app language */
 function showDeaf(){const f=$('flip');f.innerHTML=esc(trH('أنا أصم'))+'<small>'+esc(trH('من فضلك اكتبلي، أو شاورلي'))+'</small><span class="fx">'+esc(tr('دوس في أي حتة عشان تقفل'))+'</span>';f.classList.add('up');f.style.display='flex';buzz([60])}

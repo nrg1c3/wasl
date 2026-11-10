@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#13262F">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>وصل في المكان</title>
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#13262F;--ink2:#1E3A47;--bg:#F6F3EE;--card:#fff;--line:#E3DCCF;--or:#D97A2B;--orl:#FBE6D4;--mute:#5B6870;--ok:#1F7A4D;--okl:#DDF0E5;--bad:#B3261E}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',Tahoma,sans-serif;-webkit-text-size-adjust:100%}
+html[dir=ltr] body{font-family:'Cairo',Arial,sans-serif}
+button,textarea,input{font-family:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+button:active{transform:scale(.97)}
+.hidden{display:none!important}
+header{background:var(--ink);color:var(--bg);padding:12px 16px;display:flex;align-items:center;gap:12px}
+header svg{width:38px;height:38px;flex-shrink:0}header b{font-size:20px;font-weight:800;display:block}header small{color:#BFD3D8;font-size:14px}
+header .end{margin-inline-start:auto;background:transparent;border:1px solid #4E6670;color:#fff;border-radius:12px;min-height:44px;padding:0 12px;font:700 15px Cairo,sans-serif}
+main{max-width:560px;margin:0 auto;padding:12px 16px 16px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.big{font-size:22px;font-weight:800;margin:0;line-height:1.45}
+.note{color:var(--mute);font-size:15px;line-height:1.6;margin:0}
+#qrBox{background:#fff;border-radius:16px;padding:14px;align-self:center;line-height:0}
+#qrBox svg,#qrBox img{width:min(72vw,300px);height:auto;display:block}
+.staffHint{background:var(--ink);color:#fff;border-radius:16px;padding:14px;text-align:center;font-size:19px;font-weight:800;line-height:1.5}
+.staffHint small{display:block;font-size:14px;font-weight:600;color:#BFD3D8;margin-top:4px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.btn{min-height:52px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:700 16px Cairo,sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}
+.btn.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* chat */
+#chat{display:flex;flex-direction:column;gap:10px;padding-bottom:4px}
+.m{max-width:92%;border-radius:18px;padding:10px 14px;line-height:1.5;word-wrap:break-word}
+.m.them{align-self:flex-start;background:#fff;border:2px solid var(--ink);font-size:26px;font-weight:800}
+.m.me{align-self:flex-end;background:var(--orl);font-size:18px;font-weight:700;color:#5A2C08}
+.m .num{display:inline-block;background:var(--ink);color:#fff;border-radius:10px;padding:0 10px;margin:0 2px;font-size:30px}
+.m .meta{display:block;font-size:13px;font-weight:600;color:var(--mute);margin-top:2px}
+.m button.say{border:0;background:transparent;font-size:20px;padding:0 4px;min-height:auto}
+.wait{color:var(--mute);font-weight:700;text-align:center;font-size:16px;margin:4px 0}
+.dock{position:sticky;bottom:0;background:var(--bg);padding:10px 0 calc(8px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line)}
+.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.quick button{min-height:62px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);font:700 14px Cairo,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:4px 2px;line-height:1.2}
+.quick button span{font-size:24px;line-height:1.1}
+.type{display:flex;gap:8px}.type input{flex:1;min-width:0;min-height:52px;border:1px solid var(--line);border-radius:14px;padding:0 12px;font-size:17px;background:#fff;color:var(--ink)}
+.type button{min-width:68px}
+.mic{min-height:72px;border-radius:18px;border:0;background:var(--ok);color:#fff;font:800 20px Cairo,sans-serif;display:flex;align-items:center;justify-content:center;gap:8px}
+.mic.on{background:var(--bad);animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.75}}
+.flash{animation:fl .6s 2}@keyframes fl{50%{background:#FFE7A3}}
+@media (max-width:340px){.quick button{font-size:12.5px;min-height:58px}.quick button span{font-size:21px}.m.them{font-size:23px}}
+@media (prefers-reduced-motion:reduce){button:active{transform:none}.mic.on,.flash{animation:none}}
+</style>
+</head>
+<body>
+<header>
+<svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#1E3A47"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg>
+<div><b id="hTitle">وصل في المكان</b><small id="hSub"></small></div>
+<button class="end hidden" type="button" id="endBtn">إنهاء</button>
+</header>
+<main>
+<!-- Deaf phone: show the code -->
+<section id="vQr" class="hidden" style="display:flex;flex-direction:column;gap:12px">
+<div class="staffHint" id="qrHint">لو سمحت، اعمل سكان للكود ده بكاميرا موبايلك<small id="qrHint2">عشان تتكلم مع العميل. هو أصم وهيقرا كلامك على موبايله.</small></div>
+<div class="card" style="align-items:center"><div id="qrBox" aria-label="QR"></div></div>
+<div class="row"><button class="btn" type="button" id="shareBtn">ابعت اللينك</button><button class="btn" type="button" id="backBtn">رجوع</button></div>
+<p class="note" id="qrNote" style="text-align:center"></p>
+</section>
+
+<!-- conversation (both phones) -->
+<section id="vChat" class="hidden" style="display:flex;flex-direction:column;gap:10px">
+<p class="note" id="chatHint"></p>
+<div id="chat" aria-live="polite"></div>
+<p class="wait hidden" id="sending"></p>
+<div class="dock">
+<button class="mic hidden" type="button" id="micBtn">🎤 <span id="micTxt">اتكلم</span></button>
+<div class="quick" id="quick"></div>
+<div class="type"><input id="typeIn" maxlength="300" autocomplete="off"><button class="btn dark" type="button" id="sendBtn">ابعت</button></div>
+</div>
+</section>
+
+<section id="vMsg" class="card hidden"><p class="big" id="msgTxt"></p><a class="btn dark" id="msgBtn" href="./">رجوع لوصل</a></section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+const API='https://api.nrg-egypt.com/webhook/wasl-counter';
+const $=id=>document.getElementById(id);
+const qs=new URLSearchParams(location.search);
+const H=(location.hash||'').replace('#','');
+const hm=H.match(/^s=([a-f0-9]{12})\.([a-f0-9]{24})$/);
+const ROLE=hm?'s':'d';
+let LANG=['ar-EG','ar-SA','en-US'].includes(qs.get('l'))?qs.get('l'):'ar-EG';
+const S={sid:hm?hm[1]:'',k2:hm?hm[2]:'',n:0,joined:false,ended:false,timer:null,busy:false,last:0};
+
+/* words: Egyptian (default), Gulf, English */
+const W={
+ 'ar-EG':{title:'وصل في المكان',subD:'للعميل الأصم',subS:'العميل أصم وبيقرا كلامك',hint:'لو سمحت، اعمل سكان للكود ده بكاميرا موبايلك',hint2:'عشان تتكلم مع العميل. هو أصم وهيقرا كلامك على موبايله.',share:'ابعت اللينك',back:'رجوع',end:'إنهاء',
+  waitJoin:'مستنيين الموظف يعمل سكان...',joinedD:'الموظف دخل ✓ كلامه هيظهر هنا بخط كبير.',hintS:'اتكلم أو اكتب. العميل هيقرا كلامك على موبايله، وردّه هيظهر هنا وتسمعه.',
+  mic:'دوس واتكلم',micOn:'بيسمع... دوس تاني لما تخلص',type:'اكتب هنا',send:'ابعت',sending:'بيتبعت...',ended:'المحادثة خلصت. شكراً!',bad:'الكود ده خلص أو غلط. اطلب من العميل يفتح كود جديد.',net:'النت فيه مشكلة. بنحاول تاني...',
+  shareMsg:'افتح اللينك ده عشان تتكلم مع العميل الأصم:',from:'الموظف',me:'إنت',deafSaid:'العميل',
+  qd:[['✅','أيوه'],['❌','لأ'],['💰','بكام؟'],['⏳','استنى لحظة'],['✍️','اكتبها لو سمحت'],['🔁','تاني لو سمحت'],['❓','مش فاهم'],['🙏','شكراً']],
+  qs:[['⏳','لحظة واحدة'],['✅','موجود'],['❌','مش موجود'],['💳','كاش ولا فيزا؟'],['🪪','البطاقة لو سمحت'],['👉','اتفضل من هنا'],['🔁','ممكن تاني؟'],['🙏','العفو']]},
+ 'ar-SA':{title:'وصل في المكان',subD:'للعميل الأصم',subS:'العميل أصم ويقرأ كلامك',hint:'لو سمحت، امسح هذا الكود بكاميرا جوالك',hint2:'عشان تتكلم مع العميل. هو أصم ويقرأ كلامك على جواله.',share:'أرسل الرابط',back:'رجوع',end:'إنهاء',
+  waitJoin:'ننتظر الموظف يمسح الكود...',joinedD:'الموظف دخل ✓ كلامه يطلع هنا بخط كبير.',hintS:'تكلم أو اكتب. العميل يقرأ كلامك على جواله، ورده يطلع هنا وتسمعه.',
+  mic:'اضغط وتكلم',micOn:'يسمع... اضغط مرة ثانية لما تخلص',type:'اكتب هنا',send:'أرسل',sending:'يرسل...',ended:'خلصت المحادثة. مشكور!',bad:'الكود انتهى أو غلط. اطلب من العميل يفتح كود جديد.',net:'فيه مشكلة في النت. نحاول مرة ثانية...',
+  shareMsg:'افتح الرابط عشان تتكلم مع العميل الأصم:',from:'الموظف',me:'أنت',deafSaid:'العميل',
+  qd:[['✅','إيه'],['❌','لا'],['💰','بكم؟'],['⏳','لحظة'],['✍️','اكتبها لو سمحت'],['🔁','عيدها لو سمحت'],['❓','ما فهمت'],['🙏','مشكور']],
+  qs:[['⏳','لحظة'],['✅','موجود'],['❌','مو موجود'],['💳','كاش ولا بطاقة؟'],['🪪','الهوية لو سمحت'],['👉','تفضل من هنا'],['🔁','ممكن تعيد؟'],['🙏','العفو']]},
+ 'en-US':{title:'Wasl at the counter',subD:'For the Deaf customer',subS:'The customer is Deaf and reads your words',hint:'Please scan this code with your phone camera',hint2:'to talk with this customer. They are Deaf and will read your words on their phone.',share:'Share link',back:'Back',end:'End',
+  waitJoin:'Waiting for the staff to scan...',joinedD:'Staff joined ✓ Their words will show here in large text.',hintS:'Speak or type. The customer reads your words on their phone; their replies show here and are read aloud.',
+  mic:'Tap and speak',micOn:'Listening... tap again when done',type:'Type here',send:'Send',sending:'Sending...',ended:'The conversation ended. Thank you!',bad:'This code expired or is wrong. Ask the customer to open a new one.',net:'Connection problem. Trying again...',
+  shareMsg:'Open this link to talk with the Deaf customer:',from:'Staff',me:'You',deafSaid:'Customer',
+  qd:[['✅','Yes'],['❌','No'],['💰','How much?'],['⏳','One moment'],['✍️','Please write it'],['🔁','Again please'],['❓','I don\'t understand'],['🙏','Thank you']],
+  qs:[['⏳','One moment'],['✅','We have it'],['❌','Not available'],['💳','Cash or card?'],['🪪','ID please'],['👉','This way please'],['🔁','Could you repeat?'],['🙏','You\'re welcome']]}
+};
+const t=k=>(W[LANG]||W['ar-EG'])[k];
+function applyLang(){const en=LANG==='en-US';document.documentElement.lang=en?'en':'ar';document.documentElement.dir=en?'ltr':'rtl';
+ $('hTitle').textContent=t('title');$('hSub').textContent=ROLE==='d'?t('subD'):t('subS');$('endBtn').textContent=t('end');
+ $('qrHint').firstChild.textContent=t('hint');$('qrHint2').textContent=t('hint2');$('shareBtn').textContent=t('share');$('backBtn').textContent=t('back');
+ $('typeIn').placeholder=t('type');$('sendBtn').textContent=t('send');$('micTxt').textContent=t('mic');$('chatHint').textContent=ROLE==='d'?'':t('hintS');
+ const Q=ROLE==='d'?t('qd'):t('qs');$('quick').innerHTML=Q.map((q,i)=>`<button type="button" data-i="${i}"><span>${q[0]}</span>${esc(q[1])}</button>`).join('');
+ $('quick').querySelectorAll('button').forEach(b=>b.onclick=()=>send(Q[+b.dataset.i][1],'quick'));}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function show(v){['vQr','vChat','vMsg'].forEach(x=>$(x).classList.toggle('hidden',x!==v));$('endBtn').classList.toggle('hidden',v!=='vChat'&&!(v==='vQr'&&S.sid))}
+function msg(text){try{sessionStorage.removeItem('wasl_counter')}catch(e){}show('vMsg');$('msgTxt').textContent=text;$('endBtn').classList.add('hidden');clearInterval(S.timer);$('msgBtn').classList.toggle('hidden',ROLE!=='d')}
+
+async function call(body){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:'wasl-nrg-2026',sid:S.sid,k2:S.k2},body))});let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw new Error(j.error||('http'+r.status));return j}
+
+/* numbers stand out (prices, quantities, times) so a reader who struggles still sees them */
+const fmt=s=>esc(s).replace(/([0-9٠-٩]+(?:[.,][0-9٠-٩]+)?)/g,'<span class="num">$1</span>');
+function addMsgs(list){
+ const box=$('chat');let theirs=false;
+ list.forEach(m=>{const mine=m.s===ROLE;const d=document.createElement('div');d.className='m '+(mine?'me':'them');
+  const who=mine?t('me'):(ROLE==='d'?t('from'):t('deafSaid'));
+  d.innerHTML=(mine?esc(m.t):fmt(m.t))+(!mine&&ROLE==='s'?' <button class="say" type="button" aria-label="🔊">🔊</button>':'')+`<span class="meta">${esc(who)}</span>`;
+  const sb=d.querySelector('.say');if(sb)sb.onclick=()=>speak(m.t);
+  box.appendChild(d);if(!mine){theirs=true;if(ROLE==='s')speak(m.t)}});
+ if(list.length){d0=box.lastElementChild;d0&&d0.scrollIntoView({block:'end',behavior:'smooth'})}
+ if(theirs&&ROLE==='d'){try{navigator.vibrate&&navigator.vibrate([120,60,120])}catch(e){}document.body.classList.remove('flash');void document.body.offsetWidth;document.body.classList.add('flash')}}
+let d0=null;
+
+/* staff phone: read the Deaf customer's words aloud */
+function speak(text){try{if(!('speechSynthesis' in window))return;const u=new SpeechSynthesisUtterance(text);u.lang=LANG==='en-US'?'en-US':LANG;
+ const v=speechSynthesis.getVoices().find(x=>x.lang&&x.lang.toLowerCase().startsWith(LANG==='en-US'?'en':'ar'));if(v)u.voice=v;u.rate=.95;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+
+async function send(text,kind){text=String(text||'').trim();if(!text||S.ended)return;$('sending').textContent=t('sending');$('sending').classList.remove('hidden');
+ try{const j=await call({a:'send',side:ROLE,t:text,kind:kind||'typed',since:S.n});apply(j)}catch(e){$('sending').textContent=e.message==='key'||e.message==='nosession'?t('bad'):t('net');return}
+ $('sending').classList.add('hidden')}
+function apply(j){if(!j||!j.ok)return;
+ if(Array.isArray(j.msgs)&&j.n>S.n){addMsgs(j.msgs.slice(Math.max(0,j.msgs.length-(j.n-S.n))));S.n=j.n}
+ if(j.joined&&!S.joined){S.joined=true;if(ROLE==='d'){show('vChat');$('chatHint').textContent=t('joinedD')}}
+ if(j.ended){S.ended=true;msg(t('ended'))}}
+async function poll(){if(S.busy||S.ended)return;S.busy=true;try{apply(await call({a:'poll',since:S.n}));$('qrNote').textContent=S.joined?'':t('waitJoin')}catch(e){if(e.message==='key'||e.message==='nosession')msg(t('bad'));else $('qrNote').textContent=t('net')}finally{S.busy=false}}
+function startPolling(){clearInterval(S.timer);S.timer=setInterval(()=>{if(!document.hidden)poll()},2000);poll()}
+
+function drawQr(url){const box=$('qrBox');try{const q=qrcode(0,'M');q.addData(url);q.make();box.innerHTML=q.createSvgTag({cellSize:6,margin:2,scalable:true})}catch(e){box.innerHTML='<p class="note" style="line-height:1.6">'+esc(t('share'))+' ↓</p>'}}
+
+/* speech-to-text on the staff phone (Chrome / Safari) */
+let rec=null,recOn=false;
+function setupMic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR||ROLE!=='s')return;$('micBtn').classList.remove('hidden');
+ $('micBtn').onclick=()=>{if(recOn){try{rec.stop()}catch(e){}return}
+  rec=new SR();rec.lang=LANG;rec.interimResults=true;rec.continuous=false;let final='';
+  rec.onresult=e=>{let txt='';for(let i=0;i<e.results.length;i++){txt+=e.results[i][0].transcript;if(e.results[i].isFinal)final=txt}$('typeIn').value=txt};
+  rec.onend=()=>{recOn=false;$('micBtn').classList.remove('on');$('micTxt').textContent=t('mic');const v=(final||$('typeIn').value).trim();if(v){$('typeIn').value='';send(v,'voice')}};
+  rec.onerror=()=>{};try{rec.start();recOn=true;$('micBtn').classList.add('on');$('micTxt').textContent=t('micOn')}catch(e){}}}
+
+$('sendBtn').onclick=()=>{const v=$('typeIn').value;$('typeIn').value='';send(v,'typed')};
+$('typeIn').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('sendBtn').click()}});
+$('endBtn').onclick=async()=>{try{await call({a:'end'})}catch(e){}S.ended=true;msg(t('ended'))};
+$('backBtn').onclick=()=>{if(S.sid)call({a:'end'}).catch(()=>{});location.href='./'};
+$('shareBtn').onclick=async()=>{const url=staffUrl();try{if(navigator.share){await navigator.share({text:t('shareMsg')+'\n'+url});return}}catch(e){}location.href='https://wa.me/?text='+encodeURIComponent(t('shareMsg')+'\n'+url)};
+const staffUrl=()=>location.origin+location.pathname+'#s='+S.sid+'.'+S.k2;
+let wake=null;async function keepAwake(){try{if('wakeLock' in navigator&&!wake){wake=await navigator.wakeLock.request('screen');wake.addEventListener('release',()=>wake=null)}}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){keepAwake();poll()}});
+
+(async function init(){
+ try{if(ROLE==='s'){const j=await call({a:'join'});if(j.lang)LANG=j.lang;applyLang();setupMic();show('vChat');apply(j);startPolling();keepAwake();return}
+  applyLang();
+  const prev=(()=>{try{return JSON.parse(sessionStorage.getItem('wasl_counter')||'null')}catch(e){return null}})();
+  if(prev&&prev.sid&&Date.now()-prev.at<3600e3){S.sid=prev.sid;S.k2=prev.k2}
+  else{const j=await call({a:'open',lang:LANG,place:String(qs.get('p')||'').slice(0,40)});S.sid=j.sid;S.k2=j.k2;try{sessionStorage.setItem('wasl_counter',JSON.stringify({sid:S.sid,k2:S.k2,at:Date.now()}))}catch(e){}}
+  drawQr(staffUrl());show('vQr');$('qrNote').textContent=t('waitJoin');startPolling();keepAwake();
+ }catch(e){applyLang();msg(e.message==='key'||e.message==='nosession'?t('bad'):t('net'))}
+})();
+</script>
+</body>
+</html>
