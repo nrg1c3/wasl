@@ -1487,10 +1487,11 @@ function drawSummary(){if(ROLE!=='d'||!S.joined||!S.log.length)return;const old=
   (S.result==='yes'||S.result==='no'?`<div class="srow"><i aria-hidden="true">${S.result==='yes'?'✅':'❌'}</i><div class="res ${S.result==='yes'?'ok':'no'}">${esc(t(S.result==='yes'?'sumOk':'sumNo'))}</div></div>`:'');
  $('msgTxt').insertAdjacentHTML('beforebegin',`<div class="sum" id="sumCard" role="region" aria-label="${esc(t('sumT'))}"><h2><span aria-hidden="true">🧾</span>${esc(t('sumT'))}</h2><p class="when">${esc((place?place+' · ':'')+when)}</p>${rows}<p class="keep">${esc(t(DEMO?'sumKeepDemo':'sumKeep'))}</p></div>`);
  if(DEMO||S.saved)return;S.saved=true;
- // the app's «مهامي» list (same site, same phone); «امسح كل بياناتي» in the app clears it
+ // the app's «مهامي» list (same site, same phone); «امسح كل بياناتي» in the app clears it.
+ // local:true keeps it out of taskMemory() in index.html, which sends recent task summaries with «اتكلم بدالي».
  try{const lines=[req?t('sumReq')+': '+req.slice(0,160):'',...nums,S.result==='yes'?'✅ '+t('sumOk'):S.result==='no'?'❌ '+t('sumNo'):''].filter(Boolean);
   const T=JSON.parse(localStorage.getItem('wasl_tasks')||'[]');
-  T.push({id:Date.now(),done:S.result==='yes',title:t('sumTask')+(place?': '+place:''),summary:lines.join('\n'),date:new Date().toLocaleString(LANG==='en-US'?'en-GB':'ar-EG-u-nu-latn',{dateStyle:'medium',timeStyle:'short'})});
+  T.push({id:Date.now(),local:true,done:S.result==='yes',title:t('sumTask')+(place?': '+place:''),summary:lines.join('\n'),date:new Date().toLocaleString(LANG==='en-US'?'en-GB':'ar-EG-u-nu-latn',{dateStyle:'medium',timeStyle:'short'})});
   localStorage.setItem('wasl_tasks',JSON.stringify(T.slice(-30)))}catch(e){}}
 $('endBtn').onclick=()=>{if(ROLE==='d'&&S.joined)askDone();else finish('')};
 $('doneY').onclick=()=>finish('yes');$('doneN').onclick=()=>finish('no');
