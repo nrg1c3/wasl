@@ -1431,7 +1431,7 @@ if(DEMO){S.place='pharmacy-demo';PN['pharmacy-demo']='صيدلية (تجريبي
  Object.keys(W).forEach(l=>{W[l].subD+=' · '+(l==='en-US'?'Demo':'عرض تجريبي')})} // shown under the title, so nothing covers the buttons
 
 /* numbers stand out (prices, quantities, times) so a reader who struggles still sees them */
-const fmt=s=>esc(s).replace(/([0-9٠-٩]+(?:[.,][0-9٠-٩]+)?)/g,'<span class="num">$1</span>');
+const fmt=s=>esc(s).replace(/([0-9٠-٩]+(?:[.,][0-9٠-٩]+)?)/g,'<bdi dir="ltr" class="num">$1</bdi>'); // bdi: «12.50» or a phone number never flips inside an Arabic line
 function addMsgs(list){
  const box=$('chat');let theirs=false;
  list.forEach(m=>{S.log.push({s:m.s,t:String(m.t||'')});const mine=m.s===ROLE;const d=document.createElement('div');d.className='m '+(mine?'me':'them');
@@ -1476,7 +1476,7 @@ function askDone(){S.asked=true;clearInterval(S.timer);show('vDone');$('endBtn')
 async function finish(done){S.result=done||'';try{await call(S.ended?{a:'done',done}:{a:'end',done:done||''})}catch(e){}S.ended=true;msg(t('ended'));drawSummary()}
 /* «ملخص المصلحة»: the request, every line from the staff that has a number in it (price, quantity, time), and the yes/no.
    Built from this page's memory, shown on this phone, saved in the app's «مهامي» (same phone). Never sent anywhere. */
-const HASNUM=/[0-9\u0660-\u0669]/,MONEY=/جنيه|جنية|ج\.م|درهم|ريال|pound|EGP|AED|SAR|\$/i;
+const HASNUM=/[0-9\u0660-\u0669]/,MONEY=/جنيه|جنية|ج\.م|[0-9\u0660-\u0669]\s*ج(?![\u0621-\u064A])|درهم|ريال|pound|EGP|AED|SAR|\$/i; // «90ج» / «90 ج» is money too
 function drawSummary(){if(ROLE!=='d'||!S.joined||!S.log.length)return;const old=$('sumCard');if(old)old.remove();
  const req=(S.log.find(m=>m.s==='d')||{}).t||'',nums=S.log.filter(m=>m.s!=='d'&&HASNUM.test(m.t)).slice(-4).map(m=>m.t.slice(0,160));
  if(!req&&!nums.length)return;
