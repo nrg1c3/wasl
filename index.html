@@ -1881,7 +1881,8 @@ function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').tex
 const PF={pName:'name',pSex:'sex',pVoice:'voice',pRate:'rate',pMem:'mem',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return DEMO?DEMO.profile:store.get('wasl_profile',{})}
 try{if(!localStorage.getItem('wasl_vmig')){const p=store.get('wasl_profile',null);if(p&&p.voice==='f'){p.voice='auto';store.set('wasl_profile',p)}localStorage.setItem('wasl_vmig','1')}}catch(e){}
-function taskMemory(){if(DEMO||profile().mem==='off')return[];return store.get('wasl_tasks',[]).filter(x=>x.summary).slice(-5).reverse().map(x=>({d:x.date||'',t:String(x.title||'').slice(0,60),s:String(x.summary).slice(0,220)}))}
+/* Memory sent with «اتكلم بدالي» (wasl-agent). Tasks marked local (the «وصل في المكان» summary) never leave the phone. */
+function taskMemory(){if(DEMO||profile().mem==='off')return[];return store.get('wasl_tasks',[]).filter(x=>x.summary&&!x.local).slice(-5).reverse().map(x=>({d:x.date||'',t:String(x.title||'').slice(0,60),s:String(x.summary).slice(0,220)}))}
 function taskProfile(){const p=profile(),o={};['name','sex','address','allergies','insurance','notes'].forEach(k=>{if(p[k])o[k]=p[k]});return o}
 /* Wasl's voice matches the user by default, so a man is never spoken for in a woman's voice unless he picks it. */
 function vg(){const p=profile();return p.voice==='m'||p.voice==='f'?p.voice:(p.sex==='f'?'f':'m')}
