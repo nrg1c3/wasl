@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# NRG server: serve n8n on api.nrg-egypt.com and the short project links (basata., padel., ...).
+# NRG server: serve n8n on api.nrg-egypt.com and the short project links.
 # Run as root on the server:
 #   curl -fsSL https://raw.githubusercontent.com/nrg1c3/wasl/main/server/domains.sh | bash
-# Safe to run again (after adding a link to server/links.txt, run it again).
+# Safe to run again (after editing the links file, run it again).
+# The short links live ONLY on the server, in /opt/nrg/links.txt (this repo is public, so the list is not kept here).
+# One line per link:   host   path   where-it-goes    ("/" is the address itself and catches any other path)
 # - The old address (<ip>.sslip.io) keeps working next to the new one.
 # - A host is only added once its DNS points at this server, so no failed certificates.
 # - n8n moves to the new address only after https://api.../healthz answers.
@@ -10,7 +12,7 @@
 set -euo pipefail
 
 API_HOST="${API_HOST:-api.nrg-egypt.com}"
-LINKS_URL="${LINKS_URL:-https://raw.githubusercontent.com/nrg1c3/wasl/main/server/links.txt}"
+LINKS_FILE="${LINKS_FILE:-/opt/nrg/links.txt}"
 BASE=/opt/nrg
 
 say() { printf '\n\033[1;32m==> %s\033[0m\n' "$*"; }
@@ -32,7 +34,8 @@ cp .env "backups/env_before_domains_$STAMP.txt" && chmod 600 "backups/env_before
 cp Caddyfile "backups/Caddyfile_before_domains_$STAMP.txt"
 
 say "2/5 Checking which addresses already point at this server ($IP)"
-LINKS="$(curl -fsSL "$LINKS_URL")" || die "Could not download the links list: $LINKS_URL"
+[ -f "$LINKS_FILE" ] || die "No links file at $LINKS_FILE. Nothing was changed. (Without it the short links would be removed.)"
+LINKS="$(cat "$LINKS_FILE")"
 HOSTS="$API_HOST $(printf '%s\n' "$LINKS" | awk '!/^[[:space:]]*#/ && NF>=3 {print $1}' | sort -u | tr '\n' ' ')"
 READY=""; WAIT=""
 for h in $HOSTS; do
@@ -42,7 +45,7 @@ resolves_here "$API_HOST" || die "$API_HOST does not point at $IP yet. Add the D
 
 say "3/5 Writing the web server settings"
 {
-  echo "# managed by domains.sh: edit server/links.txt in the wasl repo and run domains.sh again"
+  echo "# managed by domains.sh: edit $LINKS_FILE on this server and run domains.sh again"
   echo "(n8n) {"
   echo "	encode gzip"
   echo "	reverse_proxy n8n:5678 {"

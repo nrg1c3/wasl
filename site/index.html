@@ -35,7 +35,7 @@ function go(){fetch('https://'+l.host+'/manifest.webmanifest',{mode:'no-cors',ca
  {"@type":"WebApplication","@id":"https://wasl.nrg-egypt.com/site/#app","name":"وَصْل","alternateName":"Wasl","url":"https://wasl.nrg-egypt.com/","applicationCategory":"UtilitiesApplication","applicationSubCategory":"Accessibility","operatingSystem":"Android, iOS, Web","browserRequirements":"يشتغل من متصفح الموبايل","inLanguage":"ar-EG","description":"تطبيق مجاني للصم وضعاف السمع في مصر: يحوّل الكتابة لصوت مصري واضح، ويكتب كلام الشخص السامع، ويطلب الدوا من الصيدلية على واتساب.","offers":{"@type":"Offer","price":"0","priceCurrency":"EGP"},"audience":{"@type":"Audience","audienceType":"الصم وضعاف السمع","geographicArea":{"@type":"Country","name":"مصر"}},"publisher":{"@id":"https://wasl.nrg-egypt.com/site/#nrg"},"image":"https://wasl.nrg-egypt.com/icon-512.png"},
  {"@type":"WebPage","@id":"https://wasl.nrg-egypt.com/site/","url":"https://wasl.nrg-egypt.com/site/","name":"وَصْل | تطبيق مجاني للصم وضعاف السمع في مصر","inLanguage":"ar-EG","about":{"@id":"https://wasl.nrg-egypt.com/site/#app"},"isPartOf":{"@type":"WebSite","name":"وَصْل","url":"https://wasl.nrg-egypt.com/site/"}},
  {"@type":"FAQPage","mainEntity":[
-  {"@type":"Question","name":"هل وَصْل بيترجم لغة الإشارة؟","acceptedAnswer":{"@type":"Answer","text":"لأ. وَصْل بيشتغل بالكتابة والصور: إنت بتكتب أو بتصوّر، وهو بيتكلم بصوت مصري، وكلام اللي قدامك بيظهرلك مكتوب. شرح بلغة الإشارة هيتضاف للموقع قريب."}},
+  {"@type":"Question","name":"هل وَصْل بيترجم لغة الإشارة؟","acceptedAnswer":{"@type":"Answer","text":"لسه مش كامل. وَصْل بيشتغل أساساً بالكتابة والصور: إنت بتكتب أو بتصوّر أو بتختار صورة، وهو بيتكلم بصوت مصري، وكلام اللي قدامك بيظهرلك مكتوب. وفي شاشة «إشارة» تقدر تعلّم وَصْل إشاراتك إنت، وهو يقولها بصوت (الكاميرا بتشتغل على موبايلك بس). ومكتبة إشارات مصرية بنصوّرها مع خبراء إشارة، وهتتضاف أول ما تخلص."}},
   {"@type":"Question","name":"وَصْل بفلوس؟","acceptedAnswer":{"@type":"Answer","text":"وَصْل مجاني للصم وضعاف السمع."}},
   {"@type":"Question","name":"محتاج أنزّله من المتجر؟","acceptedAnswer":{"@type":"Answer","text":"لأ. بيفتح من متصفح الموبايل على wasl.nrg-egypt.com، وتقدر تضيفه للشاشة الرئيسية زي أي تطبيق. محتاج نت وهو شغال."}},
   {"@type":"Question","name":"بياناتي في أمان؟","acceptedAnswer":{"@type":"Answer","text":"اسمك وحساسيتك ومهامك محفوظين على موبايلك إنت، ومش بنبيع بياناتك، ووَصْل ما بيوافقش على سعر ولا دوا ولا دفع من غير ما تختار."}},
@@ -145,14 +145,12 @@ section.band{padding-block:72px}
 .trust a{color:#F0A36F}
 @media (max-width:860px){.promises{grid-template-columns:1fr}}
 
-.pilot .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:start}
+.pilot .wrap{display:grid;grid-template-columns:1fr;gap:40px;align-items:start}
 .need{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:10px}
 .need li{display:flex;gap:10px;align-items:baseline}
 .need li::before{content:"";flex:0 0 10px;height:10px;border-radius:50%;background:var(--signal);transform:translateY(-2px)}
 .pilot .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.sign{background:var(--card);border:2px dashed var(--line);border-radius:20px;aspect-ratio:4/3;display:grid;place-items:center;text-align:center;padding:24px;color:var(--soft)}
-.sign b{display:block;color:var(--ink);font-size:20px;margin-bottom:6px}
-@media (max-width:860px){.pilot .wrap{grid-template-columns:1fr}.sign{aspect-ratio:auto;min-height:180px}}
+@media (max-width:860px){.pilot .wrap{grid-template-columns:1fr}}
 
 .partners{background:var(--card);border-top:1px solid var(--line)}
 .who{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:36px}
@@ -287,7 +285,6 @@ footer a{color:var(--paper)}
         <a class="btn ghost" href="../">جرّب وَصْل دلوقتي</a>
       </div>
     </div>
-    <div class="sign" role="note"><div><b>شرح بلغة الإشارة</b>فيديو الشرح بلغة الإشارة هيتحط هنا قريب.</div></div>
   </div>
 </section>
 
@@ -307,7 +304,7 @@ footer a{color:var(--paper)}
 <section class="band" id="faq" aria-labelledby="h-faq">
   <div class="wrap faq">
     <h2 id="h-faq">أسئلة بتتسأل كتير</h2>
-    <details><summary>هل وَصْل بيترجم لغة الإشارة؟</summary><p>لأ. وَصْل بيشتغل بالكتابة والصور: إنت بتكتب أو بتصوّر، وهو بيتكلم بصوت مصري، وكلام اللي قدامك بيظهرلك مكتوب. شرح بلغة الإشارة هيتضاف للموقع قريب.</p></details>
+    <details><summary>هل وَصْل بيترجم لغة الإشارة؟</summary><p>لسه مش كامل. وَصْل بيشتغل أساساً بالكتابة والصور: إنت بتكتب أو بتصوّر أو بتختار صورة، وهو بيتكلم بصوت مصري، وكلام اللي قدامك بيظهرلك مكتوب. وفي شاشة «إشارة» تقدر تعلّم وَصْل إشاراتك إنت، وهو يقولها بصوت (الكاميرا بتشتغل على موبايلك بس). ومكتبة إشارات مصرية بنصوّرها مع خبراء إشارة، وهتتضاف أول ما تخلص.</p></details>
     <details><summary>وَصْل بفلوس؟</summary><p>وَصْل مجاني للصم وضعاف السمع.</p></details>
     <details><summary>محتاج أنزّله من المتجر؟</summary><p>لأ. بيفتح من متصفح الموبايل على wasl.nrg-egypt.com، وتقدر تضيفه للشاشة الرئيسية زي أي تطبيق. محتاج نت وهو شغال.</p></details>
     <details><summary>بياناتي في أمان؟</summary><p>اسمك وحساسيتك ومهامك محفوظين على موبايلك إنت، ومش بنبيع بياناتك، ووَصْل ما بيوافقش على سعر ولا دوا ولا دفع من غير ما تختار.</p></details>

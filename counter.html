@@ -1401,6 +1401,23 @@ function msg(text){try{sessionStorage.removeItem('wasl_counter')}catch(e){}show(
 
 async function call(body){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:'wasl-nrg-2026',sid:S.sid,k2:S.k2},body))});let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw new Error(j.error||('http'+r.status));return j}
 
+/* ?demo: the whole counter scene runs on this phone with a scripted pharmacist, no server and no network.
+   For showing Wasl when the internet is down. Nothing is sent or saved. */
+const DEMO=qs.has('demo')&&!STATION&&ROLE==='d';
+const DSTAFF={'ar-EG':['أهلاً بحضرتك. اتفضل الروشتة لو سمحت.','موجود. العلبة بـ 90 جنيه. كاش ولا فيزا؟','تمام. اتفضل الدوا والفاتورة. ألف سلامة 🙏'],
+ 'ar-SA':['هلا فيك. تفضل الوصفة لو سمحت.','موجود. العلبة بـ 38 درهم. كاش ولا بطاقة؟','تمام. تفضل الدوا والفاتورة. الله يشفيك 🙏'],
+ 'en-US':['Hello! May I see the prescription, please?','We have it. The box is 90 pounds. Cash or card?','Here is your medicine and the receipt. Get well soon 🙏']};
+const DM={msgs:[],joined:false,at:0,i:0};
+function demoCall(b){const L=DSTAFF[LANG]||DSTAFF['ar-EG'];
+ if(b.a==='open'){DM.at=Date.now();return{ok:true,sid:'000000000000',k2:'000000000000000000000000'}}
+ if(!DM.joined&&Date.now()-DM.at>3500)DM.joined=true; // the pharmacist "scans" after a few seconds
+ if(b.a==='send'){DM.joined=true;DM.msgs.push({s:'d',t:b.t});if(DM.i<L.length){const line=L[DM.i++];setTimeout(()=>{DM.msgs.push({s:'s',t:line});poll()},1800)}}
+ return{ok:true,joined:DM.joined,msgs:DM.msgs.slice(),n:DM.msgs.length,ended:false}}
+if(DEMO){S.place='pharmacy-demo';PN['pharmacy-demo']='صيدلية (تجريبي)';call=async b=>demoCall(b||{});
+ try{sessionStorage.removeItem('wasl_counter')}catch(e){}
+ $('msgBtn').href='./?demo';
+ Object.keys(W).forEach(l=>{W[l].subD+=' · '+(l==='en-US'?'Demo':'عرض تجريبي')})} // shown under the title, so nothing covers the buttons
+
 /* numbers stand out (prices, quantities, times) so a reader who struggles still sees them */
 const fmt=s=>esc(s).replace(/([0-9٠-٩]+(?:[.,][0-9٠-٩]+)?)/g,'<span class="num">$1</span>');
 function addMsgs(list){
@@ -1447,7 +1464,7 @@ function askDone(){S.asked=true;clearInterval(S.timer);show('vDone');$('endBtn')
 async function finish(done){try{await call(S.ended?{a:'done',done}:{a:'end',done:done||''})}catch(e){}S.ended=true;msg(t('ended'))}
 $('endBtn').onclick=()=>{if(ROLE==='d'&&S.joined)askDone();else finish('')};
 $('doneY').onclick=()=>finish('yes');$('doneN').onclick=()=>finish('no');
-$('backBtn').onclick=()=>{if(S.sid)call({a:'end'}).catch(()=>{});location.href='./'};
+$('backBtn').onclick=()=>{if(S.sid)call({a:'end'}).catch(()=>{});location.href=DEMO?'./?demo':'./'};
 $('shareBtn').onclick=async()=>{const url=staffUrl();try{if(navigator.share){await navigator.share({text:t('shareMsg')+'\n'+url});return}}catch(e){}location.href='https://wa.me/?text='+encodeURIComponent(t('shareMsg')+'\n'+url)};
 const staffUrl=()=>location.origin+location.pathname+'#s='+S.sid+'.'+S.k2;
 let wake=null;async function keepAwake(){try{if('wakeLock' in navigator&&!wake){wake=await navigator.wakeLock.request('screen');wake.addEventListener('release',()=>wake=null)}}catch(e){}}

@@ -62,7 +62,10 @@
 (record.html، review.html) · `wasl-join` (join.html) · `wasl-feedback` (feedback.html).
 
 لو ميزة محتاجة webhook جديد: اكتب المطلوب (الاسم، الـbody، الرد) واسأل صاحب المشروع — ما تخترعش عنوان.
-عناوين `server/links.txt` و`.github/workflows/uptime.yml` تبع مشاريع NRG تانية: ما تلمسهاش.
+الـrepo عام: **ممنوع** أي روابط أو عناوين لمشاريع NRG التانية (بساطة كمشروع، بادل، عمارتنا، شغلانة، ...).
+روابط الدومينات المختصرة موجودة على السيرفر بس (`/opt/nrg/links.txt`، بيقراها `server/domains.sh`)،
+وفحص الـuptime في `.github/workflows/uptime.yml` لوَصْل وسيرفره بس.
+(أسماء فروع الأماكن في `counter.html`، زي فروع بساطة، دي أماكن «وصل في المكان» نفسها ومسموح بيها.)
 
 ### 6. الخصوصية
 - أي ميزة جديدة تتضاف في `privacy.html` وتطلب موافقة قبل أول استخدام.
