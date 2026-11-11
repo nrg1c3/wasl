@@ -1257,7 +1257,7 @@ const EN={
 'المكالمة اتقفلت':'The call has ended',
 'المكالمة اتلغت.':'The call was cancelled.',
 'المكالمة خلصت · وصل بيقفل الخط':'The call is done · Wasl is hanging up',
-'المكالمة خلصت.':'The call is over.',
+'المكالمة خلصت.':'The call is over.','الخط اتقطع.':'The line was cut.','المكالمة اتقفلت قبل أي كلام.':'The call ended before anyone spoke.',
 'المكالمة شغالة · وصل بيسمع':'On the call · Wasl is listening',
 'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.':'The call did not go through. Check the number and try again.',
 'المكالمة مش بتتسجّل، ووصل بيقول للطرف التاني إنه مساعد بالذكاء الاصطناعي':'The call is not recorded, and Wasl tells the other person that it is an AI assistant',
@@ -1733,7 +1733,7 @@ const GU={
 "ببعت ردك...": "أرسل ردك...",
 "مقدرتش أبعت. جرّب تاني.": "ما قدرت أرسل. جرّب مرة ثانية.",
 "تنهي المكالمة؟": "تبي تنهي المكالمة؟",
-"المكالمة خلصت.": "خلصت المكالمة.",
+"المكالمة خلصت.": "خلصت المكالمة.","الخط اتقطع.": "انقطع الخط.","المكالمة اتقفلت قبل أي كلام.": "انقفلت المكالمة قبل أي كلام.",
 "محدش رد على المكالمة.": "ما أحد رد على المكالمة.",
 "المكالمة اتلغت.": "المكالمة انلغت.",
 "الخط اتقفل عشان الرد اتأخر، ووصل قالهم إننا هنكلمهم تاني.": "الخط تسكّر لأن الرد تأخر، ووصل قال لهم إننا بنكلمهم مرة ثانية.",
@@ -2987,11 +2987,12 @@ async function callEnd(){if(!CL||CL.over){CL=null;show('home');return}
  callState('think',tr('بيقفل المكالمة...'));
  try{const d=await postJSON(CALL_URL,{op:'end',cid:CL.cid},15000);callDraw(d)}catch(e){callFinish('ended')}}
 function callFinish(st){if(!CL||CL.over)return;CL.over=true;clearTimeout(CL.timer);
- const W={ended:'المكالمة خلصت.',failed:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.',noanswer:'محدش رد على المكالمة.',busy:'الخط كان مشغول.',canceled:'المكالمة اتلغت.',timeout:'الخط اتقفل عشان الرد اتأخر، ووصل قالهم إننا هنكلمهم تاني.'};
+ const W={ended:'المكالمة خلصت.',cut:'الخط اتقطع.',empty:'المكالمة اتقفلت قبل أي كلام.',failed:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.',noanswer:'محدش رد على المكالمة.',busy:'الخط كان مشغول.',canceled:'المكالمة اتلغت.',timeout:'الخط اتقفل عشان الرد اتأخر، ووصل قالهم إننا هنكلمهم تاني.'};
  const who=l=>tr(l.r==='callee'?'الطرف التاني':l.r==='wasl'?'وصل قال':'إنت'),last=CL.lines.slice(-6),had=CL.lines.length>0;
  // «✓ done» only when the call really ended; a cut, a timeout or no answer says why, above the last words
  const ended=st==='ended'||(!st&&!!CL.summary),ok=ended&&(!!CL.summary||had);
- const why=ended?'':tr(W[st]||W.ended),msg=[why,CL.summary||''].filter(Boolean).join('\n')||(had?'':tr(W.ended));
+ // the reason never contradicts the title: a lost call (no state) «اتقطع»; an ended call with no words «اتقفلت قبل أي كلام»
+ const why=ended?(CL.summary||had?'':tr(W.empty)):tr(W[st]||W.cut),msg=[why,CL.summary||''].filter(Boolean).join('\n');
  $('cSumH').textContent=ok?tr('✓ المكالمة خلصت'):tr('المكالمة اتقفلت');
  $('cSumT').innerHTML=(msg?nums(msg):'')+(had?`<span class="csl">${tr('آخر كلام في المكالمة:')}</span>`+last.map(l=>`<span class="csl"><b>${esc(who(l))}:</b> ${nums(l.t)}</span>`).join('')+`<small class="csl">${tr('الملخص ده على موبايلك بس.')}</small>`:'');
  ['cDecide','cOk','cType','cFoot'].forEach(id=>$(id).classList.add('hidden'));$('call').classList.remove('asking');$('cSum').classList.remove('hidden');
