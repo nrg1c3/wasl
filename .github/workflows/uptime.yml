@@ -1,4 +1,5 @@
-# NRG uptime check: every 10 minutes GitHub checks the server and the project links.
+# Wasl uptime check: every 10 minutes GitHub checks the Wasl app and its server.
+# (Other NRG projects are watched by the server's own alerts, not from this public repo.)
 # If something is down the run fails, and GitHub emails the repo owner.
 name: Uptime check
 on:
@@ -12,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Check server and links
+      - name: Check Wasl and its server
         run: |
           fail=0
           check() { # name url expected-status
@@ -21,9 +22,4 @@ jobs:
           }
           check "n8n server (api)"      https://api.nrg-egypt.com/healthz            200
           check "Wasl app"              https://wasl.nrg-egypt.com/                  200
-          check "Basata closing link"   https://c3.nrg-egypt.com/closing             302
-          check "Basata closing page"   https://api.nrg-egypt.com/webhook/basata-sheet 200
-          check "Owners association"    https://api.nrg-egypt.com/webhook/omara      200
-          check "Shaghlana"             https://api.nrg-egypt.com/webhook/shaghlana  200
-          check "Padel link"            https://padel.nrg-egypt.com/                 302
           exit $fail

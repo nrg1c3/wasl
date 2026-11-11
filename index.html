@@ -39,7 +39,7 @@ button{cursor:pointer}
 /* home */
 .top{background:var(--ink);color:var(--bg);padding:16px 18px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .brand{font-size:26px;font-weight:800}.brand span{color:var(--or2)}
-select{min-height:44px;border:0;border-radius:999px;background:var(--ink2);color:var(--soft);padding:0 14px;font-size:15px}
+select{min-height:48px;border:0;border-radius:999px;background:var(--ink2);color:var(--soft);padding:0 14px;font-size:15px}
 .body{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:16px}
 h2{margin:0;font-size:22px;font-weight:800}
 .lead{margin:0;color:var(--mute);font-size:15px;line-height:1.6}
@@ -121,7 +121,7 @@ nav svg{width:24px;height:24px}
 .live p{margin:0;font-size:clamp(20px,6vw,26px);line-height:1.45;font-weight:700}
 .sug{display:flex;flex-direction:column;gap:8px}
 .sug button{min-height:56px;border:2px solid var(--or);border-radius:14px;background:var(--card);font-size:19px;font-weight:700;text-align:start;padding:10px 14px;color:var(--ink)}
-.back{min-height:44px;border:0;border-radius:999px;background:var(--ink2);color:var(--bg);padding:0 16px;font-size:15px;font-weight:700}
+.back{min-height:48px;border:0;border-radius:999px;background:var(--ink2);color:var(--bg);padding:0 16px;font-size:15px;font-weight:700}
 /* signs: sign → voice */
 #signs{position:fixed;inset:0;background:#13262F;display:none;flex-direction:column;padding:12px 16px calc(12px + env(safe-area-inset-bottom));gap:10px;z-index:20;color:var(--bg);overflow-y:auto}
 #signs.on{display:flex}
@@ -172,7 +172,7 @@ html.pm .shint{display:none}html.pm .scard b{font-size:22px}
 .hhead select{background:#fff;color:var(--ink);border:1px solid var(--line)}
 .hbody{flex:1;display:flex;flex-direction:column;gap:14px;padding:10px 18px;min-height:0;overflow-y:auto}
 @media (max-height:780px){.hbody{gap:10px}.big{min-height:78px;padding:12px 16px;gap:12px;border-radius:22px}.big .ic{width:52px;height:52px;border-radius:16px}.big .ic svg{width:30px;height:30px}.big b{font-size:22px}.big small{font-size:13.5px}}
-.alchip{align-self:flex-start;display:flex;align-items:center;gap:8px;min-height:40px;border:0;border-radius:999px;padding:0 14px;font-size:14px;font-weight:700;background:#F3E3D3;color:#7A3A0E}
+.alchip{align-self:flex-start;display:flex;align-items:center;gap:8px;min-height:48px;border:0;border-radius:999px;padding:0 14px;font-size:14px;font-weight:700;background:#F3E3D3;color:#7A3A0E}
 .alchip .d{width:10px;height:10px;border-radius:50%;background:#C9501E}
 .alchip.on{background:#E3F1EA;color:#1B5E3B}.alchip.on .d{background:#2E8B57}
 .big{flex:1 1 0;min-height:104px;border:0;border-radius:26px;color:#fff;padding:18px;display:flex;align-items:center;gap:16px;text-align:start}
@@ -258,6 +258,9 @@ html.pm .only-pic{display:revert}html.pm .no-pic{display:none!important}
 html.pm #picHome{display:flex}
 html.pm #bigTalk,html.pm #openFree,html.pm .hbrand small,html.pm #sosBtn small,html.pm .alchip:not(.on){display:none}
 html.pm #sosBtn{flex:0 0 auto;min-height:74px;margin-top:auto}
+/* Emergency is always on screen: it stays stuck above the bottom bar when the home screen scrolls (small phones). */
+#sosBtn{position:sticky;bottom:0;z-index:3;flex-shrink:0;box-shadow:0 -10px 0 var(--bg),0 4px 14px rgba(0,0,0,.18)}
+html.pm #sosBtn{min-height:72px;padding-block:8px}html.pm #sosBtn .ic{width:54px;height:54px}
 #picHome{flex-direction:column;gap:10px;flex-shrink:0}
 .phead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0}.phead b{font-size:17px;font-weight:800;color:var(--mute)}
 .sit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
@@ -267,7 +270,7 @@ html.pm #sosBtn{flex:0 0 auto;min-height:74px;margin-top:auto}
 .sit .si svg{width:30px;height:30px;stroke:var(--c,#13262F)}
 .sit.tools button{background:var(--ink);color:#fff;box-shadow:none;min-height:88px}
 .sit.tools .si{background:rgba(255,255,255,.14)}.sit.tools .si svg{stroke:#fff}
-.pwrite{display:flex;align-items:center;gap:6px;min-height:44px;border:0;background:none;color:var(--mute);font-size:15px;font-weight:700;padding:0 10px}
+.pwrite{display:flex;align-items:center;gap:6px;min-height:48px;border:0;background:none;color:var(--mute);font-size:15px;font-weight:700;padding:0 10px}
 .pwrite svg{width:20px;height:20px}
 .bigopts{display:flex;flex-direction:column;gap:10px}
 .bigopts button{min-height:72px;border:2px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);display:flex;align-items:center;gap:14px;padding:8px 14px;font-size:20px;font-weight:800;text-align:start}
@@ -479,7 +482,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 
 <!-- ============ HOME ============ -->
 <section id="home" class="screen on" aria-label="الرئيسية">
-<button id="demoFab" class="hidden" style="position:fixed;bottom:96px;left:16px;z-index:40;background:#E4602A;color:#fff;border:0;border-radius:24px;padding:10px 16px;font:800 16px Cairo,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.2)">▶ عرض تجريبي</button>
+<button id="demoFab" class="hidden" style="position:fixed;top:72px;left:16px;min-height:48px;z-index:40;background:#E4602A;color:#fff;border:0;border-radius:24px;padding:10px 16px;font:800 16px Cairo,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.2)">▶ عرض تجريبي</button>
 <div class="hhead">
 <div class="hbrand"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#13262F"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>وَصْل</b><small>بيتكلم بدالك ويخلّص المهمة</small></div></div>
 <label class="sr" for="lang">لهجة اللي قدامك</label>
@@ -2293,7 +2296,19 @@ function runDemo(){DEMO={profile:{name:tr('محمد'),sex:'m',allergies:tr('ال
 async function prepDemo(){const btn=$('demoPrep'),en=LANG==='en-US',gu=LANG==='ar-SA',L=en?DL_EN:gu?DL_GU:DL,vl=en?'en-US':gu?'ar-SA':'ar-EG',keys=Object.keys(L);let ok=0;btn.disabled=true;
  for(const k of keys){btn.textContent=tr('بحضّر الأصوات {n}/{m}...',{n:ok,m:keys.length});try{await ttsBlob(mascTTS(L[k]),vl,DLG[k]||'f',true);ok++}catch(e){}}
  btn.disabled=false;btn.textContent=ok===keys.length?tr('الأصوات جاهزة ✓ (يشتغل من غير نت)'):tr('اتحضّر {n} من {m}، جرّب تاني',{n:ok,m:keys.length});}
-$('demoRun').onclick=runDemo;$('demoPrep').onclick=prepDemo;$('demoFab').onclick=runDemo;
+$('demoRun').onclick=runDemo;$('demoPrep').onclick=prepDemo;
+/* ?demo: one list with the four scenes in order. All four work with no internet (the face-to-face voices need «حضّر أصوات العرض» once, online). */
+Object.assign(EN,{'العرض التجريبي':'Demo','بيشتغل من غير نت':'Works with no internet','صيدلية: وصل بيتكلم بدالك':'Pharmacy: Wasl speaks for you','طلب دوا على واتساب':'Order medicine on WhatsApp','طوارئ':'Emergency','قفل':'Close'});
+const DEMOS=[{i:'💊',l:'صيدلية: وصل بيتكلم بدالك',go:runDemo},{i:'💬',l:'طلب دوا على واتساب',go:()=>{oSetup();show('order');$('oDemo').click()}},
+ {i:'🔳',l:'وصل في المكان',go:()=>{location.href='counter.html?demo'+(GULF?'&l=ar-SA':UI==='en'?'&l=en-US':'')}},{i:'🚨',l:'طوارئ',go:()=>$('sosBtn').click()}];
+function demoMenu(){let m=$('demoMenu');
+ if(!m){document.body.insertAdjacentHTML('beforeend','<div id="demoMenu" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="dmT"><div class="card"><h3 id="dmT"></h3><p class="lead" id="dmSub"></p><div class="bigopts" id="dmOpts"></div><button class="btn ghost" id="dmX"></button></div></div>');m=$('demoMenu');
+  $('dmT').textContent='▶ '+tr('العرض التجريبي');$('dmSub').textContent=tr('بيشتغل من غير نت');$('dmX').textContent=tr('قفل');
+  $('dmOpts').innerHTML=DEMOS.map((x,n)=>`<button><span class="si" style="font-size:28px">${x.i}</span>${n+1}. ${esc(tr(x.l))}</button>`).join('');
+  $('dmOpts').querySelectorAll('button').forEach((b,n)=>b.onclick=()=>{buzz([30]);m.classList.add('hidden');DEMOS[n].go()});
+  $('dmX').onclick=()=>m.classList.add('hidden');m.onclick=e=>{if(e.target===m)m.classList.add('hidden')}}
+ m.classList.remove('hidden')}
+$('demoFab').onclick=demoMenu;
 if(/[?&]demo\b/.test(location.search))$('demoFab').classList.remove('hidden');
 
 /* ================= FREE MODE ================= */
@@ -3245,15 +3260,17 @@ window.WaslSigns=(function(){
 /* ---------- sign view in the task and translation screens ---------- */
 const SIGN_URL=API_BASE+'wasl-sign';
 // On by default in picture mode, off in text mode; the user's own choice is remembered.
-function signOn(){const v=store.get('wasl_signview',null);return v==null?picOn():!!v}
+// Hidden until the library has at least one recorded clip (no clips = nothing real to show yet).
+let vsReady=false;
+function signOn(){if(!vsReady)return false;const v=store.get('wasl_signview',null);return v==null?picOn():!!v}
 let vsSeq=0;const vsLast={task:'',free:''};
 function vsBox(where){return $(where==='task'?'tSg':'fSg')}
 function vsHome(id,where){const b=$(id);if(!b)return;const ws=vsBox(where).querySelector('.ws'),inPlayer=signOn()&&!!vsLast[where]&&ws;
  const home=where==='task'?$('tLive'):document.querySelector('#free .sgrow');const to=inPlayer?ws:home;if(b.parentNode!==to)to.insertBefore(b,to.firstChild)} // the switch sits in the player while it shows, so it costs no extra row
-function vsDraw(){const on=signOn();['tSgT','fSgT'].forEach(id=>{const b=$(id);if(b){b.setAttribute('aria-pressed',on?'true':'false')}});
+function vsDraw(){const on=signOn();['tSgT','fSgT'].forEach(id=>{const b=$(id);if(b){b.setAttribute('aria-pressed',on?'true':'false');b.classList.toggle('hidden',!vsReady)}});
  ['task','free'].forEach(w=>{const b=vsBox(w);if(!b)return;const show=on&&!!vsLast[w];b.classList.toggle('hidden',!show);if(!on)WaslSigns.stop(b)});
  const t=$('task');if(t)t.classList.toggle('sgon',on&&!!vsLast.task);const f=$('free');if(f)f.classList.toggle('sgon',on&&!!vsLast.free);vsHome('tSgT','task');vsHome('fSgT','free')}
-function vsToggle(where){store.set('wasl_signview',!signOn());vsDraw();if(signOn()&&vsLast[where])signShow(where,vsLast[where])}
+function vsToggle(where){if(!vsReady)return;store.set('wasl_signview',!signOn());vsDraw();if(signOn()&&vsLast[where])signShow(where,vsLast[where])}
 /* The AI turns the sentence into sign IDs from our library (ESL order). Slow or no network: the local word matcher. */
 async function signGloss(text){let man=null;try{man=await WaslSigns.load()}catch(e){return null}
  const local=()=>WaslSigns.gloss(text);
@@ -3287,7 +3304,7 @@ async function signShow(where,text){text=String(text||'').trim();if(!text)return
  const sp=window.setPic;if(typeof sp==='function')window.setPic=function(){const r=sp.apply(this,arguments);vsDraw();return r};
  vsDraw();
  // load the library early (small file; the service worker keeps it for offline use)
- setTimeout(()=>{WaslSigns.load().catch(()=>{})},1500);
+ setTimeout(()=>{WaslSigns.load().then(m=>{vsReady=(m&&m.signs||[]).some(x=>x.clips&&x.clips.length);vsDraw()}).catch(()=>{})},1500);
 })();
 </script>
 <script>

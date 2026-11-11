@@ -35,7 +35,7 @@ function go(){fetch('https://'+l.host+'/manifest.webmanifest',{mode:'no-cors',ca
  {"@type":"WebApplication","@id":"https://wasl.nrg-egypt.com/site/#app","name":"وَصْل","alternateName":"Wasl","url":"https://wasl.nrg-egypt.com/","applicationCategory":"UtilitiesApplication","applicationSubCategory":"Accessibility","operatingSystem":"Android, iOS, Web","browserRequirements":"يشتغل من متصفح الموبايل","inLanguage":"ar-EG","description":"تطبيق مجاني للصم وضعاف السمع في مصر: يحوّل الكتابة لصوت مصري واضح، ويكتب كلام الشخص السامع، ويطلب الدوا من الصيدلية على واتساب.","offers":{"@type":"Offer","price":"0","priceCurrency":"EGP"},"audience":{"@type":"Audience","audienceType":"الصم وضعاف السمع","geographicArea":{"@type":"Country","name":"مصر"}},"publisher":{"@id":"https://wasl.nrg-egypt.com/site/#nrg"},"image":"https://wasl.nrg-egypt.com/icon-512.png"},
  {"@type":"WebPage","@id":"https://wasl.nrg-egypt.com/site/","url":"https://wasl.nrg-egypt.com/site/","name":"وَصْل | تطبيق مجاني للصم وضعاف السمع في مصر","inLanguage":"ar-EG","about":{"@id":"https://wasl.nrg-egypt.com/site/#app"},"isPartOf":{"@type":"WebSite","name":"وَصْل","url":"https://wasl.nrg-egypt.com/site/"}},
  {"@type":"FAQPage","mainEntity":[
-  {"@type":"Question","name":"هل وَصْل بيترجم لغة الإشارة؟","acceptedAnswer":{"@type":"Answer","text":"لأ. وَصْل بيشتغل بالكتابة والصور: إنت بتكتب أو بتصوّر، وهو بيتكلم بصوت مصري، وكلام اللي قدامك بيظهرلك مكتوب. شرح بلغة الإشارة هيتضاف للموقع قريب."}},
+  {"@type":"Question","name":"هل وَصْل بيترجم لغة الإشارة؟","acceptedAnswer":{"@type":"Answer","text":"لسه مش كامل. وَصْل بيشتغل أساساً بالكتابة والصور: إنت بتكتب أو بتصوّر أو بتختار صورة، وهو بيتكلم بصوت مصري، وكلام اللي قدامك بيظهرلك مكتوب. وفي شاشة «إشارة» تقدر تعلّم وَصْل إشاراتك إنت، وهو يقولها بصوت (الكاميرا بتشتغل على موبايلك بس). ومكتبة إشارات مصرية بنصوّرها مع خبراء إشارة، وهتتضاف أول ما تخلص."}},
   {"@type":"Question","name":"وَصْل بفلوس؟","acceptedAnswer":{"@type":"Answer","text":"وَصْل مجاني للصم وضعاف السمع."}},
   {"@type":"Question","name":"محتاج أنزّله من المتجر؟","acceptedAnswer":{"@type":"Answer","text":"لأ. بيفتح من متصفح الموبايل على wasl.nrg-egypt.com، وتقدر تضيفه للشاشة الرئيسية زي أي تطبيق. محتاج نت وهو شغال."}},
   {"@type":"Question","name":"بياناتي في أمان؟","acceptedAnswer":{"@type":"Answer","text":"اسمك وحساسيتك ومهامك محفوظين على موبايلك إنت، ومش بنبيع بياناتك، ووَصْل ما بيوافقش على سعر ولا دوا ولا دفع من غير ما تختار."}},
@@ -67,7 +67,7 @@ p{margin:0}
 /* header */
 .top{position:sticky;top:0;z-index:5;background:var(--ink);color:var(--paper)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;font-size:24px}
+.brand{display:flex;align-items:center;gap:10px;min-height:48px;text-decoration:none;font-weight:900;font-size:24px}
 .brand img{width:36px;height:36px;border-radius:9px}
 .top nav{display:flex;gap:6px;align-items:center}
 .top nav a.l{text-decoration:none;font-weight:600;font-size:16px;padding:8px 10px;color:var(--soft-on-ink)}
@@ -77,7 +77,7 @@ p{margin:0}
 .btn.go{background:var(--signal);color:#fff}
 .btn.go:hover{background:#C9501E}
 .btn.ghost{border-color:currentColor;color:var(--ink);background:transparent}
-.top .btn{min-height:42px;font-size:16px;padding:0 16px}
+.top .btn{min-height:48px;font-size:16px;padding:0 16px}
 @media (max-width:720px){.top nav a.l{display:none}}
 
 /* hero */
@@ -145,14 +145,12 @@ section.band{padding-block:72px}
 .trust a{color:#F0A36F}
 @media (max-width:860px){.promises{grid-template-columns:1fr}}
 
-.pilot .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:start}
+.pilot .wrap{display:grid;grid-template-columns:1fr;gap:40px;align-items:start}
 .need{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:10px}
 .need li{display:flex;gap:10px;align-items:baseline}
 .need li::before{content:"";flex:0 0 10px;height:10px;border-radius:50%;background:var(--signal);transform:translateY(-2px)}
 .pilot .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.sign{background:var(--card);border:2px dashed var(--line);border-radius:20px;aspect-ratio:4/3;display:grid;place-items:center;text-align:center;padding:24px;color:var(--soft)}
-.sign b{display:block;color:var(--ink);font-size:20px;margin-bottom:6px}
-@media (max-width:860px){.pilot .wrap{grid-template-columns:1fr}.sign{aspect-ratio:auto;min-height:180px}}
+@media (max-width:860px){.pilot .wrap{grid-template-columns:1fr}}
 
 .partners{background:var(--card);border-top:1px solid var(--line)}
 .who{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:36px}
@@ -163,7 +161,7 @@ section.band{padding-block:72px}
 
 .faq{max-width:780px}
 .faq details{border-bottom:1px solid var(--line);padding:16px 0}
-.faq summary{cursor:pointer;font-weight:800;font-size:19px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary{cursor:pointer;font-weight:800;font-size:19px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:48px}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";color:var(--signal);font-size:24px;line-height:1}
 .faq details[open] summary::after{content:"–"}
@@ -268,7 +266,7 @@ footer a{color:var(--paper)}
       <div><h3>مش بنبيع</h3><p>مش بنبيع بياناتك، ومفيش إعلانات بتتابعك.</p></div>
       <div><h3>القرار ليك</h3><p>وَصْل ما بيوافقش على سعر ولا دوا ولا دفع من غير ما تختار.</p></div>
     </div>
-    <p class="intro" style="margin-top:28px">التفاصيل كلها في <a href="../privacy.html">سياسة الخصوصية</a>.</p>
+    <p class="intro" style="margin-top:28px">التفاصيل كلها في <a href="../privacy.html" style="display:inline-block;padding:12px 0">سياسة الخصوصية</a>.</p>
   </div>
 </section>
 
@@ -287,7 +285,6 @@ footer a{color:var(--paper)}
         <a class="btn ghost" href="../">جرّب وَصْل دلوقتي</a>
       </div>
     </div>
-    <div class="sign" role="note"><div><b>شرح بلغة الإشارة</b>فيديو الشرح بلغة الإشارة هيتحط هنا قريب.</div></div>
   </div>
 </section>
 
@@ -307,7 +304,7 @@ footer a{color:var(--paper)}
 <section class="band" id="faq" aria-labelledby="h-faq">
   <div class="wrap faq">
     <h2 id="h-faq">أسئلة بتتسأل كتير</h2>
-    <details><summary>هل وَصْل بيترجم لغة الإشارة؟</summary><p>لأ. وَصْل بيشتغل بالكتابة والصور: إنت بتكتب أو بتصوّر، وهو بيتكلم بصوت مصري، وكلام اللي قدامك بيظهرلك مكتوب. شرح بلغة الإشارة هيتضاف للموقع قريب.</p></details>
+    <details><summary>هل وَصْل بيترجم لغة الإشارة؟</summary><p>لسه مش كامل. وَصْل بيشتغل أساساً بالكتابة والصور: إنت بتكتب أو بتصوّر أو بتختار صورة، وهو بيتكلم بصوت مصري، وكلام اللي قدامك بيظهرلك مكتوب. وفي شاشة «إشارة» تقدر تعلّم وَصْل إشاراتك إنت، وهو يقولها بصوت (الكاميرا بتشتغل على موبايلك بس). ومكتبة إشارات مصرية بنصوّرها مع خبراء إشارة، وهتتضاف أول ما تخلص.</p></details>
     <details><summary>وَصْل بفلوس؟</summary><p>وَصْل مجاني للصم وضعاف السمع.</p></details>
     <details><summary>محتاج أنزّله من المتجر؟</summary><p>لأ. بيفتح من متصفح الموبايل على wasl.nrg-egypt.com، وتقدر تضيفه للشاشة الرئيسية زي أي تطبيق. محتاج نت وهو شغال.</p></details>
     <details><summary>بياناتي في أمان؟</summary><p>اسمك وحساسيتك ومهامك محفوظين على موبايلك إنت، ومش بنبيع بياناتك، ووَصْل ما بيوافقش على سعر ولا دوا ولا دفع من غير ما تختار.</p></details>
@@ -320,7 +317,7 @@ footer a{color:var(--paper)}
 <footer>
   <div class="wrap">
     <span>وَصْل مشروع من شركة إن آر جي، مصر.</span>
-    <span><a href="../privacy.html">سياسة الخصوصية</a> · <a href="../join.html">التسجيل في التجربة</a></span>
+    <span><a href="../privacy.html" style="display:inline-block;padding:12px 4px">سياسة الخصوصية</a> · <a href="../join.html" style="display:inline-block;padding:12px 4px">التسجيل في التجربة</a></span>
   </div>
 </footer>
 </body>
