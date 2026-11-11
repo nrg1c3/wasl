@@ -14,7 +14,7 @@ const { chromium } = require('playwright');
 const ROOT = path.resolve(__dirname, '..');
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.csv': 'text/csv', '.txt': 'text/plain', '.xml': 'application/xml' };
 const PAGES = ['index.html', 'index.html?go=sos', 'index.html?go=order', 'index.html?go=free', 'counter.html?demo',
-  'join.html', 'feedback.html', 'privacy.html', 'record.html', 'review.html', 'site/index.html'];
+  'join.html', 'feedback.html', 'privacy.html', 'record.html', 'review.html', 'sponsor.html', 'site/index.html'];
 const PHONES = [{ width: 375, height: 667 }, { width: 390, height: 844 }];
 const MOCK = { ok: true, left: 3, limit: 30, t: 'test' };
 

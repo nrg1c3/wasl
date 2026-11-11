@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#13262F">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>أرقام وَصْل للرعاة</title>
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* Sponsor page: errands done for Deaf customers at a sponsor's places (Wasl at the counter).
+   Totals only: the server never sends a person, and hides any cell with fewer than 5 visits. */
+:root{--ink:#13262F;--ink2:#1E3A47;--bg:#F6F3EE;--card:#fff;--line:#E3DCCF;--or:#C9501E;--orl:#FBE6D4;--mute:#5B6870;--ok:#1F7A4D;--okl:#DDF0E5;--bad:#B3261E;--grid:#EEE8DD;color-scheme:light}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',Tahoma,sans-serif;-webkit-text-size-adjust:100%}
+button{font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+.hidden{display:none!important}
+bdi{unicode-bidi:isolate}
+header{background:var(--ink);color:var(--bg);padding:12px 16px;display:flex;align-items:center;gap:12px}
+header svg{width:40px;height:40px;flex-shrink:0}
+header b{font-size:20px;font-weight:800;display:block;line-height:1.3}header small{color:#BFD3D8;font-size:14px}
+main{max-width:640px;margin:0 auto;padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:10px}
+h2{margin:0;font-size:19px;font-weight:800;line-height:1.4}
+.note{color:var(--mute);font-size:14.5px;line-height:1.6;margin:0}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#EDE7DC;border-radius:16px;padding:4px}
+.seg button{min-height:48px;border:0;border-radius:12px;background:transparent;color:var(--ink);font-size:15px;font-weight:700}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.badge{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;background:var(--okl);color:var(--ok);font-weight:800;font-size:14px;border-radius:999px;padding:4px 12px}
+.demo{background:var(--orl);color:#7A3A0E;border-radius:14px;padding:10px 14px;font-weight:700;font-size:14.5px;line-height:1.5}
+.hero{flex-direction:row;align-items:center;gap:16px}
+.hero .ic{width:64px;height:64px;border-radius:20px;background:var(--okl);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:34px}
+.hero .n{font-size:56px;font-weight:900;line-height:1;letter-spacing:-1px}
+.hero .l{font-size:18px;font-weight:800;margin-top:4px}
+.rate{display:flex;flex-direction:column;gap:6px}
+.rate .bar{height:14px;border-radius:999px;background:var(--grid);overflow:hidden}
+.rate .bar i{display:block;height:100%;border-radius:999px;background:var(--ok)}
+.rate b{font-size:16px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpis div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+.kpis i{font-style:normal;font-size:24px}
+.kpis b{font-size:28px;font-weight:900;line-height:1.2}
+.kpis small{font-size:13px;color:var(--mute);font-weight:700;line-height:1.35}
+/* chart: one series (errands done per day); oldest on the right, like Arabic reading */
+.chart{position:relative;height:150px;display:flex;align-items:flex-end;gap:2px;padding-top:8px;border-bottom:1px solid #CFC6B6;background:linear-gradient(to top,transparent calc(50% - 1px),var(--grid) calc(50% - 1px),var(--grid) 50%,transparent 50%)}
+.chart button{flex:1 1 0;min-width:0;height:100%;border:0;padding:0;background:transparent;display:flex;align-items:flex-end;justify-content:center}
+.chart button span{display:block;width:100%;max-width:22px;border-radius:4px 4px 0 0;background:var(--or)}
+.chart button.zero span{height:2px!important;background:#CFC6B6;border-radius:0}
+.chart button.small span{background:repeating-linear-gradient(45deg,#D9D1C3 0 3px,#F1ECE3 3px 6px);height:18px!important}
+.chart button[aria-pressed=true] span{outline:2px solid var(--ink);outline-offset:1px}
+.axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mute);font-weight:600}
+.ymax{position:absolute;top:0;inset-inline-end:0;font-size:12px;color:var(--mute);background:var(--card);padding:0 4px;line-height:1}
+.read{min-height:48px;display:block;background:#F7F3EC;border-radius:12px;padding:11px 12px;font-size:15px;font-weight:700;line-height:1.5}
+.places{display:flex;flex-direction:column;gap:10px}
+.place{border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.place .t{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.place .t b{font-size:17px}.place .t span{font-size:15px;font-weight:800;color:var(--ok)}
+.place .bar{height:10px;border-radius:999px;background:var(--grid);overflow:hidden}
+.place .bar i{display:block;height:100%;background:var(--ok);border-radius:999px}
+.place small{color:var(--mute);font-size:13.5px;line-height:1.5}
+.place.small{background:#FAF7F2}
+details summary{min-height:48px;display:flex;align-items:center;font-weight:800;font-size:16px;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:start}th{color:var(--mute);font-size:13px}
+td.n,th.n{text-align:end}
+.btn{min-height:52px;border:0;border-radius:16px;background:var(--ink);color:#fff;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;padding:0 18px}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.msg{align-items:center;text-align:center;padding:28px 16px}
+.msg .ic{font-size:44px}.msg p{margin:0;font-size:19px;font-weight:800;line-height:1.5}
+.foot{color:var(--mute);font-size:13.5px;line-height:1.7;text-align:center;margin:0}
+.foot a{color:inherit;display:inline-block;padding:13px 4px}
+@media print{header{background:none;color:var(--ink);border-bottom:2px solid var(--ink)}header small{color:var(--mute)}.seg,.noprint{display:none!important}body,.card{background:#fff}main{max-width:none}details{display:block}details>*{display:block}}
+</style>
+</head>
+<body>
+<header>
+<svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#1E3A47"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg>
+<div><b id="hName">وَصْل</b><small id="hSub">أرقام الرعاة · وصل في المكان</small></div>
+</header>
+<main>
+<div class="seg" role="group" aria-label="الفترة">
+<button type="button" data-p="this" aria-pressed="true">الشهر ده</button>
+<button type="button" data-p="last" aria-pressed="false">الشهر اللي فات</button>
+<button type="button" data-p="q" aria-pressed="false">آخر 3 شهور</button>
+</div>
+
+<section id="vMsg" class="card msg hidden" aria-live="polite"><div class="ic" id="msgIc">⏳</div><p id="msgTxt">بيجيب الأرقام...</p><button class="btn hidden" id="retry" type="button">🔄 جرّب تاني</button></section>
+
+<div id="vData" class="hidden" style="display:flex;flex-direction:column;gap:14px">
+<div class="demo hidden" id="demo">🧪 دي أرقام تجريبية ثابتة عشان تشوف الصفحة. مش أرقام حقيقية.</div>
+<span class="badge">🤟 <span id="badge">مكان صديق للصم</span></span>
+
+<section class="card hero" id="hero">
+<div class="ic" aria-hidden="true">✅</div>
+<div><div class="n" id="nDone">0</div><div class="l">مصلحة خلصت لعملاء صم</div><p class="note" id="period"></p></div>
+</section>
+<section class="card hidden" id="few"><p class="note">🔒 لسه الزيارات أقل من 5 في الفترة دي. الأرقام بتظهر لما تبقى 5 أو أكتر، عشان محدش يقدر يعرف عميل بعينه.</p></section>
+
+<section class="card rate" id="rate">
+<b id="rateTxt"></b>
+<div class="bar" role="img" id="rateBar"><i id="rateFill"></i></div>
+<p class="note">من العملاء اللي جاوبوا على «مصلحتك خلصت؟» في آخر المحادثة.</p>
+</section>
+
+<div class="kpis" id="kpis">
+<div><i aria-hidden="true">🔳</i><b id="kSes">0</b><small>مرة عميل أصم فتح الكود</small></div>
+<div><i aria-hidden="true">🧑‍💼</i><b id="kJoin">0</b><small>مرة الموظف ردّ عليه</small></div>
+<div><i aria-hidden="true">❌</i><b id="kNo">0</b><small>مصلحة ما خلصتش</small></div>
+</div>
+
+<section class="card">
+<h2 id="chT">المصالح اللي خلصت كل يوم</h2>
+<div class="chart" id="chart" role="group" aria-labelledby="chT"></div>
+<div class="axis"><span id="axR"></span><span id="axL"></span></div>
+<div class="read" id="read" aria-live="polite">دوس على أي عمود تشوف أرقام اليوم ده.</div>
+<details class="noprint-open"><summary>📋 الأرقام بالأيام</summary><table><thead><tr><th>اليوم</th><th class="n">زيارات</th><th class="n">خلصت</th></tr></thead><tbody id="dayRows"></tbody></table></details>
+</section>
+
+<section class="card">
+<h2>الفروع</h2>
+<div class="places" id="places"></div>
+</section>
+
+<button class="btn ghost noprint" id="print" type="button">🖨️ اطبع أو احفظ PDF</button>
+<p class="foot">أرقام إجمالية بس، من غير أي بيانات عن أي شخص: لا أسماء ولا أرقام ولا كلام من المحادثات.<br>أي يوم أو فرع فيه أقل من 5 زيارات أرقامه مستخبية.<br><span id="upd"></span><br><a href="privacy.html#counter">سياسة الخصوصية</a></p>
+</div>
+</main>
+<script>
+const API='https://api.nrg-egypt.com/webhook/wasl-sponsor-stats';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const N=v=>v==null?'—':String(v);
+/* The sponsor's private link: sponsor.html#s=<sponsor>.<key>. The key stays after "#", so it never reaches any server log;
+   it is only sent in the request body, and the server checks it. Nothing is saved on the phone. */
+const m=(location.hash||'').match(/^#s=([a-z0-9-]{3,40})\.([0-9a-f]{24})$/i);
+const SP=m?m[1].toLowerCase():'',KEY=m?m[2].toLowerCase():'';
+const DLOC='ar-EG-u-nu-latn';
+let PER='this',busy=0,sel=-1,last=null;
+
+/* today in Cairo, then the period as YYYY-MM-DD */
+function cairoToday(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Africa/Cairo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());return p}
+function ymd(y,m,d){const t=new Date(Date.UTC(y,m,d));return t.toISOString().slice(0,10)}
+function period(p){const t=cairoToday(),y=+t.slice(0,4),mo=+t.slice(5,7)-1;
+ if(p==='last')return{from:ymd(y,mo-1,1),to:ymd(y,mo,0)};
+ if(p==='q')return{from:ymd(y,mo-2,1),to:ymd(y,mo+1,0)};
+ return{from:ymd(y,mo,1),to:ymd(y,mo+1,0)}}
+const dayName=d=>new Date(d+'T12:00:00Z').toLocaleDateString(DLOC,{day:'numeric',month:'long',timeZone:'UTC'});
+
+function msg(ic,text,retry){$('vData').classList.add('hidden');$('vMsg').classList.remove('hidden');$('msgIc').textContent=ic;$('msgTxt').textContent=text;$('retry').classList.toggle('hidden',!retry)}
+
+async function load(){if(!SP){msg('🔗','اللينك ناقص. اطلب لينك الأرقام بتاعك من فريق وَصْل.',false);return}
+ const my=++busy;msg('⏳','بيجيب الأرقام...',false);const ac=new AbortController(),to=setTimeout(()=>ac.abort(),15000);
+ try{const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:'wasl-nrg-2026',sponsor:SP,key:KEY},period(PER))),signal:ac.signal});
+  let j=null;try{j=await r.json()}catch(e){}
+  if(my!==busy)return;
+  if(r.status===401)return msg('🔒','اللينك ده غلط أو اتلغى. اطلب لينك جديد من فريق وَصْل.',false);
+  if(r.status===429)return msg('⏱️','فتحت الصفحة مرات كتير. جرّب تاني بعد ساعة.',true);
+  if(!r.ok||!j||!j.ok)throw new Error('http '+r.status);
+  draw(j)}
+ catch(e){if(my===busy)msg('📶','النت فيه مشكلة. ما قدرناش نجيب الأرقام.',true)}
+ finally{clearTimeout(to)}}
+
+function draw(j){last=j;sel=-1;$('vMsg').classList.add('hidden');$('vData').classList.remove('hidden');
+ const name=(j.sponsor&&j.sponsor.name)||SP,T=j.totals||{};document.title='أرقام وَصْل · '+name;
+ $('hName').textContent=name;$('badge').textContent=name+' · مكان صديق للصم';
+ $('demo').classList.toggle('hidden',!(j.sponsor&&j.sponsor.id==='demo'));
+ const p=j.period||period(PER);$('period').textContent='من '+dayName(p.from)+' لـ '+dayName(p.to);
+ const few=T.sessions==null;$('few').classList.toggle('hidden',!few);
+ $('nDone').textContent=N(T.done);$('kSes').textContent=N(T.sessions);$('kJoin').textContent=N(T.staff_joined);$('kNo').textContent=N(T.not_done);
+ const pct=T.asked?Math.round(100*T.done/T.asked):null;$('rate').classList.toggle('hidden',pct==null);
+ if(pct!=null){$('rateTxt').innerHTML='<bdi>'+pct+'%</bdi> قالوا مصلحتهم خلصت';$('rateFill').style.width=pct+'%';$('rateBar').setAttribute('aria-label',pct+'%')}
+ const today=cairoToday();drawChart((j.by_day||[]).filter(d=>d.day<=today));drawPlaces(j.places||[]);
+ $('upd').textContent=j.updated?'آخر تحديث: '+new Date(j.updated).toLocaleString(DLOC,{day:'numeric',month:'long',hour:'numeric',minute:'2-digit',timeZone:'Africa/Cairo'}):''}
+
+/* more than 40 days: one bar per week (hidden days are left out of the week's sum, and the week says so) */
+function buckets(days){if(days.length<=40)return days.map(d=>({label:dayName(d.day),from:d.day,sessions:d.sessions,done:d.done,small:!!d.small,part:false}));
+ const out=[];for(let i=0;i<days.length;i+=7){const w=days.slice(i,i+7),known=w.filter(d=>!d.small),hid=w.length-known.length;
+  out.push({label:'أسبوع '+dayName(w[0].day),from:w[0].day,sessions:known.length?known.reduce((a,d)=>a+d.sessions,0):null,done:known.length?known.reduce((a,d)=>a+d.done,0):null,small:!known.length,part:hid>0&&known.length>0})}
+ return out}
+function drawChart(days){const B=buckets(days),max=Math.max(1,...B.map(b=>b.done||0));
+ $('chT').textContent=days.length>40?'المصالح اللي خلصت كل أسبوع':'المصالح اللي خلصت كل يوم';
+ $('chart').innerHTML='<span class="ymax" aria-hidden="true">'+max+'</span>'+B.map((b,i)=>{const cls=b.small?'small':(!b.done?'zero':'');
+  return `<button type="button" class="${cls}" data-i="${i}" aria-pressed="false" aria-label="${esc(b.label)}"><span style="height:${b.small||!b.done?0:Math.max(4,Math.round(100*b.done/max))}%"></span></button>`}).join('');
+ $('chart').querySelectorAll('button').forEach(el=>{const show=()=>{const b=B[+el.dataset.i];$('chart').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===el)));
+   $('read').innerHTML=b.small?esc(b.label)+': أقل من 5 زيارات (مستخبي للخصوصية)':esc(b.label)+': <bdi>'+b.sessions+'</bdi> زيارة · <bdi>'+b.done+'</bdi> خلصت'+(b.part?' (فيه أيام مستخبية)':'')};
+  el.onclick=show;el.onmouseenter=show;el.onfocus=show});
+ $('read').textContent=B.length>1?'دوس على أي عمود تشوف أرقامه.':'';
+ $('axR').textContent=B.length?B[0].label:'';$('axL').textContent=B.length>1?B[B.length-1].label:'';
+ $('dayRows').innerHTML=days.map(d=>`<tr><td>${esc(dayName(d.day))}</td><td class="n">${d.small?'أقل من 5':d.sessions}</td><td class="n">${d.small?'—':d.done}</td></tr>`).join('')}
+
+function drawPlaces(P){const L=P.slice().sort((a,b)=>(b.done||0)-(a.done||0)||(b.sessions||0)-(a.sessions||0));
+ $('places').innerHTML=L.length?L.map(p=>{if(p.small)return `<div class="place small"><div class="t"><b>${esc(p.name)}</b></div><small>🔒 أقل من 5 زيارات. الأرقام مستخبية للخصوصية.</small></div>`;
+  const pct=p.asked?Math.round(100*p.done/p.asked):0;
+  return `<div class="place"><div class="t"><b>${esc(p.name)}</b><span>✅ <bdi>${p.done}</bdi> خلصت</span></div><div class="bar" role="img" aria-label="${pct}%"><i style="width:${pct}%"></i></div><small><bdi>${p.sessions}</bdi> زيارة · الموظف ردّ في <bdi>${p.staff_joined}</bdi> · <bdi>${pct}%</bdi> من اللي جاوبوا قالوا خلصت</small></div>`}).join(''):'<p class="note">لسه مفيش زيارات في الفترة دي.</p>'}
+
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{if(PER===b.dataset.p)return;PER=b.dataset.p;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));load()});
+$('retry').onclick=load;$('print').onclick=()=>{document.querySelectorAll('details').forEach(d=>d.open=true);print()};
+addEventListener('hashchange',()=>location.reload());
+load();
+</script>
+</body>
+</html>
