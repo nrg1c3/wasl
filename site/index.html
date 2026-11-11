@@ -67,7 +67,7 @@ p{margin:0}
 /* header */
 .top{position:sticky;top:0;z-index:5;background:var(--ink);color:var(--paper)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;font-size:24px}
+.brand{display:flex;align-items:center;gap:10px;min-height:48px;text-decoration:none;font-weight:900;font-size:24px}
 .brand img{width:36px;height:36px;border-radius:9px}
 .top nav{display:flex;gap:6px;align-items:center}
 .top nav a.l{text-decoration:none;font-weight:600;font-size:16px;padding:8px 10px;color:var(--soft-on-ink)}
@@ -77,7 +77,7 @@ p{margin:0}
 .btn.go{background:var(--signal);color:#fff}
 .btn.go:hover{background:#C9501E}
 .btn.ghost{border-color:currentColor;color:var(--ink);background:transparent}
-.top .btn{min-height:42px;font-size:16px;padding:0 16px}
+.top .btn{min-height:48px;font-size:16px;padding:0 16px}
 @media (max-width:720px){.top nav a.l{display:none}}
 
 /* hero */
@@ -161,7 +161,7 @@ section.band{padding-block:72px}
 
 .faq{max-width:780px}
 .faq details{border-bottom:1px solid var(--line);padding:16px 0}
-.faq summary{cursor:pointer;font-weight:800;font-size:19px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary{cursor:pointer;font-weight:800;font-size:19px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:48px}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";color:var(--signal);font-size:24px;line-height:1}
 .faq details[open] summary::after{content:"–"}
@@ -266,7 +266,7 @@ footer a{color:var(--paper)}
       <div><h3>مش بنبيع</h3><p>مش بنبيع بياناتك، ومفيش إعلانات بتتابعك.</p></div>
       <div><h3>القرار ليك</h3><p>وَصْل ما بيوافقش على سعر ولا دوا ولا دفع من غير ما تختار.</p></div>
     </div>
-    <p class="intro" style="margin-top:28px">التفاصيل كلها في <a href="../privacy.html">سياسة الخصوصية</a>.</p>
+    <p class="intro" style="margin-top:28px">التفاصيل كلها في <a href="../privacy.html" style="display:inline-block;padding:12px 0">سياسة الخصوصية</a>.</p>
   </div>
 </section>
 
@@ -317,7 +317,7 @@ footer a{color:var(--paper)}
 <footer>
   <div class="wrap">
     <span>وَصْل مشروع من شركة إن آر جي، مصر.</span>
-    <span><a href="../privacy.html">سياسة الخصوصية</a> · <a href="../join.html">التسجيل في التجربة</a></span>
+    <span><a href="../privacy.html" style="display:inline-block;padding:12px 4px">سياسة الخصوصية</a> · <a href="../join.html" style="display:inline-block;padding:12px 4px">التسجيل في التجربة</a></span>
   </div>
 </footer>
 </body>

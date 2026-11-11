@@ -36,7 +36,7 @@ input:focus,select:focus{outline:none;border-color:var(--or)}
 .chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .chips.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.chips.scale button{padding:6px 2px;min-height:64px;border-radius:14px;font-size:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;line-height:1.1}.chips.scale small{font-size:11.5px;font-weight:700}
 .q{font-size:17px;font-weight:800;line-height:1.5;margin:0}
-.check{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.55;font-weight:600}.check input{width:26px;height:26px;min-height:0;flex-shrink:0;margin-top:2px;accent-color:var(--ink)}
+.check{display:flex;gap:12px;align-items:flex-start;min-height:48px;padding:8px 0;cursor:pointer;font-size:16px;line-height:1.55;font-weight:600}.check input{width:30px;height:30px;min-height:0;flex-shrink:0;margin-top:2px;accent-color:var(--ink)}
 .go{min-height:60px;border:0;border-radius:16px;background:var(--ok);color:#fff;font:800 20px Cairo,sans-serif}
 .go:disabled{opacity:.6}
 .err{color:var(--bad);font-weight:700;font-size:15px;margin:0}
@@ -94,7 +94,7 @@ input:focus,select:focus{outline:none;border-color:var(--or)}
 <label class="f">عرفت وَصْل منين؟ (اسم الجروب أو الصفحة)<input id="source" maxlength="80"></label>
 <label class="check"><input type="checkbox" id="adult">سني 18 سنة أو أكتر.</label>
 <label class="check"><input type="checkbox" id="consent">موافق أشارك في التجربة، وفريق وَصْل يكلمني على واتساب. أقدر أنسحب في أي وقت.</label>
-<p class="note">بنستخدم بياناتك للتجربة دي بس. <a href="privacy.html">سياسة الخصوصية</a></p>
+<p class="note">بنستخدم بياناتك للتجربة دي بس. <a href="privacy.html" style="display:inline-block;padding:13px 0">سياسة الخصوصية</a></p>
 <p class="err hidden" id="err"></p>
 <button class="go" id="go" type="submit">سجّلني</button>
 </section>
