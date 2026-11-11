@@ -345,6 +345,7 @@ html.en:not(.tr) body{visibility:hidden}
 #call .cbody{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
 .cnote{margin:0;font-size:15px;line-height:1.6;font-weight:700;color:var(--ink);background:var(--orl);border-radius:12px;padding:10px 12px}
 .sit button .tag{font-size:11.5px;font-weight:800;line-height:1.2;background:#FFF1C2;color:#5C4300;border-radius:999px;padding:1px 8px;margin-top:-2px}
+.csl{display:block;margin-top:8px;line-height:1.6}small.csl{color:var(--mute);font-size:13.5px}
 .simbadge{font-size:13px;font-weight:800;background:#FFF1C2;color:#5C4300;border:1px solid #D9B84A;padding:3px 10px;border-radius:999px;white-space:nowrap}
 .cerr{margin:0;color:#B3261E;font-weight:700;font-size:15px;line-height:1.5}
 .crecent{display:flex;flex-wrap:wrap;gap:8px}.crecent .chip{direction:ltr}
@@ -1278,7 +1279,7 @@ const EN={
 'مثلاً: عايز أحجز كشف عند دكتور العظام بكرة':'For example: I want to book a visit with the orthopedic doctor tomorrow',
 'محدش رد على المكالمة.':'Nobody answered the call.',
 'مقدرتش أبعت. جرّب تاني.':'Couldn\'t send. Try again.',
-'مكالمة':'Call','مكالمة (تجريبي)':'Call (trial)','تجريبي':'Trial','محاكاة':'Simulation','المكالمات لسه تجريبية.':'Calls are still a trial.',
+'مكالمة':'Call','مكالمة (تجريبي)':'Call (trial)','تجريبي':'Trial','محاكاة':'Simulation','المكالمات لسه تجريبية.':'Calls are still a trial.','آخر كلام في المكالمة:':'The last words of the call:','الملخص ده على موبايلك بس.':'This summary stays on your phone only.',
 'وصل في المكان':'Wasl at the counter',
 'مكالمة: {g}':'Call: {g}',
 'وصل بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.':'For now Wasl can only call numbers in Egypt, the UAE, Saudi Arabia, the UK and the US.',
@@ -1881,7 +1882,8 @@ function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').tex
 const PF={pName:'name',pSex:'sex',pVoice:'voice',pRate:'rate',pMem:'mem',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return DEMO?DEMO.profile:store.get('wasl_profile',{})}
 try{if(!localStorage.getItem('wasl_vmig')){const p=store.get('wasl_profile',null);if(p&&p.voice==='f'){p.voice='auto';store.set('wasl_profile',p)}localStorage.setItem('wasl_vmig','1')}}catch(e){}
-function taskMemory(){if(DEMO||profile().mem==='off')return[];return store.get('wasl_tasks',[]).filter(x=>x.summary).slice(-5).reverse().map(x=>({d:x.date||'',t:String(x.title||'').slice(0,60),s:String(x.summary).slice(0,220)}))}
+/* Memory sent with «اتكلم بدالي» (wasl-agent). Tasks marked local (call and «وصل في المكان» summaries) never leave the phone. */
+function taskMemory(){if(DEMO||profile().mem==='off')return[];return store.get('wasl_tasks',[]).filter(x=>x.summary&&!x.local).slice(-5).reverse().map(x=>({d:x.date||'',t:String(x.title||'').slice(0,60),s:String(x.summary).slice(0,220)}))}
 function taskProfile(){const p=profile(),o={};['name','sex','address','allergies','insurance','notes'].forEach(k=>{if(p[k])o[k]=p[k]});return o}
 /* Wasl's voice matches the user by default, so a man is never spoken for in a woman's voice unless he picks it. */
 function vg(){const p=profile();return p.voice==='m'||p.voice==='f'?p.voice:(p.sex==='f'?'f':'m')}
@@ -2924,7 +2926,7 @@ async function callStart(){const n=callNumber($('cNum').value),goal=$('cGoal').v
  try{const d=await postJSON(CALL_START_URL,{to:n,goal,lang:LANG,ui:UI,profile:taskProfile(),name:voiceName(),agender:vg()},30000);
   if(!d||!d.cid)throw new Error('no call');
   store.set('wasl_call_recent',[n,...store.get('wasl_call_recent',[]).filter(x=>x!==n)].slice(0,4));
-  CL={cid:d.cid,mode:d.mode,goal,to:n,seen:0,over:false,pendKey:'',summary:'',typeFor:'',fails:0,asked:0};
+  CL={cid:d.cid,mode:d.mode,goal,to:n,lines:[],linesKey:'',over:false,pendKey:'',summary:'',typeFor:'',fails:0,asked:0};
   $('cSetup').classList.add('hidden');$('cLive').classList.remove('hidden');$('cFoot').classList.remove('hidden');
   $('cLog').innerHTML='';$('cHeard').textContent='';drawCards('cCards',[]);$('cSaid').classList.add('hidden');['cDecide','cOk','cType','cSum'].forEach(id=>$(id).classList.add('hidden'));
   callDraw(d);CL.timer=setTimeout(callPoll,1500)}
@@ -2940,8 +2942,13 @@ function callState(dot,text){$('cDot').className='dot '+dot;$('cState').textCont
 function callLog(l){const d=document.createElement('div');d.className='msg '+(l.r==='callee'?'h':l.r==='wasl'?'w':'u');
  d.innerHTML='<b>'+tr(l.r==='callee'?'الطرف التاني':l.r==='wasl'?'وصل قال':'إنت')+'</b>'+nums(l.t);$('cLog').appendChild(d)}
 function callDraw(d){if(!d||!CL)return;CL.mode=d.mode||CL.mode;const sim=CL.mode==='sim';$('cBadge').classList.toggle('hidden',!sim);$('cSp').classList.toggle('hidden',sim);
- const L=d.lines||[];
- if(L.length>CL.seen){const fresh=L.slice(CL.seen);CL.seen=L.length;fresh.forEach(callLog);if(fresh.some(l=>l.r==='callee'))buzz([80])}
+ /* «lines» comes complete with every state, in time order, and a line may change or be added in the middle:
+    redraw from it each time. The server wipes it when the call ends, so an empty list keeps what the user saw. */
+ const got=Array.isArray(d.lines)?d.lines.filter(l=>l&&typeof l.t==='string'&&l.t.trim()):[];
+ if(got.length){const key=JSON.stringify(got.map(l=>[l.r,l.t]));
+  if(key!==CL.linesKey){const heard=n=>n.filter(l=>l.r==='callee').length,more=heard(got)>heard(CL.lines);
+   CL.linesKey=key;CL.lines=got;const box=$('cLog');box.innerHTML='';got.forEach(callLog);if(box.lastElementChild)box.lastElementChild.scrollIntoView({block:'nearest'});if(more)buzz([80])}}
+ const L=CL.lines;
  let lc=null,lw=null;L.forEach(l=>{if(l.r==='callee')lc=l;if(l.r==='wasl')lw=l});
  if(lc){$('cHeard').innerHTML=nums(lc.t);drawCards('cCards',lc.k||[])}
  if(lw){$('cSaidT').innerHTML=nums(lw.t);$('cSaid').classList.remove('hidden')}
@@ -2977,11 +2984,15 @@ async function callEnd(){if(!CL||CL.over){CL=null;show('home');return}
  try{const d=await postJSON(CALL_URL,{op:'end',cid:CL.cid},15000);callDraw(d)}catch(e){callFinish('ended')}}
 function callFinish(st){if(!CL||CL.over)return;CL.over=true;clearTimeout(CL.timer);
  const W={ended:'المكالمة خلصت.',failed:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.',noanswer:'محدش رد على المكالمة.',busy:'الخط كان مشغول.',canceled:'المكالمة اتلغت.',timeout:'الخط اتقفل عشان الرد اتأخر، ووصل قالهم إننا هنكلمهم تاني.'};
- const msg=CL.summary||tr(W[st]||W.ended);
- $('cSumH').textContent=CL.summary?tr('✓ المكالمة خلصت'):tr('المكالمة اتقفلت');$('cSumT').innerHTML=nums(msg);
+ const who=l=>tr(l.r==='callee'?'الطرف التاني':l.r==='wasl'?'وصل قال':'إنت'),last=CL.lines.slice(-6),had=CL.lines.length>0;
+ const msg=CL.summary||(had?'':tr(W[st]||W.ended));
+ $('cSumH').textContent=CL.summary||had?tr('✓ المكالمة خلصت'):tr('المكالمة اتقفلت');
+ $('cSumT').innerHTML=(msg?nums(msg):'')+(had?`<span class="csl">${tr('آخر كلام في المكالمة:')}</span>`+last.map(l=>`<span class="csl"><b>${esc(who(l))}:</b> ${nums(l.t)}</span>`).join('')+`<small class="csl">${tr('الملخص ده على موبايلك بس.')}</small>`:'');
  ['cDecide','cOk','cType','cFoot'].forEach(id=>$(id).classList.add('hidden'));$('call').classList.remove('asking');$('cSum').classList.remove('hidden');
  callState('ok',tr('المكالمة اتقفلت'));buzz([300]);showBox('cSum');
- const t=store.get('wasl_tasks',[]);t.push({id:Date.now(),done:!!CL.summary,title:tr('مكالمة: {g}',{g:CL.goal}).slice(0,80),goal:'',summary:CL.summary||'',date:new Date().toLocaleString(LOC,{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
+ // local: shown in «مهامي», never in the memory sent with «اتكلم بدالي» (taskMemory skips local tasks)
+ const sumTxt=[CL.summary||'',...last.map(l=>who(l)+': '+l.t)].filter(Boolean).join('\n').slice(0,1200);
+ const t=store.get('wasl_tasks',[]);t.push({id:Date.now(),local:true,done:!!CL.summary||had,title:tr('مكالمة: {g}',{g:CL.goal}).slice(0,80),goal:'',summary:sumTxt,date:new Date().toLocaleString(LOC,{dateStyle:'medium',timeStyle:'short'})});store.set('wasl_tasks',t.slice(-30))}
 $('openCall').onclick=()=>{buzz([30]);callOpen()};
 $('openCounter').onclick=()=>{buzz([30]);location.href='counter.html'+(GULF?'?l=ar-SA':UI==='en'?'?l=en-US':'')};
 /* «أنا أصم»: a big sign to show the person in front (phone held toward them, not flipped). */
