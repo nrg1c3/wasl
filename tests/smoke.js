@@ -5,7 +5,7 @@
    - no sideways scrolling
    - every button / link is at least 48px tall (checkboxes inside a tappable label are fine)
    - the emergency button is fully visible on the home screen
-   - the offline demo works: the four-scene list in the app, and the counter scene (counter.html?demo)
+   - the offline demo works: the four-scene list in the app, and the counter scene (counter.html?demo) with its errand summary
    Run from the repo root:   node tests/smoke.js
    Needs Playwright with Chromium (npm i -g playwright && npx playwright install chromium). */
 const http = require('http'), fs = require('fs'), path = require('path');
@@ -120,6 +120,9 @@ async function pastWelcome(page, choice) {
     await page.locator('#reqGrid button').first().click(); await page.waitForTimeout(2600);
     const msgs = await page.locator('#chat .m').count();
     msgs >= 2 ? pass('counter demo', 'pharmacist answered') : fail('counter demo', `only ${msgs} message(s) in the chat`);
+    await page.click('#endBtn'); await page.waitForTimeout(300); await page.click('#doneY'); await page.waitForTimeout(500);
+    const sum = await page.locator('#sumCard').count();
+    sum ? pass('counter demo', 'errand summary shown') : fail('counter demo', 'no errand summary at the end');
     if (page.errs.length) fail('demo', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
     await ctx.close();
   }

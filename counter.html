@@ -19,6 +19,16 @@ button,textarea,input{font-family:inherit}button{cursor:pointer;-webkit-tap-high
 button:focus-visible,input:focus-visible{outline:3px solid var(--or);outline-offset:2px}
 button:active{transform:scale(.97)}
 .hidden{display:none!important}
+/* «ملخص المصلحة»: the end-of-conversation card on the customer's phone (kept on this phone only) */
+.sum{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px;text-align:start}
+.sum h2{margin:0;font-size:21px;font-weight:800;display:flex;align-items:center;gap:8px}
+.sum .when{color:var(--mute);font-size:14px;font-weight:700;margin:-6px 0 0}
+.sum .srow{display:flex;gap:10px;align-items:flex-start;font-size:18px;font-weight:700;line-height:1.6;border-top:1px solid var(--line);padding-top:10px}
+.sum .srow>i{font-style:normal;font-size:24px;line-height:1.3;flex-shrink:0}
+.sum .srow>div{flex:1;min-width:0}
+.sum .num{display:inline-block;background:var(--ink);color:#fff;font-size:21px;padding:0 8px;margin:0 2px;border-radius:8px;line-height:1.5}
+.sum .res{font-size:19px;font-weight:800}.sum .res.ok{color:var(--ok)}.sum .res.no{color:var(--bad)}
+.sum .keep{color:var(--mute);font-size:13.5px;margin:0;line-height:1.5}
 header{background:var(--ink);color:var(--bg);padding:12px 16px;display:flex;align-items:center;gap:12px}
 header svg{width:38px;height:38px;flex-shrink:0}header b{font-size:20px;font-weight:800;display:block}header small{color:#BFD3D8;font-size:14px}
 header .end{margin-inline-start:auto;background:transparent;border:1px solid #4E6670;color:#fff;border-radius:12px;min-height:48px;padding:0 14px;font:700 15px Cairo,sans-serif}
@@ -1360,7 +1370,7 @@ const stm=hm?null:(qs.get('st')||'').match(/^([a-z0-9-]{3,40})\.([a-f0-9]{24})$/
 const STATION=!!stm;
 let ROLE=hm?'s':(STATION?'st':'d');
 let LANG=['ar-EG','ar-SA','en-US'].includes(qs.get('l'))?qs.get('l'):'ar-EG';
-const S={sid:hm?hm[1]:'',k2:hm?hm[2]:'',n:0,joined:false,ended:false,timer:null,busy:false,last:0,one:false,place:STATION?stm[1]:String(qs.get('p')||'').toLowerCase().replace(/[^a-z0-9-]/g,'').slice(0,40)};
+const S={log:[],result:'',saved:false,sid:hm?hm[1]:'',k2:hm?hm[2]:'',n:0,joined:false,ended:false,timer:null,busy:false,last:0,one:false,place:STATION?stm[1]:String(qs.get('p')||'').toLowerCase().replace(/[^a-z0-9-]/g,'').slice(0,40)};
 /* places with stickers: name for the branch phone, and the request cards the Deaf customer picks from (Egyptian Arabic) */
 const PN={'basata-saft':'بساطة صفط اللبن','basata-helwan':'بساطة حلوان','basata-mokattam':'بساطة المقطم','basata-tanta':'بساطة طنطا','pharmacy-mokattam':'صيدلية المقطم'};
 const KIND=p=>/^basata/.test(p||'')?'pay':(/^pharmacy/.test(p||'')?'pharm':'');
@@ -1370,19 +1380,19 @@ const QX={pay:[['🔢','الرقم لو سمحت'],['🧾','اتفضل الإي�
 
 /* words: Egyptian (default), Gulf, English */
 const W={
- 'ar-EG':{cns1:'كلامك بيعدّي على السيرفر وبيتمسح لما المحادثة تخلص.',cns2:'بنحفظ بس: المكان واليوم، وإذا المصلحة خلصت ولا لأ.',cnsOk:'✅ موافق',title:'وصل في المكان',subD:'للعميل الأصم',subS:'العميل أصم وبيقرا كلامك',hint:'لو سمحت، اعمل سكان للكود ده بكاميرا موبايلك',hint2:'عشان تتكلم مع العميل. هو أصم وهيقرا كلامك على موبايله.',share:'ابعت اللينك',back:'رجوع',end:'إنهاء',doneQ:'مصلحتك خلصت؟',doneY:'✅ أيوه خلصت',doneN:'❌ لأ',stTitle:'موبايل الفرع',stArmHead:'استقبال العملاء الصم',stArm:'▶️ ابدأ',stArmNote:'دوس «ابدأ» مرة واحدة، وسيب الصفحة مفتوحة والموبايل على الشاحن.',stReady:'جاهز ✓',stWait:'مستنيين عميل أصم...',stWaitNote:'أول ما عميل أصم يعمل سكان للستيكر، الموبايل هيرن والمحادثة هتفتح لوحدها.',stBad:'الستيكر ده اتلغى أو غلط. كلّم شركة NRG.',one:'📱 الموظف مش معاه موبايل؟ كلّمه على موبايلي',oneHint:'الموظف يدوس 🎤 ويتكلم، وإنت تقرا كلامه هنا. ردّك هيتقال بصوت عالي.',reqQ:'عايز تعمل إيه؟',reqSent:'طلبك اتبعت للموظف ✓',
+ 'ar-EG':{sumT:'ملخص المصلحة',sumReq:'طلبك',sumOk:'المصلحة خلصت',sumNo:'المصلحة ما خلصتش',sumKeep:'الملخص ده على موبايلك بس، ومتحفظ في «مهامي».',sumKeepDemo:'الملخص ده على موبايلك بس.',sumTask:'وصل في المكان',cns1:'كلامك بيعدّي على السيرفر وبيتمسح لما المحادثة تخلص.',cns2:'بنحفظ بس: المكان واليوم، وإذا المصلحة خلصت ولا لأ.',cnsOk:'✅ موافق',title:'وصل في المكان',subD:'للعميل الأصم',subS:'العميل أصم وبيقرا كلامك',hint:'لو سمحت، اعمل سكان للكود ده بكاميرا موبايلك',hint2:'عشان تتكلم مع العميل. هو أصم وهيقرا كلامك على موبايله.',share:'ابعت اللينك',back:'رجوع',end:'إنهاء',doneQ:'مصلحتك خلصت؟',doneY:'✅ أيوه خلصت',doneN:'❌ لأ',stTitle:'موبايل الفرع',stArmHead:'استقبال العملاء الصم',stArm:'▶️ ابدأ',stArmNote:'دوس «ابدأ» مرة واحدة، وسيب الصفحة مفتوحة والموبايل على الشاحن.',stReady:'جاهز ✓',stWait:'مستنيين عميل أصم...',stWaitNote:'أول ما عميل أصم يعمل سكان للستيكر، الموبايل هيرن والمحادثة هتفتح لوحدها.',stBad:'الستيكر ده اتلغى أو غلط. كلّم شركة NRG.',one:'📱 الموظف مش معاه موبايل؟ كلّمه على موبايلي',oneHint:'الموظف يدوس 🎤 ويتكلم، وإنت تقرا كلامه هنا. ردّك هيتقال بصوت عالي.',reqQ:'عايز تعمل إيه؟',reqSent:'طلبك اتبعت للموظف ✓',
   waitJoin:'مستنيين الموظف يعمل سكان...',joinedD:'الموظف دخل ✓ كلامه هيظهر هنا بخط كبير.',hintS:'اتكلم أو اكتب. العميل هيقرا كلامك على موبايله، وردّه هيظهر هنا وتسمعه.',
   mic:'دوس واتكلم',micOn:'بيسمع... دوس تاني لما تخلص',type:'اكتب هنا',send:'ابعت',sending:'بيتبعت...',ended:'المحادثة خلصت. شكراً!',bad:'الكود ده خلص أو غلط. اطلب من العميل يفتح كود جديد.',net:'النت فيه مشكلة. بنحاول تاني...',
   shareMsg:'افتح اللينك ده عشان تتكلم مع العميل الأصم:',from:'الموظف',me:'إنت',deafSaid:'العميل',
   qd:[['✅','أيوه'],['❌','لأ'],['💰','بكام؟'],['⏳','استنى لحظة'],['✍️','اكتبها لو سمحت'],['🔁','تاني لو سمحت'],['❓','مش فاهم'],['🙏','شكراً']],
   qs:[['⏳','لحظة واحدة'],['✅','موجود'],['❌','مش موجود'],['💳','كاش ولا فيزا؟'],['🪪','البطاقة لو سمحت'],['👉','اتفضل من هنا'],['🔁','ممكن تاني؟'],['🙏','العفو']]},
- 'ar-SA':{cns1:'كلامك يمر على السيرفر وينمسح لما تخلص المحادثة.',cns2:'نحفظ بس: المكان واليوم، وإذا المصلحة خلصت أو لا.',cnsOk:'✅ موافق',title:'وصل في المكان',subD:'للعميل الأصم',subS:'العميل أصم ويقرأ كلامك',hint:'لو سمحت، امسح هذا الكود بكاميرا جوالك',hint2:'عشان تتكلم مع العميل. هو أصم ويقرأ كلامك على جواله.',share:'أرسل الرابط',back:'رجوع',end:'إنهاء',doneQ:'خلصت مصلحتك؟',doneY:'✅ إيه خلصت',doneN:'❌ لا',stTitle:'جوال الفرع',stArmHead:'استقبال العملاء الصم',stArm:'▶️ ابدأ',stArmNote:'اضغط «ابدأ» مرة وحدة، وخلّ الصفحة مفتوحة والجوال على الشاحن.',stReady:'جاهز ✓',stWait:'ننتظر عميل أصم...',stWaitNote:'أول ما عميل أصم يمسح الملصق، الجوال يرن والمحادثة تفتح بنفسها.',stBad:'الملصق هذا ملغي أو غلط. تواصل مع شركة NRG.',one:'📱 الموظف ما معه جوال؟ كلّمه على جوالي',oneHint:'الموظف يضغط 🎤 ويتكلم، وأنت تقرأ كلامه هنا. ردك ينقال بصوت عالي.',reqQ:'وش تبي تسوي؟',reqSent:'طلبك وصل للموظف ✓',
+ 'ar-SA':{sumT:'ملخص المصلحة',sumReq:'طلبك',sumOk:'المصلحة خلصت',sumNo:'المصلحة ما خلصت',sumKeep:'الملخص هذا على جوالك بس، ومحفوظ في «مهامي».',sumKeepDemo:'الملخص هذا على جوالك بس.',sumTask:'وصل في المكان',cns1:'كلامك يمر على السيرفر وينمسح لما تخلص المحادثة.',cns2:'نحفظ بس: المكان واليوم، وإذا المصلحة خلصت أو لا.',cnsOk:'✅ موافق',title:'وصل في المكان',subD:'للعميل الأصم',subS:'العميل أصم ويقرأ كلامك',hint:'لو سمحت، امسح هذا الكود بكاميرا جوالك',hint2:'عشان تتكلم مع العميل. هو أصم ويقرأ كلامك على جواله.',share:'أرسل الرابط',back:'رجوع',end:'إنهاء',doneQ:'خلصت مصلحتك؟',doneY:'✅ إيه خلصت',doneN:'❌ لا',stTitle:'جوال الفرع',stArmHead:'استقبال العملاء الصم',stArm:'▶️ ابدأ',stArmNote:'اضغط «ابدأ» مرة وحدة، وخلّ الصفحة مفتوحة والجوال على الشاحن.',stReady:'جاهز ✓',stWait:'ننتظر عميل أصم...',stWaitNote:'أول ما عميل أصم يمسح الملصق، الجوال يرن والمحادثة تفتح بنفسها.',stBad:'الملصق هذا ملغي أو غلط. تواصل مع شركة NRG.',one:'📱 الموظف ما معه جوال؟ كلّمه على جوالي',oneHint:'الموظف يضغط 🎤 ويتكلم، وأنت تقرأ كلامه هنا. ردك ينقال بصوت عالي.',reqQ:'وش تبي تسوي؟',reqSent:'طلبك وصل للموظف ✓',
   waitJoin:'ننتظر الموظف يمسح الكود...',joinedD:'الموظف دخل ✓ كلامه يطلع هنا بخط كبير.',hintS:'تكلم أو اكتب. العميل يقرأ كلامك على جواله، ورده يطلع هنا وتسمعه.',
   mic:'اضغط وتكلم',micOn:'يسمع... اضغط مرة ثانية لما تخلص',type:'اكتب هنا',send:'أرسل',sending:'يرسل...',ended:'خلصت المحادثة. مشكور!',bad:'الكود انتهى أو غلط. اطلب من العميل يفتح كود جديد.',net:'فيه مشكلة في النت. نحاول مرة ثانية...',
   shareMsg:'افتح الرابط عشان تتكلم مع العميل الأصم:',from:'الموظف',me:'أنت',deafSaid:'العميل',
   qd:[['✅','إيه'],['❌','لا'],['💰','بكم؟'],['⏳','لحظة'],['✍️','اكتبها لو سمحت'],['🔁','عيدها لو سمحت'],['❓','ما فهمت'],['🙏','مشكور']],
   qs:[['⏳','لحظة'],['✅','موجود'],['❌','مو موجود'],['💳','كاش ولا بطاقة؟'],['🪪','الهوية لو سمحت'],['👉','تفضل من هنا'],['🔁','ممكن تعيد؟'],['🙏','العفو']]},
- 'en-US':{cns1:'Your messages pass through our server and are deleted when the conversation ends.',cns2:'We keep only: the place, the day, and whether it got done.',cnsOk:'✅ OK',title:'Wasl at the counter',subD:'For the Deaf customer',subS:'The customer is Deaf and reads your words',hint:'Please scan this code with your phone camera',hint2:'to talk with this customer. They are Deaf and will read your words on their phone.',share:'Share link',back:'Back',end:'End',doneQ:'Did you get it done?',doneY:'✅ Yes, done',doneN:'❌ No',stTitle:'Branch phone',stArmHead:'Serve Deaf customers',stArm:'▶️ Start',stArmNote:'Tap Start once, then leave this page open with the phone on its charger.',stReady:'Ready ✓',stWait:'Waiting for a Deaf customer...',stWaitNote:'When a Deaf customer scans the sticker, this phone rings and the chat opens by itself.',stBad:'This sticker was cancelled or is wrong. Contact NRG.',one:'📱 Staff has no phone? Talk on my phone',oneHint:'The staff taps 🎤 and speaks; you read it here. Your reply is read aloud.',reqQ:'What do you need?',reqSent:'Your request was sent to the staff ✓',
+ 'en-US':{sumT:'Errand summary',sumReq:'Your request',sumOk:'Got it done',sumNo:'Not done',sumKeep:'This summary stays on your phone only, in «My tasks».',sumKeepDemo:'This summary stays on your phone only.',sumTask:'Wasl at the counter',cns1:'Your messages pass through our server and are deleted when the conversation ends.',cns2:'We keep only: the place, the day, and whether it got done.',cnsOk:'✅ OK',title:'Wasl at the counter',subD:'For the Deaf customer',subS:'The customer is Deaf and reads your words',hint:'Please scan this code with your phone camera',hint2:'to talk with this customer. They are Deaf and will read your words on their phone.',share:'Share link',back:'Back',end:'End',doneQ:'Did you get it done?',doneY:'✅ Yes, done',doneN:'❌ No',stTitle:'Branch phone',stArmHead:'Serve Deaf customers',stArm:'▶️ Start',stArmNote:'Tap Start once, then leave this page open with the phone on its charger.',stReady:'Ready ✓',stWait:'Waiting for a Deaf customer...',stWaitNote:'When a Deaf customer scans the sticker, this phone rings and the chat opens by itself.',stBad:'This sticker was cancelled or is wrong. Contact NRG.',one:'📱 Staff has no phone? Talk on my phone',oneHint:'The staff taps 🎤 and speaks; you read it here. Your reply is read aloud.',reqQ:'What do you need?',reqSent:'Your request was sent to the staff ✓',
   waitJoin:'Waiting for the staff to scan...',joinedD:'Staff joined ✓ Their words will show here in large text.',hintS:'Speak or type. The customer reads your words on their phone; their replies show here and are read aloud.',
   mic:'Tap and speak',micOn:'Listening... tap again when done',type:'Type here',send:'Send',sending:'Sending...',ended:'The conversation ended. Thank you!',bad:'This code expired or is wrong. Ask the customer to open a new one.',net:'Connection problem. Trying again...',
   shareMsg:'Open this link to talk with the Deaf customer:',from:'Staff',me:'You',deafSaid:'Customer',
@@ -1399,7 +1409,7 @@ function applyLang(){const en=LANG==='en-US';document.documentElement.lang=en?'e
  $('quick').querySelectorAll('button').forEach(b=>b.onclick=()=>send(Q[+b.dataset.i][1],'quick'));}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function show(v){['vQr','vChat','vMsg','vDone','vWait','vConsent'].forEach(x=>$(x).classList.toggle('hidden',x!==v));$('endBtn').classList.toggle('hidden',v!=='vChat'&&!(v==='vQr'&&S.sid))}
-function msg(text){try{sessionStorage.removeItem('wasl_counter')}catch(e){}show('vMsg');$('msgTxt').textContent=text;$('endBtn').classList.add('hidden');clearInterval(S.timer);$('msgBtn').classList.toggle('hidden',ROLE!=='d');if(STATION&&text!==t('stBad'))setTimeout(backToWait,2500)}
+function msg(text){try{sessionStorage.removeItem('wasl_counter')}catch(e){}const sc=$('sumCard');if(sc)sc.remove();show('vMsg');$('msgTxt').textContent=text;$('endBtn').classList.add('hidden');clearInterval(S.timer);$('msgBtn').classList.toggle('hidden',ROLE!=='d');if(STATION&&text!==t('stBad'))setTimeout(backToWait,2500)}
 
 async function call(body){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:'wasl-nrg-2026',sid:S.sid,k2:S.k2},body))});let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw new Error(j.error||('http'+r.status));return j}
 
@@ -1424,7 +1434,7 @@ if(DEMO){S.place='pharmacy-demo';PN['pharmacy-demo']='صيدلية (تجريبي
 const fmt=s=>esc(s).replace(/([0-9٠-٩]+(?:[.,][0-9٠-٩]+)?)/g,'<span class="num">$1</span>');
 function addMsgs(list){
  const box=$('chat');let theirs=false;
- list.forEach(m=>{const mine=m.s===ROLE;const d=document.createElement('div');d.className='m '+(mine?'me':'them');
+ list.forEach(m=>{S.log.push({s:m.s,t:String(m.t||'')});const mine=m.s===ROLE;const d=document.createElement('div');d.className='m '+(mine?'me':'them');
   const who=mine?t('me'):(ROLE==='d'?t('from'):t('deafSaid'));
   d.innerHTML=(mine?esc(m.t):fmt(m.t))+(!mine&&ROLE==='s'?' <button class="say" type="button" aria-label="🔊">🔊</button>':'')+`<span class="meta">${esc(who)}</span>`;
   const sb=d.querySelector('.say');if(sb)sb.onclick=()=>speak(m.t);
@@ -1463,7 +1473,25 @@ $('sendBtn').onclick=()=>{const v=$('typeIn').value;$('typeIn').value='';send(v,
 $('typeIn').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('sendBtn').click()}});
 /* The Deaf user says if the errand got done. Only this yes/no is kept, with the place and the day (no conversation text). */
 function askDone(){S.asked=true;clearInterval(S.timer);show('vDone');$('endBtn').classList.add('hidden')}
-async function finish(done){try{await call(S.ended?{a:'done',done}:{a:'end',done:done||''})}catch(e){}S.ended=true;msg(t('ended'))}
+async function finish(done){S.result=done||'';try{await call(S.ended?{a:'done',done}:{a:'end',done:done||''})}catch(e){}S.ended=true;msg(t('ended'));drawSummary()}
+/* «ملخص المصلحة»: the request, every line from the staff that has a number in it (price, quantity, time), and the yes/no.
+   Built from this page's memory, shown on this phone, saved in the app's «مهامي» (same phone). Never sent anywhere. */
+const HASNUM=/[0-9\u0660-\u0669]/,MONEY=/جنيه|جنية|ج\.م|درهم|ريال|pound|EGP|AED|SAR|\$/i;
+function drawSummary(){if(ROLE!=='d'||!S.joined||!S.log.length)return;const old=$('sumCard');if(old)old.remove();
+ const req=(S.log.find(m=>m.s==='d')||{}).t||'',nums=S.log.filter(m=>m.s!=='d'&&HASNUM.test(m.t)).slice(-4).map(m=>m.t.slice(0,160));
+ if(!req&&!nums.length)return;
+ const when=new Date().toLocaleDateString(LANG==='en-US'?'en-GB':'ar-EG-u-nu-latn',{weekday:'long',day:'numeric',month:'long'});
+ const place=PN[S.place]||'';
+ const rows=(req?`<div class="srow"><i aria-hidden="true">📝</i><div><small class="keep" style="display:block">${esc(t('sumReq'))}</small>${esc(req.slice(0,160))}</div></div>`:'')+
+  nums.map(n=>`<div class="srow"><i aria-hidden="true">${MONEY.test(n)?'💰':'🔢'}</i><div>${fmt(n)}</div></div>`).join('')+
+  (S.result==='yes'||S.result==='no'?`<div class="srow"><i aria-hidden="true">${S.result==='yes'?'✅':'❌'}</i><div class="res ${S.result==='yes'?'ok':'no'}">${esc(t(S.result==='yes'?'sumOk':'sumNo'))}</div></div>`:'');
+ $('msgTxt').insertAdjacentHTML('beforebegin',`<div class="sum" id="sumCard" role="region" aria-label="${esc(t('sumT'))}"><h2><span aria-hidden="true">🧾</span>${esc(t('sumT'))}</h2><p class="when">${esc((place?place+' · ':'')+when)}</p>${rows}<p class="keep">${esc(t(DEMO?'sumKeepDemo':'sumKeep'))}</p></div>`);
+ if(DEMO||S.saved)return;S.saved=true;
+ // the app's «مهامي» list (same site, same phone); «امسح كل بياناتي» in the app clears it
+ try{const lines=[req?t('sumReq')+': '+req.slice(0,160):'',...nums,S.result==='yes'?'✅ '+t('sumOk'):S.result==='no'?'❌ '+t('sumNo'):''].filter(Boolean);
+  const T=JSON.parse(localStorage.getItem('wasl_tasks')||'[]');
+  T.push({id:Date.now(),done:S.result==='yes',title:t('sumTask')+(place?': '+place:''),summary:lines.join('\n'),date:new Date().toLocaleString(LANG==='en-US'?'en-GB':'ar-EG-u-nu-latn',{dateStyle:'medium',timeStyle:'short'})});
+  localStorage.setItem('wasl_tasks',JSON.stringify(T.slice(-30)))}catch(e){}}
 $('endBtn').onclick=()=>{if(ROLE==='d'&&S.joined)askDone();else finish('')};
 $('doneY').onclick=()=>finish('yes');$('doneN').onclick=()=>finish('no');
 $('backBtn').onclick=()=>{if(S.sid)call({a:'end'}).catch(()=>{});location.href=DEMO?'./?demo':'./'};
