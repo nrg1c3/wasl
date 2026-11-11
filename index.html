@@ -2911,7 +2911,7 @@ async function callStart(){const n=callNumber($('cNum').value),goal=$('cGoal').v
   $('cSetup').classList.add('hidden');$('cLive').classList.remove('hidden');$('cFoot').classList.remove('hidden');
   $('cLog').innerHTML='';$('cHeard').textContent='';drawCards('cCards',[]);$('cSaid').classList.add('hidden');['cDecide','cOk','cType','cSum'].forEach(id=>$(id).classList.add('hidden'));
   callDraw(d);CL.timer=setTimeout(callPoll,1500)}
- catch(e){const W={quota:'',number:'الرقم ده مش مسموح. اتأكد منه وجرّب تاني.',calls:'وصلت لأقصى عدد مكالمات النهارده. جرّب بكرة.',daily:'خدمة المكالمات مشغولة النهارده. جرّب بكرة.',dial:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.'};
+ catch(e){const W={quota:'',number:'الرقم ده مش مسموح. اتأكد منه وجرّب تاني.',calls:'خلصت مكالماتك المجانية الشهر ده (3 مكالمات). ممكن تخلّصها واتساب أو «وصل في المكان».',daily:'خدمة المكالمات مشغولة النهارده. جرّب بكرة.',dial:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.'};
   if(e&&e.why==='quota'){quotaShow(e.data);return}
   callErr('cErr',tr((e&&W[e.why])||(e&&e.data&&W[e.data.why])||'النت ضعيف. جرّب تاني.'))}
  finally{if(!CL){$('cGo').disabled=false;$('cGo').textContent=tr('📞 اتصل')}}}
