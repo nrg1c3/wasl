@@ -88,7 +88,8 @@ p{margin:0}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
 .hero .ghost{color:var(--paper)}
 .hero .note{margin-top:16px;font-size:15px;color:var(--soft-on-ink)}
-@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero .phone{order:2}}
+@media (max-width:860px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.hero .phone{order:2}}
+.hero .wrap>*{min-width:0} /* a grid column must not grow wider than the screen (the text was cut on small phones) */
 
 /* the table demo */
 .phone{justify-self:center;width:min(330px,86vw);aspect-ratio:9/18.5;background:#0B1A21;border-radius:44px;padding:12px;
@@ -196,8 +197,9 @@ footer a{color:var(--paper)}
       <div class="ctas">
         <a class="btn go" href="../">افتح وَصْل</a>
         <a class="btn ghost" href="../join.html">سجّل في التجربة</a>
+        <a class="btn ghost" href="../?demo">▶ جرّب العرض</a>
       </div>
-      <p class="note">بيشتغل من متصفح الموبايل، من غير تحميل من المتجر.</p>
+      <p class="note">بيشتغل من متصفح الموبايل، من غير تحميل من المتجر. والعرض بيشتغل من غير نت.</p>
     </div>
 
     <figure class="phone" aria-label="مثال: وَصْل في الصيدلية. نص الشاشة اللي فوق متقلوب عشان الصيدلي يقراه، والنص اللي تحت لصاحب الموبايل.">
@@ -240,6 +242,21 @@ footer a{color:var(--paper)}
         <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#E2622A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4v6c0 5-3.8 9.4-9 10-5.2-.6-9-5-9-10V6z"/><path d="M12 8v5M12 16h.01"/></svg></div>
         <h3>الطوارئ</h3>
         <p>زرار واحد ينبّه اللي حواليك بصوت عالي، ويبعت مكانك لأهلك على واتساب.</p>
+      </article>
+      <article>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#E2622A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v.01M14 21h7v-4"/></svg></div>
+        <h3>وصل في المكان</h3>
+        <p>في الفروع اللي فيها ستيكر: موبايلك بيعرض كود، والموظف يعمل له سكان ويكلمك، وكلامه بيظهرلك بخط كبير. وفي الآخر ملخص بطلبك والسعر، على موبايلك بس.</p>
+      </article>
+      <article>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#E2622A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></div>
+        <h3>مكالمة (تجريبي)</h3>
+        <p>وَصْل يتصل بدالك ويقول اللي إنت عايزه، وإنت بتقرا المكالمة مكتوبة. لسه تجريبية ومش مفتوحة للناس، والتشغيل الكامل هيبقى مع شركة اتصالات.</p>
+      </article>
+      <article>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#E2622A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        <h3>بالصور، من غير قراية كتير</h3>
+        <p>«وضع الصور» بيخلّي كل حاجة أيقونات كبيرة وكلام قليل، لمين قراءته ضعيفة.</p>
       </article>
     </div>
     <p class="also">وكمان: بيراجع الحساسية اللي سجّلتها قدام أي دوا بيتذكر، وبينبّهك بالاهتزاز لما جرس البيت يرن.</p>
@@ -293,7 +310,7 @@ footer a{color:var(--paper)}
     <h2 id="h-partners">للشركات والجهات</h2>
     <p class="intro">وَصْل مجاني للصم. اللي بيدعمه شركاء عايزين يوصلوا لمجتمع الصم ويخدموه.</p>
     <div class="who">
-      <div><h3>خدمة العميل الأصم</h3><p>الصيدليات والمطاعم والبنوك تقدر تخدم العميل الأصم من غير مترجم.</p></div>
+      <div><h3>خدمة العميل الأصم</h3><p>الصيدليات والبنوك وأماكن الدفع تقدر تخدم العميل الأصم من غير مترجم: ستيكر «وصل في المكان» عند الكاشير، وموبايل الفرع بيفتح المحادثة لوحده. وصفحة أرقام للراعي بكام مصلحة خلصت في فروعه، أرقام إجمالية بس.</p></div>
       <div><h3>تشغيل موظفين صم</h3><p>الموظف الأصم يقرا كلام مديره وزمايله مكتوب، ويرد بصوت. فيشتغل وينتج.</p></div>
       <div><h3>رعاية التجربة</h3><p>رعاية بتخلّي وَصْل مجاني، وبتدفع مرتبات شباب صم بيشتغلوا فيه.</p></div>
     </div>
