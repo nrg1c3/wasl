@@ -6,13 +6,13 @@
 <meta name="theme-color" content="#13262F">
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
-<title>أرقام وَصْل للرعاة</title>
+<title>أرقام بَدالَك للرعاة</title>
 <link rel="icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* Sponsor page: errands done for Deaf customers at a sponsor's places (Wasl at the counter).
+/* Sponsor page: errands done for Deaf customers at a sponsor's places (Badalak at the counter).
    Totals only: the server never sends a person, and hides any cell with fewer than 5 visits. */
 :root{--ink:#13262F;--ink2:#1E3A47;--bg:#F6F3EE;--card:#fff;--line:#E3DCCF;--or:#C9501E;--orl:#FBE6D4;--mute:#5B6870;--ok:#1F7A4D;--okl:#DDF0E5;--bad:#B3261E;--grid:#EEE8DD;color-scheme:light}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',Tahoma,sans-serif;-webkit-text-size-adjust:100%}
@@ -79,7 +79,7 @@ td.n,th.n{text-align:end}
 <body>
 <header>
 <svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#1E3A47"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg>
-<div><b id="hName">وَصْل</b><small id="hSub">أرقام الرعاة · وصل في المكان</small></div>
+<div><b id="hName">بَدالَك</b><small id="hSub">أرقام الرعاة · بدالك على الكاونتر</small></div>
 </header>
 <main>
 <div class="seg" role="group" aria-label="الفترة">
@@ -152,12 +152,12 @@ const dayName=d=>new Date(d+'T12:00:00Z').toLocaleDateString(DLOC,{day:'numeric'
 
 function msg(ic,text,retry){$('vData').classList.add('hidden');$('vMsg').classList.remove('hidden');$('msgIc').textContent=ic;$('msgTxt').textContent=text;$('retry').classList.toggle('hidden',!retry)}
 
-async function load(){if(!SP){msg('🔗','اللينك ناقص. اطلب لينك الأرقام بتاعك من فريق وَصْل.',false);return}
+async function load(){if(!SP){msg('🔗','اللينك ناقص. اطلب لينك الأرقام بتاعك من فريق بَدالَك.',false);return}
  const my=++busy;msg('⏳','بيجيب الأرقام...',false);const ac=new AbortController(),to=setTimeout(()=>ac.abort(),15000);
  try{const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:'wasl-nrg-2026',sponsor:SP,key:KEY},period(PER))),signal:ac.signal});
   let j=null;try{j=await r.json()}catch(e){}
   if(my!==busy)return;
-  if(r.status===401)return msg('🔒','اللينك ده غلط أو اتلغى. اطلب لينك جديد من فريق وَصْل.',false);
+  if(r.status===401)return msg('🔒','اللينك ده غلط أو اتلغى. اطلب لينك جديد من فريق بَدالَك.',false);
   if(r.status===429)return msg('⏱️','فتحت الصفحة مرات كتير. جرّب تاني بعد ساعة.',true);
   if(!r.ok||!j||!j.ok)throw new Error('http '+r.status);
   draw(j)}
@@ -165,7 +165,7 @@ async function load(){if(!SP){msg('🔗','اللينك ناقص. اطلب لين
  finally{clearTimeout(to)}}
 
 function draw(j){last=j;sel=-1;$('vMsg').classList.add('hidden');$('vData').classList.remove('hidden');
- const name=(j.sponsor&&j.sponsor.name)||SP,T=j.totals||{};document.title='أرقام وَصْل · '+name;
+ const name=(j.sponsor&&j.sponsor.name)||SP,T=j.totals||{};document.title='أرقام بَدالَك · '+name;
  $('hName').textContent=name;$('badge').textContent=name+' · مكان صديق للصم';
  $('demo').classList.toggle('hidden',!(j.sponsor&&j.sponsor.id==='demo'));
  const p=j.period||period(PER);$('period').textContent='من '+dayName(p.from)+' لـ '+dayName(p.to);

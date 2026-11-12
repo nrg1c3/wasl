@@ -1,7 +1,7 @@
 {
-  "name": "وَصْل — صوتك في كل مكان",
-  "short_name": "وَصْل",
-  "description": "مساعد ذكي بيتكلم بالنيابة عن الصم وضعاف السمع. Wasl speaks for you.",
+  "name": "بَدالَك — صوتك في كل مكان",
+  "short_name": "بَدالَك",
+  "description": "مساعد ذكي بيتكلم بالنيابة عن الصم وضعاف السمع. Badalak speaks for you.",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "./",
