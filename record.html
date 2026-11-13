@@ -298,7 +298,7 @@ const LISTS=[['P1','الأهم'],['P2','المهم'],['P3','الباقي'],['ALL
 const LNAME=k=>(LISTS.find(l=>l[0]===k)||[k,k])[1];
 /* internal ids stay in file names only; the screen shows names */
 /* [id, name, what they do]. Ids are in clip file names: never change them. First names only (the repo is public). */
-const PEOPLE=[['d1','آية','صمّاء، بتعمل الإشارة'],['d2','الزوج','بيعمل الإشارة'],['f2','إسراء','سامعة، بتقرا الكلمة للزوج'],['f1','أ. ميادة','خبيرة الإشارة']];
+const PEOPLE=[['d1','آية','صمّاء، بتعمل الإشارة'],['d2','بلال','بيعمل الإشارة'],['f2','إسراء','سامعة، بتقرا الكلمة لبلال'],['f1','أ. ميادة','خبيرة الإشارة']];
 let EXTRA=[];
 const pname=c=>(S.consent[c]&&S.consent[c].name)||((PEOPLE.concat(EXTRA)).find(p=>p[0]===c)||[c,'شخص '+c.replace(/\D/g,'')])[1];
 const GROUP_AR={greetings:'تحية',basic:'أساسي',questions:'أسئلة',pharmacy:'صيدلية',doctor:'دكتور',body:'الجسم',feelings:'إحساس',transport:'مواصلات',places:'أماكن',shop:'شرا',money:'فلوس',government:'مصالح حكومية',numbers:'أرقام',time:'وقت',sos:'طوارئ',bank:'بنك',telecom:'شحن وفواتير',restaurant:'مطعم',delivery:'دليفري',service:'خدمة عملاء'};
