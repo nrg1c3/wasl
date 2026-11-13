@@ -6,7 +6,7 @@
 في الصيدلية، عند الدكتور، في البنك، في المكالمات، وعلى واتساب.
 
 - 📱 **جرّب التطبيق:** https://badalak.nrg-egypt.com (بيفتح من المتصفح، من غير تحميل)
-- ▶️ **العرض التجريبي (بيشتغل من غير نت):** https://badalak.nrg-egypt.com/?demo ← دوس «▶ عرض تجريبي»
+- ▶️ **العرض التجريبي (بيشتغل من غير نت بعد أول فتحة):** https://badalak.nrg-egypt.com/?demo ← دوس «▶ عرض تجريبي»
 - 🌐 **عن بَدالَك:** https://badalak.nrg-egypt.com/site/
 - ✍️ **التسجيل في التجربة:** https://badalak.nrg-egypt.com/join.html
 - 🔒 **الخصوصية:** https://badalak.nrg-egypt.com/privacy.html
