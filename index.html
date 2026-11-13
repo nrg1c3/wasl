@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<script>/* On wasl.nrg-egypt.com over http (GitHub's certificate can take a while), switch to https as soon as it works. */
+<script>/* On badalak.nrg-egypt.com over http (GitHub's certificate can take a while), switch to https as soon as it works. */
 (function(){var l=location;if(l.protocol!=='http:'||!/(^|\.)nrg-egypt\.com$/.test(l.hostname))return;var u='https://'+l.host+l.pathname+l.search+l.hash;
 function go(){fetch('https://'+l.host+'/manifest.webmanifest',{mode:'no-cors',cache:'no-store'}).then(function(){l.replace(u)}).catch(function(){setTimeout(go,30000)})}go()})();</script>
 
@@ -12,11 +12,11 @@ function go(){fetch('https://'+l.host+'/manifest.webmanifest',{mode:'no-cors',ca
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="وَصْل">
+<meta name="apple-mobile-web-app-title" content="بَدالَك">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>وَصْل | Wasl</title>
-<meta name="description" content="وَصْل بيتكلم بدالك ويخلّص المهمة: تطبيق مجاني للصم وضعاف السمع في مصر. اكتب اللي عايزه ووَصْل يقوله بصوت مصري، وكلام اللي قدامك يظهرلك مكتوب.">
-<link rel="canonical" href="https://wasl.nrg-egypt.com/">
+<title>بَدالَك | Badalak</title>
+<meta name="description" content="بَدالَك بيتكلم عنك ويخلّص المهمة: تطبيق مجاني للصم وضعاف السمع في مصر. اكتب اللي عايزه وبَدالَك يقوله بصوت مصري، وكلام اللي قدامك يظهرلك مكتوب.">
+<link rel="canonical" href="https://badalak.nrg-egypt.com/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='30' fill='%2313262F'/%3E%3Crect x='22' y='44' width='11' height='32' rx='5.5' fill='%23E4602A'/%3E%3Crect x='39' y='30' width='11' height='60' rx='5.5' fill='%23E4602A'/%3E%3Crect x='56' y='48' width='11' height='24' rx='5.5' fill='%23E4602A'/%3E%3Crect x='74' y='40' width='26' height='10' rx='5' fill='white'/%3E%3Crect x='74' y='55' width='19' height='10' rx='5' fill='white'/%3E%3Crect x='74' y='70' width='23' height='10' rx='5' fill='white'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap">
@@ -340,7 +340,7 @@ html.en:not(.tr) body{visibility:hidden}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.seg button{min-height:52px;border:2px solid var(--line);border-radius:14px;background:var(--bg);font-size:18px;font-weight:800;color:var(--ink)}.seg button[aria-pressed="true"]{border-color:var(--or);background:var(--orl)}
 [dir="ltr"] .sw i{right:auto;left:3px}[dir="ltr"] .psw[aria-checked="true"] .sw i{transform:translateX(26px)}
 .sb-en{display:block;font-size:.5em;margin-top:10px;font-weight:700}.sb-call,.sb-what{white-space:pre-line}.back{white-space:nowrap}.pcard.long b{font-size:18px;line-height:1.25}#sosScriptText{white-space:pre-line}
-/* «مكالمة»: Wasl calls a number for the user and shows the call as text */
+/* «مكالمة»: Badalak calls a number for the user and shows the call as text */
 .calllink{border-color:#1F6F80;background:#E1EFF1;color:#1F6F80}.calllink small{color:#25525C}
 #call .cbody{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
 .cnote{margin:0;font-size:15px;line-height:1.6;font-weight:700;color:var(--ink);background:var(--orl);border-radius:12px;padding:10px 12px}
@@ -470,14 +470,14 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <body>
 <div id="offBar" role="status" aria-live="polite"><p><b>مفيش نت.</b> شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.</p><p>مش شغّال: «اتكلم بدالي»، والردود الذكية، والسماع، والصوت المصري.</p></div>
 <div id="welcome" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="wTitle"><div class="card">
-<h3 id="wTitle">أهلاً بيك في وَصْل</h3>
+<h3 id="wTitle">أهلاً بيك في بَدالَك</h3>
 <ul data-i18n="wList">
-<li>وَصْل <b>مجاني</b>.</li>
-<li>كلامك <b>مش بيتسجل</b>. بيعدّي بس على الخدمات اللي بتشغّل وصل. <a href="privacy.html">اقرا الخصوصية</a></li>
-<li>الطوارئ في وصل <b>مساعدة</b>، مش بديل عن الإسعاف والشرطة.</li>
+<li>بَدالَك <b>مجاني</b>.</li>
+<li>كلامك <b>مش بيتسجل</b>. بيعدّي بس على الخدمات اللي بتشغّل بدالك. <a href="privacy.html">اقرا الخصوصية</a></li>
+<li>الطوارئ في بدالك <b>مساعدة</b>، مش بديل عن الإسعاف والشرطة.</li>
 <li>لو سنك <b>أقل من 18</b>، لازم أهلك يوافقوا.</li>
 </ul>
-<p class="wq">تحب وصل يكون إزاي؟</p>
+<p class="wq">تحب بدالك يكون إزاي؟</p>
 <div class="wch"><button id="wOk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3.5 5v14c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v14"/></svg>بقرا كويس</button><button id="wPic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>بفضّل الصور</button></div>
 <button class="wsos" id="wSos">🚨 عندي طوارئ دلوقتي</button>
 </div></div>
@@ -486,12 +486,12 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <section id="home" class="screen on" aria-label="الرئيسية">
 <button id="demoFab" class="hidden" style="position:fixed;top:72px;left:16px;min-height:48px;z-index:40;background:#E4602A;color:#fff;border:0;border-radius:24px;padding:10px 16px;font:800 16px Cairo,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.2)">▶ عرض تجريبي</button>
 <div class="hhead">
-<div class="hbrand"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#13262F"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>وَصْل</b><small>بيتكلم بدالك ويخلّص المهمة</small></div></div>
+<div class="hbrand"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#13262F"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>بَدالَك</b><small>بيتكلم عنك ويخلّص المهمة</small></div></div>
 <label class="sr" for="lang">لهجة اللي قدامك</label>
 <select id="lang"><option value="ar-EG">مصري</option><option value="ar-SA">خليجي</option><option value="en-US">English</option></select>
 </div>
 <div class="hbody">
-<div id="instBar" class="hidden" style="display:flex;align-items:center;gap:10px;background:#13262F;color:#fff;border-radius:16px;padding:10px 12px;margin-bottom:10px"><img src="icon-192.png" alt="" width="36" height="36" style="border-radius:9px"><span id="instTxt" style="flex:1;font-weight:700;font-size:15px;line-height:1.4">ثبّت وَصْل على موبايلك، ويشتغل من غير نت</span><button id="instGo" style="background:#E4602A;color:#fff;border:0;border-radius:12px;padding:8px 14px;font:800 15px Cairo,sans-serif">ثبّت</button><button id="instX" aria-label="إخفاء" style="background:none;border:0;color:#BFD3D8;font-size:20px;padding:4px">✕</button></div>
+<div id="instBar" class="hidden" style="display:flex;align-items:center;gap:10px;background:#13262F;color:#fff;border-radius:16px;padding:10px 12px;margin-bottom:10px"><img src="icon-192.png" alt="" width="36" height="36" style="border-radius:9px"><span id="instTxt" style="flex:1;font-weight:700;font-size:15px;line-height:1.4">ثبّت بَدالَك على موبايلك، ويشتغل من غير نت</span><button id="instGo" style="background:#E4602A;color:#fff;border:0;border-radius:12px;padding:8px 14px;font:800 15px Cairo,sans-serif">ثبّت</button><button id="instX" aria-label="إخفاء" style="background:none;border:0;color:#BFD3D8;font-size:20px;padding:4px">✕</button></div>
 <button class="alchip" id="alChip"><span class="d"></span><span id="alChipT">تنبيهات الأصوات مقفولة · شغّلها</span></button>
 <div id="coBadge" class="cobadge hidden"></div>
 <div class="stats hidden" id="stats"></div>
@@ -522,8 +522,8 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div class="qgrid hidden" id="quick"></div>
 </details>
 <button class="ordlink hidden" id="openOrder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M12 8v6M9 11h6"/></svg><span><b>مش في الصيدلية؟ اطلب دوا للبيت</b><small>أكتب للصيدلية على واتساب، وأقرالك ردهم</small></span></button>
-<button class="ordlink calllink" id="openCall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span><b>مكالمة: وصل يتصل بدالك</b><small>اكتب الرقم واللي عايزه، ووصل يكلمهم ويكتبلك ردهم</small></span></button>
-<button class="ordlink calllink" id="openCounter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg><span><b>وصل في المكان: الموظف يكلمك</b><small>وريه كود على موبايلك، يعمل سكان ويتكلم، وإنت تقرا كلامه</small></span></button>
+<button class="ordlink calllink" id="openCall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span><b>مكالمة: بدالك يتصل عنك</b><small>اكتب الرقم واللي عايزه، وبدالك يكلمهم ويكتبلك ردهم</small></span></button>
+<button class="ordlink calllink" id="openCounter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg><span><b>بدالك على الكاونتر: الموظف يكلمك</b><small>وريه كود على موبايلك، يعمل سكان ويتكلم، وإنت تقرا كلامه</small></span></button>
 <div style="flex:1"></div>
 <div class="tip no-pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><span>حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.</span></div>
 <p class="qleft hidden" id="qLeft" aria-live="polite"></p>
@@ -533,7 +533,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 
 <section id="mytasks" class="screen" aria-label="مهامي">
 <div class="top"><button class="back" id="tasksBack">→ رجوع</button><b style="font-size:18px">مهامي</b><span style="width:70px"></span></div>
-<div class="body"><a class="btn wa" id="fbLink" href="feedback.html" style="text-decoration:none">📝 قولنا رأيك في وَصْل</a><div class="card" id="kpiCard"><div class="kpis" id="kpis"></div><button class="btn ghost" id="shareRates">شارك التقييمات</button><p class="lead" style="margin:0;font-size:13px">بيبعت التاريخ والتقييم بس، من غير أي كلام أو بيانات. للمشاركين في التجربة.</p></div><p class="lead">كل مهمة خلصت، وملخصها.</p><div class="card" id="taskList"></div></div>
+<div class="body"><a class="btn wa" id="fbLink" href="feedback.html" style="text-decoration:none">📝 قولنا رأيك في بَدالَك</a><div class="card" id="kpiCard"><div class="kpis" id="kpis"></div><button class="btn ghost" id="shareRates">شارك التقييمات</button><p class="lead" style="margin:0;font-size:13px">بيبعت التاريخ والتقييم بس، من غير أي كلام أو بيانات. للمشاركين في التجربة.</p></div><p class="lead">كل مهمة خلصت، وملخصها.</p><div class="card" id="taskList"></div></div>
 </section>
 
 <section id="me" class="screen" aria-label="بياناتي">
@@ -546,13 +546,13 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div class="card">
 <div class="field"><label for="pName">الاسم</label><input id="pName" autocomplete="name"></div>
 <div class="field"><label for="pSex">أنا</label><select id="pSex"><option value="m">راجل</option><option value="f">ست / بنت</option></select></div>
-<div class="field"><label for="pVoice">وصل يتكلم بصوت</label><select id="pVoice"><option value="auto">زيّي (حسب أنا راجل ولا ست)</option><option value="f">ست</option><option value="m">راجل</option></select></div>
-<div class="field"><label for="pRate">سرعة صوت وصل</label><select id="pRate"><option value="1">هادي</option><option value="1.15">عادي</option><option value="1.3">أسرع</option></select></div>
-<div class="field"><label for="pMem">وصل يفتكر مهامك اللي فاتت</label><select id="pMem"><option value="on">أيوه، عشان يقولي «زي المرة اللي فاتت؟»</option><option value="off">لأ</option></select></div>
+<div class="field"><label for="pVoice">بدالك يتكلم بصوت</label><select id="pVoice"><option value="auto">زيّي (حسب أنا راجل ولا ست)</option><option value="f">ست</option><option value="m">راجل</option></select></div>
+<div class="field"><label for="pRate">سرعة صوت بدالك</label><select id="pRate"><option value="1">هادي</option><option value="1.15">عادي</option><option value="1.3">أسرع</option></select></div>
+<div class="field"><label for="pMem">بدالك يفتكر مهامك اللي فاتت</label><select id="pMem"><option value="on">أيوه، عشان يقولي «زي المرة اللي فاتت؟»</option><option value="off">لأ</option></select></div>
 <div class="field"><label for="pAll">حساسية من أدوية أو أكل</label><input id="pAll" placeholder="مثلاً: البنسلين"></div>
 <div class="field"><label for="pIns">التأمين الصحي</label><input id="pIns" placeholder="مثلاً: مفيش، أو اسم الشركة"></div>
 <div class="field"><label for="pAddr">العنوان</label><input id="pAddr"></div>
-<div class="field"><label for="pNotes">حاجات وصل لازم يعرفها</label><textarea id="pNotes" rows="3"></textarea></div>
+<div class="field"><label for="pNotes">حاجات بدالك لازم يعرفها</label><textarea id="pNotes" rows="3"></textarea></div>
 <b style="margin-top:6px">بيانات الطوارئ</b>
 <div class="field"><label for="pBlood">فصيلة الدم</label><input id="pBlood" placeholder="مثلاً: O+"></div>
 <div class="field"><label for="pCond">أمراض مزمنة</label><input id="pCond" placeholder="مثلاً: سكر، ضغط"></div>
@@ -584,7 +584,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 </div>
 <div class="card">
 <b>الإشارات</b>
-<p class="lead">علّم وصل إشاراتك، وتقدر تستخدمها جوه المهمة والمحادثة.</p>
+<p class="lead">علّم بدالك إشاراتك، وتقدر تستخدمها جوه المهمة والمحادثة.</p>
 <button class="btn ghost" id="openSignsMe">افتح الكاميرا</button>
 </div>
 </div>
@@ -596,7 +596,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div class="top"><button class="back" id="oBack">→ رجوع</button><b style="font-size:18px">اطلب من الصيدلية</b><span style="width:70px"></span></div>
 <div class="body" id="oBody">
 <div id="oSetup" class="ofl">
-<p class="lead">وصل يكتب الطلب للصيدلية على واتساب بتاعك، ويقرالك ردهم، حتى لو كان رسالة صوتية.</p>
+<p class="lead">بدالك يكتب الطلب للصيدلية على واتساب بتاعك، ويقرالك ردهم، حتى لو كان رسالة صوتية.</p>
 <div class="card">
 <b>الصيدلية</b>
 <div class="ophs" id="oPhs"></div>
@@ -628,11 +628,11 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <label class="sr" for="oMsg">الرسالة</label>
 <textarea id="oMsg" class="goal" rows="5"></textarea>
 <button class="btn wa" id="oOpenWa">افتح واتساب وابعت</button>
-<p class="lead" style="font-size:13px">واتساب هيفتح والرسالة مكتوبة. دوس إرسال هناك، وارجع لوصل.</p>
+<p class="lead" style="font-size:13px">واتساب هيفتح والرسالة مكتوبة. دوس إرسال هناك، وارجع لبدالك.</p>
 </div>
 <div class="card oreply hidden" id="oReply">
 <b>⏳ مستنيين رد الصيدلية</b>
-<p class="lead">لما يردّوا على واتساب: دوس مطوّل على ردهم ← مشاركة ← وَصْل. أو انسخه وارجع هنا.</p>
+<p class="lead">لما يردّوا على واتساب: دوس مطوّل على ردهم ← مشاركة ← بَدالَك. أو انسخه وارجع هنا.</p>
 <button class="btn" id="oPaste">📋 الصق ردهم</button>
 <button class="btn ghost" id="oVoice">🎤 ردّوا برسالة صوتية</button>
 <input type="file" id="oVoiceIn" accept="audio/*,.ogg,.opus,.m4a,.mp3,.aac,.amr" class="hidden">
@@ -649,7 +649,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 
 <section id="task" class="screen" aria-label="المهمة">
 <div class="hear" aria-live="polite">
-<div class="lab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span id="hLab">وصل سامعك · اتكلم عادي</span></div>
+<div class="lab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span id="hLab">بدالك سامعك · اتكلم عادي</span></div>
 <div class="big" id="hBig">أهلاً بيك</div>
 <div class="sub" id="hSub">صاحب الموبايل أصم، وأنا مساعده. اتكلم عادي وأنا هوصّل كلامك.</div>
 <img id="hPhoto" class="hidden" alt="الصورة اللي صوّرها صاحب الموبايل">
@@ -660,12 +660,12 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div class="thead"><div><small>المهمة</small><b id="tTitle">مهمة</b></div><span class="stepchip" id="tStep">خطوة 1</span></div>
 <div class="prog" id="tProg"></div>
 <div class="state"><span class="dot" id="tDot"></span><span id="tState">بيبدأ...</span></div>
-<p class="note srvnote">الموبايل ده بيسمع عن طريق سيرفر وصل، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.</p>
+<p class="note srvnote">الموبايل ده بيسمع عن طريق سيرفر بدالك، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.</p>
 <div class="log" id="tLog"></div>
 <div class="decide hidden" id="tDecide"><div class="q" id="tQ"></div><div class="opts" id="tOpts"></div></div>
-<div class="decide hidden" id="tOk" role="alertdialog" aria-labelledby="tOkQ"><div class="q" id="tOkQ"><span class="no-pic">وصل هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:</span><span class="only-pic">اتأكد الأول:</span></div><p class="okline" id="tOkT"></p><div class="opts"><button id="tOkYes"><span class="pi" aria-hidden="true">✓</span>قوله</button><button id="tOkNo"><span class="pi" aria-hidden="true">✋</span>لأ، استنى</button></div></div>
-<div class="typerow hidden" id="tType"><label class="sr" for="tInput">اكتب لوصل</label><input id="tInput" placeholder="اكتب اللي عايز وصل يقوله أو يعرفه"><button id="tSend">ابعت</button></div><div class="phr hidden" id="tPhr"></div>
-<div class="summary hidden" id="tSum"><b>✓ المهمة خلصت</b><p id="tSumText"></p><div class="rate" id="tRate"><span>وَصْل ساعدك؟</span><button data-r="up" aria-label="ساعدني">👍</button><button data-r="down" aria-label="ماساعدنيش">👎</button></div><div class="refill hidden" id="tRefill" style="background:var(--orl);border-radius:14px;padding:12px;margin:0 0 10px"><b id="tRefQ" style="display:block;margin-bottom:8px"></b><div class="why" id="tRefOpts" style="margin:0"><button data-d="7">أسبوع</button><button data-d="14">أسبوعين</button><button data-d="30">شهر</button><button data-d="0">مش عايز</button></div><p id="tRefOk" class="hidden" style="margin:8px 0 0;font-weight:700"></p><button class="btn ghost hidden" id="tRefCal" style="min-height:44px;font-size:16px;margin-top:8px;width:100%">📅 ضيفه لتقويم الموبايل</button></div>
+<div class="decide hidden" id="tOk" role="alertdialog" aria-labelledby="tOkQ"><div class="q" id="tOkQ"><span class="no-pic">بدالك هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:</span><span class="only-pic">اتأكد الأول:</span></div><p class="okline" id="tOkT"></p><div class="opts"><button id="tOkYes"><span class="pi" aria-hidden="true">✓</span>قوله</button><button id="tOkNo"><span class="pi" aria-hidden="true">✋</span>لأ، استنى</button></div></div>
+<div class="typerow hidden" id="tType"><label class="sr" for="tInput">اكتب لبدالك</label><input id="tInput" placeholder="اكتب اللي عايز بدالك يقوله أو يعرفه"><button id="tSend">ابعت</button></div><div class="phr hidden" id="tPhr"></div>
+<div class="summary hidden" id="tSum"><b>✓ المهمة خلصت</b><p id="tSumText"></p><div class="rate" id="tRate"><span>بَدالَك ساعدك؟</span><button data-r="up" aria-label="ساعدني">👍</button><button data-r="down" aria-label="ماساعدنيش">👎</button></div><div class="refill hidden" id="tRefill" style="background:var(--orl);border-radius:14px;padding:12px;margin:0 0 10px"><b id="tRefQ" style="display:block;margin-bottom:8px"></b><div class="why" id="tRefOpts" style="margin:0"><button data-d="7">أسبوع</button><button data-d="14">أسبوعين</button><button data-d="30">شهر</button><button data-d="0">مش عايز</button></div><p id="tRefOk" class="hidden" style="margin:8px 0 0;font-weight:700"></p><button class="btn ghost hidden" id="tRefCal" style="min-height:44px;font-size:16px;margin-top:8px;width:100%">📅 ضيفه لتقويم الموبايل</button></div>
 <div class="why hidden" id="tWhy"><button>مفهمش اللي قدامي</button><button>بطيء</button><button>الصوت مش واضح</button><button>قال حاجة غلط</button><button>حاجة تانية</button></div><button class="btn ghost" id="tShare" style="margin-bottom:8px">ابعت الملخص</button><button class="btn" id="tHome">رجوع للرئيسية</button></div>
 </div>
 <div class="tfoot" id="tFoot">
@@ -682,13 +682,13 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div class="top"><button class="back" id="freeBack">→ رجوع</button><b style="font-size:18px">ترجمة</b><button class="back" id="freeGo">▶ ابدأ</button></div>
 <div class="body">
 <div class="state"><span class="dot" id="fDot"></span><span id="fState">دوس "ابدأ"، واسند الموبايل.</span></div>
-<p class="note srvnote">الموبايل ده بيسمع عن طريق سيرفر وصل، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.</p>
+<p class="note srvnote">الموبايل ده بيسمع عن طريق سيرفر بدالك، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.</p>
 <div id="cap" aria-live="polite">كلام اللي قدامك هيظهر هنا...</div>
 <div class="cards lg" id="fCards"></div>
 <div class="sug" id="fSug"></div>
 <div class="phr hidden" id="fPhr"></div>
 <div class="typerow"><label class="sr" for="fInput">اكتب كلامك</label><input id="fInput" placeholder="أو اكتب كلامك هنا..."><button class="fix" id="fFix" type="button">✨ ظبّطها</button><button id="fSay">انطق</button></div>
-<div class="card fixbox hidden" id="fFixBox" aria-live="polite"><label for="fFixT"><b>وصل هيقول كده. تقدر تعدّل:</b></label><textarea id="fFixT" class="goal" rows="2"></textarea><small class="note" id="fFixNote"></small><div class="row"><button class="btn or" id="fFixSay" type="button">انطق</button><button class="btn ghost" id="fFixMine" type="button">رجّع كلامي</button><button class="btn ghost" id="fFixNo" type="button">إلغاء</button></div></div>
+<div class="card fixbox hidden" id="fFixBox" aria-live="polite"><label for="fFixT"><b>بدالك هيقول كده. تقدر تعدّل:</b></label><textarea id="fFixT" class="goal" rows="2"></textarea><small class="note" id="fFixNote"></small><div class="row"><button class="btn or" id="fFixSay" type="button">انطق</button><button class="btn ghost" id="fFixMine" type="button">رجّع كلامي</button><button class="btn ghost" id="fFixNo" type="button">إلغاء</button></div></div>
 <div class="row"><button class="btn ghost" id="fSign">إشارة</button><button class="btn ghost" id="fPay">الدفع</button><button class="btn ghost" id="fFlip">اعرض للي قدامي</button></div>
 <div class="note" id="fSaid"></div>
 </div>
@@ -701,7 +701,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <section id="sos" class="screen" aria-label="الطوارئ">
 <div class="top" style="background:#A3221A"><button class="back" id="sosBack" style="background:#7E1912">→ رجوع</button><b style="font-size:20px">طوارئ</b><span style="width:70px"></span></div>
 <div class="body">
-<p class="sosnote">وصل بيساعدك تطلب المساعدة، لكنه مش بديل عن الإسعاف والشرطة. لو تقدر، اتصل بنفسك أو خلّي حد جنبك يتصل.</p>
+<p class="sosnote">بدالك بيساعدك تطلب المساعدة، لكنه مش بديل عن الإسعاف والشرطة. لو تقدر، اتصل بنفسك أو خلّي حد جنبك يتصل.</p>
 <div class="sosc"><span class="sosc-t"><span>أرقام الطوارئ في:</span> <b id="sosCtyName">مصر</b></span><span class="sosc-ch" aria-hidden="true">غيّر ▾</span><label class="sr" for="sosCty">البلد</label><select id="sosCty"></select></div>
 <div id="sosStep1">
 <h2 style="margin-bottom:10px">إيه اللي حصل؟</h2>
@@ -711,9 +711,9 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div class="card" style="border:2px solid #A3221A"><b id="sosTitle" style="font-size:20px"></b><span class="note" id="sosLoc">بيحدد مكانك...</span></div>
 <button class="sosact" id="sosShow"><span>🪧</span><div><b>اعرض للناس اللي حواليك</b><small>رسالة كبيرة، وصوت إنذار، وفلاش</small></div></button>
 <button class="sosact" id="sosFamily"><span>👨‍👩‍👧</span><div><b>ابعت لأهلي</b><small id="sosFamSub">رسالة فيها مكانك</small></div></button>
-<button class="sosact" id="sosCall"><span>📞</span><div><b id="sosCallT">اتصل، ووصل يقرأ رسالة الطوارئ</b><small>شغّل السبيكر وارجع هنا ودوس «اتكلم دلوقتي». الرد مش هيتكتب، فابعت لأهلك كمان</small></div></button>
+<button class="sosact" id="sosCall"><span>📞</span><div><b id="sosCallT">اتصل، وبدالك يقرأ رسالة الطوارئ</b><small>شغّل السبيكر وارجع هنا ودوس «اتكلم دلوقتي». الرد مش هيتكتب، فابعت لأهلك كمان</small></div></button>
 <button class="sosact" id="sosRC"><span>💬</span><div><b>واتساب الهلال الأحمر</b><small>رسالة مكتوبة من غير مكالمة</small></div></button>
-<div class="card hidden" id="sosScript"><b>اللي وصل هيقوله:</b><p class="lead" id="sosScriptText" style="color:var(--ink)"></p><button class="btn or" id="sosSpeak">🔊 اتكلم دلوقتي</button><span class="note">لو الكلام ما طلعش في المكالمة، حط الموبايل قريب من السماعة ودوس تاني.</span></div>
+<div class="card hidden" id="sosScript"><b>اللي بدالك هيقوله:</b><p class="lead" id="sosScriptText" style="color:var(--ink)"></p><button class="btn or" id="sosSpeak">🔊 اتكلم دلوقتي</button><span class="note">لو الكلام ما طلعش في المكالمة، حط الموبايل قريب من السماعة ودوس تاني.</span></div>
 <button class="btn ghost" id="sosAgain">نوع تاني من الطوارئ</button>
 </div>
 <div class="card"><b id="sosNumsT">أرقام الطوارئ في مصر</b><div class="nums" id="sosNums"></div></div>
@@ -737,10 +737,10 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <button class="btn or" id="alToggle" style="width:100%">ابدأ</button>
 </div>
 <div class="card"><b>نبّهني لما أسمع</b><div class="chips" id="alGroups"></div></div>
-<div class="card"><b>🎓 علّم وصل صوت من بيتك</b><span class="note">لو جرس بيتك أو التليفون مش بيتعرف عليه، علّمه لوصل مرة واحدة: اختار الصوت، ودوس "سجّل"، وشغّل الصوت جنب الموبايل.</span>
+<div class="card"><b>🎓 علّم بدالك صوت من بيتك</b><span class="note">لو جرس بيتك أو التليفون مش بيتعرف عليه، علّمه لبدالك مرة واحدة: اختار الصوت، ودوس "سجّل"، وشغّل الصوت جنب الموبايل.</span>
 <div class="row"><select id="lrnG" aria-label="الصوت"></select><button class="btn" id="lrnGo">سجّل</button></div><p id="lrnMsg" class="note"></p><div id="lrnList"></div></div>
 <div class="card"><b>آخر التنبيهات</b><div id="alLog" class="log"><div class="empty">لسه مفيش تنبيهات.</div></div></div>
-<p class="note">خلي الصفحة دي مفتوحة. وصل بيحاول يخلي الشاشة منوّرة عشان يفضل سامع. التعرف على الأصوات بيحصل على الموبايل نفسه، ومفيش أي صوت بيتبعت لبرّه.</p>
+<p class="note">خلي الصفحة دي مفتوحة. بدالك بيحاول يخلي الشاشة منوّرة عشان يفضل سامع. التعرف على الأصوات بيحصل على الموبايل نفسه، ومفيش أي صوت بيتبعت لبرّه.</p>
 </div>
 </section>
 <div id="bigAlert" role="alertdialog" aria-live="assertive">
@@ -755,7 +755,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div id="flip"></div>
 <div id="edgeFlash" aria-hidden="true"></div>
 <div id="readOv" role="status"><img id="readImg" alt=""><b id="readT">بقرا الصورة...</b><button class="btn ghost" id="readCancel" style="min-width:160px">إلغاء</button></div>
-<div id="paySheet" role="dialog" aria-label="طريقة الدفع"><div class="pbox"><b>هتدفع إزاي؟</b><small>وصل هيقول طريقة الدفع للي قدامك</small><div class="pgrid" id="payOpts"></div><button class="pclose" id="payClose">إلغاء</button></div></div>
+<div id="paySheet" role="dialog" aria-label="طريقة الدفع"><div class="pbox"><b>هتدفع إزاي؟</b><small>بدالك هيقول طريقة الدفع للي قدامك</small><div class="pgrid" id="payOpts"></div><button class="pclose" id="payClose">إلغاء</button></div></div>
 
 <div id="quotaBox" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="qbTitle"><div class="card">
 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D97A2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg>
@@ -772,7 +772,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 </div></div>
 <div id="sayFix" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="sfTitle"><div class="card">
 <h3 id="sfTitle">أنهي كلمة اتنطقت غلط؟</h3>
-<p class="lead">اللي قدامك ممكن يشاورلك عليها. دوس على الكلمة، وهنبعتها هي والجملة لفريق وصل عشان نصلّح نطقها. مش هيتبعت أي حاجة تانية.</p>
+<p class="lead">اللي قدامك ممكن يشاورلك عليها. دوس على الكلمة، وهنبعتها هي والجملة لفريق بدالك عشان نصلّح نطقها. مش هيتبعت أي حاجة تانية.</p>
 <div class="wchips" id="sfWords"></div>
 <button class="btn" id="sfSend" disabled>ابعت</button>
 <button class="btn ghost" id="sfCancel">إلغاء</button>
@@ -784,9 +784,9 @@ const EN={
 // ---- offline banner, welcome
 'مفيش نت.':'No internet.',
 'شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.':'Still works: SOS (call, and a text to your family), «Show people», and typing.',
-'مش شغّال: «اتكلم بدالي»، والردود الذكية، والسماع، والصوت المصري.':'Not working: «Speak for me», smart replies, listening, and Wasl\'s voice.',
-'أهلاً بيك في وَصْل':'Welcome to Wasl',
-'تحب وصل يكون إزاي؟':'How do you want Wasl?',
+'مش شغّال: «اتكلم بدالي»، والردود الذكية، والسماع، والصوت المصري.':'Not working: «Speak for me», smart replies, listening, and Badalak\'s voice.',
+'أهلاً بيك في بَدالَك':'Welcome to Badalak',
+'تحب بدالك يكون إزاي؟':'How do you want Badalak?',
 'بقرا كويس':'I read well',
 'بفضّل الصور':'I prefer pictures',
 '🚨 عندي طوارئ دلوقتي':'🚨 I have an emergency now',
@@ -794,12 +794,12 @@ const EN={
 'الرئيسية':'Home',
 '▶ عرض تجريبي':'▶ Demo',
 'عرض تجريبي':'Demo',
-'وَصْل':'Wasl',
-'بيتكلم بدالك ويخلّص المهمة':'Speaks for you and gets it done',
-'لهجة اللي قدامك':'Language Wasl speaks to the person in front of you',
+'بَدالَك':'Badalak',
+'بيتكلم عنك ويخلّص المهمة':'Speaks for you and gets it done',
+'لهجة اللي قدامك':'Language Badalak speaks to the person in front of you',
 'مصري':'Arabic (Egypt)',
 'خليجي':'Arabic (Gulf)',
-'ثبّت وَصْل على موبايلك، ويشتغل من غير نت':'Install Wasl on your phone. It works without internet too',
+'ثبّت بَدالَك على موبايلك، ويشتغل من غير نت':'Install Badalak on your phone. It works without internet too',
 'ثبّت':'Install',
 'إخفاء':'Hide',
 'تنبيهات الأصوات مقفولة · شغّلها':'Sound alerts are off · Turn on',
@@ -839,7 +839,7 @@ const EN={
 'الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.':'The photo is not clear. Take it again, closer and without shadow.',
 'النت ضعيف. جرّب تاني.':'Weak internet. Try again.',
 // ---- my tasks
-'📝 قولنا رأيك في وَصْل':'📝 Tell us what you think of Wasl',
+'📝 قولنا رأيك في بَدالَك':'📝 Tell us what you think of Badalak',
 'شارك التقييمات':'Share ratings',
 'بيبعت التاريخ والتقييم بس، من غير أي كلام أو بيانات. للمشاركين في التجربة.':'Sends only the date and the rating, no words or personal data. For pilot testers.',
 'كل مهمة خلصت، وملخصها.':'Every finished task, with its summary.',
@@ -848,22 +848,22 @@ const EN={
 'لسه مفيش مهام. ابدأ أول مهمة من "اتكلم بدالي".':'No tasks yet. Start your first one from "Speak for me".',
 'مهمة خلصت':'tasks done','مرة ترجمة':'translations','ساعدتك':'helped you',
 '✓ {n} مهمة':'✓ {n} task{s}','💬 {n} ترجمة':'💬 {n} translation{s}','🔔 {n} تنبيه':'🔔 {n} alert{s}',
-'تقييمات وصل':'Wasl ratings',
+'تقييمات بدالك':'Badalak ratings',
 'اتنسخ ✓':'Copied ✓',
 // ---- profile
 'لغة التطبيق':'App language',
-'لغة الكلام مع اللي قدامك بتختارها من فوق في الرئيسية.':'The language Wasl speaks to people is chosen at the top of the home screen.',
+'لغة الكلام مع اللي قدامك بتختارها من فوق في الرئيسية.':'The language Badalak speaks to people is chosen at the top of the home screen.',
 'وضع الصور':'Picture mode',
 'صور كبيرة وكلام أقل':'Big pictures, fewer words',
 'مقفول':'Off','شغّال':'On',
-'بنستخدمها عشان نرد عنك من غير ما نسألك كل مرة. محفوظة على الموبايل ده بس، وأرقام الطوارئ مش بتخرج منه أبداً.':'Wasl uses this to answer for you without asking every time. It stays on this phone only, and your emergency numbers never leave it.',
+'بنستخدمها عشان نرد عنك من غير ما نسألك كل مرة. محفوظة على الموبايل ده بس، وأرقام الطوارئ مش بتخرج منه أبداً.':'Badalak uses this to answer for you without asking every time. It stays on this phone only, and your emergency numbers never leave it.',
 'الاسم':'Name','أنا':'I am','راجل':'A man','ست / بنت':'A woman / girl',
-'وصل يتكلم بصوت':'Wasl speaks with a voice of',
+'بدالك يتكلم بصوت':'Badalak speaks with a voice of',
 'زيّي (حسب أنا راجل ولا ست)':'Like me (man or woman)',
 'ست':'A woman',
-'سرعة صوت وصل':'Speed of Wasl\'s voice',
+'سرعة صوت بدالك':'Speed of Badalak\'s voice',
 'هادي':'Calm','عادي':'Normal','أسرع':'Faster',
-'وصل يفتكر مهامك اللي فاتت':'Wasl remembers your past tasks',
+'بدالك يفتكر مهامك اللي فاتت':'Badalak remembers your past tasks',
 'أيوه، عشان يقولي «زي المرة اللي فاتت؟»':'Yes, so it can ask «like last time?»',
 'لأ':'No',
 'حساسية من أدوية أو أكل':'Allergy to medicine or food',
@@ -871,7 +871,7 @@ const EN={
 'التأمين الصحي':'Health insurance',
 'مثلاً: مفيش، أو اسم الشركة':'Example: none, or the company name',
 'العنوان':'Address',
-'حاجات وصل لازم يعرفها':'Things Wasl should know',
+'حاجات بدالك لازم يعرفها':'Things Badalak should know',
 'بيانات الطوارئ':'Emergency info',
 'فصيلة الدم':'Blood type',
 'مثلاً: O+':'Example: O+',
@@ -883,7 +883,7 @@ const EN={
 'الرقم':'Number',
 'رقم طوارئ 2: الاسم':'Emergency contact 2: name',
 'احفظ':'Save',
-'اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.':'Saved ✓ Wasl will use this in your tasks.',
+'اتحفظ ✓ بدالك هيستخدم البيانات دي في المهام.':'Saved ✓ Badalak will use this in your tasks.',
 'كود الشركة أو الجمعية':'Company or association code',
 'لو شغلك أو جمعيتك إدّتك كود، اكتبه هنا.':'If your work or association gave you a code, type it here.',
 'الكود':'Code',
@@ -894,14 +894,14 @@ const EN={
 'اقرا سياسة الخصوصية':'Read the privacy policy',
 'هتتمسح بياناتك ومهامك وإشاراتك من الموبايل ده. متأكد؟':'Your info, tasks and signs will be deleted from this phone. Are you sure?',
 'وضع العرض':'Demo mode',
-'مشهد صيدلية جاهز للعروض والفيديو: فاطمة بتكلم الصيدلي، وتكتشف الحساسية، وتسألك. حضّر الأصوات مرة وإنت على النت، وبعدها يشتغل من غير نت.':'A ready pharmacy scene for shows and videos: Wasl talks to the pharmacist, finds the allergy, and asks you. Prepare the voices once while online, then it works offline.',
+'مشهد صيدلية جاهز للعروض والفيديو: فاطمة بتكلم الصيدلي، وتكتشف الحساسية، وتسألك. حضّر الأصوات مرة وإنت على النت، وبعدها يشتغل من غير نت.':'A ready pharmacy scene for shows and videos: Badalak talks to the pharmacist, finds the allergy, and asks you. Prepare the voices once while online, then it works offline.',
 'حضّر أصوات العرض':'Prepare demo voices',
 '▶ شغّل العرض':'▶ Play the demo',
 'الإشارات':'Signs',
-'علّم وصل إشاراتك، وتقدر تستخدمها جوه المهمة والمحادثة.':'Teach Wasl your signs, and use them in tasks and translation.',
+'علّم بدالك إشاراتك، وتقدر تستخدمها جوه المهمة والمحادثة.':'Teach Badalak your signs, and use them in tasks and translation.',
 'افتح الكاميرا':'Open the camera',
 // ---- quota
-'وَصْل مقدَّم من {co}':'Wasl is offered by {co}',
+'بَدالَك مقدَّم من {co}':'Badalak is offered by {co}',
 'الموبايل ده متفعّل مع {co}.':'This phone is active with {co}.',
 'خلصت مهام الشهر ده':'You used all your tasks this month',
 'فاضلك {n} مهمة الشهر ده':'{n} task{s} left this month',
@@ -923,7 +923,7 @@ const EN={
 // ---- say-fix
 'كلمة اتنطقت غلط؟':'A word said wrong?',
 'أنهي كلمة اتنطقت غلط؟':'Which word was said wrong?',
-'اللي قدامك ممكن يشاورلك عليها. دوس على الكلمة، وهنبعتها هي والجملة لفريق وصل عشان نصلّح نطقها. مش هيتبعت أي حاجة تانية.':'The other person can point to it. Tap the word, and we send it with the sentence to the Wasl team to fix how it sounds. Nothing else is sent.',
+'اللي قدامك ممكن يشاورلك عليها. دوس على الكلمة، وهنبعتها هي والجملة لفريق بدالك عشان نصلّح نطقها. مش هيتبعت أي حاجة تانية.':'The other person can point to it. Tap the word, and we send it with the sentence to the Badalak team to fix how it sounds. Nothing else is sent.',
 'ببعت...':'Sending...',
 'وصل ✓ شكراً. هنصلّح نطقها.':'Sent ✓ Thank you. We will fix it.',
 'مقدرتش أبعت دلوقتي. جرّب تاني.':'I couldn\'t send it now. Try again.',
@@ -931,7 +931,7 @@ const EN={
 'السعر':'Price','العدد':'How many','الميعاد':'Time','أيوه':'Yes','موجود':'Available','مش متوفر هنا':'Not available here','البديل المتاح':'Alternative','الجرعة':'Dose','استنى شوية':'Wait a bit','عايز يسمع تاني':'Wants to hear it again','ادفع':'Pay','روح':'Go to','خلي بالك':'Careful','بيسألك':'Asking you','شكراً':'Thank you','مش عارف':'Doesn\'t know','افتح الخريطة ووريهاله':'Open the map and show them','محتاج ورق':'Papers needed',
 // ---- task screen
 'المهمة':'Task','مهمة':'Task','خطوة 1':'Step 1','خطوة {n} من {m}':'Step {n} of {m}','بيبدأ...':'Starting...',
-'وصل سامعك · اتكلم عادي':'Wasl is listening · Speak normally',
+'بدالك سامعك · اتكلم عادي':'Badalak is listening · Speak normally',
 'أهلاً بيك':'Hello',
 'صاحب الموبايل أصم، وأنا مساعده. اتكلم عادي وأنا هوصّل كلامك.':'The owner of this phone is Deaf, and I\'m the assistant. Speak normally and I\'ll pass on your words.',
 'صاحب الموبايل أصم، وأنا مساعده.':'The owner of this phone is Deaf, and I\'m the assistant.',
@@ -939,16 +939,16 @@ const EN={
 'كلام اللي قدامك هيظهر هنا':'What the other person says shows here',
 'اللي قدامك بيقول دلوقتي':'They are saying now',
 'آخر كلام قاله اللي قدامك':'The last thing they said',
-'الموبايل ده بيسمع عن طريق سيرفر وصل، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.':'This phone listens through Wasl\'s server, so it needs internet and uses a bit more data.',
-'وصل هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:':'Wasl will say this. It has numbers, money or medicine. Check it:',
+'الموبايل ده بيسمع عن طريق سيرفر بدالك، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.':'This phone listens through Badalak\'s server, so it needs internet and uses a bit more data.',
+'بدالك هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:':'Badalak will say this. It has numbers, money or medicine. Check it:',
 'اتأكد الأول:':'Check first:',
 'قوله':'Say it',
 'لأ، استنى':'No, wait',
-'اكتب لوصل':'Type to Wasl',
-'اكتب اللي عايز وصل يقوله أو يعرفه':'Type what Wasl should say or know',
+'اكتب لبدالك':'Type to Badalak',
+'اكتب اللي عايز بدالك يقوله أو يعرفه':'Type what Badalak should say or know',
 'ابعت':'Send',
 '✓ المهمة خلصت':'✓ Task done',
-'وَصْل ساعدك؟':'Did Wasl help you?',
+'بَدالَك ساعدك؟':'Did Badalak help you?',
 'ساعدني':'It helped','ماساعدنيش':'It didn\'t help',
 'أسبوع':'1 week','أسبوعين':'2 weeks','شهر':'1 month','مش عايز':'No, thanks','مش محتاج':'No need',
 '📅 ضيفه لتقويم الموبايل':'📅 Add to the phone calendar',
@@ -956,12 +956,12 @@ const EN={
 'ابعت الملخص':'Share the summary',
 'رجوع للرئيسية':'Back to home',
 'أنا هكتب':'I\'ll type','إشارة':'Sign','الدفع':'Pay','الخريطة':'Map','إنهاء':'End',
-'اللي قدامك':'They said','وصل قال':'Wasl said','إنت قررت':'You decided',
+'اللي قدامك':'They said','بدالك قال':'Badalak said','إنت قررت':'You decided',
 'بسمع اللي قدامك...':'Listening to them...',
 'اتفضل، أنا سامعك':'Go ahead, I\'m listening',
 'لحظة واحدة':'One moment',
-'وصل بيجهّز الرد.':'Wasl is preparing the answer.',
-'وصل بيفكر...':'Wasl is thinking...',
+'بدالك بيجهّز الرد.':'Badalak is preparing the answer.',
+'بدالك بيفكر...':'Badalak is thinking...',
 'لحظة من فضلك':'One moment, please',
 'لحظة واحدة من فضلك':'One moment, please',
 'النت ضعيف شوية.':'The internet is a bit weak.',
@@ -971,30 +971,30 @@ const EN={
 'صاحب الموبايل بيختار دلوقتي.':'The phone owner is choosing now.',
 'تختار إيه؟':'What do you choose?',
 'عنواني المحفوظ: ':'My saved address: ',
-'وصل محتاج قرارك':'Wasl needs your decision',
-'وصل بيقول':'Wasl says',
+'بدالك محتاج قرارك':'Badalak needs your decision',
+'بدالك بيقول':'Badalak says',
 'شكراً جزيلاً':'Thank you very much',
 'لو فيه كلام تاني كمّل، ودوس إنهاء لما تخلص.':'If there is more to say, please go on.',
 'المهمة خلصت.':'The task is done.',
 'بسمع لو فيه كلام تاني · دوس إنهاء لما تخلص':'Listening in case there is more · Tap End when you finish',
-'وصل بيتكلم...':'Wasl is speaking...',
+'بدالك بيتكلم...':'Badalak is speaking...',
 'صاحب الموبايل بيراجع الكلام.':'The phone owner is checking the sentence.',
 'راجع الجملة، ودوس «قوله»':'Check the sentence, then tap «Say it»',
 '(صاحب الموبايل وقّف الجملة دي ومتقالتش: {s})':'(The phone owner stopped this sentence, it was not said: {s})',
 'وقّفت الجملة، ومتقالتش':'You stopped the sentence. It was not said',
-'الجملة متقالتش. اكتب اللي عايز وصل يقوله':'The sentence was not said. Type what Wasl should say',
-'وصل':'Wasl',
+'الجملة متقالتش. اكتب اللي عايز بدالك يقوله':'The sentence was not said. Type what Badalak should say',
+'بدالك':'Badalak',
 'المايك مقفول. اسمح بيه من إعدادات المتصفح':'The microphone is blocked. Allow it in the browser settings',
 'السماع وقف. دوس هنا عشان أسمع تاني':'Listening stopped. Tap here to listen again',
 'اكتب العلامة المميزة (مثلاً: جنب مسجد الحصري، 6 أكتوبر)':'Type a landmark (for example: next to El Hosary Mosque, 6th of October)',
 'اكتب العنوان أو اسم المكان والمنطقة (مثلاً: شارع التحرير، الدقي)':'Type the address or the place and area (for example: Tahrir Street, Dokki)',
-'اكتب وابعت، ووصل هيقوله':'Type and send, and Wasl will say it',
+'اكتب وابعت، وبدالك هيقوله':'Type and send, and Badalak will say it',
 'اكتب العنوان اللي عايز توريه للي قدامك على الخريطة':'Type the address you want to show them on the map',
 'فتحت الخريطة على: ':'I opened the map at: ',
 'تنهي المهمة؟':'End the task?',
-'قبل أول مهمة:\n\nعشان وصل يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي وصل هيقولها بتتبعت لخدمة الصوت (ElevenLabs).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟':'Before your first task:\n\nTo do the task, what people say near you is turned into text by your browser\'s speech service (Google or Apple). Then it is sent, with your request, your name, allergies and insurance if you wrote them, to an AI service (Claude by Anthropic). The sentences Wasl says are sent to a voice service (ElevenLabs).\n\nWe don\'t keep any of this, and you can delete your data from the phone anytime.\n\nDo you agree?',
-'وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ({e})':'Wasl needs the microphone to hear the other person. Allow the microphone in the browser settings ({e})',
-'الموبايل ده مش بيحوّل الكلام لكتابة لوحده.\n\nعشان وصل يسمع اللي قدامك، صوت كلامه هيتبعت لسيرفر وصل وخدمة ElevenLabs تحوّله لكتابة. مفيش حاجة بتتحفظ، بس لازم يكون فيه نت.\n\nموافق؟':'This phone can\'t turn speech into text by itself.\n\nSo Wasl can hear the other person, the sound of their words will go to Wasl\'s server, and ElevenLabs will turn it into text. Nothing is kept, but you need internet.\n\nDo you agree?',
+'قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بدالك هيقولها بتتبعت لخدمة الصوت (ElevenLabs).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟':'Before your first task:\n\nTo do the task, what people say near you is turned into text by your browser\'s speech service (Google or Apple). Then it is sent, with your request, your name, allergies and insurance if you wrote them, to an AI service (Claude by Anthropic). The sentences Badalak says are sent to a voice service (ElevenLabs).\n\nWe don\'t keep any of this, and you can delete your data from the phone anytime.\n\nDo you agree?',
+'بدالك محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ({e})':'Badalak needs the microphone to hear the other person. Allow the microphone in the browser settings ({e})',
+'الموبايل ده مش بيحوّل الكلام لكتابة لوحده.\n\nعشان بدالك يسمع اللي قدامك، صوت كلامه هيتبعت لسيرفر بدالك وخدمة ElevenLabs تحوّله لكتابة. مفيش حاجة بتتحفظ، بس لازم يكون فيه نت.\n\nموافق؟':'This phone can\'t turn speech into text by itself.\n\nSo Badalak can hear the other person, the sound of their words will go to Badalak\'s server, and ElevenLabs will turn it into text. Nothing is kept, but you need internet.\n\nDo you agree?',
 'الموبايل ده مش بيسمع الكلام. استخدم Chrome على أندرويد، أو آخر نسخة على الآيفون. الكتابة شغالة عادي.':'This phone can\'t listen to speech. Use Chrome on Android, or the latest version on iPhone. Typing still works.',
 'الموبايل مش بيسمع عربي. حدّث تطبيق Google وفعّل العربي في «الكتابة بالصوت»':'This phone can\'t listen in this language. Update the Google app and turn the language on in «voice typing»',
 'المايك مشغول في تطبيق تاني. اقفله ودوس هنا':'Another app is using the microphone. Close it and tap here',
@@ -1004,8 +1004,8 @@ const EN={
 'عايز {m} (زي المرة اللي فاتت)':'I want {m} (like last time)',
 '💊 تذكير {m}':'💊 Reminder: {m}',
 '✓ هفكّرك يوم {d}، قبل ما يخلص بـ 3 أيام.':'✓ I\'ll remind you on {d}, 3 days before it runs out.',
-'💊 {m} قرب يخلص - اطلبه من وصل':'💊 {m} is running out - order it with Wasl',
-'افتح وصل ودوس اطلبه تاني':'Open Wasl and tap Order again',
+'💊 {m} قرب يخلص - اطلبه من بدالك':'💊 {m} is running out - order it with Badalak',
+'افتح بدالك ودوس اطلبه تاني':'Open Badalak and tap Order again',
 '{m} قرب يخلص':'{m} is running out',
 'اطلبه تاني':'Order again',
 'خلاص':'Done',
@@ -1050,25 +1050,25 @@ const EN={
 // ---- payment
 'طريقة الدفع':'Payment method',
 'هتدفع إزاي؟':'How will you pay?',
-'وصل هيقول طريقة الدفع للي قدامك':'Wasl will tell them how you pay',
+'بدالك هيقول طريقة الدفع للي قدامك':'Badalak will tell them how you pay',
 'إلغاء':'Cancel',
 'كاش':'Cash','فيزا':'Card','محفظة إلكترونية':'Mobile wallet','إنستاباي':'InstaPay',
 'طريقة الدفع: {p}':'Payment: {p}',
 'هدفع {p}':'I\'ll pay by {p}',
 // ---- SOS
 'الطوارئ':'SOS',
-'وصل بيساعدك تطلب المساعدة، لكنه مش بديل عن الإسعاف والشرطة. لو تقدر، اتصل بنفسك أو خلّي حد جنبك يتصل.':'Wasl helps you ask for help, but it does not replace the ambulance or police. If you can, call yourself or ask someone near you to call.',
+'بدالك بيساعدك تطلب المساعدة، لكنه مش بديل عن الإسعاف والشرطة. لو تقدر، اتصل بنفسك أو خلّي حد جنبك يتصل.':'Badalak helps you ask for help, but it does not replace the ambulance or police. If you can, call yourself or ask someone near you to call.',
 'إيه اللي حصل؟':'What happened?',
 'بيحدد مكانك...':'Finding your location...',
 'اعرض للناس اللي حواليك':'Show people around you',
 'رسالة كبيرة، وصوت إنذار، وفلاش':'A big message, an alarm sound, and a flashlight',
 'ابعت لأهلي':'Text my family',
 'رسالة فيها مكانك':'A message with your location',
-'اتصل، ووصل يقرأ رسالة الطوارئ':'Call, and Wasl reads the emergency message',
+'اتصل، وبدالك يقرأ رسالة الطوارئ':'Call, and Badalak reads the emergency message',
 'شغّل السبيكر وارجع هنا ودوس «اتكلم دلوقتي». الرد مش هيتكتب، فابعت لأهلك كمان':'Turn on the speaker, come back here and tap «Speak now». Their answer won\'t be written, so text your family too',
 'واتساب الهلال الأحمر':'Red Crescent WhatsApp',
 'رسالة مكتوبة من غير مكالمة':'A written message, no call',
-'اللي وصل هيقوله:':'What Wasl will say on the call:',
+'اللي بدالك هيقوله:':'What Badalak will say on the call:',
 '🔊 اتكلم دلوقتي':'🔊 Speak now',
 'لو الكلام ما طلعش في المكالمة، حط الموبايل قريب من السماعة ودوس تاني.':'If they can\'t hear it on the call, hold the phone near the speaker and tap again.',
 'نوع تاني من الطوارئ':'A different emergency',
@@ -1096,7 +1096,7 @@ const EN={
 'شخص أصم':'a Deaf person',
 '🚨 طوارئ من {w}: {s}.':'🚨 Emergency from {w}: {s}.',
 'أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.':'I am Deaf and can\'t hear calls. Please text me.',
-'(اتبعتت من وصل)':'(sent from Wasl)',
+'(اتبعتت من بدالك)':'(sent from Badalak)',
 'لو محتاجين المكان، ابعتوا رسالة على نفس الرقم ونبعتهولكم.':'If you need the location, text this number and we will send it.',
 'ألو، أنا {n}، مساعد صوتي لشخص أصم اسمه {w}. هو {s}. {a}{al} من فضلكم ابعتوا حد بسرعة. هو مش هيقدر يسمعكم، ولو محتاجين حاجة ابعتوا رسالة على نفس الرقم.':'Hello, I\'m {n}, a voice assistant for a Deaf person named {w}. He {s}. {a}{al} Please send someone quickly. He can\'t hear you; if you need anything, send a text message to this same number.',
 'العنوان: {x}.':'Address: {x}.',
@@ -1106,7 +1106,7 @@ const EN={
 'أنا صماء ومش بقدر أسمع التليفون، كلّموني رسالة.':'I am Deaf and can\'t hear calls. Please text me.',
 'واحدة صماء':'a Deaf woman',
 'In English: {x}':'In English: {x}',
-'اتصل بـ{s} {n}، ووصل يقرأ الرسالة':'Call {s} {n}, and Wasl reads the message',
+'اتصل بـ{s} {n}، وبدالك يقرأ الرسالة':'Call {s} {n}, and Badalak reads the message',
 'لـ{x}، ومعاها مكانك':'To {x}, with your location',
 ' و':' and ',
 'ضيف أرقام أهلك في بياناتي الأول':'Add your family\'s numbers in My info first',
@@ -1117,13 +1117,13 @@ const EN={
 'دوس "ابدأ" وسيب الموبايل في مكان واضح.':'Tap "Start" and leave the phone in an open place.',
 'ابدأ':'Start','وقف':'Stop',
 'نبّهني لما أسمع':'Alert me when I hear',
-'🎓 علّم وصل صوت من بيتك':'🎓 Teach Wasl a sound from your home',
-'لو جرس بيتك أو التليفون مش بيتعرف عليه، علّمه لوصل مرة واحدة: اختار الصوت، ودوس "سجّل"، وشغّل الصوت جنب الموبايل.':'If your doorbell or phone is not recognised, teach it to Wasl once: choose the sound, tap "Record", and play the sound next to the phone.',
+'🎓 علّم بدالك صوت من بيتك':'🎓 Teach Badalak a sound from your home',
+'لو جرس بيتك أو التليفون مش بيتعرف عليه، علّمه لبدالك مرة واحدة: اختار الصوت، ودوس "سجّل"، وشغّل الصوت جنب الموبايل.':'If your doorbell or phone is not recognised, teach it to Badalak once: choose the sound, tap "Record", and play the sound next to the phone.',
 'الصوت':'Sound',
 'سجّل':'Record',
 'آخر التنبيهات':'Latest alerts',
 'لسه مفيش تنبيهات.':'No alerts yet.',
-'خلي الصفحة دي مفتوحة. وصل بيحاول يخلي الشاشة منوّرة عشان يفضل سامع. التعرف على الأصوات بيحصل على الموبايل نفسه، ومفيش أي صوت بيتبعت لبرّه.':'Keep this page open. Wasl tries to keep the screen on so it keeps listening. Sounds are recognised on the phone itself, and no sound is sent out.',
+'خلي الصفحة دي مفتوحة. بدالك بيحاول يخلي الشاشة منوّرة عشان يفضل سامع. التعرف على الأصوات بيحصل على الموبايل نفسه، ومفيش أي صوت بيتبعت لبرّه.':'Keep this page open. Badalak tries to keep the screen on so it keeps listening. Sounds are recognised on the phone itself, and no sound is sent out.',
 'تمام، شُفت':'OK, I saw it',
 'حد على الباب':'Someone is at the door','جرس الباب والخبط':'Doorbell and knocking','الطفل بيعيط':'The baby is crying','عياط طفل':'Baby crying','إنذار حريق!':'Fire alarm!','إنذار حريق ودخان':'Fire and smoke alarm','فيه إنذار أو سرينة':'An alarm or siren','إنذار وسرينة':'Alarm and siren','التليفون بيرن':'The phone is ringing','التليفون':'Phone','المنبه بيرن':'The alarm clock is ringing','المنبه':'Alarm clock','حد بيزعق أو بينادي':'Someone is shouting or calling','زعيق وصريخ':'Shouting and screaming','حاجة اتكسرت':'Something broke','كسر إزاز':'Breaking glass','فيه مية مفتوحة أو بتغلي':'Water is running or boiling','مية وغلاية':'Water and kettle','كلاكس عربية':'A car horn','كلاكس':'Car horn','كلب بينبح':'A dog is barking','نباح كلب':'Dog barking',
 'بيجهّز...':'Getting ready...',
@@ -1135,16 +1135,16 @@ const EN={
 'اتأكد من النت وجرّب تاني.':'Check your internet and try again.',
 'بسمع: {x} ({p}%)':'Hearing: {x} ({p}%)',
 '{t} · متأكد بنسبة {p}%':'{t} · {p}% sure',
-'وصل: {x}':'Wasl: {x}',
+'بدالك: {x}':'Badalak: {x}',
 '{x} · صوت متعلّم':'{x} · learned sound',
 'امسح':'Delete',
 '🎙️ شغّل الصوت دلوقتي جنب الموبايل... {n}':'🎙️ Play the sound now next to the phone... {n}',
 'ما سمعتش صوت واضح. قرّب الموبايل من الصوت وجرّب تاني.':'I didn\'t hear a clear sound. Move the phone closer and try again.',
-'✅ اتعلمته! من دلوقتي لما الصوت ده يتكرر وصل هينبّهك. جرّبه مرة كمان عشان تتأكد.':'✅ Learned! From now on Wasl alerts you when this sound comes again. Try it once more to be sure.',
+'✅ اتعلمته! من دلوقتي لما الصوت ده يتكرر بدالك هينبّهك. جرّبه مرة كمان عشان تتأكد.':'✅ Learned! From now on Badalak alerts you when this sound comes again. Try it once more to be sure.',
 // ---- signs
 'بيشغّل الكاميرا...':'Starting the camera...',
 'ابعت الجملة':'Send the sentence',
-'علّم وصل إشارة جديدة':'Teach Wasl a new sign',
+'علّم بدالك إشارة جديدة':'Teach Badalak a new sign',
 'معنى الإشارة':'Meaning of the sign',
 'معنى الإشارة، مثلاً: محتاج دكتور':'Meaning of the sign, for example: I need a doctor',
 'سجّل 3 ثواني':'Record 3 seconds',
@@ -1153,11 +1153,11 @@ const EN={
 'لسه مفيش إشارات':'No signs yet',
 'بيحمّل الموديل...':'Loading the model...',
 'جاهز، اعمل إشارة':'Ready, make a sign',
-'علّم وصل أول إشارة من تحت':'Teach Wasl your first sign below',
+'علّم بدالك أول إشارة من تحت':'Teach Badalak your first sign below',
 'الكاميرا ما اشتغلتش، اسمح بالكاميرا من المتصفح':'The camera didn\'t start. Allow the camera in the browser',
 'مش متعرف عليها':'Not recognised',
 'مفيش إيد قدام الكاميرا':'No hand in front of the camera',
-'ابعتها لوصل':'Send to Wasl','انطقها':'Say it',
+'ابعتها لبدالك':'Send to Badalak','انطقها':'Say it',
 'اكتب معنى الإشارة الأول':'Type the meaning of the sign first',
 'الكاميرا لسه ما اشتغلتش':'The camera hasn\'t started yet',
 'استعد...':'Get ready...',
@@ -1165,7 +1165,7 @@ const EN={
 'اتسجلت ✓ سجّلها مرتين كمان':'Recorded ✓ Record it 2 more times',
 'تمسح كل الإشارات؟':'Delete all signs?',
 // ---- install, picture mode
-'ثبّت وَصْل: دوس زرار المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»':'Install Wasl: tap the Share button ⬆️ below, then «Add to Home Screen»',
+'ثبّت بَدالَك: دوس زرار المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»':'Install Badalak: tap the Share button ⬆️ below, then «Add to Home Screen»',
 'كاشير':'Cashier','عايز أدفع حساب الحاجات دي عند الكاشير':'I want to pay for these things at the cashier',
 'حجز دكتور':'Doctor booking','عايز أحجز كشف عند الدكتور':'I want to book a visit with the doctor',
 'عايز أركب مواصلة، وأعرف أنزل فين والأجرة كام':'I want to take a ride, and know where to get off and how much the fare is',
@@ -1179,7 +1179,7 @@ const EN={
 // ---- pharmacy order
 'طلب من الصيدلية':'Pharmacy order',
 'اطلب من الصيدلية':'Pharmacy order',
-'وصل يكتب الطلب للصيدلية على واتساب بتاعك، ويقرالك ردهم، حتى لو كان رسالة صوتية.':'Wasl writes your order to the pharmacy on your own WhatsApp, and reads you their reply, even a voice message.',
+'بدالك يكتب الطلب للصيدلية على واتساب بتاعك، ويقرالك ردهم، حتى لو كان رسالة صوتية.':'Badalak writes your order to the pharmacy on your own WhatsApp, and reads you their reply, even a voice message.',
 'الصيدلية':'Pharmacy',
 'اسم الصيدلية':'Pharmacy name',
 'مثلاً: صيدلية الشفاء':'Example: El Shefa Pharmacy',
@@ -1196,9 +1196,9 @@ const EN={
 '📝 الرسالة جاهزة':'📝 The message is ready',
 'الرسالة':'Message',
 'افتح واتساب وابعت':'Open WhatsApp and send',
-'واتساب هيفتح والرسالة مكتوبة. دوس إرسال هناك، وارجع لوصل.':'WhatsApp opens with the message written. Tap Send there, then come back to Wasl.',
+'واتساب هيفتح والرسالة مكتوبة. دوس إرسال هناك، وارجع لبدالك.':'WhatsApp opens with the message written. Tap Send there, then come back to Badalak.',
 '⏳ مستنيين رد الصيدلية':'⏳ Waiting for the pharmacy\'s reply',
-'لما يردّوا على واتساب: دوس مطوّل على ردهم ← مشاركة ← وَصْل. أو انسخه وارجع هنا.':'When they reply on WhatsApp: press and hold their reply → Share → Wasl. Or copy it and come back here.',
+'لما يردّوا على واتساب: دوس مطوّل على ردهم ← مشاركة ← بَدالَك. أو انسخه وارجع هنا.':'When they reply on WhatsApp: press and hold their reply → Share → Badalak. Or copy it and come back here.',
 '📋 الصق ردهم':'📋 Paste their reply',
 '🎤 ردّوا برسالة صوتية':'🎤 They sent a voice message',
 'أو اكتب ردهم هنا':'Or type their reply here',
@@ -1210,17 +1210,17 @@ const EN={
 'بقرا الروشتة...':'Reading the prescription...',
 'اكتب الدوا الأول، أو صوّر الروشتة':'Type the medicine first, or take a photo of the prescription',
 'رقم الصيدلية مش مظبوط. اكتبه زي 01xxxxxxxxx':'The pharmacy number is not right. Write it like 01xxxxxxxxx',
-'قبل أول طلب:\n\nعشان وصل يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (ElevenLabs).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟':'Before your first order:\n\nSo Wasl can write the messages and understand the pharmacy, your order, your address and the pharmacy messages you paste or share are sent to an AI service (Claude by Anthropic). Voice messages are sent to a speech-to-text service (ElevenLabs).\n\nMessages to the pharmacy go from your own WhatsApp, and you tap Send. We don\'t keep anything.\n\nDo you agree?',
+'قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (ElevenLabs).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟':'Before your first order:\n\nSo Badalak can write the messages and understand the pharmacy, your order, your address and the pharmacy messages you paste or share are sent to an AI service (Claude by Anthropic). Voice messages are sent to a speech-to-text service (ElevenLabs).\n\nMessages to the pharmacy go from your own WhatsApp, and you tap Send. We don\'t keep anything.\n\nDo you agree?',
 'صيدلية الشفاء (تجريبي)':'El Shefa Pharmacy (demo)',
 'علبة كونكور 5 مجم':'A box of Concor 5 mg',
 '15 شارع 9، المعادي، الدور التالت':'15 Street 9, Maadi, 3rd floor',
 'كونكور 5 مجم':'Concor 5 mg',
 ' · تجربة':' · demo',
-'إنت بعت':'You sent','اختيارك':'Your choice','🎤 رسالة صوتية من الصيدلية · وصل حوّلها لكلام':'🎤 Voice message from the pharmacy · Wasl turned it into text',
+'إنت بعت':'You sent','اختيارك':'Your choice','🎤 رسالة صوتية من الصيدلية · بدالك حوّلها لكلام':'🎤 Voice message from the pharmacy · Badalak turned it into text',
 'ابعت (تجربة من غير واتساب)':'Send (demo, no WhatsApp)',
 'الطلب خلص.':'The order is done.',
 'بقرا رد الصيدلية...':'Reading the pharmacy\'s reply...',
-'وصل بيكتب...':'Wasl is writing...',
+'بدالك بيكتب...':'Badalak is writing...',
 'النت ضعيف ومقدرتش أكمّل. جرّب تاني.':'Weak internet, I couldn\'t continue. Try again.',
 'طلب من {p}: {g}':'Order from {p}: {g}',
 'أطلب {g} من {p} على واتساب':'Order {g} from {p} on WhatsApp',
@@ -1230,7 +1230,7 @@ const EN={
 'مقدرتش أفهم الرسالة الصوتية. ممكن تطلب منهم يكتبوا الرد؟':'I couldn\'t understand the voice message. Can you ask them to write their reply?',
 'تلغي الطلب ده؟':'Cancel this order?',
 'افتح':'Open',
-'مفيش طلب مفتوح. ابدأ طلب جديد، وبعدين شارك رد الصيدلية لوصل.':'No open order. Start a new order, then share the pharmacy\'s reply with Wasl.',
+'مفيش طلب مفتوح. ابدأ طلب جديد، وبعدين شارك رد الصيدلية لبدالك.':'No open order. Start a new order, then share the pharmacy\'s reply with Badalak.',
 'جهزت الرسالة. راجعها ولو تمام ابعتها.':'The message is ready. Check it, and send it if it\'s OK.',
 'الصيدلية بعتت رسالة صوتية، وبتقول: كونكور 5 للأسف مش متوفر دلوقتي، والبديل المتاح بيزوكور 5 بنفس المادة الفعالة بـ 60 جنيه، وتوصيل خلال ساعة.':'The pharmacy sent a voice message. They say: sorry, Concor 5 is not available now. The available alternative is another brand with the same active ingredient (5 mg), for 60 pounds, delivered within an hour.',
 'الصيدلية بتقول إن كونكور 5 للأسف مش متوفر، والبديل المتاح بيزوكور 5 بنفس المادة الفعالة وسعره 60 جنيه.':'The pharmacy says Concor 5 is not available. The available alternative is another brand with the same active ingredient (5 mg), for 60 pounds.',
@@ -1247,20 +1247,20 @@ const EN={
 'أسأل على دوا':'Ask about a medicine',
 'أسأل على طلب':'Ask about an order',
 'إنهاء المكالمة':'End call',
-'اكتب اللي عايز وصل يقوله':'Type what you want Wasl to say',
-'اكتب عايز وصل يقول إيه في المكالمة.':'Write what Wasl should say on the call.',
-'الخط اتقفل عشان الرد اتأخر، ووصل قالهم إننا هنكلمهم تاني.':'The call ended because the answer took too long. Wasl told them we will call back.',
+'اكتب اللي عايز بدالك يقوله':'Type what you want Badalak to say',
+'اكتب عايز بدالك يقول إيه في المكالمة.':'Write what Badalak should say on the call.',
+'الخط اتقفل عشان الرد اتأخر، وبدالك قالهم إننا هنكلمهم تاني.':'The call ended because the answer took too long. Badalak told them we will call back.',
 'الخط كان مشغول.':'The line was busy.',
 'الرقم ده مش كامل. اكتبه بالكامل، مثلاً 01001234567 أو +971501234567':'This number is not complete. Write all of it, for example 01001234567 or +971501234567',
 'الرقم ده مش مسموح. اتأكد منه وجرّب تاني.':'This number can\'t be called. Check it and try again.',
 'الطرف التاني بيقول':'They are saying',
 'المكالمة اتقفلت':'The call has ended',
 'المكالمة اتلغت.':'The call was cancelled.',
-'المكالمة خلصت · وصل بيقفل الخط':'The call is done · Wasl is hanging up',
+'المكالمة خلصت · بدالك بيقفل الخط':'The call is done · Badalak is hanging up',
 'المكالمة خلصت.':'The call is over.','الخط اتقطع.':'The line was cut.','المكالمة اتقفلت قبل أي كلام.':'The call ended before anyone spoke.',
-'المكالمة شغالة · وصل بيسمع':'On the call · Wasl is listening',
+'المكالمة شغالة · بدالك بيسمع':'On the call · Badalak is listening',
 'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.':'The call did not go through. Check the number and try again.',
-'المكالمة مش بتتسجّل، ووصل بيقول للطرف التاني إنه مساعد بالذكاء الاصطناعي':'The call is not recorded, and Wasl tells the other person that it is an AI assistant',
+'المكالمة مش بتتسجّل، وبدالك بيقول للطرف التاني إنه مساعد بالذكاء الاصطناعي':'The call is not recorded, and Badalak tells the other person that it is an AI assistant',
 'النت ضعيف، بحاول تاني...':'Weak internet, trying again...',
 'ببعت ردك...':'Sending your reply...',
 'بيتصل...':'Calling...',
@@ -1273,27 +1273,27 @@ const EN={
 'عايز أسأل على طلب: ':'I want to ask about an order: ',
 'عايز أسأل لو الدوا ده موجود: ':'I want to ask if they have this medicine: ',
 'عايز أعرف مواعيد الشغل':'I want to know the opening hours',
-'عايز وصل يقول إيه؟':'What should Wasl say?',
-'قبل أول مكالمة:\n\nوصل هيتصل بالرقم ده، ويقول في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nالكلام بيعدّي على شركة الاتصالات ومساعدها الصوتي عشان يتقال ويتكتب. المساعد بياخد اسمك وهدف المكالمة بس، وأي حاجة تانية بيسألك الأول.\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح أول ما المكالمة تخلص.\n\nموافق؟':'Before your first call:\n\nWasl will call this number and first say that it is an AI assistant speaking for you.\n\nThe words pass through the telecom company and its voice assistant so they can be spoken and written down. The assistant gets only your name and the goal of the call, and asks you before using anything else.\n\nThe call is not recorded, and the words are deleted as soon as the call ends.\n\nDo you agree?',
+'عايز بدالك يقول إيه؟':'What should Badalak say?',
+'قبل أول مكالمة:\n\nبدالك هيتصل بالرقم ده، ويقول في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nالكلام بيعدّي على شركة الاتصالات ومساعدها الصوتي عشان يتقال ويتكتب. المساعد بياخد اسمك وهدف المكالمة بس، وأي حاجة تانية بيسألك الأول.\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح أول ما المكالمة تخلص.\n\nموافق؟':'Before your first call:\n\nBadalak will call this number and first say that it is an AI assistant speaking for you.\n\nThe words pass through the telecom company and its voice assistant so they can be spoken and written down. The assistant gets only your name and the goal of the call, and asks you before using anything else.\n\nThe call is not recorded, and the words are deleted as soon as the call ends.\n\nDo you agree?',
 'كل كلام المكالمة':'The whole call',
 'مثلاً: عايز أحجز كشف عند دكتور العظام بكرة':'For example: I want to book a visit with the orthopedic doctor tomorrow',
 'محدش رد على المكالمة.':'Nobody answered the call.',
 'مقدرتش أبعت. جرّب تاني.':'Couldn\'t send. Try again.',
 'مكالمة':'Call','مكالمة (تجريبي)':'Call (trial)','تجريبي':'Trial','محاكاة':'Simulation','المكالمات لسه تجريبية.':'Calls are still a trial.','آخر كلام في المكالمة:':'The last words of the call:','الملخص ده على موبايلك بس.':'This summary stays on your phone only.',
-'وصل في المكان':'Wasl at the counter',
+'بدالك على الكاونتر':'Badalak at the counter',
 'مكالمة: {g}':'Call: {g}',
-'وصل بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.':'For now Wasl can only call numbers in Egypt, the UAE, Saudi Arabia, the UK and the US.',
-'وصل بيفكر في الرد...':'Wasl is thinking of a reply...',
-'وصل محتاج قرارك · الطرف التاني مستني':'Wasl needs your decision · they are waiting',
-'وصل هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:':'Wasl will say this sentence. It has numbers or money, check it:',
-'وصل يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف التاني يظهر لك مكتوب.':'Wasl calls the number and speaks for you, and the other person\'s words show up as text.',
+'بدالك بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.':'For now Badalak can only call numbers in Egypt, the UAE, Saudi Arabia, the UK and the US.',
+'بدالك بيفكر في الرد...':'Badalak is thinking of a reply...',
+'بدالك محتاج قرارك · الطرف التاني مستني':'Badalak needs your decision · they are waiting',
+'بدالك هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:':'Badalak will say this sentence. It has numbers or money, check it:',
+'بدالك يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف التاني يظهر لك مكتوب.':'Badalak calls the number and speaks for you, and the other person\'s words show up as text.',
 'وصلت لأقصى عدد مكالمات النهارده. جرّب بكرة.':'You reached today\'s call limit. Try tomorrow.',
 '✓ المكالمة خلصت':'✓ The call is done',
 '📞 اتصل':'📞 Call',
-'مكالمة: وصل يتصل بدالك':'Call: Wasl phones for you',
-'وصل في المكان: الموظف يكلمك':'At the counter: staff talk to you',
+'مكالمة: بدالك يتصل عنك':'Call: Badalak phones for you',
+'بدالك على الكاونتر: الموظف يكلمك':'At the counter: staff talk to you',
 'وريه كود على موبايلك، يعمل سكان ويتكلم، وإنت تقرا كلامه':'Show a code on your phone; staff scan it and talk, you read their words',
-'اكتب الرقم واللي عايزه، ووصل يكلمهم ويكتبلك ردهم':'Write the number and what you need. Wasl talks to them and writes their answer for you',
+'اكتب الرقم واللي عايزه، وبدالك يكلمهم ويكتبلك ردهم':'Write the number and what you need. Badalak talks to them and writes their answer for you',
 'الطرف التاني':'Them',
 'إنت':'You',
 // ---- sign → voice
@@ -1301,11 +1301,11 @@ const EN={
 'استعد... {n}':'Get ready... {n}',
 'اعمل الإشارة دلوقتي ({k} من 3)':'Make the sign now ({k} of 3)',
 'الإشارات القديمة محتاجة تتسجّل تاني بالطريقة الجديدة.':'Your old signs need to be recorded again the new way.',
-'الإشارات اللي وصل يفهمها هتظهر هنا':'The signs Wasl understands show here',
+'الإشارات اللي بدالك يفهمها هتظهر هنا':'The signs Badalak understands show here',
 'الكاميرا بتشتغل على الموبايل بس، ومفيش فيديو بيتبعت':'The camera works on the phone only. No video is sent',
 'الكاميرا شغّالة في تطبيق تاني. اقفله وجرّب تاني.':'Another app is using the camera. Close it and try again.',
 'الكاميرا ما اشتغلتش. اقفل الشاشة دي وافتحها تاني.':'The camera didn\'t start. Close this screen and open it again.',
-'الكاميرا مش متاحة هنا. افتح وصل من المتصفح (Chrome) بالرابط اللي بيبدأ بـ https':'The camera isn\'t available here. Open Wasl in the browser (Chrome) with the link that starts with https',
+'الكاميرا مش متاحة هنا. افتح بدالك من المتصفح (Chrome) بالرابط اللي بيبدأ بـ https':'The camera isn\'t available here. Open Badalak in the browser (Chrome) with the link that starts with https',
 'الكاميرا مقفولة. افتح إعدادات المتصفح، واختار «الأذونات» ثم «الكاميرا»، وخليها «سماح». وبعدين اقفل الشاشة دي وافتحها تاني.':'The camera is blocked. Open the browser settings, choose «Permissions», then «Camera», and set it to «Allow». Then close this screen and open it again.',
 'امسح {w}':'Delete {w}',
 'امسح كل إشاراتي':'Delete all my signs',
@@ -1330,31 +1330,31 @@ const EN={
 'مشفتش إيدك. خلّي إيدك جوه الصورة':'I didn\'t see your hand. Keep your hand inside the picture',
 'نزّل إيدك، اعمل الإشارة، ونزّل إيدك تاني.':'Hands down, make the sign, then hands down again.',
 'نزّل إيدك، وبعدين اعمل الإشارة':'Hands down, then make the sign',
-'وصل لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور':'Wasl hasn\'t learned any signs yet. Teach it below, or pick from pictures',
+'بدالك لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور':'Badalak hasn\'t learned any signs yet. Teach it below, or pick from pictures',
 'ولا واحدة':'None of these'
 };
 /* Mixed text and bold words: the whole block in English. */
 const EN_HTML={
-wList:'<li>Wasl is <b>free</b>.</li><li>Your words are <b>not recorded</b>. They only pass through the services that run Wasl. <a href="privacy.html#en">Read the privacy page</a></li><li>SOS in Wasl is <b>help</b>, not a replacement for the ambulance or police.</li><li>If you are <b>under 18</b>, your parents must agree.</li>'
+wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. They only pass through the services that run Badalak. <a href="privacy.html#en">Read the privacy page</a></li><li>SOS in Badalak is <b>help</b>, not a replacement for the ambulance or police.</li><li>If you are <b>under 18</b>, your parents must agree.</li>'
 };
 /* Gulf screen (خليجي): when the app is Arabic and the user is Gulf (GULF, set in <head>), each Egyptian sentence on the
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
-'وصل في المكان: الموظف يكلمك':'وصل في المكان: الموظف يكلمك',
+'بدالك على الكاونتر: الموظف يكلمك':'بدالك على الكاونتر: الموظف يكلمك',
 'وريه كود على موبايلك، يعمل سكان ويتكلم، وإنت تقرا كلامه':'وريه كود على جوالك، يمسحه ويتكلم، وأنت تقرأ كلامه',
-'وصل في المكان':'وصل في المكان',
+'بدالك على الكاونتر':'بدالك على الكاونتر',
 'عرض بالإشارة':'عرض بالإشارة',
 "مفيش نت.": "ما فيه نت.",
 "شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.": "يشتغل: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.",
 "مش شغّال: «اتكلم بدالي»، والردود الذكية، والسماع، والصوت المصري.": "ما يشتغل: «تكلّم عني»، والردود الذكية، والسماع، والصوت.",
-"أهلاً بيك في وَصْل": "هلا والله في وَصْل",
-"تحب وصل يكون إزاي؟": "كيف تبي وصل يكون؟",
+"أهلاً بيك في بَدالَك": "هلا والله في بَدالَك",
+"تحب بدالك يكون إزاي؟": "كيف تبي بدالك يكون؟",
 "بقرا كويس": "أقرا زين",
 "بفضّل الصور": "أفضّل الصور",
 "🚨 عندي طوارئ دلوقتي": "🚨 عندي طوارئ الحين",
-"بيتكلم بدالك ويخلّص المهمة": "يتكلم عنك ويخلّص المهمة",
-"ثبّت وَصْل على موبايلك، ويشتغل من غير نت": "ثبّت وَصْل على جوالك، ويشتغل بدون نت",
+"بيتكلم عنك ويخلّص المهمة": "يتكلم عنك ويخلّص المهمة",
+"ثبّت بَدالَك على موبايلك، ويشتغل من غير نت": "ثبّت بَدالَك على جوالك، ويشتغل بدون نت",
 "تنبيهات الأصوات مقفولة · شغّلها": "تنبيهات الأصوات مقفلة · شغّلها",
 "تنبيهات الأصوات شغالة": "تنبيهات الأصوات شغّالة",
 "اتكلم بدالي": "تكلّم عني",
@@ -1405,7 +1405,7 @@ const GU={
 "بقرا الصورة...": "أقرا الصورة...",
 "الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.": "الصورة مو واضحة. صوّر مرة ثانية من قريب وبدون ظل.",
 "النت ضعيف. جرّب تاني.": "النت ضعيف. جرّب مرة ثانية.",
-"📝 قولنا رأيك في وَصْل": "📝 قل لنا رأيك في وَصْل",
+"📝 قولنا رأيك في بَدالَك": "📝 قل لنا رأيك في بَدالَك",
 "بيبعت التاريخ والتقييم بس، من غير أي كلام أو بيانات. للمشاركين في التجربة.": "يرسل التاريخ والتقييم بس، بدون أي كلام أو بيانات. للمشاركين في التجربة.",
 "اتقفلت قبل ما تخلص.": "انقفلت قبل ما تخلص.",
 "↻ اعملها تاني": "↻ سوّها مرة ثانية",
@@ -1418,19 +1418,19 @@ const GU={
 "ست / بنت": "امرأة / بنت",
 "زيّي (حسب أنا راجل ولا ست)": "مثلي (رجّال ولا امرأة)",
 "ست": "امرأة",
-"وصل يفتكر مهامك اللي فاتت": "وصل يتذكر مهامك اللي فاتت",
+"بدالك يفتكر مهامك اللي فاتت": "بدالك يتذكر مهامك اللي فاتت",
 "أيوه، عشان يقولي «زي المرة اللي فاتت؟»": "إيه، عشان يقول لي «مثل المرة اللي فاتت؟»",
 "لأ": "لا",
 "مثلاً: مفيش، أو اسم الشركة": "مثلاً: ما فيه، أو اسم الشركة",
-"حاجات وصل لازم يعرفها": "أشياء لازم وصل يعرفها",
+"حاجات بدالك لازم يعرفها": "أشياء لازم بدالك يعرفها",
 "مثلاً: سكر، ضغط": "مثلاً: سكري، ضغط",
 "أدوية بتاخدها بانتظام": "أدوية تاخذها بانتظام",
 "ماما": "أمي",
-"اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.": "انحفظ ✓ وصل بيستخدم هذي البيانات في المهام.",
+"اتحفظ ✓ بدالك هيستخدم البيانات دي في المهام.": "انحفظ ✓ بدالك بيستخدم هذي البيانات في المهام.",
 "لو شغلك أو جمعيتك إدّتك كود، اكتبه هنا.": "لو شغلك أو جمعيتك عطوك كود، اكتبه هنا.",
 "كل بياناتك على الموبايل ده. تقدر تمسحها كلها في أي وقت.": "كل بياناتك على هذا الجوال. تقدر تمسحها كلها في أي وقت.",
 "هتتمسح بياناتك ومهامك وإشاراتك من الموبايل ده. متأكد؟": "بتنمسح بياناتك ومهامك وإشاراتك من هذا الجوال. متأكد؟",
-"علّم وصل إشاراتك، وتقدر تستخدمها جوه المهمة والمحادثة.": "علّم وصل إشاراتك، وتقدر تستخدمها داخل المهمة والمحادثة.",
+"علّم بدالك إشاراتك، وتقدر تستخدمها جوه المهمة والمحادثة.": "علّم بدالك إشاراتك، وتقدر تستخدمها داخل المهمة والمحادثة.",
 "الموبايل ده متفعّل مع {co}.": "هذا الجوال مفعّل مع {co}.",
 "خلصت مهام الشهر ده": "خلصت مهام هذا الشهر",
 "فاضلك {n} مهمة الشهر ده": "باقي لك {n} مهمة هذا الشهر",
@@ -1450,7 +1450,7 @@ const GU={
 "مقدرتش أتأكد من الموبايل. جرّب تاني بعد شوية.": "ما قدرت أتأكد من الجوال. جرّب مرة ثانية بعد شوي.",
 "كلمة اتنطقت غلط؟": "كلمة انقالت غلط؟",
 "أنهي كلمة اتنطقت غلط؟": "أي كلمة انقالت غلط؟",
-"اللي قدامك ممكن يشاورلك عليها. دوس على الكلمة، وهنبعتها هي والجملة لفريق وصل عشان نصلّح نطقها. مش هيتبعت أي حاجة تانية.": "اللي قدامك يقدر يأشّر لك عليها. اضغط على الكلمة، ونرسلها هي والجملة لفريق وصل عشان نصلّح نطقها. ما بيترسل أي شي ثاني.",
+"اللي قدامك ممكن يشاورلك عليها. دوس على الكلمة، وهنبعتها هي والجملة لفريق بدالك عشان نصلّح نطقها. مش هيتبعت أي حاجة تانية.": "اللي قدامك يقدر يأشّر لك عليها. اضغط على الكلمة، ونرسلها هي والجملة لفريق بدالك عشان نصلّح نطقها. ما بيترسل أي شي ثاني.",
 "ببعت...": "أرسل...",
 "وصل ✓ شكراً. هنصلّح نطقها.": "وصل ✓ مشكور. بنصلّح نطقها.",
 "مقدرتش أبعت دلوقتي. جرّب تاني.": "ما قدرت أرسل الحين. جرّب مرة ثانية.",
@@ -1464,19 +1464,19 @@ const GU={
 "افتح الخريطة ووريهاله": "افتح الخريطة وورّيه",
 "محتاج ورق": "يحتاج أوراق",
 "بيبدأ...": "يبدأ...",
-"وصل سامعك · اتكلم عادي": "وصل يسمعك · تكلّم عادي",
+"بدالك سامعك · اتكلم عادي": "بدالك يسمعك · تكلّم عادي",
 "أهلاً بيك": "هلا وغلا",
 "صاحب الموبايل أصم، وأنا مساعده. اتكلم عادي وأنا هوصّل كلامك.": "صاحب الجوال أصم، وأنا مساعده. تكلّم عادي وأنا أوصّل كلامك.",
 "صاحب الموبايل أصم، وأنا مساعده.": "صاحب الجوال أصم، وأنا مساعده.",
 "الصورة اللي صوّرها صاحب الموبايل": "الصورة اللي صوّرها صاحب الجوال",
 "كلام اللي قدامك هيظهر هنا": "كلام اللي قدامك يطلع هنا",
 "اللي قدامك بيقول دلوقتي": "اللي قدامك يقول الحين",
-"الموبايل ده بيسمع عن طريق سيرفر وصل، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.": "هذا الجوال يسمع عن طريق سيرفر وصل، فلازم يكون فيه نت، ويصرف نت أكثر شوي.",
-"وصل هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:": "وصل بيقول هذي الجملة. فيها أرقام أو فلوس أو دواء، تأكد منها:",
+"الموبايل ده بيسمع عن طريق سيرفر بدالك، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.": "هذا الجوال يسمع عن طريق سيرفر بدالك، فلازم يكون فيه نت، ويصرف نت أكثر شوي.",
+"بدالك هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:": "بدالك بيقول هذي الجملة. فيها أرقام أو فلوس أو دواء، تأكد منها:",
 "اتأكد الأول:": "تأكد أول:",
 "قوله": "قلها",
 "لأ، استنى": "لا، انتظر",
-"اكتب اللي عايز وصل يقوله أو يعرفه": "اكتب اللي تبي وصل يقوله أو يعرفه",
+"اكتب اللي عايز بدالك يقوله أو يعرفه": "اكتب اللي تبي بدالك يقوله أو يعرفه",
 "ابعت": "أرسل",
 "ماساعدنيش": "ما ساعدني",
 "مش عايز": "ما أبي",
@@ -1491,8 +1491,8 @@ const GU={
 "إنت قررت": "أنت قررت",
 "بسمع اللي قدامك...": "أسمع اللي قدامك...",
 "اتفضل، أنا سامعك": "تفضل، أنا أسمعك",
-"وصل بيجهّز الرد.": "وصل يجهّز الرد.",
-"وصل بيفكر...": "وصل يفكّر...",
+"بدالك بيجهّز الرد.": "بدالك يجهّز الرد.",
+"بدالك بيفكر...": "بدالك يفكّر...",
 "لحظة من فضلك": "لحظة لو سمحت",
 "لحظة واحدة من فضلك": "لحظة واحدة لو سمحت",
 "النت فاصل. دوس هنا عشان تجرّب تاني": "النت مقطوع. اضغط هنا عشان تجرّب مرة ثانية",
@@ -1500,27 +1500,27 @@ const GU={
 "لحظة واحدة، بسأله": "لحظة، بسأله",
 "صاحب الموبايل بيختار دلوقتي.": "صاحب الجوال يختار الحين.",
 "تختار إيه؟": "وش تختار؟",
-"وصل محتاج قرارك": "وصل يحتاج قرارك",
-"وصل بيقول": "وصل يقول",
+"بدالك محتاج قرارك": "بدالك يحتاج قرارك",
+"بدالك بيقول": "بدالك يقول",
 "شكراً جزيلاً": "مشكور وايد",
 "لو فيه كلام تاني كمّل، ودوس إنهاء لما تخلص.": "لو فيه كلام ثاني كمّل، واضغط إنهاء لما تخلص.",
 "بسمع لو فيه كلام تاني · دوس إنهاء لما تخلص": "أسمع لو فيه كلام ثاني · اضغط إنهاء لما تخلص",
-"وصل بيتكلم...": "وصل يتكلم...",
+"بدالك بيتكلم...": "بدالك يتكلم...",
 "صاحب الموبايل بيراجع الكلام.": "صاحب الجوال يراجع الكلام.",
 "راجع الجملة، ودوس «قوله»": "راجع الجملة، واضغط «قلها»",
 "(صاحب الموبايل وقّف الجملة دي ومتقالتش: {s})": "(صاحب الجوال وقّف هذي الجملة وما انقالت: {s})",
 "وقّفت الجملة، ومتقالتش": "وقّفت الجملة، وما انقالت",
-"الجملة متقالتش. اكتب اللي عايز وصل يقوله": "الجملة ما انقالت. اكتب اللي تبي وصل يقوله",
+"الجملة متقالتش. اكتب اللي عايز بدالك يقوله": "الجملة ما انقالت. اكتب اللي تبي بدالك يقوله",
 "المايك مقفول. اسمح بيه من إعدادات المتصفح": "المايك مقفل. اسمح له من إعدادات المتصفح",
 "السماع وقف. دوس هنا عشان أسمع تاني": "السماع وقف. اضغط هنا عشان أسمع مرة ثانية",
 "اكتب العلامة المميزة (مثلاً: جنب مسجد الحصري، 6 أكتوبر)": "اكتب العلامة المميزة (مثلاً: جنب مسجد، أو جنب مول)",
 "اكتب العنوان أو اسم المكان والمنطقة (مثلاً: شارع التحرير، الدقي)": "اكتب العنوان أو اسم المكان والمنطقة (مثلاً: شارع الشيخ زايد، دبي)",
-"اكتب وابعت، ووصل هيقوله": "اكتب وأرسل، ووصل بيقوله",
+"اكتب وابعت، وبدالك هيقوله": "اكتب وأرسل، وبدالك بيقوله",
 "اكتب العنوان اللي عايز توريه للي قدامك على الخريطة": "اكتب العنوان اللي تبي توريه اللي قدامك على الخريطة",
 "فتحت الخريطة على: ": "فتحت الخريطة على:",
-"قبل أول مهمة:\n\nعشان وصل يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي وصل هيقولها بتتبعت لخدمة الصوت (ElevenLabs).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟": "قبل أول مهمة:\n\nعشان وصل يخلّص المهمة، الكلام اللي ينقال قدامك يتحوّل لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها يترسل هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بيقولها وصل تترسل لخدمة الصوت (ElevenLabs).\n\nولا شي من هذا ينحفظ عندنا، وتقدر تمسح بياناتك من الجوال في أي وقت.\n\nموافق؟",
-"وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ({e})": "وصل يحتاج المايك عشان يسمع اللي قدامك. اسمح للمايك من إعدادات المتصفح ({e})",
-"الموبايل ده مش بيحوّل الكلام لكتابة لوحده.\n\nعشان وصل يسمع اللي قدامك، صوت كلامه هيتبعت لسيرفر وصل وخدمة ElevenLabs تحوّله لكتابة. مفيش حاجة بتتحفظ، بس لازم يكون فيه نت.\n\nموافق؟": "هذا الجوال ما يحوّل الكلام لكتابة بروحه.\n\nعشان وصل يسمع اللي قدامك، صوت كلامه يترسل لسيرفر وصل وخدمة ElevenLabs تحوّله لكتابة. ولا شي ينحفظ، بس لازم يكون فيه نت.\n\nموافق؟",
+"قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بدالك هيقولها بتتبعت لخدمة الصوت (ElevenLabs).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟": "قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي ينقال قدامك يتحوّل لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها يترسل هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بيقولها بدالك تترسل لخدمة الصوت (ElevenLabs).\n\nولا شي من هذا ينحفظ عندنا، وتقدر تمسح بياناتك من الجوال في أي وقت.\n\nموافق؟",
+"بدالك محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ({e})": "بدالك يحتاج المايك عشان يسمع اللي قدامك. اسمح للمايك من إعدادات المتصفح ({e})",
+"الموبايل ده مش بيحوّل الكلام لكتابة لوحده.\n\nعشان بدالك يسمع اللي قدامك، صوت كلامه هيتبعت لسيرفر بدالك وخدمة ElevenLabs تحوّله لكتابة. مفيش حاجة بتتحفظ، بس لازم يكون فيه نت.\n\nموافق؟": "هذا الجوال ما يحوّل الكلام لكتابة بروحه.\n\nعشان بدالك يسمع اللي قدامك، صوت كلامه يترسل لسيرفر بدالك وخدمة ElevenLabs تحوّله لكتابة. ولا شي ينحفظ، بس لازم يكون فيه نت.\n\nموافق؟",
 "الموبايل ده مش بيسمع الكلام. استخدم Chrome على أندرويد، أو آخر نسخة على الآيفون. الكتابة شغالة عادي.": "هذا الجوال ما يسمع الكلام. استخدم Chrome على أندرويد، أو آخر نسخة على الآيفون. الكتابة شغّالة عادي.",
 "الموبايل مش بيسمع عربي. حدّث تطبيق Google وفعّل العربي في «الكتابة بالصوت»": "الجوال ما يسمع عربي. حدّث تطبيق Google وفعّل العربي في «الكتابة بالصوت»",
 "المايك مشغول في تطبيق تاني. اقفله ودوس هنا": "المايك مشغول في تطبيق ثاني. سكّره واضغط هنا",
@@ -1529,8 +1529,8 @@ const GU={
 "💊 أفكّرك قبل ما {m} يخلص؟ العلبة بتكفيك قد إيه؟": "💊 أذكّرك قبل ما {m} يخلص؟ العلبة تكفيك كم؟",
 "عايز {m} (زي المرة اللي فاتت)": "أبي {m} (مثل المرة اللي فاتت)",
 "✓ هفكّرك يوم {d}، قبل ما يخلص بـ 3 أيام.": "✓ بذكّرك يوم {d}، قبل ما يخلص بـ 3 أيام.",
-"💊 {m} قرب يخلص - اطلبه من وصل": "💊 {m} قرّب يخلص - اطلبه من وصل",
-"افتح وصل ودوس اطلبه تاني": "افتح وصل واضغط اطلبه مرة ثانية",
+"💊 {m} قرب يخلص - اطلبه من بدالك": "💊 {m} قرّب يخلص - اطلبه من بدالك",
+"افتح بدالك ودوس اطلبه تاني": "افتح بدالك واضغط اطلبه مرة ثانية",
 "{m} قرب يخلص": "{m} قرّب يخلص",
 "اطلبه تاني": "اطلبه مرة ثانية",
 "دوس \"ابدأ\"، واسند الموبايل.": "اضغط \"ابدأ\"، وسند الجوال.",
@@ -1544,19 +1544,19 @@ const GU={
 "السماع وقف. دوس هنا": "السماع وقف. اضغط هنا",
 "مصلحة حكومية": "دائرة حكومية",
 "هتدفع إزاي؟": "كيف بتدفع؟",
-"وصل هيقول طريقة الدفع للي قدامك": "وصل بيقول طريقة الدفع للي قدامك",
+"بدالك هيقول طريقة الدفع للي قدامك": "بدالك بيقول طريقة الدفع للي قدامك",
 "فيزا": "بطاقة",
 "هدفع {p}": "بدفع {p}",
-"وصل بيساعدك تطلب المساعدة، لكنه مش بديل عن الإسعاف والشرطة. لو تقدر، اتصل بنفسك أو خلّي حد جنبك يتصل.": "وصل يساعدك تطلب المساعدة، بس هو مو بديل عن الإسعاف والشرطة. لو تقدر، اتصل بنفسك أو خلّ أحد جنبك يتصل.",
+"بدالك بيساعدك تطلب المساعدة، لكنه مش بديل عن الإسعاف والشرطة. لو تقدر، اتصل بنفسك أو خلّي حد جنبك يتصل.": "بدالك يساعدك تطلب المساعدة، بس هو مو بديل عن الإسعاف والشرطة. لو تقدر، اتصل بنفسك أو خلّ أحد جنبك يتصل.",
 "إيه اللي حصل؟": "وش اللي صار؟",
 "بيحدد مكانك...": "يحدد مكانك...",
 "اعرض للناس اللي حواليك": "اعرض للناس اللي حولك",
 "ابعت لأهلي": "أرسل لأهلي",
 "رسالة فيها مكانك": "رسالة فيها موقعك",
-"اتصل، ووصل يقرأ رسالة الطوارئ": "اتصل، ووصل يقرا رسالة الطوارئ",
+"اتصل، وبدالك يقرأ رسالة الطوارئ": "اتصل، وبدالك يقرا رسالة الطوارئ",
 "شغّل السبيكر وارجع هنا ودوس «اتكلم دلوقتي». الرد مش هيتكتب، فابعت لأهلك كمان": "شغّل السماعة وارجع هنا واضغط «تكلّم الحين». الرد ما ينكتب، فأرسل لأهلك بعد",
 "رسالة مكتوبة من غير مكالمة": "رسالة مكتوبة بدون مكالمة",
-"اللي وصل هيقوله:": "اللي بيقوله وصل:",
+"اللي بدالك هيقوله:": "اللي بيقوله بدالك:",
 "🔊 اتكلم دلوقتي": "🔊 تكلّم الحين",
 "لو الكلام ما طلعش في المكالمة، حط الموبايل قريب من السماعة ودوس تاني.": "لو الكلام ما طلع في المكالمة، حط الجوال قريب من السماعة واضغط مرة ثانية.",
 "نوع تاني من الطوارئ": "نوع ثاني من الطوارئ",
@@ -1590,19 +1590,19 @@ const GU={
 "📍 مكانك اتحدد (دقة حوالي {m} متر)": "📍 تحدد موقعك (دقة تقريباً {m} متر)",
 "ما قدرتش أحدد المكان. اسمح بالموقع، وهستخدم العنوان المكتوب في بياناتك.": "ما قدرت أحدد الموقع. اسمح بالموقع، وبستخدم العنوان المكتوب في بياناتك.",
 "أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.": "أنا أصم وما أقدر أسمع التليفون، كلّموني برسالة.",
-"(اتبعتت من وصل)": "(انرسلت من وصل)",
+"(اتبعتت من بدالك)": "(انرسلت من بدالك)",
 "لو محتاجين المكان، ابعتوا رسالة على نفس الرقم ونبعتهولكم.": "إذا تحتاجون الموقع أرسلوا رسالة على نفس الرقم ونرسله لكم.",
 "أنا صماء ومش بقدر أسمع التليفون، كلّموني رسالة.": "أنا صمّاء وما أقدر أسمع التليفون، كلّموني برسالة.",
 "واحدة صماء": "وحدة صمّاء",
-"اتصل بـ{s} {n}، ووصل يقرأ الرسالة": "اتصل بـ{s} {n}، ووصل يقرا الرسالة",
+"اتصل بـ{s} {n}، وبدالك يقرأ الرسالة": "اتصل بـ{s} {n}، وبدالك يقرا الرسالة",
 "لـ{x}، ومعاها مكانك": "لـ{x}، ومعها موقعك",
 "ضيف أرقام أهلك في بياناتي الأول": "أضف أرقام أهلك في بياناتي أول",
 "ضيف رقم طوارئ واحد على الأقل في بياناتي.": "أضف رقم طوارئ واحد على الأقل في بياناتي.",
 "من فضلك اتصل بـ{s}: {n}": "لو سمحت اتصل بـ{s}: {n}",
 "دوس \"ابدأ\" وسيب الموبايل في مكان واضح.": "اضغط \"ابدأ\" وخلّ الجوال في مكان واضح.",
-"لو جرس بيتك أو التليفون مش بيتعرف عليه، علّمه لوصل مرة واحدة: اختار الصوت، ودوس \"سجّل\"، وشغّل الصوت جنب الموبايل.": "لو جرس بيتك أو التليفون ما يتعرّف عليه، علّمه لوصل مرة وحدة: اختر الصوت، واضغط \"سجّل\"، وشغّل الصوت جنب الجوال.",
+"لو جرس بيتك أو التليفون مش بيتعرف عليه، علّمه لبدالك مرة واحدة: اختار الصوت، ودوس \"سجّل\"، وشغّل الصوت جنب الموبايل.": "لو جرس بيتك أو التليفون ما يتعرّف عليه، علّمه لبدالك مرة وحدة: اختر الصوت، واضغط \"سجّل\"، وشغّل الصوت جنب الجوال.",
 "لسه مفيش تنبيهات.": "للحين ما فيه تنبيهات.",
-"خلي الصفحة دي مفتوحة. وصل بيحاول يخلي الشاشة منوّرة عشان يفضل سامع. التعرف على الأصوات بيحصل على الموبايل نفسه، ومفيش أي صوت بيتبعت لبرّه.": "خلّ هذي الصفحة مفتوحة. وصل يحاول يخلي الشاشة شغّالة عشان يظل يسمع. التعرّف على الأصوات يصير على الجوال نفسه، وولا صوت يطلع برّا.",
+"خلي الصفحة دي مفتوحة. بدالك بيحاول يخلي الشاشة منوّرة عشان يفضل سامع. التعرف على الأصوات بيحصل على الموبايل نفسه، ومفيش أي صوت بيتبعت لبرّه.": "خلّ هذي الصفحة مفتوحة. بدالك يحاول يخلي الشاشة شغّالة عشان يظل يسمع. التعرّف على الأصوات يصير على الجوال نفسه، وولا صوت يطلع برّا.",
 "تمام، شُفت": "تمام، شفت",
 "حد على الباب": "أحد على الباب",
 "جرس الباب والخبط": "جرس الباب والطق",
@@ -1632,7 +1632,7 @@ const GU={
 "بسمع: {x} ({p}%)": "أسمع: {x} ({p}%)",
 "🎙️ شغّل الصوت دلوقتي جنب الموبايل... {n}": "🎙️ شغّل الصوت الحين جنب الجوال... {n}",
 "ما سمعتش صوت واضح. قرّب الموبايل من الصوت وجرّب تاني.": "ما سمعت صوت واضح. قرّب الجوال من الصوت وجرّب مرة ثانية.",
-"✅ اتعلمته! من دلوقتي لما الصوت ده يتكرر وصل هينبّهك. جرّبه مرة كمان عشان تتأكد.": "✅ تعلّمته! من الحين لما يتكرر هذا الصوت وصل بينبّهك. جرّبه مرة ثانية عشان تتأكد.",
+"✅ اتعلمته! من دلوقتي لما الصوت ده يتكرر بدالك هينبّهك. جرّبه مرة كمان عشان تتأكد.": "✅ تعلّمته! من الحين لما يتكرر هذا الصوت بدالك بينبّهك. جرّبه مرة ثانية عشان تتأكد.",
 "بيشغّل الكاميرا...": "يشغّل الكاميرا...",
 "ابعت الجملة": "أرسل الجملة",
 "معنى الإشارة، مثلاً: محتاج دكتور": "معنى الإشارة، مثلاً: أحتاج دكتور",
@@ -1643,12 +1643,12 @@ const GU={
 "الكاميرا ما اشتغلتش، اسمح بالكاميرا من المتصفح": "الكاميرا ما اشتغلت، اسمح للكاميرا من المتصفح",
 "مش متعرف عليها": "ما تعرّف عليها",
 "مفيش إيد قدام الكاميرا": "ما فيه يد قدام الكاميرا",
-"ابعتها لوصل": "أرسلها لوصل",
+"ابعتها لبدالك": "أرسلها لبدالك",
 "اكتب معنى الإشارة الأول": "اكتب معنى الإشارة أول",
 "الكاميرا لسه ما اشتغلتش": "الكاميرا للحين ما اشتغلت",
 "بيسجل: {l} ({n})": "يسجّل: {l} ({n})",
 "اتسجلت ✓ سجّلها مرتين كمان": "تسجّلت ✓ سجّلها مرتين بعد",
-"ثبّت وَصْل: دوس زرار المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»": "ثبّت وَصْل: اضغط زر المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»",
+"ثبّت بَدالَك: دوس زرار المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»": "ثبّت بَدالَك: اضغط زر المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»",
 "عايز أدفع حساب الحاجات دي عند الكاشير": "أبي أدفع حساب هذي الأغراض عند الكاشير",
 "حجز دكتور": "موعد دكتور",
 "عايز أحجز كشف عند الدكتور": "أبي أحجز موعد عند الدكتور",
@@ -1663,33 +1663,33 @@ const GU={
 "عايز من الصيدلية: ": "أبي من الصيدلية:",
 "من فضلك اكتبلي، أو شاورلي": "لو سمحت اكتب لي، أو أشّر لي",
 "دوس في أي حتة عشان تقفل": "اضغط في أي مكان عشان تسكّر",
-"وصل يكتب الطلب للصيدلية على واتساب بتاعك، ويقرالك ردهم، حتى لو كان رسالة صوتية.": "وصل يكتب الطلب للصيدلية على واتساب حقك، ويقرا لك ردهم، حتى لو كان رسالة صوتية.",
+"بدالك يكتب الطلب للصيدلية على واتساب بتاعك، ويقرالك ردهم، حتى لو كان رسالة صوتية.": "بدالك يكتب الطلب للصيدلية على واتساب حقك، ويقرا لك ردهم، حتى لو كان رسالة صوتية.",
 "الشارع ورقم العمارة والدور والمنطقة": "الشارع ورقم الفيلا أو البناية والدور والمنطقة",
 "✍️ اكتبلي الرسالة": "✍️ اكتب لي الرسالة",
 "▶ جرّب طلب تجريبي (من غير صيدلية حقيقية)": "▶ جرّب طلب تجريبي (بدون صيدلية حقيقية)",
 "بيجهّز": "يجهّز",
 "اكتب اللي عايز تقوله للصيدلية": "اكتب اللي تبي تقوله للصيدلية",
 "افتح واتساب وابعت": "افتح واتساب وأرسل",
-"واتساب هيفتح والرسالة مكتوبة. دوس إرسال هناك، وارجع لوصل.": "واتساب بينفتح والرسالة مكتوبة. اضغط إرسال هناك، وارجع لوصل.",
+"واتساب هيفتح والرسالة مكتوبة. دوس إرسال هناك، وارجع لبدالك.": "واتساب بينفتح والرسالة مكتوبة. اضغط إرسال هناك، وارجع لبدالك.",
 "⏳ مستنيين رد الصيدلية": "⏳ ننتظر رد الصيدلية",
-"لما يردّوا على واتساب: دوس مطوّل على ردهم ← مشاركة ← وَصْل. أو انسخه وارجع هنا.": "لما يردّون على واتساب: اضغط مطوّل على ردهم ← مشاركة ← وَصْل. أو انسخه وارجع هنا.",
+"لما يردّوا على واتساب: دوس مطوّل على ردهم ← مشاركة ← بَدالَك. أو انسخه وارجع هنا.": "لما يردّون على واتساب: اضغط مطوّل على ردهم ← مشاركة ← بَدالَك. أو انسخه وارجع هنا.",
 "محتاج قرارك": "يحتاج قرارك",
 "مستنيين ردهم": "ننتظر ردهم",
 "بقرا الروشتة...": "أقرا الوصفة...",
 "اكتب الدوا الأول، أو صوّر الروشتة": "اكتب الدواء أول، أو صوّر الوصفة",
 "رقم الصيدلية مش مظبوط. اكتبه زي 01xxxxxxxxx": "رقم الصيدلية مو صحيح. اكتبه مع رمز الدولة، مثل 9715xxxxxxxx",
-"قبل أول طلب:\n\nعشان وصل يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (ElevenLabs).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟": "قبل أول طلب:\n\nعشان وصل يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي تلصقها أو تشاركها تترسل لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية تترسل لخدمة تحويل الصوت لكلام (ElevenLabs).\n\nالرسايل للصيدلية تطلع من واتساب حقك، وأنت اللي تضغط إرسال. ولا شي ينحفظ عندنا.\n\nموافق؟",
+"قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (ElevenLabs).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟": "قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي تلصقها أو تشاركها تترسل لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية تترسل لخدمة تحويل الصوت لكلام (ElevenLabs).\n\nالرسايل للصيدلية تطلع من واتساب حقك، وأنت اللي تضغط إرسال. ولا شي ينحفظ عندنا.\n\nموافق؟",
 "إنت بعت": "أنت أرسلت",
 "ابعت (تجربة من غير واتساب)": "أرسل (تجربة بدون واتساب)",
 "بقرا رد الصيدلية...": "أقرا رد الصيدلية...",
-"وصل بيكتب...": "وصل يكتب...",
+"بدالك بيكتب...": "بدالك يكتب...",
 "النت ضعيف ومقدرتش أكمّل. جرّب تاني.": "النت ضعيف وما قدرت أكمّل. جرّب مرة ثانية.",
 "مقدرتش أقرا المنسوخ. الصق ردهم هنا (دوس مطوّل ← لصق)": "ما قدرت أقرا المنسوخ. الصق ردهم هنا (اضغط مطوّل ← لصق)",
 "الرسالة الصوتية كبيرة أوي.": "الرسالة الصوتية كبيرة واجد.",
 "🎤 بحوّل الرسالة الصوتية لكلام...": "🎤 أحوّل الرسالة الصوتية لكلام...",
 "مقدرتش أفهم الرسالة الصوتية. ممكن تطلب منهم يكتبوا الرد؟": "ما قدرت أفهم الرسالة الصوتية. تقدر تطلب منهم يكتبون الرد؟",
 "تلغي الطلب ده؟": "تلغي هذا الطلب؟",
-"مفيش طلب مفتوح. ابدأ طلب جديد، وبعدين شارك رد الصيدلية لوصل.": "ما فيه طلب مفتوح. ابدأ طلب جديد، وبعدين شارك رد الصيدلية لوصل.",
+"مفيش طلب مفتوح. ابدأ طلب جديد، وبعدين شارك رد الصيدلية لبدالك.": "ما فيه طلب مفتوح. ابدأ طلب جديد، وبعدين شارك رد الصيدلية لبدالك.",
 "جهزت الرسالة. راجعها ولو تمام ابعتها.": "جهّزت الرسالة. راجعها ولو تمام أرسلها.",
 "الطلب خرج.": "الطلب طلع.",
 "مستنيين الصيدلية.": "ننتظر الصيدلية.",
@@ -1699,11 +1699,11 @@ const GU={
 "اتحضّر {n} من {m}، جرّب تاني": "تجهّز {n} من {m}، جرّب مرة ثانية",
 "إنستاباي": "Apple Pay",
 // ---- «مكالمة» (phone call for the user)
-"مكالمة: وصل يتصل بدالك": "مكالمة: وصل يتصل عنك",
-"اكتب الرقم واللي عايزه، ووصل يكلمهم ويكتبلك ردهم": "اكتب الرقم وش تبي، ووصل يكلمهم ويكتب لك ردهم",
-"وصل يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف التاني يظهر لك مكتوب.": "وصل يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف الثاني يطلع لك مكتوب.",
+"مكالمة: بدالك يتصل عنك": "مكالمة: بدالك يتصل عنك",
+"اكتب الرقم واللي عايزه، وبدالك يكلمهم ويكتبلك ردهم": "اكتب الرقم وش تبي، وبدالك يكلمهم ويكتب لك ردهم",
+"بدالك يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف التاني يظهر لك مكتوب.": "بدالك يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف الثاني يطلع لك مكتوب.",
 "رقم التليفون": "رقم الجوال أو التلفون",
-"عايز وصل يقول إيه؟": "وش تبي وصل يقول؟",
+"عايز بدالك يقول إيه؟": "وش تبي بدالك يقول؟",
 "مثلاً: عايز أحجز كشف عند دكتور العظام بكرة": "مثلاً: أبي أحجز موعد عند دكتور العظام بكرة",
 "أسأل على دوا": "أسأل عن دواء",
 "أسأل على طلب": "أسأل عن طلب",
@@ -1711,24 +1711,24 @@ const GU={
 "عايز أسأل لو الدوا ده موجود: ": "أبي أسأل إذا هالدواء موجود: ",
 "عايز أسأل على طلب: ": "أبي أسأل عن طلب: ",
 "عايز أعرف مواعيد الشغل": "أبي أعرف أوقات الدوام",
-"المكالمة مش بتتسجّل، ووصل بيقول للطرف التاني إنه مساعد بالذكاء الاصطناعي": "المكالمة ما تتسجّل، ووصل يقول للطرف الثاني إنه مساعد بالذكاء الاصطناعي",
+"المكالمة مش بتتسجّل، وبدالك بيقول للطرف التاني إنه مساعد بالذكاء الاصطناعي": "المكالمة ما تتسجّل، وبدالك يقول للطرف الثاني إنه مساعد بالذكاء الاصطناعي",
 "بيتصل...": "يتصل...",
 "الطرف التاني بيقول": "الطرف الثاني يقول",
 "الطرف التاني": "الطرف الثاني",
-"اكتب اللي عايز وصل يقوله": "اكتب اللي تبي وصل يقوله",
+"اكتب اللي عايز بدالك يقوله": "اكتب اللي تبي بدالك يقوله",
 "الرقم ده مش كامل. اكتبه بالكامل، مثلاً 01001234567 أو +971501234567": "الرقم مو كامل. اكتبه كامل، مثلاً 0501234567 أو +971501234567",
-"وصل بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.": "وصل يتصل الحين بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.",
-"اكتب عايز وصل يقول إيه في المكالمة.": "اكتب وش تبي وصل يقول في المكالمة.",
+"بدالك بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.": "بدالك يتصل الحين بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.",
+"اكتب عايز بدالك يقول إيه في المكالمة.": "اكتب وش تبي بدالك يقول في المكالمة.",
 "الرقم ده مش مسموح. اتأكد منه وجرّب تاني.": "هالرقم مو مسموح. تأكد منه وجرّب مرة ثانية.",
 "وصلت لأقصى عدد مكالمات النهارده. جرّب بكرة.": "وصلت لأكثر عدد مكالمات اليوم. جرّب بكرة.",
 "خدمة المكالمات مشغولة النهارده. جرّب بكرة.": "خدمة المكالمات مشغولة اليوم. جرّب بكرة.",
 "المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.": "المكالمة ما تمّت. تأكد من الرقم وجرّب مرة ثانية.",
 "بيرن... مستني حد يرد": "يرن... ننتظر أحد يرد",
 "بيقفل المكالمة...": "يسكّر المكالمة...",
-"وصل محتاج قرارك · الطرف التاني مستني": "وصل يحتاج قرارك · الطرف الثاني ينتظر",
-"المكالمة خلصت · وصل بيقفل الخط": "خلصت المكالمة · وصل يسكّر الخط",
-"وصل بيفكر في الرد...": "وصل يفكر في الرد...",
-"المكالمة شغالة · وصل بيسمع": "المكالمة شغّالة · وصل يسمع",
+"بدالك محتاج قرارك · الطرف التاني مستني": "بدالك يحتاج قرارك · الطرف الثاني ينتظر",
+"المكالمة خلصت · بدالك بيقفل الخط": "خلصت المكالمة · بدالك يسكّر الخط",
+"بدالك بيفكر في الرد...": "بدالك يفكر في الرد...",
+"المكالمة شغالة · بدالك بيسمع": "المكالمة شغّالة · بدالك يسمع",
 "النت ضعيف، بحاول تاني...": "النت ضعيف، أحاول مرة ثانية...",
 "ببعت ردك...": "أرسل ردك...",
 "مقدرتش أبعت. جرّب تاني.": "ما قدرت أرسل. جرّب مرة ثانية.",
@@ -1736,19 +1736,19 @@ const GU={
 "المكالمة خلصت.": "خلصت المكالمة.","الخط اتقطع.": "انقطع الخط.","المكالمة اتقفلت قبل أي كلام.": "انقفلت المكالمة قبل أي كلام.",
 "محدش رد على المكالمة.": "ما أحد رد على المكالمة.",
 "المكالمة اتلغت.": "المكالمة انلغت.",
-"الخط اتقفل عشان الرد اتأخر، ووصل قالهم إننا هنكلمهم تاني.": "الخط تسكّر لأن الرد تأخر، ووصل قال لهم إننا بنكلمهم مرة ثانية.",
+"الخط اتقفل عشان الرد اتأخر، وبدالك قالهم إننا هنكلمهم تاني.": "الخط تسكّر لأن الرد تأخر، وبدالك قال لهم إننا بنكلمهم مرة ثانية.",
 "✓ المكالمة خلصت": "✓ خلصت المكالمة",
 "المكالمة اتقفلت": "تسكّرت المكالمة",
-"وصل هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:": "وصل بيقول هالجملة. فيها أرقام أو فلوس، تأكد منها:",
-"قبل أول مكالمة:\n\nوصل هيتصل بالرقم ده، ويقول في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nالكلام بيعدّي على شركة الاتصالات ومساعدها الصوتي عشان يتقال ويتكتب. المساعد بياخد اسمك وهدف المكالمة بس، وأي حاجة تانية بيسألك الأول.\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح أول ما المكالمة تخلص.\n\nموافق؟": "قبل أول مكالمة:\n\nوصل بيتصل بهالرقم، ويقول في البداية إنه مساعد بالذكاء الاصطناعي يتكلم بالنيابة عنك.\n\nالكلام يمر على شركة الاتصالات ومساعدها الصوتي عشان ينقال وينكتب. المساعد ياخذ اسمك وهدف المكالمة بس، وأي شي ثاني يسألك قبل.\n\nالمكالمة ما تتسجّل، والكلام ينمسح أول ما تخلص المكالمة.\n\nموافق؟",
+"بدالك هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:": "بدالك بيقول هالجملة. فيها أرقام أو فلوس، تأكد منها:",
+"قبل أول مكالمة:\n\nبدالك هيتصل بالرقم ده، ويقول في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nالكلام بيعدّي على شركة الاتصالات ومساعدها الصوتي عشان يتقال ويتكتب. المساعد بياخد اسمك وهدف المكالمة بس، وأي حاجة تانية بيسألك الأول.\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح أول ما المكالمة تخلص.\n\nموافق؟": "قبل أول مكالمة:\n\nبدالك بيتصل بهالرقم، ويقول في البداية إنه مساعد بالذكاء الاصطناعي يتكلم بالنيابة عنك.\n\nالكلام يمر على شركة الاتصالات ومساعدها الصوتي عشان ينقال وينكتب. المساعد ياخذ اسمك وهدف المكالمة بس، وأي شي ثاني يسألك قبل.\n\nالمكالمة ما تتسجّل، والكلام ينمسح أول ما تخلص المكالمة.\n\nموافق؟",
 "اتعلمتها ✓ جرّبها دلوقتي": "تعلّمتها ✓ جرّبها الحين",
 "اعمل الإشارة دلوقتي ({k} من 3)": "سوّ الإشارة الحين ({k} من 3)",
 "الإشارات القديمة محتاجة تتسجّل تاني بالطريقة الجديدة.": "الإشارات القديمة تحتاج تتسجّل مرة ثانية بالطريقة الجديدة.",
-"الإشارات اللي وصل يفهمها هتظهر هنا": "الإشارات اللي يفهمها وصل بتطلع هنا",
+"الإشارات اللي بدالك يفهمها هتظهر هنا": "الإشارات اللي يفهمها بدالك بتطلع هنا",
 "الكاميرا بتشتغل على الموبايل بس، ومفيش فيديو بيتبعت": "الكاميرا تشتغل على الجوال بس، وما ينرسل أي فيديو",
 "الكاميرا شغّالة في تطبيق تاني. اقفله وجرّب تاني.": "الكاميرا شغّالة في تطبيق ثاني. سكّره وجرّب مرة ثانية.",
 "الكاميرا ما اشتغلتش. اقفل الشاشة دي وافتحها تاني.": "الكاميرا ما اشتغلت. سكّر هالشاشة وافتحها مرة ثانية.",
-"الكاميرا مش متاحة هنا. افتح وصل من المتصفح (Chrome) بالرابط اللي بيبدأ بـ https": "الكاميرا مو متاحة هنا. افتح وصل من المتصفح (Chrome) بالرابط اللي يبدأ بـ https",
+"الكاميرا مش متاحة هنا. افتح بدالك من المتصفح (Chrome) بالرابط اللي بيبدأ بـ https": "الكاميرا مو متاحة هنا. افتح بدالك من المتصفح (Chrome) بالرابط اللي يبدأ بـ https",
 "الكاميرا مقفولة. افتح إعدادات المتصفح، واختار «الأذونات» ثم «الكاميرا»، وخليها «سماح». وبعدين اقفل الشاشة دي وافتحها تاني.": "الكاميرا مقفلة. افتح إعدادات المتصفح، واختار «الأذونات» بعدين «الكاميرا»، وخلّها «سماح». وبعدين سكّر هالشاشة وافتحها مرة ثانية.",
 "برنامج الإشارات ما نزلش. اتأكد إن فيه نت وجرّب تاني. وتقدر تختار بالصور.": "برنامج الإشارات ما نزل. تأكد إن فيه نت وجرّب مرة ثانية. وتقدر تختار من الصور.",
 "بشوف... ✋": "أشوف... ✋",
@@ -1767,10 +1767,10 @@ const GU={
 "مشفتش إيدك. خلّي إيدك جوه الصورة": "ما شفت يدك. خلّ يدك داخل الصورة",
 "نزّل إيدك، اعمل الإشارة، ونزّل إيدك تاني.": "نزّل يدك، سوّ الإشارة، ونزّل يدك مرة ثانية.",
 "نزّل إيدك، وبعدين اعمل الإشارة": "نزّل يدك، وبعدين سوّ الإشارة",
-"وصل لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور": "وصل للحين ما تعلّم إشارات. علّمه من تحت، أو اختار من الصور",
+"بدالك لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور": "بدالك للحين ما تعلّم إشارات. علّمه من تحت، أو اختار من الصور",
 "ولا واحدة": "ولا وحدة"
 };
-const GU_HTML={wList:'<li>وصل <b>مجاني</b>.</li><li>كلامك <b>ما ينسجل</b>. يمر بس على الخدمات اللي يشتغل عليها وصل. <a href="privacy.html">اقرا صفحة الخصوصية</a></li><li>الطوارئ في وصل <b>مساعدة</b>، مو بديل عن الإسعاف أو الشرطة.</li><li>إذا عمرك <b>أقل من 18</b>، لازم أهلك يوافقون.</li>'};
+const GU_HTML={wList:'<li>بدالك <b>مجاني</b>.</li><li>كلامك <b>ما ينسجل</b>. يمر بس على الخدمات اللي يشتغل عليها بدالك. <a href="privacy.html">اقرا صفحة الخصوصية</a></li><li>الطوارئ في بدالك <b>مساعدة</b>، مو بديل عن الإسعاف أو الشرطة.</li><li>إذا عمرك <b>أقل من 18</b>، لازم أهلك يوافقون.</li>'};
 
 
 /* ================= APP LANGUAGE (UI) =================
@@ -1789,12 +1789,12 @@ function trDom(root){if(UI!=='en'&&!GULF)return;const EN=UI==='en'?window.EN_MAP
  root.querySelectorAll('[data-i18n]').forEach(e=>{const h=EN_HTML[e.dataset.i18n];if(h!=null)e.innerHTML=h});
  if(UI==='en')root.querySelectorAll('a[href="privacy.html"]').forEach(a=>a.setAttribute('href','privacy.html#en'))}
 window.EN_MAP=EN;window.EN_HTML_MAP=EN_HTML;
-if(UI==='en'){document.title='Wasl';trDom(document.body)}else if(GULF)trDom(document.body)
+if(UI==='en'){document.title='Badalak';trDom(document.body)}else if(GULF)trDom(document.body)
 document.documentElement.classList.add('tr');
 </script>
 <script>
 const $=id=>document.getElementById(id);
-// The one place that says where Wasl's server is. Moving servers = change this line.
+// The one place that says where Badalak's server is. Moving servers = change this line.
 const API_BASE='https://api.nrg-egypt.com/webhook/';
 const AGENT_URL=API_BASE+'wasl-agent';
 const REPLY_URL=API_BASE+'wasl-replies';
@@ -1838,7 +1838,7 @@ const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e)
 const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
 
 /* ---------- language ---------- */
-/* The conversation language (how Wasl talks to the hearing person) is separate from the app language. First run on an English phone: English. */
+/* The conversation language (how Badalak talks to the hearing person) is separate from the app language. First run on an English phone: English. */
 let LANG=store.get('wasl_lang',null);if(!LANG){LANG=UI==='en'?'en-US':GULF?'ar-SA':'ar-EG';if(UI==='en')store.set('wasl_lang',LANG)}if(LANG==='ar-AE')LANG='ar-SA';if(LANG==='ar-JO')LANG='ar-EG';$('lang').value=LANG;
 $('lang').onchange=()=>{LANG=$('lang').value;store.set('wasl_lang',LANG);if(UI!=='en'&&(LANG==='ar-SA')!==GULF)location.replace(location.pathname)}; // the screen follows a Gulf / Egyptian pick: reload in the new dialect
 
@@ -1882,21 +1882,21 @@ function drawAlChip(){$('alChip').classList.toggle('on',!!alOn);$('alChipT').tex
 const PF={pName:'name',pSex:'sex',pVoice:'voice',pRate:'rate',pMem:'mem',pAll:'allergies',pIns:'insurance',pAddr:'address',pNotes:'notes',pBlood:'blood',pCond:'conditions',pMeds:'meds',pC1n:'c1name',pC1p:'c1phone',pC2n:'c2name',pC2p:'c2phone'};
 function profile(){return DEMO?DEMO.profile:store.get('wasl_profile',{})}
 try{if(!localStorage.getItem('wasl_vmig')){const p=store.get('wasl_profile',null);if(p&&p.voice==='f'){p.voice='auto';store.set('wasl_profile',p)}localStorage.setItem('wasl_vmig','1')}}catch(e){}
-/* Memory sent with «اتكلم بدالي» (wasl-agent). Tasks marked local (call and «وصل في المكان» summaries) never leave the phone. */
+/* Memory sent with «اتكلم بدالي» (wasl-agent). Tasks marked local (call and «بدالك على الكاونتر» summaries) never leave the phone. */
 /* Call tasks saved before calls were marked local («مكالمة: …» / «Call: …») become local too. Runs on every load (30 tasks at most). */
 (function(){try{const t=store.get('wasl_tasks',[]);let ch=false;
  t.forEach(x=>{if(x&&!x.local&&/^(مكالمة: |Call: )/.test(String(x.title||''))){x.local=true;ch=true}});if(ch)store.set('wasl_tasks',t)}catch(e){}})();
 function taskMemory(){if(DEMO||profile().mem==='off')return[];return store.get('wasl_tasks',[]).filter(x=>x.summary&&!x.local).slice(-5).reverse().map(x=>({d:x.date||'',t:String(x.title||'').slice(0,60),s:String(x.summary).slice(0,220)}))}
 function taskProfile(){const p=profile(),o={};['name','sex','address','allergies','insurance','notes'].forEach(k=>{if(p[k])o[k]=p[k]});return o}
-/* Wasl's voice matches the user by default, so a man is never spoken for in a woman's voice unless he picks it. */
+/* Badalak's voice matches the user by default, so a man is never spoken for in a woman's voice unless he picks it. */
 function vg(){const p=profile();return p.voice==='m'||p.voice==='f'?p.voice:(p.sex==='f'?'f':'m')}
-/* How fast Wasl speaks, picked in بياناتي. Pitch stays the same. */
+/* How fast Badalak speaks, picked in بياناتي. Pitch stays the same. */
 function vRate(){const r=parseFloat(profile().rate);return r>=0.8&&r<=1.6?r:1.15}
 function voiceName(){const m=vg()==='m';const n={'ar-EG':['فاطمة','ممدوح'],'ar-SA':['منى','بندر'],'en-US':['Jessica','Mark']}[LANG]||['فاطمة','ممدوح'];return n[m?1:0]}
 function loadMe(){const p=profile();for(const id in PF)$(id).value=p[PF[id]]||'';if(!$('pVoice').value)$('pVoice').value='auto';if(!$('pRate').value)$('pRate').value='1.15';if(!$('pMem').value)$('pMem').value='on';if(!$('pSex').value)$('pSex').value='m'}
 $('wipeMe').onclick=()=>{if(!confirm(tr('هتتمسح بياناتك ومهامك وإشاراتك من الموبايل ده. متأكد؟')))return;try{Object.keys(localStorage).filter(k=>k.startsWith('wasl_')||k==='signs').forEach(k=>localStorage.removeItem(k))}catch(e){}
  let done=false;const go=()=>{if(!done){done=true;location.reload()}};try{const r=indexedDB.deleteDatabase('wasl-signs');r.onsuccess=r.onerror=r.onblocked=go;setTimeout(go,1500)}catch(e){go()}};
-$('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent=tr('اتحفظ ✓ وصل هيستخدم البيانات دي في المهام.')};
+$('saveMe').onclick=()=>{const p={};for(const id in PF)p[PF[id]]=$(id).value.trim();store.set('wasl_profile',p);$('savedNote').textContent=tr('اتحفظ ✓ بدالك هيستخدم البيانات دي في المهام.')};
 /* App language switch: saved on this phone; the page reloads in the new language and comes back here with what was typed. */
 function drawUiSw(){$('uiAr').setAttribute('aria-pressed',String(UI!=='en'));$('uiEn').setAttribute('aria-pressed',String(UI==='en'))}
 function setUI(u){buzz([30]);if(u===UI)return;store.set('wasl_ui',u);try{const d={};for(const id in PF)d[id]=$(id).value;sessionStorage.setItem('wasl_me_draft',JSON.stringify(d))}catch(e){}
@@ -1920,7 +1920,7 @@ const SILENT=(()=>{const n=800,b=new ArrayBuffer(44+n*2),v=new DataView(b),w=(o,
 function unlockAudio(){if(audUnlocked)return;audUnlocked=true;try{AUD.src=SILENT;const p=AUD.play();if(p)p.catch(()=>{audUnlocked=false})}catch(e){audUnlocked=false}}
 document.addEventListener('pointerdown',unlockAudio,{capture:true});document.addEventListener('touchstart',unlockAudio,{capture:true,passive:true});
 function bestVoice(lang){const vs=speechSynthesis.getVoices().filter(v=>v.lang.replace('_','-').toLowerCase().startsWith(lang.slice(0,2)));if(!vs.length)return null;const ex=vs.filter(v=>v.lang.replace('_','-')===lang);const pool=ex.length?ex:vs;return pool.find(v=>/natural|neural|online|google/i.test(v.name))||pool[0]}
-/* The voice reads unvowelled حضرتك as feminine (حضرتِك). Wasl always talks to the other person in the masculine by default, so add the fatha. */
+/* The voice reads unvowelled حضرتك as feminine (حضرتِك). Badalak always talks to the other person in the masculine by default, so add the fatha. */
 function mascTTS(t){return String(t).replace(/حضرتك/g,'حضرتَك').replace(/(^|[\s،.؟!,])(و?(?:إن|ان|عند|بتاع|إذن|اذن|ذوق|سؤال|كلام|وقت|تعب|خدمت))ك(?=[\s،.؟!,]|$)/g,'$1$2َك')}
 /* Weak or slow network: ask the server for the quicker voice model (ElevenLabs Flash) instead of the richest one (v3).
    Weak = the phone says 2G/3G, under 1.5 Mbps or data saver; or the last voice from the server took more than 4 seconds (then for 5 minutes). */
@@ -1934,7 +1934,7 @@ async function ttsBlob(t,vl,g,useCache,signal,fast){const key='https://wasl.voic
  const r=await fetch(TTS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:API_K,text:t,lang:vl,gender:g},fast&&!useCache?{fast:true}:{})),signal});
  if(!r.ok||!(r.headers.get('content-type')||'').includes('audio'))throw 0;const b=await r.blob();
  if(c){try{await c.put(key,new Response(b,{headers:{'Content-Type':'audio/mpeg'}}))}catch(e){}}return b}
-/* Wasl's Egyptian voice comes from the server. Offline, or when it fails, the phone's own voice says it, so Wasl is never silent.
+/* Badalak's Egyptian voice comes from the server. Offline, or when it fails, the phone's own voice says it, so Badalak is never silent.
    o.fast (SOS): wait for the server at most 4 seconds. */
 async function speak(t,done,o){t=mascTTS(String(t||'').replace('✨','').trim());if(!t){done&&done();return}
  stopListening();try{speechSynthesis.cancel()}catch(e){}if(player){try{player.pause()}catch(e){}}player={pause(){}};
@@ -1981,10 +1981,10 @@ function startListening(){if(DEMO)return;
   if(recFails>6){if(lastRecErr==='network'&&srvCan()&&navigator.onLine!==false){toSrv(me);return}wantListen=false;onListenState&&onListenState(lastRecErr==='network'?'network':'stuck');return}
   restartT=setTimeout(()=>{if(wantListen&&!player&&!rec)startListening()},recFails?Math.min(4000,400*recFails):150)};
  try{me.start()}catch(e){rec=null;recLive=false}}
-/* ---------- listening through Wasl's server (phones whose browser can't turn speech into text) ----------
+/* ---------- listening through Badalak's server (phones whose browser can't turn speech into text) ----------
    Used only when the browser has no speech recognition, or it keeps failing (service-not-allowed, or network again and again).
    Records each sentence of the person in front (starts on voice, stops after 1.2 s of quiet, at most 12 s) and sends it
-   to ElevenLabs speech to text through Wasl's server (wasl-stt, live:true). The words go to the same onHeard, so tasks and
+   to ElevenLabs speech to text through Badalak's server (wasl-stt, live:true). The words go to the same onHeard, so tasks and
    translation work as before. Nothing is stored. It is only listening: it does not count as a task. */
 const LIVE_STT_URL=API_BASE+'wasl-stt';
 let srvMode=!SR,srv=null,srvQ=Promise.resolve(),srvFails=0;
@@ -1993,7 +1993,7 @@ function srvMime(){for(const m of ['audio/webm;codecs=opus','audio/mp4','audio/o
 function toSrv(me){srvMode=true;if(rec===me){rec=null;recLive=false}try{me.abort()}catch(e){}clearTimeout(restartT);if(wantListen&&!player)startListening()}
 function srvB64(blob){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]||'');r.onerror=no;r.readAsDataURL(blob)})}
 async function srvStart(){
- if(!store.get('wasl_srv_ok',false)){if(!confirm(tr('الموبايل ده مش بيحوّل الكلام لكتابة لوحده.\n\nعشان وصل يسمع اللي قدامك، صوت كلامه هيتبعت لسيرفر وصل وخدمة ElevenLabs تحوّله لكتابة. مفيش حاجة بتتحفظ، بس لازم يكون فيه نت.\n\nموافق؟'))){wantListen=false;onListenState&&onListenState('nosr');return}store.set('wasl_srv_ok',true)}
+ if(!store.get('wasl_srv_ok',false)){if(!confirm(tr('الموبايل ده مش بيحوّل الكلام لكتابة لوحده.\n\nعشان بدالك يسمع اللي قدامك، صوت كلامه هيتبعت لسيرفر بدالك وخدمة ElevenLabs تحوّله لكتابة. مفيش حاجة بتتحفظ، بس لازم يكون فيه نت.\n\nموافق؟'))){wantListen=false;onListenState&&onListenState('nosr');return}store.set('wasl_srv_ok',true)}
  if(srv||!wantListen||player)return;const me={stopped:false};srv=me;document.body.classList.add('srvlisten');
  let stream;try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}})}
  catch(e){if(srv===me)srv=null;wantListen=false;onListenState&&onListenState(e&&(e.name==='NotAllowedError'||e.name==='SecurityError')?'blocked':'audio-capture');return}
@@ -2042,7 +2042,7 @@ function fitHear(){const box=document.querySelector('#task .hear'),big=$('hBig')
 addEventListener('resize',()=>{try{fitHear()}catch(e){}});
 function setState(kind,text){$('tDot').className='dot'+(kind==='think'?' think':kind==='talk'?' talk':'');$('tState').textContent=text}
 function logMsg(role,text){if(!text)return;const d=document.createElement('div');d.className='msg '+(role==='hearing'?'h':role==='wasl'?'w':'u');
- d.innerHTML='<b>'+tr(role==='hearing'?'اللي قدامك':role==='wasl'?'وصل قال':'إنت قررت')+'</b>'+nums(text);
+ d.innerHTML='<b>'+tr(role==='hearing'?'اللي قدامك':role==='wasl'?'بدالك قال':'إنت قررت')+'</b>'+nums(text);
  if(role==='wasl'&&!DEMO){const fb=document.createElement('button');fb.className='sayfix';fb.type='button';fb.textContent=tr('كلمة اتنطقت غلط؟');fb.onclick=()=>sayFixOpen(text);d.appendChild(fb)}
  const log=$('tLog');log.appendChild(d);while(log.children.length>4)log.removeChild(log.firstChild);$('tbody').scrollTop=$('tbody').scrollHeight}
 /* ---------- monthly tasks: 30 free a month per phone (or the company's number). SOS is never counted; each translation visit counts once. ---------- */
@@ -2050,7 +2050,7 @@ let QS=null;
 async function quotaGet(ms){if(DEMO)return null;try{const q=await postJSON(QUOTA_URL,{op:'status'},ms||5000);if(q&&typeof q.left==='number'){QS=q;quotaDraw();return q}}catch(e){if(e&&e.data&&typeof e.data.left==='number'){QS=e.data;quotaDraw();return QS}}return null}
 function arDate(iso){try{return new Date(String(iso)+'T12:00:00').toLocaleDateString(LOC,{day:'numeric',month:'long'})}catch(e){return String(iso||'')}}
 function quotaDraw(){const q=QS;if(q)store.set('wasl_company',q.company||'');const co=q?(q.company||''):store.get('wasl_company','');
- $('coBadge').textContent=co?tr('وَصْل مقدَّم من {co}',{co}):'';$('coBadge').classList.toggle('hidden',!co);
+ $('coBadge').textContent=co?tr('بَدالَك مقدَّم من {co}',{co}):'';$('coBadge').classList.toggle('hidden',!co);
  $('coLead').textContent=co?tr('الموبايل ده متفعّل مع {co}.',{co}):tr('لو شغلك أو جمعيتك إدّتك كود، اكتبه هنا.');
  if(!q)return;
  $('qLeft').textContent=q.left===0?tr('خلصت مهام الشهر ده'):tr('فاضلك {n} مهمة الشهر ده',{n:q.left,s:q.left===1?'':'s'});$('qLeft').classList.toggle('hidden',q.left>5);
@@ -2109,10 +2109,10 @@ function drawCards(id,cards){const el=$(id);if(!el)return;
 function liveCap(t,on){const b=$('tLive');$('tLiveText').innerHTML=nums(t);$('tLiveLab').textContent=tr(on?'اللي قدامك بيقول دلوقتي':'آخر كلام قاله اللي قدامك');b.classList.toggle('on',!!on);b.scrollTop=b.scrollHeight}
 function drawProg(step){const n=Math.max(1,Math.min(step.n||1,step.total||3)),tot=Math.max(n,step.total||3);
  $('tStep').textContent=tr('خطوة {n} من {m}',{n,m:tot});$('tProg').innerHTML=Array.from({length:tot},(_,i)=>`<i class="${i<n-1?'done':i===n-1?'now':''}"></i>`).join('')}
-function listenForHearing(){if(!T||T.over)return;setState('ok',tr('بسمع اللي قدامك...'));setHear(trH('وصل سامعك · اتكلم عادي'),T.lastSaid||trH('اتفضل، أنا سامعك'),trH('صاحب الموبايل أصم، وأنا مساعده.'));if(DEMO)demoHear();else startListening()}
+function listenForHearing(){if(!T||T.over)return;setState('ok',tr('بسمع اللي قدامك...'));setHear(trH('بدالك سامعك · اتكلم عادي'),T.lastSaid||trH('اتفضل، أنا سامعك'),trH('صاحب الموبايل أصم، وأنا مساعده.'));if(DEMO)demoHear();else startListening()}
 
 let heardBuf='',heardTimer=null;
-/* A short "one moment" so the other person isn't left in silence while Wasl prepares the reply. At most once every 15 s, never over someone talking. */
+/* A short "one moment" so the other person isn't left in silence while Badalak prepares the reply. At most once every 15 s, never over someone talking. */
 let fillP=null,fillWanted=false,lastFill=0;
 function fillers(){return LANG==='en-US'?['One moment, please.','Just a second, please.']:['لحظة واحدة لو سمحت.','ثانية واحدة من فضلك.','لحظة بس لو سمحت.']}
 /* One at a time: the voice service takes at most 3 requests at once, and the first real sentence must not be refused. */
@@ -2120,13 +2120,13 @@ function prefetchFillers(){if(DEMO)return;const g=vg(),L=fillers().slice();(asyn
 function playFiller(){if(DEMO||!T||T.over||!fillWanted||player||fillP||Date.now()-lastFill<15000||Date.now()-lastVoiceAt<2000||heardBuf.trim())return;
  lastFill=Date.now();const l=fillers(),t=mascTTS(l[Math.floor(Math.random()*l.length)]);
  fillP=(async()=>{try{const ac=new AbortController();const to=setTimeout(()=>ac.abort(),2500);const b=await ttsBlob(t,LANG,vg(),true,ac.signal);clearTimeout(to);
-  if(!T||T.over||!fillWanted||player)return;stopListening();setHear(trH('لحظة واحدة'),t,trH('وصل بيجهّز الرد.'));
+  if(!T||T.over||!fillWanted||player)return;stopListening();setHear(trH('لحظة واحدة'),t,trH('بدالك بيجهّز الرد.'));
   const url=URL.createObjectURL(b);AUD.defaultPlaybackRate=vRate();AUD.src=url;AUD.playbackRate=vRate();await new Promise(res=>{AUD.onended=AUD.onerror=res;const pl=AUD.play();if(pl)pl.catch(res)});URL.revokeObjectURL(url);
   if(T&&!T.over&&fillWanted)startListening()}catch(e){}finally{fillP=null}})()}
 function flushHeard(){heardTimer=null;if(!T||T.over||!heardBuf.trim())return;const t=heardBuf.trim();heardBuf='';T.history.push({role:'hearing',text:t});logMsg('hearing',t);
  if(!$('tDecide').classList.contains('hidden')||!$('tOk').classList.contains('hidden'))return;agent({type:'heard',text:t})}
 async function agent(event){if(!T||T.over)return;const my=++T.seq;
- setState('think',tr('وصل بيفكر...'));$('tDecide').classList.add('hidden');$('tOk').classList.add('hidden');asking(null);
+ setState('think',tr('بدالك بيفكر...'));$('tDecide').classList.add('hidden');$('tOk').classList.add('hidden');asking(null);
  let d=null;
  try{if(DEMO){await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{if(event.type==='heard'){fillWanted=true;var ft=setTimeout(playFiller,2800)}
   d=await postJSON(AGENT_URL,{goal:T.goal,lang:LANG,ui:UI,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:vg()},20000)}}catch(e){if(e&&e.why==='quota'){if(typeof ft!=='undefined')clearTimeout(ft);fillWanted=false;T.over=true;stopListening();show('home');quotaShow(e.data);return}}
@@ -2153,17 +2153,17 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
    else if(/المحفوظ|saved address/i.test(c)&&profile().address){const t=tr('عنواني المحفوظ: ')+profile().address;lastMap=profile().address;T.history.push({role:'user',text:t});logMsg('user',t);agent({type:'typed',text:t});return}
    else if(/اكتب|هكتب|أكتب|بنفسي|علامة|معلم|اسم المكان|العنوان|عنوان/.test(c)||/\btype\b|\bwrite\b|myself|landmark|address/i.test(c)){askType(c);return}
    T.history.push({role:'user',text:c});logMsg('user',c);agent({type:'decision',text:c})});
-  $('tDecide').classList.remove('hidden');asking('tDecide');setState('talk',tr('وصل محتاج قرارك'));
+  $('tDecide').classList.remove('hidden');asking('tDecide');setState('talk',tr('بدالك محتاج قرارك'));
   if(d.say)speak(d.say,()=>{if(T&&!T.over)startListening()});else startListening();showBox('tDecide');return}
  if(d.action==='done'){
   // The task stays open: only the user ends it with إنهاء. Keep listening and keep the controls.
-  T.summary=d.summary||T.summary||'';buzz([300]);setHear(trH(hold?'لحظة واحدة':'وصل بيقول'),hold?trH('لحظة واحدة من فضلك'):(d.say||trH('شكراً جزيلاً')),trH('لو فيه كلام تاني كمّل، ودوس إنهاء لما تخلص.'));
+  T.summary=d.summary||T.summary||'';buzz([300]);setHear(trH(hold?'لحظة واحدة':'بدالك بيقول'),hold?trH('لحظة واحدة من فضلك'):(d.say||trH('شكراً جزيلاً')),trH('لو فيه كلام تاني كمّل، ودوس إنهاء لما تخلص.'));
   resetRate();if(d.med&&d.med!==refillMed)showRefill(d.med);$('tSumText').innerHTML=nums(T.summary||tr('المهمة خلصت.'));$('tSum').classList.remove('hidden');$('tFoot').classList.remove('hidden');
-  if(d.say){const after=()=>{if(T&&!T.over){setState('ok',tr('بسمع لو فيه كلام تاني · دوس إنهاء لما تخلص'));listenForHearing()}};if(hold)holdSay(d.say,after);else{setState('talk',tr('وصل بيتكلم...'));speak(d.say,after)}}else listenForHearing();
+  if(d.say){const after=()=>{if(T&&!T.over){setState('ok',tr('بسمع لو فيه كلام تاني · دوس إنهاء لما تخلص'));listenForHearing()}};if(hold)holdSay(d.say,after);else{setState('talk',tr('بدالك بيتكلم...'));speak(d.say,after)}}else listenForHearing();
   $('tbody').scrollTop=$('tbody').scrollHeight;return}
  if(T.summary)$('tSum').classList.add('hidden');
- if(d.say&&hold)holdSay(d.say,listenForHearing);else if(d.say){setState('talk',tr('وصل بيتكلم...'));setHear(trH('وصل بيقول'),d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
-/* Lines with numbers, money or medicine are shown to the user first; Wasl says them only after «قوله». */
+ if(d.say&&hold)holdSay(d.say,listenForHearing);else if(d.say){setState('talk',tr('بدالك بيتكلم...'));setHear(trH('بدالك بيقول'),d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
+/* Lines with numbers, money or medicine are shown to the user first; Badalak says them only after «قوله». */
 /* Picture mode: while the user decides, the picture cards sit inside the question box, next to the answers. */
 function asking(box){$('task').classList.toggle('asking',!!box);setTimeout(()=>{try{fitHear()}catch(e){}},0);const c=$('tCards'),to=box&&picOn()?$(box):$('tLive');
  if(c.parentNode!==to){if(to===$('tLive'))to.appendChild(c);else to.insertBefore(c,to.querySelector('.opts'))}}
@@ -2173,9 +2173,9 @@ function needsOk(d){if(DEMO)return false;const t=String(d.say||'');
  return /[0-9\u0660-\u0669%٪]|جنيه|جنية|ج\.م|ريال|درهم|دولار|قرش/.test(t)||/pound|\bEGP\b|\bLE\b|dollar|riyal|dirham/i.test(t)||!!d.med||(d.cards||[]).some(c=>c&&c.k==='dose')}
 function holdSay(t,after){haltListening();buzz([200,100,200]);setHear(trH('لحظة واحدة'),trH('لحظة واحدة من فضلك'),trH('صاحب الموبايل بيراجع الكلام.'));
  $('tOkT').innerHTML=nums(t);$('tOk').classList.remove('hidden');asking('tOk');setState('talk',tr('راجع الجملة، ودوس «قوله»'));showBox('tOk');
- $('tOkYes').onclick=()=>{$('tOk').classList.add('hidden');asking(null);if(!T||T.over)return;T.history.push({role:'wasl',text:t});T.lastSaid=t;logMsg('wasl',t);setHear(trH('وصل بيقول'),t,'');setState('talk',tr('وصل بيتكلم...'));speak(t,after)};
+ $('tOkYes').onclick=()=>{$('tOk').classList.add('hidden');asking(null);if(!T||T.over)return;T.history.push({role:'wasl',text:t});T.lastSaid=t;logMsg('wasl',t);setHear(trH('بدالك بيقول'),t,'');setState('talk',tr('بدالك بيتكلم...'));speak(t,after)};
  $('tOkNo').onclick=()=>{$('tOk').classList.add('hidden');asking(null);if(!T||T.over)return;T.history.push({role:'user',text:tr('(صاحب الموبايل وقّف الجملة دي ومتقالتش: {s})',{s:t})});logMsg('user',tr('وقّفت الجملة، ومتقالتش'));
-  setHear(trH('وصل سامعك · اتكلم عادي'),T.lastSaid||trH('لحظة واحدة من فضلك'),trH('صاحب الموبايل أصم، وأنا مساعده.'));$('tType').classList.remove('hidden');setState('ok',tr('الجملة متقالتش. اكتب اللي عايز وصل يقوله'));if(!DEMO)startListening()}}
+  setHear(trH('بدالك سامعك · اتكلم عادي'),T.lastSaid||trH('لحظة واحدة من فضلك'),trH('صاحب الموبايل أصم، وأنا مساعده.'));$('tType').classList.remove('hidden');setState('ok',tr('الجملة متقالتش. اكتب اللي عايز بدالك يقوله'));if(!DEMO)startListening()}}
 function isAck(t){const w=String(t).replace(/[،.!؟?,]/g,' ').trim().split(/\s+/);return w.length<=4&&w.every(x=>/^(ماشي|تمام|طيب|اتفضل|اتفضلي|كمل|كملي|كمّل|أوكي|اوكي|اه|آه|أيوه|ايوه|حاضر|معاك|معاكي|سامعك|سامعاك|و|يا|فندم|حضرتك|ok|okay|sure|go|on)$/i.test(x))}
 
 let lastTid=null;
@@ -2183,13 +2183,13 @@ function saveTask(summary){if(DEMO){lastTid=null;return}const t=store.get('wasl_
 
 $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('goal').focus();return}
  if(!DEMO){const q=await quotaGet(4000);if(q&&q.left===0){quotaShow(q);return}}
- if(!DEMO&&!store.get('wasl_consent',false)){if(!confirm(tr('قبل أول مهمة:\n\nعشان وصل يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي وصل هيقولها بتتبعت لخدمة الصوت (ElevenLabs).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟')))return;store.set('wasl_consent',true)}
+ if(!DEMO&&!store.get('wasl_consent',false)){if(!confirm(tr('قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بدالك هيقولها بتتبعت لخدمة الصوت (ElevenLabs).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟')))return;store.set('wasl_consent',true)}
  if(alOn){stopAlerts(true);drawAlChip()}
- const ok=DEMO?true:await micOk();if(ok!==true){alert(tr('وصل محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ({e})',{e:ok}));return}
+ const ok=DEMO?true:await micOk();if(ok!==true){alert(tr('بدالك محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ({e})',{e:ok}));return}
  T={goal,history:[],seq:0,over:false,title:goal,lastSaid:'',tid:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)};lastTid=null;refillMed='';lastMap='';prefetchFillers();
  $('tTitle').textContent=goal;$('tLog').innerHTML='';if(taskPhoto){$('hPhoto').src=taskPhoto;$('hPhoto').classList.remove('hidden')}else $('hPhoto').classList.add('hidden');drawProg({n:1,total:3});liveCap('',false);$('tLiveLab').textContent=tr('كلام اللي قدامك هيظهر هنا');drawCards('tCards',[]);
  ['tDecide','tSum','tType','tOk'].forEach(id=>$(id).classList.add('hidden'));asking(null);$('tFoot').classList.remove('hidden');
- setHear(trH('وصل'),trH('أهلاً بيك'),trH('صاحب الموبايل أصم، وأنا مساعده.'));show('task');
+ setHear(trH('بدالك'),trH('أهلاً بيك'),trH('صاحب الموبايل أصم، وأنا مساعده.'));show('task');
  heardBuf='';clearTimeout(heardTimer);
  onHeard=t=>{if(!T||T.over)return;heardBuf=(heardBuf?heardBuf+' ':'')+t;liveCap(heardBuf,false);clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,2600)};
  onInterim=t=>{if(!T||T.over)return;if(!t){liveCap(heardBuf,false);return}liveCap((heardBuf?heardBuf+' ':'')+t,true);if(heardTimer){clearTimeout(heardTimer);heardTimer=setTimeout(flushHeard,3500)}};
@@ -2200,8 +2200,8 @@ $('tWrite').onclick=()=>{$('tType').classList.toggle('hidden');if(!$('tType').cl
 let typeFor='';
 function askType(choice){typeFor=choice;$('tDecide').classList.add('hidden');asking(null);const inp=$('tInput');
  inp.placeholder=/علامة|معلم/.test(choice)||/landmark/i.test(choice)?tr('اكتب العلامة المميزة (مثلاً: جنب مسجد الحصري، 6 أكتوبر)'):tr('اكتب العنوان أو اسم المكان والمنطقة (مثلاً: شارع التحرير، الدقي)');
- $('tType').classList.remove('hidden');setState('talk',tr('اكتب وابعت، ووصل هيقوله'));inp.focus()}
-$('tSend').onclick=()=>{const t=$('tInput').value.trim();if(!t||!T)return;$('tInput').value='';$('tType').classList.add('hidden');$('tInput').placeholder=tr('اكتب اللي عايز وصل يقوله أو يعرفه');
+ $('tType').classList.remove('hidden');setState('talk',tr('اكتب وابعت، وبدالك هيقوله'));inp.focus()}
+$('tSend').onclick=()=>{const t=$('tInput').value.trim();if(!t||!T)return;$('tInput').value='';$('tType').classList.add('hidden');$('tInput').placeholder=tr('اكتب اللي عايز بدالك يقوله أو يعرفه');
  const full=typeFor?typeFor+': '+t:t;typeFor='';if(/عنوان|علامة|معلم|شارع|مسجد|جنب|قدام/.test(full)||/address|landmark|street|mosque|next to|near/i.test(full))lastMap=t;
  T.history.push({role:'user',text:full});logMsg('user',full);agent({type:'typed',text:full})};
 $('tInput').onkeydown=e=>{if(e.key==='Enter')$('tSend').click()};
@@ -2217,7 +2217,7 @@ $('tRefOpts').querySelectorAll('button').forEach(b=>b.onclick=()=>{const d=+b.da
  if(!DEMO){const r=store.get('wasl_refills',[]).filter(x=>x.med!==refillMed);r.push({id:Date.now(),med:refillMed,goal:tr('عايز {m} (زي المرة اللي فاتت)',{m:refillMed}),due:refillDue});store.set('wasl_refills',r)}
  $('tRefOpts').classList.add('hidden');$('tRefQ').textContent=tr('💊 تذكير {m}',{m:refillMed});$('tRefOk').textContent=tr('✓ هفكّرك يوم {d}، قبل ما يخلص بـ 3 أيام.',{d:when});$('tRefOk').classList.remove('hidden');$('tRefCal').classList.remove('hidden');buzz([40])});
 $('tRefCal').onclick=()=>{const f=t=>new Date(t).toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';const st=new Date(refillDue);st.setHours(10,0,0,0);
- const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Wasl//AR','BEGIN:VEVENT','UID:wasl-'+Date.now()+'@wasl','DTSTAMP:'+f(Date.now()),'DTSTART:'+f(st),'DTEND:'+f(st.getTime()+18e5),'SUMMARY:'+tr('💊 {m} قرب يخلص - اطلبه من وصل',{m:refillMed}),'DESCRIPTION:'+tr('افتح وصل ودوس اطلبه تاني'),'BEGIN:VALARM','TRIGGER:PT0M','ACTION:DISPLAY','DESCRIPTION:'+tr('{m} قرب يخلص',{m:refillMed}),'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+ const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Badalak//AR','BEGIN:VEVENT','UID:wasl-'+Date.now()+'@wasl','DTSTAMP:'+f(Date.now()),'DTSTART:'+f(st),'DTEND:'+f(st.getTime()+18e5),'SUMMARY:'+tr('💊 {m} قرب يخلص - اطلبه من بدالك',{m:refillMed}),'DESCRIPTION:'+tr('افتح بدالك ودوس اطلبه تاني'),'BEGIN:VALARM','TRIGGER:PT0M','ACTION:DISPLAY','DESCRIPTION:'+tr('{m} قرب يخلص',{m:refillMed}),'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='wasl-'+refillMed.replace(/\s+/g,'-')+'.ics';a.click()};
 function drawRefills(){const now=Date.now(),r=store.get('wasl_refills',[]).filter(x=>x.due<=now);
  $('refills').innerHTML=r.map(x=>`<div style="display:flex;align-items:center;gap:10px;background:#FBE6D4;border-radius:16px;padding:10px 12px;margin-bottom:8px"><span style="font-size:26px">💊</span><b style="flex:1;font-size:15px;line-height:1.4">${esc(tr('{m} قرب يخلص',{m:x.med}))}</b><button data-id="${x.id}" class="rfGo" style="background:#13262F;color:#fff;border:0;border-radius:12px;padding:8px 12px;font:800 15px Cairo,sans-serif">${tr('اطلبه تاني')}</button><button data-id="${x.id}" class="rfX" aria-label="${tr('خلاص')}" style="background:none;border:0;font-size:20px;color:#5B6870">✕</button></div>`).join('');
@@ -2234,10 +2234,10 @@ function drawStats(){const d=statsData(),el=$('stats');const parts=[];const pl=n
  el.innerHTML=parts.map(p=>'<span>'+p+'</span>').join('');el.classList.toggle('hidden',!parts.length)}
 function drawKpis(){const d=statsData();$('kpis').innerHTML=`<div><b>${d.done}</b><small>${tr('مهمة خلصت')}</small></div><div><b>${d.free}</b><small>${tr('مرة ترجمة')}</small></div><div><b>${d.rated?Math.round(100*d.up/d.rated)+'%':'—'}</b><small>${tr('ساعدتك')}</small></div>`;$('shareRates').classList.toggle('hidden',!d.rated)}
 $('shareRates').onclick=async()=>{const t=store.get('wasl_tasks',[]).filter(x=>x.rating);const csv='date,completed,rating,reason\n'+t.map(x=>[new Date(x.id||0).toISOString().slice(0,16),x.done?1:0,x.rating,'"'+(x.why||'').replace(/"/g,'')+'"'].join(',')).join('\n');
- try{const f=new File([csv],'wasl-ratings.csv',{type:'text/csv'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:tr('تقييمات وصل')});return}}catch(e){}
+ try{const f=new File([csv],'wasl-ratings.csv',{type:'text/csv'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:tr('تقييمات بدالك')});return}}catch(e){}
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='wasl-ratings.csv';a.click()};
 function bumpStat(k){const st=store.get('wasl_stats',{});st[k]=(st[k]||0)+1;store.set('wasl_stats',st)}
-$('tShare').onclick=async()=>{const t=$('tSumText').innerText;try{if(navigator.share){await navigator.share({title:tr('وصل'),text:t});return}await navigator.clipboard.writeText(t);$('tShare').textContent=tr('اتنسخ ✓')}catch(e){}};
+$('tShare').onclick=async()=>{const t=$('tSumText').innerText;try{if(navigator.share){await navigator.share({title:tr('بدالك'),text:t});return}await navigator.clipboard.writeText(t);$('tShare').textContent=tr('اتنسخ ✓')}catch(e){}};
 
 /* ================= DEMO MODE (scripted pharmacy scene, works offline once voices are prepared) ================= */
 const DL={
@@ -2304,9 +2304,9 @@ async function prepDemo(){const btn=$('demoPrep'),en=LANG==='en-US',gu=LANG==='a
  btn.disabled=false;btn.textContent=ok===keys.length?tr('الأصوات جاهزة ✓ (يشتغل من غير نت)'):tr('اتحضّر {n} من {m}، جرّب تاني',{n:ok,m:keys.length});}
 $('demoRun').onclick=runDemo;$('demoPrep').onclick=prepDemo;
 /* ?demo: one list with the four scenes in order. All four work with no internet (the face-to-face voices need «حضّر أصوات العرض» once, online). */
-Object.assign(EN,{'العرض التجريبي':'Demo','بيشتغل من غير نت':'Works with no internet','صيدلية: وصل بيتكلم بدالك':'Pharmacy: Wasl speaks for you','طلب دوا على واتساب':'Order medicine on WhatsApp','طوارئ':'Emergency','قفل':'Close'});
-const DEMOS=[{i:'💊',l:'صيدلية: وصل بيتكلم بدالك',go:runDemo},{i:'💬',l:'طلب دوا على واتساب',go:()=>{oSetup();show('order');$('oDemo').click()}},
- {i:'🔳',l:'وصل في المكان',go:()=>{location.href='counter.html?demo'+(GULF?'&l=ar-SA':UI==='en'?'&l=en-US':'')}},{i:'🚨',l:'طوارئ',go:()=>$('sosBtn').click()}];
+Object.assign(EN,{'العرض التجريبي':'Demo','بيشتغل من غير نت':'Works with no internet','صيدلية: بدالك بيتكلم عنك':'Pharmacy: Badalak speaks for you','طلب دوا على واتساب':'Order medicine on WhatsApp','طوارئ':'Emergency','قفل':'Close'});
+const DEMOS=[{i:'💊',l:'صيدلية: بدالك بيتكلم عنك',go:runDemo},{i:'💬',l:'طلب دوا على واتساب',go:()=>{oSetup();show('order');$('oDemo').click()}},
+ {i:'🔳',l:'بدالك على الكاونتر',go:()=>{location.href='counter.html?demo'+(GULF?'&l=ar-SA':UI==='en'?'&l=en-US':'')}},{i:'🚨',l:'طوارئ',go:()=>$('sosBtn').click()}];
 function demoMenu(){let m=$('demoMenu');
  if(!m){document.body.insertAdjacentHTML('beforeend','<div id="demoMenu" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="dmT"><div class="card"><h3 id="dmT"></h3><p class="lead" id="dmSub"></p><div class="bigopts" id="dmOpts"></div><button class="btn ghost" id="dmX"></button></div></div>');m=$('demoMenu');
   $('dmT').textContent='▶ '+tr('العرض التجريبي');$('dmSub').textContent=tr('بيشتغل من غير نت');$('dmX').textContent=tr('قفل');
@@ -2360,7 +2360,7 @@ function closePay(){$('paySheet').style.display='none'}
 function choosePay(p){closePay();const say=paySay(p.k);
  if(payFrom==='task'&&T&&!T.over){const note=tr('طريقة الدفع: {p}',{p:p.l});T.history.push({role:'user',text:note});logMsg('user',note);
   if(!$('tDecide').classList.contains('hidden')){agent({type:'decision',text:tr('هدفع {p}',{p:p.l})});return}
-  haltListening();T.history.push({role:'wasl',text:say});logMsg('wasl',say);T.lastSaid=say;setHear(trH('وصل بيقول'),say,'');setState('talk',tr('وصل بيتكلم...'));speak(say,listenForHearing);return}
+  haltListening();T.history.push({role:'wasl',text:say});logMsg('wasl',say);T.lastSaid=say;setHear(trH('بدالك بيقول'),say,'');setState('talk',tr('بدالك بيتكلم...'));speak(say,listenForHearing);return}
  fSpeak(say)}
 $('tPay').onclick=()=>openPay('task');$('fPay').onclick=()=>openPay('free');
 $('payClose').onclick=closePay;$('paySheet').onclick=e=>{if(e.target.id==='paySheet')closePay()};
@@ -2369,7 +2369,7 @@ $('payClose').onclick=closePay;$('paySheet').onclick=e=>{if(e.target.id==='paySh
 /* Emergency numbers by country. SAFETY: only numbers confirmed (Nov 2026) on an official government page, or on two independent sources.
    Source URL next to each country. A country we could not confirm is left out (Syria, Libya, Mauritania: sources disagree or none).
    amb ambulance, pol police, fire fire/civil defence, gas gas emergency, gen one number for everything.
-   d = how Wasl speaks on the call: eg Egyptian, gulf Gulf, msa simple standard Arabic, en English.
+   d = how Badalak speaks on the call: eg Egyptian, gulf Gulf, msa simple standard Arabic, en English.
    list = the quick-dial numbers shown on the SOS screen: [number, label]. */
 const COUNTRIES={
  // gov.uk/foreign-travel-advice/egypt/getting-help (123, 122, 180, 126); travel.state.gov Egypt page (123, 122); elwatannews.com/news/details/8332349 and elbalad.news/4961333 (129 gas, 121 electricity, 15322 Red Crescent)
@@ -2423,7 +2423,7 @@ function countryOptions(sel){const cur=countryCode(),en=UI==='en';
  sel.innerHTML=ks.map(k=>`<option value="${k}"${k===cur?' selected':''}>${esc(cName(COUNTRIES[k]))}</option>`).join('')}
 function setCountry(k){if(!COUNTRIES[k])return;store.set('wasl_country',k);drawSosCountry();if($('pCountry'))$('pCountry').value=k}
 /* Each situation and the service it needs. If the country has no separate number, its one emergency number; gas falls back to fire / civil defence;
-   a situation with no number at all is hidden. say = what Wasl says on the call, in the call's dialect. */
+   a situation with no number at all is hidden. say = what Badalak says on the call, in the call's dialect. */
 const SOS_TYPES=[
  {id:'med',icon:'🚑',ar:'تعبان ومحتاج إسعاف',need:'amb',say:{eg:'تعبان جداً ومحتاج عربية إسعاف',gulf:'تعبان واجد ويحتاج إسعاف',msa:'مريض جداً ويحتاج إلى سيارة إسعاف'},sayF:{eg:'تعبانة جداً ومحتاجة عربية إسعاف',gulf:'تعبانة واجد وتحتاج إسعاف',msa:'مريضة جداً وتحتاج إلى سيارة إسعاف'}},
  {id:'acc',icon:'💥',ar:'حادثة',need:'amb',say:{eg:'حصلتله حادثة ومحتاج إسعاف',gulf:'صار له حادث ويحتاج إسعاف',msa:'تعرّض لحادث ويحتاج إلى إسعاف'},sayF:{eg:'حصلتلها حادثة ومحتاجة إسعاف',gulf:'صار لها حادث وتحتاج إسعاف',msa:'تعرّضت لحادث وتحتاج إلى إسعاف'}},
@@ -2465,8 +2465,8 @@ function locate(){$('sosLoc').textContent=tr('بيحدد مكانك...');
   ()=>{$('sosLoc').textContent=tr('ما قدرتش أحدد المكان. اسمح بالموقع، وهستخدم العنوان المكتوب في بياناتك.')},{enableHighAccuracy:true,timeout:12000,maximumAge:60000})}
 /* The text message to the family is in the app's language (en = English). */
 function sosMessage(en){const p=profile(),f=(s,v)=>tx(en,s,v,GULF);const who=p.name?p.name:f('شخص أصم');
- return[f('🚨 طوارئ من {w}: {s}.',{w:who,s:f(sosT.ar)}),f(p.sex==='f'?'أنا صماء ومش بقدر أسمع التليفون، كلّموني رسالة.':'أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.'),mapLink()?f('مكاني: {x}',{x:mapLink()}):'',p.address?f('العنوان: {x}',{x:p.address}):'',...medLines(p,en),f('(اتبعتت من وصل)')].filter(Boolean).join('\n')}
-/* What Wasl says on the call, in the language of the country's emergency service (country().d):
+ return[f('🚨 طوارئ من {w}: {s}.',{w:who,s:f(sosT.ar)}),f(p.sex==='f'?'أنا صماء ومش بقدر أسمع التليفون، كلّموني رسالة.':'أنا أصم ومش بقدر أسمع التليفون، كلّموني رسالة.'),mapLink()?f('مكاني: {x}',{x:mapLink()}):'',p.address?f('العنوان: {x}',{x:p.address}):'',...medLines(p,en),f('(اتبعتت من بدالك)')].filter(Boolean).join('\n')}
+/* What Badalak says on the call, in the language of the country's emergency service (country().d):
    eg Egyptian, gulf Gulf, msa simple standard Arabic, en English. The user also sees it in the app's language. */
 const CALL_AR_F={gulf:{t:'السلام عليكم، أنا {n}، مساعد صوتي لوحدة صماء اسمها {w}. هي {s}. {a}{al} الله يخليكم أرسلوا أحد بسرعة. هي ما تقدر تسمعكم، وإذا تحتاجون شي أرسلوا رسالة على نفس الرقم.',addr:'العنوان: {x}.',loc:'إذا تحتاجون الموقع أرسلوا رسالة على نفس الرقم ونرسله لكم.',al:' عندها حساسية من {x}.'},
  msa:{t:'مرحباً، أنا {n}، مساعد صوتي لامرأة صمّاء اسمها {w}. هي {s}. {a}{al} من فضلكم أرسلوا المساعدة بسرعة. هي لا تستطيع سماعكم، وإذا احتجتم شيئاً أرسلوا رسالة نصية إلى نفس الرقم.',addr:'العنوان: {x}.',loc:'إذا احتجتم الموقع، أرسلوا رسالة إلى نفس الرقم وسنرسله لكم.',al:' لديها حساسية من {x}.'}};
@@ -2488,7 +2488,7 @@ function buildScript(){const d=country().d,s=scriptText(d);let shown=s;
  if(UI!=='en'&&d==='en')shown+='\n\nبالعربي: '+scriptText(GULF?'gulf':'eg');
  $('sosScriptText').textContent=shown;return s}
 function pickSos(ty,redraw){const dl=sosDial(ty);if(!dl)return;sosT=Object.assign({},ty,dl);if(!redraw)buzz([200,100,200]);$('sosStep1').classList.add('hidden');$('sosStep2').classList.remove('hidden');
- $('sosTitle').textContent=ty.icon+' '+tr(ty.ar);$('sosCallT').textContent=tr('اتصل بـ{s} {n}، ووصل يقرأ الرسالة',{s:tr(sosT.svc),n:sosT.num});
+ $('sosTitle').textContent=ty.icon+' '+tr(ty.ar);$('sosCallT').textContent=tr('اتصل بـ{s} {n}، وبدالك يقرأ الرسالة',{s:tr(sosT.svc),n:sosT.num});
  const p=profile();$('sosFamSub').textContent=p.c1phone?tr('لـ{x}، ومعاها مكانك',{x:[p.c1name||p.c1phone,p.c2phone?(p.c2name||p.c2phone):''].filter(Boolean).join(tr(' و'))}):tr('ضيف أرقام أهلك في بياناتي الأول');
  if(!redraw)$('sosScript').classList.add('hidden');buildScript();if(!redraw)locate()}
 $('sosBtn').onclick=()=>{show('sos');sosT=null;$('sosStep1').classList.remove('hidden');$('sosStep2').classList.add('hidden');try{drawSosCountry()}catch(e){}drawMed()};
@@ -2572,7 +2572,7 @@ async function startAlerts(){
  $('alToggle').disabled=false}
 function stopAlerts(keepMsg){alOn=false;drawAlChip();try{alNode&&alNode.disconnect()}catch(e){}try{alCtx&&alCtx.close()}catch(e){}alStream&&alStream.getTracks().forEach(t=>t.stop());alNode=alCtx=alStream=null;try{alWake&&alWake.release()}catch(e){}alWake=null;
  $('alRing').classList.remove('on');$('alIcon').textContent='🔇';$('alToggle').textContent=tr('ابدأ');if(!keepMsg)setAl('متوقف','دوس "ابدأ" وسيب الموبايل في مكان واضح.')}
-/* sounds the user taught Wasl (their own doorbell, phone...) */
+/* sounds the user taught Badalak (their own doorbell, phone...) */
 let alSamples=store.get('wasl_snd_samples',[]),learning=null;
 function vecOf(cats){const v=new Float32Array(521);cats.forEach(c=>{const i=c.index;if(i>=0&&i<521)v[i]=c.score});return v}
 function cosSim(a,b){let d=0,na=0,nb=0;for(let i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]}return na&&nb?d/Math.sqrt(na*nb):0}
@@ -2593,7 +2593,7 @@ function fireAlert(g,score){
  $('bigAlert').style.background=g.color;$('baIcon').textContent=g.icon;$('baText').textContent=g.ar;$('baSub').textContent=tr('{t} · متأكد بنسبة {p}%',{t,p:Math.round(score*100)});
  $('bigAlert').classList.add('on');clearInterval(alBuzzT);let n=0;buzz(g.vib);
  alBuzzT=setInterval(()=>{if(++n>(g.urgent?40:12)){clearInterval(alBuzzT);return}buzz(g.vib)},2000);
- try{if(document.hidden&&'Notification'in window&&Notification.permission==='granted')new Notification(tr('وصل: {x}',{x:g.ar}))}catch(e){}}
+ try{if(document.hidden&&'Notification'in window&&Notification.permission==='granted')new Notification(tr('بدالك: {x}',{x:g.ar}))}catch(e){}}
 $('baOk').onclick=()=>{$('bigAlert').classList.remove('on');clearInterval(alBuzzT);buzz(0)};
 $('openAlerts').onclick=()=>{show('alerts');drawGroups();drawAlLog();drawLearn()};
 function drawLearn(){$('lrnG').innerHTML=GROUPS.map(g=>`<option value="${g.id}">${g.icon} ${esc(g.chip)}</option>`).join('');
@@ -2608,12 +2608,12 @@ $('lrnGo').onclick=async()=>{const g=$('lrnG').value;if(!alOn){await startAlerts
   const v=new Float32Array(521);fr.forEach(f=>{for(let i=0;i<521;i++)v[i]+=f.v[i]/fr.length});
   const mine=alSamples.filter(x=>x.g===g);if(mine.length>=3)alSamples.splice(alSamples.indexOf(mine[0]),1);
   alSamples.push({g,v:Array.from(v,x=>Math.round(x*1000)/1000),d:Date.now()});store.set('wasl_snd_samples',alSamples);
-  $('lrnMsg').textContent=tr('✅ اتعلمته! من دلوقتي لما الصوت ده يتكرر وصل هينبّهك. جرّبه مرة كمان عشان تتأكد.');drawLearn()},1000)};
+  $('lrnMsg').textContent=tr('✅ اتعلمته! من دلوقتي لما الصوت ده يتكرر بدالك هينبّهك. جرّبه مرة كمان عشان تتأكد.');drawLearn()},1000)};
 $('alToggle').onclick=()=>{alOn?stopAlerts():startAlerts()};
 $('alBack').onclick=()=>{drawAlChip();show('home')};
 document.addEventListener('visibilitychange',async()=>{if(alOn&&!document.hidden){try{alWake=await navigator.wakeLock.request('screen')}catch(e){}}});
-/* The screen never turns off while Wasl is open: a Deaf user holding the phone up in a conversation must not lose it.
-   Browsers drop the lock when the app is hidden, so it is taken again when Wasl comes back, and on the first touch
+/* The screen never turns off while Badalak is open: a Deaf user holding the phone up in a conversation must not lose it.
+   Browsers drop the lock when the app is hidden, so it is taken again when Badalak comes back, and on the first touch
    (some browsers only allow it after one). */
 let keepWake=null;
 async function keepAwake(){if(document.hidden||!('wakeLock' in navigator))return;if(keepWake&&!keepWake.released)return;
@@ -2663,7 +2663,7 @@ function sgBuild(){if(SG.ui)return;SG.ui=true;const b=$('signs');
 <div class="scards" id="sSent" aria-live="polite"></div>
 <div class="row"><button class="btn or" id="sUse">${tr('قوله')}</button><button class="btn ghost" id="sClear">${tr('امسح')}</button></div>
 <details id="sGridD"><summary>🖼 ${tr('اختار بالصور')}</summary><div class="scards sm" id="sGrid"></div></details>
-<details id="sTeach"><summary>${tr('علّم وصل إشارة جديدة')}</summary>
+<details id="sTeach"><summary>${tr('علّم بدالك إشارة جديدة')}</summary>
 <p class="note" id="sOld" style="color:#ffd7b0" hidden>${tr('الإشارات القديمة محتاجة تتسجّل تاني بالطريقة الجديدة.')}</p>
 <label for="sLabel" style="display:block;margin:8px 0 4px;font-weight:700">${tr('معنى الإشارة')}</label>
 <input id="sLabel" placeholder="${esc(tr('معنى الإشارة، مثلاً: محتاج دكتور'))}">
@@ -2684,7 +2684,7 @@ function sgBuild(){if(SG.ui)return;SG.ui=true;const b=$('signs');
  }
 function sgLive(t){const e=$('slive');if(e)e.textContent=t}
 function sgCard(id,extra){return `<button class="scard${extra||''}" data-id="${esc(id)}"><span class="sgi" aria-hidden="true">${esc(sgIcon(id))}</span><b>${esc(sgWord(id))}</b></button>`}
-function sgDraw(){const s=$('sSent');s.innerHTML=SG.cards.length?SG.cards.map((id,i)=>sgCard(id,' x').replace('<button ',`<button data-i="${i}" aria-label="${esc(tr('شيل {w}',{w:sgWord(id)}))}" `)).join(''):`<span class="sempty">${tr('الإشارات اللي وصل يفهمها هتظهر هنا')}</span>`;
+function sgDraw(){const s=$('sSent');s.innerHTML=SG.cards.length?SG.cards.map((id,i)=>sgCard(id,' x').replace('<button ',`<button data-i="${i}" aria-label="${esc(tr('شيل {w}',{w:sgWord(id)}))}" `)).join(''):`<span class="sempty">${tr('الإشارات اللي بدالك يفهمها هتظهر هنا')}</span>`;
  s.querySelectorAll('button').forEach(x=>x.onclick=()=>{SG.cards.splice(+x.dataset.i,1);sgDraw()});$('sUse').disabled=!SG.cards.length}
 function sgAdd(id){if(!id)return;if(SG.cards.length>=8)SG.cards.shift();SG.cards.push(id);buzz(60);sgDraw();sgPick(null)}
 function sgPick(top){const p=$('sPick');if(!top){p.classList.add('hidden');return}
@@ -2693,7 +2693,7 @@ function sgGrid(){const g=$('sGrid');const mine=Object.values(SG.meta).filter(m=
  g.innerHTML=mine.concat(lib).map(id=>sgCard(id)).join('');g.querySelectorAll('button').forEach(x=>x.onclick=()=>sgAdd(x.dataset.id))}
 function sgMineDraw(){const e=Object.entries(SG.mineN);$('sMine').innerHTML=e.length?e.map(([k,n])=>`<span>${esc(k)} (${n}) <button class="sdel" data-l="${esc(k)}" aria-label="${esc(tr('امسح {w}',{w:k}))}">✕</button></span>`).join(''):'<span>'+tr('لسه مفيش إشارات')+'</span>';
  $('sMine').querySelectorAll('.sdel').forEach(x=>x.onclick=async()=>{if(!confirm(tr('تمسح إشارة «{w}»؟',{w:x.dataset.l})))return;const S=await loadS2V();await S.mine.delLabel(x.dataset.l);Object.keys(SG.meta).forEach(k=>{if(SG.meta[k].mine&&SG.meta[k].ar===x.dataset.l)delete SG.meta[k]});await sgTemplates();sgMineDraw()})}
-async function sgGot(r){if(SG.teach)return;const S=await loadS2V();if(!S.dtw_recognizer.tpl.length&&!S.hasClassifier()){sgLive(tr('وصل لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور'));return}
+async function sgGot(r){if(SG.teach)return;const S=await loadS2V();if(!S.dtw_recognizer.tpl.length&&!S.hasClassifier()){sgLive(tr('بدالك لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور'));return}
  const res=await S.recognize(r.seq);SG.last=res;if(!res.top.length){sgLive(tr('مش فاهمها. جرّب تاني، أو اختار بالصور'));return}
  if(res.sure){sgAdd(res.top[0].id);sgLive('« '+sgWord(res.top[0].id)+' »')}
  else{sgPick(res.top.slice(0,3));sgLive(res.none?tr('مش فاهمها. يمكن واحدة من دول؟'):tr('مش متأكد. اختار الصح'))}}
@@ -2706,7 +2706,7 @@ function sgFrame(o){const c=$('sc'),v=$('sv'),x=c.getContext('2d');if(c.width!==
  if(r){sgGot(r);return}
  if(SG.seg.state==='sign'&&was!=='sign')sgLive(tr('بشوف... ✋'));
  else if(SG.seg.state!=='sign'&&SG.noPose===30)sgLive(tr('بعّد الموبايل شوية عشان راسك وكتافك يبانوا'))}
-/* «علّم وصل»: 3 takes, 3 seconds each, then saved on this phone (IndexedDB) */
+/* «علّم بدالك»: 3 takes, 3 seconds each, then saved on this phone (IndexedDB) */
 async function sgTeach(){const l=$('sLabel').value.trim();if(!l){$('sLabel').focus();return alert(tr('اكتب معنى الإشارة الأول'))}if(!SG.ready)return alert(tr('الكاميرا لسه ما اشتغلتش'));if(SG.teach)return;
  $('sRec').disabled=true;const S=await loadS2V();const norm=s=>String(s).replace(/[؟?.!،]/g,'').replace(/\s+/g,' ').trim();
  const lib=SG.list.find(s=>String(s.ar).split(' / ').some(a=>norm(sgArFirst(a))===norm(l)));const id=lib?lib.id:'me:'+l,icon=lib&&lib.icon||'✋';
@@ -2723,19 +2723,19 @@ async function sgTeach(){const l=$('sLabel').value.trim();if(!l){$('sLabel').foc
  await sgTemplates();sgMineDraw();$('sLabel').value='';sgLive(tr('اتعلمتها ✓ جرّبها دلوقتي'));buzz([60,60,60])}
 /* camera problems in simple words */
 function sgCamErr(e){const n=e&&e.name||'';
- if(!window.isSecureContext||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return tr('الكاميرا مش متاحة هنا. افتح وصل من المتصفح (Chrome) بالرابط اللي بيبدأ بـ https');
+ if(!window.isSecureContext||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return tr('الكاميرا مش متاحة هنا. افتح بدالك من المتصفح (Chrome) بالرابط اللي بيبدأ بـ https');
  if(n==='NotAllowedError'||n==='SecurityError')return tr('الكاميرا مقفولة. افتح إعدادات المتصفح، واختار «الأذونات» ثم «الكاميرا»، وخليها «سماح». وبعدين اقفل الشاشة دي وافتحها تاني.');
  if(n==='NotFoundError'||n==='OverconstrainedError')return tr('مش لاقي كاميرا أمامية في الموبايل ده.');
  if(n==='NotReadableError'||n==='AbortError')return tr('الكاميرا شغّالة في تطبيق تاني. اقفله وجرّب تاني.');
  return tr('الكاميرا ما اشتغلتش. اقفل الشاشة دي وافتحها تاني.')}
 async function sgStart(){SG.ready=false;sgLive(tr('بيحمّل برنامج الإشارات... (أول مرة بس، محتاج نت)'));let S;
- try{S=await loadS2V();sgTemplates().then(()=>{sgMineDraw();if(SG.ready&&!S.dtw_recognizer.tpl.length)sgLive(tr('وصل لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور'))});await S.Engine.load()}
+ try{S=await loadS2V();sgTemplates().then(()=>{sgMineDraw();if(SG.ready&&!S.dtw_recognizer.tpl.length)sgLive(tr('بدالك لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور'))});await S.Engine.load()}
  catch(e){if(SG.open)sgLive(tr('برنامج الإشارات ما نزلش. اتأكد إن فيه نت وجرّب تاني. وتقدر تختار بالصور.'));return}
  if(!SG.open)return;
  try{SG.seg=new S.Segmenter();await S.Engine.start($('sv'),o=>{if(SG.open)sgFrame(o)})}
  catch(e){S.Engine.stop();if(SG.open){sgLive(sgCamErr(e));$('sCam').classList.add('err')}return}
  if(!SG.open){S.Engine.stop();return}
- SG.ready=true;$('sCam').classList.remove('err');sgLive(S.dtw_recognizer.tpl.length||S.hasClassifier()?tr('نزّل إيدك، وبعدين اعمل الإشارة'):tr('وصل لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور'))}
+ SG.ready=true;$('sCam').classList.remove('err');sgLive(S.dtw_recognizer.tpl.length||S.hasClassifier()?tr('نزّل إيدك، وبعدين اعمل الإشارة'):tr('بدالك لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور'))}
 function openSigns(mode){sgBuild();SG.mode=mode;SG.open=true;SG.cards=[];sgDraw();sgPick(null);
  $('sUse').hidden=mode==='me';$('sUse').textContent=tr('قوله');$('sTeach').open=mode==='me';
  $('signs').classList.add('on');if(mode!=='me')haltListening();sgMeta().then(()=>{if($('sGridD').open)sgGrid()});sgStart()}
@@ -2752,7 +2752,7 @@ $('openSignsMe').onclick=()=>openSigns('me');
 
 drawStats();drawRefills();
 /* ================= INSTALL + OFFLINE ================= */
-/* New version: the phone checks for updates each time Wasl is opened. When one arrives, the page reloads only at a safe moment
+/* New version: the phone checks for updates each time Badalak is opened. When one arrives, the page reloads only at a safe moment
    (on the home screen, or while the app is in the background), so nobody loses what they are doing. */
 if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='file:'){
  let hadCtrl=!!navigator.serviceWorker.controller,newVer=false,done=false;
@@ -2767,7 +2767,7 @@ if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='fi
  const showBar=()=>{if(!standalone&&!hidden())bar.classList.remove('hidden')};
  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();ev=e;showBar()});
  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;
- if(ios&&!standalone){$('instTxt').textContent=tr('ثبّت وَصْل: دوس زرار المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»');$('instGo').classList.add('hidden');showBar()}
+ if(ios&&!standalone){$('instTxt').textContent=tr('ثبّت بَدالَك: دوس زرار المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»');$('instGo').classList.add('hidden');showBar()}
  $('instGo').onclick=async()=>{if(!ev)return;ev.prompt();try{await ev.userChoice}catch(e){}ev=null;bar.classList.add('hidden')};
  $('instX').onclick=()=>{bar.classList.add('hidden');try{localStorage.setItem('wasl_inst_x','1')}catch(e){}};
  window.addEventListener('appinstalled',()=>bar.classList.add('hidden'));
@@ -2837,7 +2837,7 @@ const SIT=[
  {k:'bus',l:'مواصلات',c:'#7A5A00',t:'#F5EDD3',g:'عايز أركب مواصلة، وأعرف أنزل فين والأجرة كام'},
  {k:'bank',l:'بنك',c:'#13262F',t:'#E4EAEC',g:'عايز أخلّص حاجة في البنك'},
  {k:'where',l:'فين المكان؟',c:'#8F4612',t:'#F6E6D8',g:'عايز أسأل عن مكان'}];
-const TOOLS=[{k:'chat',l:'ترجمة',go:()=>$('openFree').click()},{k:'homeRx',l:'دوا للبيت',go:()=>oOpen()},{k:'deaf',l:'أنا أصم',go:showDeaf},{k:'phone',l:'مكالمة',tag:'تجريبي',go:()=>callOpen()},{k:'qr',l:'وصل في المكان',go:()=>{location.href='counter.html'+(GULF?'?l=ar-SA':UI==='en'?'?l=en-US':'')}}];
+const TOOLS=[{k:'chat',l:'ترجمة',go:()=>$('openFree').click()},{k:'homeRx',l:'دوا للبيت',go:()=>oOpen()},{k:'deaf',l:'أنا أصم',go:showDeaf},{k:'phone',l:'مكالمة',tag:'تجريبي',go:()=>callOpen()},{k:'qr',l:'بدالك على الكاونتر',go:()=>{location.href='counter.html'+(GULF?'?l=ar-SA':UI==='en'?'?l=en-US':'')}}];
 if(UI==='en'||GULF){SIT.forEach(x=>{x.l=tr(x.l);if(x.g)x.g=tr(x.g)});TOOLS.forEach(x=>x.l=tr(x.l))}
 const welcomed=()=>store.get('wasl_welcome',false)===true;
 const gated=fn=>()=>{buzz([30]);if(!welcomed()){$('welcome').classList.remove('hidden');return}fn()};
@@ -2849,7 +2849,7 @@ function typeGoal(pre){drawPics(null);taskPhoto=null;$('goal').value=pre||'';sho
 $('sitGrid').querySelectorAll('button').forEach(b=>b.onclick=gated(()=>{const x=SIT[+b.dataset.i];if(x.ph)openPh();else startSit(x.g)}));
 $('toolGrid').querySelectorAll('button').forEach(b=>b.onclick=gated(()=>TOOLS[+b.dataset.i].go()));
 $('picWrite').onclick=gated(()=>typeGoal(''));
-/* pharmacy: Wasl never suggests a medicine. The user shows the prescription or the box, or writes the name. */
+/* pharmacy: Badalak never suggests a medicine. The user shows the prescription or the box, or writes the name. */
 const PH=[{k:'cam',l:'صوّر الروشتة',go:()=>{camHint='روشتة';$('camIn').click()}},{k:'box',l:'صوّر علبة الدوا',go:()=>{camHint='علبة دوا';$('camIn').click()}},{k:'pen',l:'اكتب اسم الدوا',go:()=>typeGoal(tr('عايز من الصيدلية: '))}];PH.forEach(x=>x.l=tr(x.l));
 $('phT').innerHTML=svgI('pill')+tr('صيدلية');
 $('phOpts').innerHTML=PH.map(x=>`<button><span class="si">${svgI(x.k)}</span>${esc(x.l)}</button>`).join('');
@@ -2857,7 +2857,7 @@ $('phOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{buzz([30]);
 function openPh(){$('phSheet').classList.remove('hidden')}
 $('phX').onclick=()=>$('phSheet').classList.add('hidden');
 $('phSheet').onclick=e=>{if(e.target.id==='phSheet')$('phSheet').classList.add('hidden')};
-/* ================= «مكالمة»: Wasl phones a number for the user =================
+/* ================= «مكالمة»: Badalak phones a number for the user =================
    The user writes the number and what to say. The server (Wasl - Call Start / Session) dials with Telnyx, whose live voice
    assistant says first that it is an AI assistant speaking for a Deaf person, speaks for the user and writes down the other side.
    The app polls the call as text every 1.5 s («lines» comes complete each time) and shows questions (q + 2-4 options) like a task.
@@ -2876,23 +2876,23 @@ function callBuild(){$('call').setAttribute('aria-label',tr('مكالمة'));
  $('call').innerHTML=`<div class="top"><button class="back" id="cBack">${tr('→ رجوع')}</button><b style="font-size:18px">${tr('مكالمة (تجريبي)')}</b><span class="simbadge hidden" id="cBadge">${tr('محاكاة')}</span><span id="cSp" style="width:70px"></span></div>
 <div class="cbody" id="cBody">
 <div id="cSetup" style="display:flex;flex-direction:column;gap:12px">
-<p class="lead">${tr('وصل يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف التاني يظهر لك مكتوب.')}</p>
+<p class="lead">${tr('بدالك يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف التاني يظهر لك مكتوب.')}</p>
 <p class="cnote">🧪 ${tr('المكالمات لسه تجريبية.')}</p>
 <div class="field"><label for="cNum">${tr('رقم التليفون')}</label><input id="cNum" type="tel" inputmode="tel" dir="ltr" autocomplete="tel" placeholder="01xxxxxxxxx"><p class="cerr hidden" id="cNumErr" role="alert"></p></div>
 <div class="crecent" id="cRecent"></div>
-<div class="field"><label for="cGoal">${tr('عايز وصل يقول إيه؟')}</label><textarea id="cGoal" class="goal" rows="3" placeholder="${esc(tr('مثلاً: عايز أحجز كشف عند دكتور العظام بكرة'))}"></textarea><p class="cerr hidden" id="cGoalErr" role="alert"></p></div>
+<div class="field"><label for="cGoal">${tr('عايز بدالك يقول إيه؟')}</label><textarea id="cGoal" class="goal" rows="3" placeholder="${esc(tr('مثلاً: عايز أحجز كشف عند دكتور العظام بكرة'))}"></textarea><p class="cerr hidden" id="cGoalErr" role="alert"></p></div>
 <div class="qgrid" id="cIdeas"></div>
-<p class="cnote" id="cConsent">${tr('المكالمة مش بتتسجّل، ووصل بيقول للطرف التاني إنه مساعد بالذكاء الاصطناعي')}</p>
+<p class="cnote" id="cConsent">${tr('المكالمة مش بتتسجّل، وبدالك بيقول للطرف التاني إنه مساعد بالذكاء الاصطناعي')}</p>
 <p class="cerr hidden" id="cErr" role="alert"></p>
 <button class="btn or startbig" id="cGo">${tr('📞 اتصل')}</button>
 </div>
 <div id="cLive" class="hidden" style="display:flex;flex-direction:column;gap:10px">
 <div class="state"><span class="dot think" id="cDot"></span><span id="cState">${tr('بيتصل...')}</span></div>
 <div class="cheard" aria-live="polite"><small id="cHeardLab">${tr('الطرف التاني بيقول')}</small><p id="cHeard"></p><div class="cards" id="cCards"></div></div>
-<p class="csaid hidden" id="cSaid"><b>${tr('وصل قال')}</b><span id="cSaidT"></span></p>
+<p class="csaid hidden" id="cSaid"><b>${tr('بدالك قال')}</b><span id="cSaidT"></span></p>
 <div class="decide hidden" id="cDecide" role="alertdialog" aria-labelledby="cQ"><div class="q" id="cQ"></div><div class="opts" id="cOpts"></div></div>
-<div class="decide hidden" id="cOk" role="alertdialog" aria-labelledby="cOkQ"><div class="q" id="cOkQ"><span class="no-pic">${tr('وصل هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:')}</span><span class="only-pic">${tr('اتأكد الأول:')}</span></div><p class="okline" id="cOkT"></p><div class="opts"><button id="cOkYes"><span class="pi" aria-hidden="true">✓</span>${tr('قوله')}</button><button id="cOkNo"><span class="pi" aria-hidden="true">✋</span>${tr('لأ، استنى')}</button></div></div>
-<div class="typerow hidden" id="cType"><label class="sr" for="cIn">${tr('اكتب ردك')}</label><input id="cIn" placeholder="${esc(tr('اكتب اللي عايز وصل يقوله'))}"><button id="cSend">${tr('ابعت')}</button></div>
+<div class="decide hidden" id="cOk" role="alertdialog" aria-labelledby="cOkQ"><div class="q" id="cOkQ"><span class="no-pic">${tr('بدالك هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:')}</span><span class="only-pic">${tr('اتأكد الأول:')}</span></div><p class="okline" id="cOkT"></p><div class="opts"><button id="cOkYes"><span class="pi" aria-hidden="true">✓</span>${tr('قوله')}</button><button id="cOkNo"><span class="pi" aria-hidden="true">✋</span>${tr('لأ، استنى')}</button></div></div>
+<div class="typerow hidden" id="cType"><label class="sr" for="cIn">${tr('اكتب ردك')}</label><input id="cIn" placeholder="${esc(tr('اكتب اللي عايز بدالك يقوله'))}"><button id="cSend">${tr('ابعت')}</button></div>
 <div class="summary hidden" id="cSum"><b id="cSumH">${tr('✓ المكالمة خلصت')}</b><p id="cSumT"></p><button class="btn" id="cHome">${tr('رجوع للرئيسية')}</button></div>
 <details class="typebox" id="cLogBox"><summary>${tr('كل كلام المكالمة')}</summary><div class="log" id="cLog"></div></details>
 </div>
@@ -2920,12 +2920,12 @@ function callOpen(){if(!$('cSetup'))callBuild();CL=null;
  show('call');quotaGet()}
 async function callStart(){const n=callNumber($('cNum').value),goal=$('cGoal').value.trim();let bad=false;
  if(!n){callErr('cNumErr',tr('الرقم ده مش كامل. اكتبه بالكامل، مثلاً 01001234567 أو +971501234567'));bad=true}
- else if(!/^\+(20|971|966|44|1)\d/.test(n)){callErr('cNumErr',tr('وصل بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.'));bad=true}
- if(goal.length<3){callErr('cGoalErr',tr('اكتب عايز وصل يقول إيه في المكالمة.'));bad=true}
+ else if(!/^\+(20|971|966|44|1)\d/.test(n)){callErr('cNumErr',tr('بدالك بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.'));bad=true}
+ if(goal.length<3){callErr('cGoalErr',tr('اكتب عايز بدالك يقول إيه في المكالمة.'));bad=true}
  if(bad){buzz([200]);return}
  const q=await quotaGet(4000);if(q&&q.left===0){quotaShow(q);return}
  if(!store.get('wasl_consent_call2',false)){ // «2»: the wording changed with the live voice assistant; agreed once more
- if(!confirm(tr('قبل أول مكالمة:\n\nوصل هيتصل بالرقم ده، ويقول في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nالكلام بيعدّي على شركة الاتصالات ومساعدها الصوتي عشان يتقال ويتكتب. المساعد بياخد اسمك وهدف المكالمة بس، وأي حاجة تانية بيسألك الأول.\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح أول ما المكالمة تخلص.\n\nموافق؟')))return;store.set('wasl_consent_call2',true)}
+ if(!confirm(tr('قبل أول مكالمة:\n\nبدالك هيتصل بالرقم ده، ويقول في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nالكلام بيعدّي على شركة الاتصالات ومساعدها الصوتي عشان يتقال ويتكتب. المساعد بياخد اسمك وهدف المكالمة بس، وأي حاجة تانية بيسألك الأول.\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح أول ما المكالمة تخلص.\n\nموافق؟')))return;store.set('wasl_consent_call2',true)}
  $('cGo').disabled=true;$('cGo').textContent=tr('بيتصل...');callErr('cErr','');
  try{const d=await postJSON(CALL_START_URL,{to:n,goal,lang:LANG,ui:UI,profile:taskProfile(),name:voiceName(),agender:vg()},30000);
   if(!d||!d.cid)throw new Error('no call');
@@ -2934,7 +2934,7 @@ async function callStart(){const n=callNumber($('cNum').value),goal=$('cGoal').v
   $('cSetup').classList.add('hidden');$('cLive').classList.remove('hidden');$('cFoot').classList.remove('hidden');
   $('cLog').innerHTML='';$('cHeard').textContent='';drawCards('cCards',[]);$('cSaid').classList.add('hidden');['cDecide','cOk','cType','cSum'].forEach(id=>$(id).classList.add('hidden'));
   callDraw(d);CL.timer=setTimeout(callPoll,1500)}
- catch(e){const W={quota:'',number:'الرقم ده مش مسموح. اتأكد منه وجرّب تاني.',calls:'خلصت مكالماتك المجانية الشهر ده (3 مكالمات). ممكن تخلّصها واتساب أو «وصل في المكان».',daily:'خدمة المكالمات مشغولة النهارده. جرّب بكرة.',dial:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.'};
+ catch(e){const W={quota:'',number:'الرقم ده مش مسموح. اتأكد منه وجرّب تاني.',calls:'خلصت مكالماتك المجانية الشهر ده (3 مكالمات). ممكن تخلّصها واتساب أو «بدالك على الكاونتر».',daily:'خدمة المكالمات مشغولة النهارده. جرّب بكرة.',dial:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.'};
   if(e&&e.why==='quota'){quotaShow(e.data);return}
   callErr('cErr',tr((e&&W[e.why])||(e&&e.data&&W[e.data.why])||'النت ضعيف. جرّب تاني.'))}
  finally{if(!CL){$('cGo').disabled=false;$('cGo').textContent=tr('📞 اتصل')}}}
@@ -2944,7 +2944,7 @@ async function callPoll(){if(!CL||CL.over)return;const my=CL;
  if(CL&&!CL.over&&my===CL){clearTimeout(CL.timer);CL.timer=setTimeout(callPoll,1500)}}
 function callState(dot,text){$('cDot').className='dot '+dot;$('cState').textContent=text}
 function callLog(l){const d=document.createElement('div');d.className='msg '+(l.r==='callee'?'h':l.r==='wasl'?'w':'u');
- d.innerHTML='<b>'+tr(l.r==='callee'?'الطرف التاني':l.r==='wasl'?'وصل قال':'إنت')+'</b>'+nums(l.t);$('cLog').appendChild(d)}
+ d.innerHTML='<b>'+tr(l.r==='callee'?'الطرف التاني':l.r==='wasl'?'بدالك قال':'إنت')+'</b>'+nums(l.t);$('cLog').appendChild(d)}
 function callDraw(d){if(!d||!CL)return;CL.mode=d.mode||CL.mode;const sim=CL.mode==='sim';$('cBadge').classList.toggle('hidden',!sim);$('cSp').classList.toggle('hidden',sim);
  /* «lines» comes complete with every state, in time order, and a line may change or be added in the middle:
     redraw from it each time. The server wipes it when the call ends, so an empty list keeps what the user saw. */
@@ -2960,7 +2960,7 @@ function callDraw(d){if(!d||!CL)return;CL.mode=d.mode||CL.mode;const sim=CL.mode
  const p=d.pending,key=p?JSON.stringify(p):'';
  if(key!==CL.pendKey){CL.pendKey=key;$('cDecide').classList.add('hidden');$('cOk').classList.add('hidden');
   if(p&&p.ok){$('cOkT').innerHTML=nums(p.say);$('cOk').classList.remove('hidden');buzz([200,100,200]);showBox('cOk')}
-  else if(p&&p.type){$('cType').classList.remove('hidden');$('cIn').placeholder=p.q||tr('اكتب اللي عايز وصل يقوله');$('cIn').focus();showBox('cType')}
+  else if(p&&p.type){$('cType').classList.remove('hidden');$('cIn').placeholder=p.q||tr('اكتب اللي عايز بدالك يقوله');$('cIn').focus();showBox('cType')}
   else if(p){$('cQ').textContent=p.q||tr('تختار إيه؟');const opts=(p.o&&p.o.length?p.o:[tr('أيوه'),tr('لأ')]);
    $('cOpts').innerHTML=opts.map(o=>`<button>${optIc(o)}${esc(o)}</button>`).join('');
    $('cOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{const c=opts[i];
@@ -2975,10 +2975,10 @@ function callDraw(d){if(!d||!CL)return;CL.mode=d.mode||CL.mode;const sim=CL.mode
  const last=L[L.length-1];
  if(st==='ringing')callState('think',tr('بيرن... مستني حد يرد'));
  else if(st==='ending')callState('think',tr('بيقفل المكالمة...'));
- else if(p)callState('talk',tr('وصل محتاج قرارك · الطرف التاني مستني'));
- else if(st==='done')callState('ok',tr('المكالمة خلصت · وصل بيقفل الخط'));
- else if(d.think||(last&&last.r!=='wasl'))callState('think',tr('وصل بيفكر في الرد...'));
- else callState('ok',tr('المكالمة شغالة · وصل بيسمع'))}
+ else if(p)callState('talk',tr('بدالك محتاج قرارك · الطرف التاني مستني'));
+ else if(st==='done')callState('ok',tr('المكالمة خلصت · بدالك بيقفل الخط'));
+ else if(d.think||(last&&last.r!=='wasl'))callState('think',tr('بدالك بيفكر في الرد...'));
+ else callState('ok',tr('المكالمة شغالة · بدالك بيسمع'))}
 async function callReply(kind,text){if(!CL||CL.over)return;$('cDecide').classList.add('hidden');$('cOk').classList.add('hidden');$('call').classList.remove('asking');callState('think',tr('ببعت ردك...'));
  try{const d=await postJSON(CALL_URL,{op:'reply',cid:CL.cid,kind,text:text||''},15000);callDraw(d)}
  catch(e){CL.pendKey='';callState('think',tr('مقدرتش أبعت. جرّب تاني.'))}}
@@ -2987,8 +2987,8 @@ async function callEnd(){if(!CL||CL.over){CL=null;show('home');return}
  callState('think',tr('بيقفل المكالمة...'));
  try{const d=await postJSON(CALL_URL,{op:'end',cid:CL.cid},15000);callDraw(d)}catch(e){callFinish('ended')}}
 function callFinish(st){if(!CL||CL.over)return;CL.over=true;clearTimeout(CL.timer);
- const W={ended:'المكالمة خلصت.',cut:'الخط اتقطع.',empty:'المكالمة اتقفلت قبل أي كلام.',failed:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.',noanswer:'محدش رد على المكالمة.',busy:'الخط كان مشغول.',canceled:'المكالمة اتلغت.',timeout:'الخط اتقفل عشان الرد اتأخر، ووصل قالهم إننا هنكلمهم تاني.'};
- const who=l=>tr(l.r==='callee'?'الطرف التاني':l.r==='wasl'?'وصل قال':'إنت'),last=CL.lines.slice(-6),had=CL.lines.length>0;
+ const W={ended:'المكالمة خلصت.',cut:'الخط اتقطع.',empty:'المكالمة اتقفلت قبل أي كلام.',failed:'المكالمة ماتمّتش. اتأكد من الرقم وجرّب تاني.',noanswer:'محدش رد على المكالمة.',busy:'الخط كان مشغول.',canceled:'المكالمة اتلغت.',timeout:'الخط اتقفل عشان الرد اتأخر، وبدالك قالهم إننا هنكلمهم تاني.'};
+ const who=l=>tr(l.r==='callee'?'الطرف التاني':l.r==='wasl'?'بدالك قال':'إنت'),last=CL.lines.slice(-6),had=CL.lines.length>0;
  // «✓ done» only when the call really ended; a cut, a timeout or no answer says why, above the last words
  const ended=st==='ended'||(!st&&!!CL.summary),ok=ended&&(!!CL.summary||had);
  // the reason never contradicts the title: a lost call (no state) «اتقطع»; an ended call with no words «اتقفلت قبل أي كلام»
@@ -3021,7 +3021,7 @@ addEventListener('online',netDraw);addEventListener('offline',netDraw);addEventL
 </script>
 <script>
 /* ============ ORDER FROM A PHARMACY ON WHATSAPP ============
-   The user's own WhatsApp sends every message (the user taps send). Wasl writes the messages,
+   The user's own WhatsApp sends every message (the user taps send). Badalak writes the messages,
    reads the replies (pasted, shared, or a voice note turned into text), explains them with
    picture cards, checks allergies, and asks the user only for decisions. */
 const WA_URL=API_BASE+'wasl-wa';
@@ -3053,7 +3053,7 @@ $('oStart').onclick=async()=>{const goal=$('oGoal').value.trim(),name=$('oPhName
  if(!goal){$('oGoal').focus();$('oGoal').placeholder=tr('اكتب الدوا الأول، أو صوّر الروشتة');return}
  if(num&&waNum(num).length<10){alert(tr('رقم الصيدلية مش مظبوط. اكتبه زي 01xxxxxxxxx'));return}
  {const q=await quotaGet(4000);if(q&&q.left===0){quotaShow(q);return}}
- if(!store.get('wasl_consent_order',false)){if(!confirm(tr('قبل أول طلب:\n\nعشان وصل يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (ElevenLabs).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟')))return;store.set('wasl_consent_order',true)}
+ if(!store.get('wasl_consent_order',false)){if(!confirm(tr('قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (ElevenLabs).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟')))return;store.set('wasl_consent_order',true)}
  if(num){const ps=oPhones().filter(x=>waNum(x.num)!==waNum(num));ps.push({name,num});store.set('wasl_pharmacies',ps.slice(-8))}
  const o={id:Date.now(),pharmacy:name,num,goal,address:$('oAddr').value.trim(),thread:[],state:'setup',title:goal.slice(0,40),created:Date.now()};
  oSave(o);oDraw();oStep({type:'start',tid:'o'+o.id})};
@@ -3063,7 +3063,7 @@ $('oDemo').onclick=()=>{const p=profile();OD={step:0,o:{id:1,demo:true,pharmacy:
 function oDraw(){const o=oCur();if(!o){oSetup();return}
  $('oSetup').classList.add('hidden');$('oChat').classList.remove('hidden');
  $('oPhLab').textContent=o.pharmacy+(o.demo?tr(' · تجربة'):'');$('oTitle').textContent=o.title||o.goal;$('oStat').textContent=O_STATE[o.state]||'';
- $('oLog').innerHTML=o.thread.map(m=>{const c=m.from==='me'?'w':m.from==='user'?'u':'h';const who=tr(m.from==='me'?'إنت بعت':m.from==='user'?'اختيارك':m.from==='voice'?'🎤 رسالة صوتية من الصيدلية · وصل حوّلها لكلام':'الصيدلية');
+ $('oLog').innerHTML=o.thread.map(m=>{const c=m.from==='me'?'w':m.from==='user'?'u':'h';const who=tr(m.from==='me'?'إنت بعت':m.from==='user'?'اختيارك':m.from==='voice'?'🎤 رسالة صوتية من الصيدلية · بدالك حوّلها لكلام':'الصيدلية');
   return `<div class="msg ${c}"><b>${who}</b>${nums(m.text)}</div>`}).join('');
  const showExp=!!(o.explain||(o.cards&&o.cards.length))&&o.state!=='done';$('oExp').classList.toggle('hidden',!showExp);$('oExpT').innerHTML=nums(o.explain||'');drawCards('oCards',showExp?(o.cards||[]):[]);
  $('oDecide').classList.toggle('hidden',o.state!=='decide');$('oType').classList.add('hidden');
@@ -3077,7 +3077,7 @@ function oDraw(){const o=oCur();if(!o){oSetup();return}
  $('oSum').classList.toggle('hidden',o.state!=='done');if(o.state==='done'){$('oSumT').innerHTML=nums(o.summary||tr('الطلب خلص.'));$('oRef').classList.toggle('hidden',!o.med||o.refDone);$('oRefQ').textContent=tr('💊 أفكّرك قبل ما {m} يخلص؟ العلبة بتكفيك قد إيه؟',{m:o.med||''});$('oRefOpts').classList.remove('hidden');$('oRefOk').classList.add('hidden')}
  $('oCancel').classList.toggle('hidden',o.state==='done');
  setTimeout(()=>{$('oBody').scrollTop=$('oBody').scrollHeight},30)}
-async function oStep(ev){const o=oCur();if(!o)return;oBusy(tr(ev.type==='reply'?'بقرا رد الصيدلية...':'وصل بيكتب...'));
+async function oStep(ev){const o=oCur();if(!o)return;oBusy(tr(ev.type==='reply'?'بقرا رد الصيدلية...':'بدالك بيكتب...'));
  let d=null;
  if(o.demo){await new Promise(r=>setTimeout(r,900));d=oDemoStep(ev,o)}
  else{const p=taskProfile();const body={k:API_K,ui:UI,lang:LANG,profile:p,order:{pharmacy:o.pharmacy,goal:o.goal,address:o.address,thread:o.thread.slice(-24).map(m=>({from:m.from,text:m.text}))},event:ev};
@@ -3129,7 +3129,7 @@ function drawOrderChip(){const o=(()=>{const id=store.get('wasl_order_active',0)
 /* ---------- replies shared from WhatsApp (Android share sheet) ---------- */
 async function oTakeShared(){if(new URLSearchParams(location.search).get('shared')!=='1')return;history.replaceState(null,'',location.pathname);
  let text='',audio=null;try{const c=await caches.open('wasl-share');const t=await c.match('/wasl-share/text');if(t)text=(await t.json()).text||'';const a=await c.match('/wasl-share/audio');if(a)audio=await a.blob();await c.delete('/wasl-share/text');await c.delete('/wasl-share/audio')}catch(e){}
- const o=oCur();if(!o||o.state==='done'){show('order');oSetup();if(text)$('oGoal').value='';alert(tr('مفيش طلب مفتوح. ابدأ طلب جديد، وبعدين شارك رد الصيدلية لوصل.'));return}
+ const o=oCur();if(!o||o.state==='done'){show('order');oSetup();if(text)$('oGoal').value='';alert(tr('مفيش طلب مفتوح. ابدأ طلب جديد، وبعدين شارك رد الصيدلية لبدالك.'));return}
  show('order');oDraw();if(audio&&audio.size)oVoiceNote(audio);else if(text)oGotReply(text)}
 
 /* ---------- scripted demo: a pharmacy that answers with a voice note ---------- */
@@ -3349,12 +3349,12 @@ Object.assign(EN,{
 'وصلت لأقصى عدد ({n}). امسح كلمة الأول.':'You reached the limit ({n}). Delete a word first.',
 'الجملة دي موجودة.':'That sentence is already saved.','الكلمة دي موجودة.':'That word is already saved.','اتحفظت ✓':'Saved ✓',
 'كلماتي':'My words',
-'أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدوا اللي بتاخده، أسماء أهلك. وصل بيبعتها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على الموبايل ده.':"Names and words of yours: your doctor, your street, the medicine you take, your family's names. Wasl sends them with requests so the AI spells them right. Saved on this phone.",
+'أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدوا اللي بتاخده، أسماء أهلك. بدالك بيبعتها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على الموبايل ده.':"Names and words of yours: your doctor, your street, the medicine you take, your family's names. Badalak sends them with requests so the AI spells them right. Saved on this phone.",
 'كلمة جديدة':'New word','مثلاً: د. سامي، شارع التحرير':'e.g. Dr. Samy, Tahrir Street','امسح {w}':'Delete {w}',
-'✨ ظبّطها':'✨ Polish','خلّي وصل يظبط الجملة':'Let Wasl polish the sentence',
-'وصل هيقول كده. تقدر تعدّل:':'Wasl will say this. You can edit it:','رجّع كلامي':'Use my words',
+'✨ ظبّطها':'✨ Polish','خلّي بدالك يظبط الجملة':'Let Badalak polish the sentence',
+'بدالك هيقول كده. تقدر تعدّل:':'Badalak will say this. You can edit it:','رجّع كلامي':'Use my words',
 'النت ضعيف. سيبت كلامك زي ما هو.':'Weak connection. Your words are kept as you typed them.',
-'اكتب كلامك الأول':'Type your words first','وصل سابها زي ما هي':'Wasl kept it as it is','لحظة...':'One moment...'
+'اكتب كلامك الأول':'Type your words first','بدالك سابها زي ما هي':'Badalak kept it as it is','لحظة...':'One moment...'
 });
 Object.assign(GU,{
 'عرض الكلام':'عرض الكلام','كلام اللي قدامك والكروت بيكبروا.':'كلام اللي قدامك والكروت يكبرون.',
@@ -3365,11 +3365,11 @@ Object.assign(GU,{
 'أنا أصم، اكتبلي لو سمحت':'أنا أصم، اكتب لي لو سمحت','ممكن تكتبلي العنوان؟':'ممكن تكتب لي العنوان؟',
 'وصلت لأقصى عدد ({n}). امسح جملة الأول.':'وصلت للحد ({n}). امسح جملة أول.','وصلت لأقصى عدد ({n}). امسح كلمة الأول.':'وصلت للحد ({n}). امسح كلمة أول.',
 'الجملة دي موجودة.':'هذي الجملة موجودة.','الكلمة دي موجودة.':'هذي الكلمة موجودة.','اتحفظت ✓':'انحفظت ✓',
-'أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدوا اللي بتاخده، أسماء أهلك. وصل بيبعتها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على الموبايل ده.':'أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدواء اللي تاخذه، أسماء أهلك. وصل يرسلها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على هذا الجوال.',
-'✨ ظبّطها':'✨ رتّبها','خلّي وصل يظبط الجملة':'خلّ وصل يرتّب الجملة',
-'وصل هيقول كده. تقدر تعدّل:':'وصل بيقول كذا. تقدر تعدّل:',
+'أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدوا اللي بتاخده، أسماء أهلك. بدالك بيبعتها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على الموبايل ده.':'أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدواء اللي تاخذه، أسماء أهلك. بدالك يرسلها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على هذا الجوال.',
+'✨ ظبّطها':'✨ رتّبها','خلّي بدالك يظبط الجملة':'خلّ بدالك يرتّب الجملة',
+'بدالك هيقول كده. تقدر تعدّل:':'بدالك بيقول كذا. تقدر تعدّل:',
 'النت ضعيف. سيبت كلامك زي ما هو.':'النت ضعيف. خلّيت كلامك مثل ما هو.',
-'اكتب كلامك الأول':'اكتب كلامك أول','وصل سابها زي ما هي':'وصل خلّاها مثل ما هي'
+'اكتب كلامك الأول':'اكتب كلامك أول','بدالك سابها زي ما هي':'بدالك خلّاها مثل ما هي'
 });
 (function(){
 const REFINE_URL=API_BASE+'wasl-refine';
@@ -3380,7 +3380,7 @@ const myPhr=()=>list('wasl_phr',PH_MAX,PH_LEN);
 const myWords=()=>DEMO?[]:list('wasl_words',W_MAX,W_LEN);
 window.myWords=myWords;
 // the static parts added to the page (translation screen) follow the app language too
-try{trDom($('fFixBox'));$('fFix').textContent=tr('✨ ظبّطها');$('fFix').setAttribute('aria-label',tr('خلّي وصل يظبط الجملة'))}catch(e){}
+try{trDom($('fFixBox'));$('fFix').textContent=tr('✨ ظبّطها');$('fFix').setAttribute('aria-label',tr('خلّي بدالك يظبط الجملة'))}catch(e){}
 
 /* ---------- كلماتي go with the AI requests (task agent, smart replies, refine) ---------- */
 const _pj=postJSON;
@@ -3406,7 +3406,7 @@ ${sw('hcSw','<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill
 ${sw('saSw','<path d="M3 12h2M7 8v8M11 5v14M15 8v8M19 11v2"/>','تنبيه الكلام','اهتزاز ونور على جنب الشاشة لما اللي قدامك يبدأ يتكلم')}</div>
 <div class="card" id="phCard"><b>${esc(tr('جملي'))}</b><p class="lead" style="margin:0;font-size:14px">${esc(tr('جمل بتقولها كتير، زي اسمك أو عنوانك. بتظهر زراير في الترجمة وجوه المهمة. محفوظة على الموبايل ده بس.'))}</p>
 <div id="phList"></div><div class="field"><label for="phIn">${esc(tr('جملة جديدة'))}</label><div class="addrow"><input id="phIn" maxlength="${PH_LEN}" placeholder="${esc(tr('مثلاً: أنا أصم، اكتبلي لو سمحت'))}"><button class="btn" id="phAdd" type="button">${esc(tr('ضيف'))}</button></div></div><div class="note" id="phNote" aria-live="polite"></div></div>
-<div class="card" id="wdCard"><b>${esc(tr('كلماتي'))}</b><p class="lead" style="margin:0;font-size:14px">${esc(tr('أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدوا اللي بتاخده، أسماء أهلك. وصل بيبعتها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على الموبايل ده.'))}</p>
+<div class="card" id="wdCard"><b>${esc(tr('كلماتي'))}</b><p class="lead" style="margin:0;font-size:14px">${esc(tr('أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدوا اللي بتاخده، أسماء أهلك. بدالك بيبعتها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على الموبايل ده.'))}</p>
 <div class="wlist" id="wdList"></div><div class="field"><label for="wdIn">${esc(tr('كلمة جديدة'))}</label><div class="addrow"><input id="wdIn" maxlength="${W_LEN}" placeholder="${esc(tr('مثلاً: د. سامي، شارع التحرير'))}"><button class="btn" id="wdAdd" type="button">${esc(tr('ضيف'))}</button></div></div><div class="note" id="wdNote" aria-live="polite"></div></div>`;
 $('picSw').closest('.card').insertAdjacentHTML('afterend',html);
 
@@ -3472,7 +3472,7 @@ $('fFix').onclick=async()=>{const t=clean($('fInput').value,300),b=$('fFix');if(
  const my=++fixSeq;b.disabled=true;b.textContent=tr('لحظة...');
  try{const d=await postJSON(REFINE_URL,{text:t,heard:fHeard.slice(-4),lang:LANG,ui:UI,sex:profile().sex==='f'?'f':'m',words:myWords()},8000);
   if(my!==fixSeq)return;const out=clean(d&&d.text,300);if(!out){fixKeep();return}
-  fixOrig=t;$('fFixT').value=out;$('fFixNote').textContent=d.refined===false?tr('وصل سابها زي ما هي'):'';$('fFixBox').classList.remove('hidden');
+  fixOrig=t;$('fFixT').value=out;$('fFixNote').textContent=d.refined===false?tr('بدالك سابها زي ما هي'):'';$('fFixBox').classList.remove('hidden');
   requestAnimationFrame(()=>{try{$('fFixBox').scrollIntoView({block:'nearest'})}catch(e){}})}
  catch(e){if(my===fixSeq)fixKeep()}
  finally{if(my===fixSeq){b.disabled=false;b.textContent=tr('✨ ظبّطها')}}};

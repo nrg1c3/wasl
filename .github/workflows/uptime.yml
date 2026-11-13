@@ -21,5 +21,5 @@ jobs:
             if [ "$code" = "$3" ]; then echo "OK    $1 ($code)"; else echo "DOWN  $1: got $code, expected $3  $2"; fail=1; fi
           }
           check "n8n server (api)"      https://api.nrg-egypt.com/healthz            200
-          check "Wasl app"              https://wasl.nrg-egypt.com/                  200
+          check "Badalak app"           https://badalak.nrg-egypt.com/                  200
           exit $fail
