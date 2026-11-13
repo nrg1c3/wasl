@@ -1,4 +1,5 @@
 group,arabic,english_gloss,direction,priority
+greetings,بدالك (اسم التطبيق),BADALAK,both,P1
 greetings,السلام عليكم / أهلاً,HELLO,both,P1
 greetings,صباح الخير,GOOD-MORNING,both,P2
 greetings,شكراً,THANK-YOU,both,P1
@@ -78,7 +79,7 @@ transport,محطة,STATION,both,P2
 places,بيت,HOME,both,P1
 places,شغل,WORK,both,P2
 places,مدرسة,SCHOOL,both,P1
-places,بنك,BANK,both,P2
+places,بنك,BANK,both,P1
 places,قسم شرطة,POLICE-STATION,both,P2
 places,سوق,MARKET,both,P3
 places,جامع,MOSQUE,both,P3
@@ -99,7 +100,7 @@ money,كارت فيزا,CARD,both,P2
 money,كاش,CASH,both,P2
 money,إيصال,RECEIPT,both,P2
 money,ادفع,PAY,both,P1
-money,محفظة موبايل,MOBILE-WALLET,both,P3
+money,محفظة موبايل,MOBILE-WALLET,both,P1
 government,بطاقة رقم قومي,ID-CARD,both,P1
 government,شهادة ميلاد,BIRTH-CERTIFICATE,both,P2
 government,ورق,PAPERS,both,P1
@@ -166,3 +167,46 @@ sos,اتسرق مني,ROBBED,sign2voice,P2
 sos,تايه,LOST,sign2voice,P1
 sos,كلّم أهلي,CALL-MY-FAMILY,sign2voice,P1
 sos,نزيف / دم,BLEEDING,both,P1
+bank,حساب في البنك,ACCOUNT,both,P1
+bank,أسحب فلوس,WITHDRAW,both,P1
+bank,أحط فلوس / إيداع,DEPOSIT,both,P1
+bank,تحويل,TRANSFER,both,P1
+bank,ماكينة الفلوس (ATM),ATM,both,P1
+bank,الكارت اتقفل / الماكينة سحبته,CARD-BLOCKED,both,P1
+bank,رصيد,BALANCE,both,P1
+bank,خدمة العملاء,CUSTOMER-SERVICE,both,P1
+bank,كشف حساب,STATEMENT,both,P2
+bank,قرض,LOAN,both,P2
+telecom,شحن رصيد,TOP-UP,both,P1
+telecom,باقة نت,DATA-BUNDLE,both,P1
+telecom,خط / شريحة,SIM,both,P1
+telecom,فاتورة,BILL,both,P1
+telecom,كهربا,ELECTRICITY,both,P1
+telecom,ميه (الشرب والفاتورة),WATER,both,P1
+telecom,غاز,GAS,both,P1
+telecom,قسط,INSTALLMENT,both,P1
+telecom,النت مش شغال / الموبايل عطلان,NOT-WORKING,both,P2
+telecom,إنترنت البيت,HOME-INTERNET,both,P2
+restaurant,مطعم,RESTAURANT,both,P1
+restaurant,المنيو,MENU,both,P1
+restaurant,أكل,FOOD,both,P1
+restaurant,أشرب,DRINK,both,P1
+restaurant,آكل هنا,EAT-HERE,both,P1
+restaurant,تيك أواي,TAKEAWAY,both,P1
+restaurant,من غير...,WITHOUT,both,P1
+restaurant,حرّاق / سبايسي,SPICY,both,P2
+restaurant,الحساب,THE-BILL,both,P1
+restaurant,شاي,TEA,both,P2
+restaurant,قهوة,COFFEE,both,P2
+delivery,دليفري,DELIVERY,both,P1
+delivery,العنوان,ADDRESS,both,P1
+delivery,الدور / الشقة,FLOOR-FLAT,both,P2
+delivery,الطلب اتأخر,ORDER-LATE,both,P1
+delivery,انزل تحت / أنا تحت,DOWNSTAIRS,both,P2
+service,موظف,EMPLOYEE,both,P1
+service,فرع,BRANCH,both,P2
+service,شكوى,COMPLAINT,both,P1
+service,استلام,RECEIVE,both,P2
+service,سوبر ماركت,SUPERMARKET,both,P2
+service,كاشير,CASHIER,both,P1
+service,رقم موبايل,PHONE-NUMBER,both,P1

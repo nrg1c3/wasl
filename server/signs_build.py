@@ -32,6 +32,22 @@ CLIP_RE = re.compile(r'^(?P<id>.+?)__(?P<signer>[a-z]\d{1,2})\.mp4$', re.I)
 
 # One emoji per sign: the picture card shown when a sign has no clip yet.
 ICONS = {
+    # the app's name (its sign is chosen by the sign expert)
+    'BADALAK': '🤝',
+    # bank
+    'ACCOUNT': '🏦', 'WITHDRAW': '💵', 'DEPOSIT': '📥', 'TRANSFER': '🔁', 'ATM': '🏧', 'CARD-BLOCKED': '🚫',
+    'BALANCE': '📊', 'CUSTOMER-SERVICE': '🎧', 'STATEMENT': '🧾', 'LOAN': '💳',
+    # telecom and bills
+    'TOP-UP': '📲', 'DATA-BUNDLE': '🌐', 'SIM': '📶', 'BILL': '🧾', 'ELECTRICITY': '💡', 'WATER': '🚰',
+    'GAS': '🔥', 'INSTALLMENT': '🗓️', 'NOT-WORKING': '⚠️', 'HOME-INTERNET': '🏠',
+    # restaurant
+    'RESTAURANT': '🍽️', 'MENU': '📋', 'FOOD': '🍲', 'DRINK': '🥤', 'EAT-HERE': '🪑', 'TAKEAWAY': '🥡',
+    'WITHOUT': '🚫', 'SPICY': '🌶️', 'THE-BILL': '🧾', 'TEA': '🍵', 'COFFEE': '☕',
+    # delivery
+    'DELIVERY': '🛵', 'ADDRESS': '📍', 'FLOOR-FLAT': '🏢', 'ORDER-LATE': '⏰', 'DOWNSTAIRS': '⬇️',
+    # service
+    'EMPLOYEE': '🧑‍💼', 'BRANCH': '🏬', 'COMPLAINT': '📢', 'RECEIVE': '📦', 'SUPERMARKET': '🛒',
+    'CASHIER': '💁', 'PHONE-NUMBER': '📞',
     # greetings
     'HELLO': '👋', 'GOOD-MORNING': '🌅', 'THANK-YOU': '🙏', 'PLEASE': '🤲', 'SORRY': '😔',
     'GOODBYE': '👋', 'MY-NAME': '🪪', 'I-AM-DEAF': '🧏', 'SPEAK-TO-PHONE': '📱', 'OK': '👌',

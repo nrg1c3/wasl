@@ -297,7 +297,7 @@ const LNAME=k=>(LISTS.find(l=>l[0]===k)||[k,k])[1];
 const PEOPLE=[['f1','أ. ميادة'],['d1','الأخت الصمّاء'],['d2','جوزها'],['f2','أختها']];
 let EXTRA=[];
 const pname=c=>(S.consent[c]&&S.consent[c].name)||((PEOPLE.concat(EXTRA)).find(p=>p[0]===c)||[c,'شخص '+c.replace(/\D/g,'')])[1];
-const GROUP_AR={greetings:'تحية',basic:'أساسي',questions:'أسئلة',pharmacy:'صيدلية',doctor:'دكتور',body:'الجسم',feelings:'إحساس',transport:'مواصلات',places:'أماكن',shop:'شرا',money:'فلوس',government:'مصالح حكومية',numbers:'أرقام',time:'وقت',sos:'طوارئ'};
+const GROUP_AR={greetings:'تحية',basic:'أساسي',questions:'أسئلة',pharmacy:'صيدلية',doctor:'دكتور',body:'الجسم',feelings:'إحساس',transport:'مواصلات',places:'أماكن',shop:'شرا',money:'فلوس',government:'مصالح حكومية',numbers:'أرقام',time:'وقت',sos:'طوارئ',bank:'بنك',telecom:'شحن وفواتير',restaurant:'مطعم',delivery:'دليفري',service:'خدمة عملاء'};
 const S={vocab:[],takes:[],consent:{},signer:'f1',list:'P1',pos:{},cam:'environment',dur:4,state:'setup',stream:null,view:null,newTake:false,parts:[],wake:null,free:null};
 
 /* ---------- small helpers ---------- */
