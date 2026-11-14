@@ -16,6 +16,8 @@ Choosing the take, per <ID>__<signer>:
   3. otherwise the last take not marked rejected.
 Output: signs/clips/<ID>__<signer>.mp4  (540x960 portrait, H.264 CRF 26, preset
 veryfast, no audio, +faststart, at most --max seconds, default 4).
+Landscape takes are not cropped to 9:16 (that cuts the hands off): the middle --land-crop of the width
+(default 0.76) is kept whole, centred on a blurred copy of the frame.
 
 A signer whose consent.json does not allow "use in the app" is skipped unless --force.
 Needs ffmpeg and ffprobe on PATH. Standard library only.
@@ -221,10 +223,37 @@ def choose(takes, picks):
     return chosen, by
 
 
-def convert(src, dst, max_s):
-    vf = ('scale=540:960:force_original_aspect_ratio=increase,crop=540:960,'
-          'fps=30,format=yuv420p,setsar=1')
-    cmd = ['ffmpeg', '-y', '-v', 'error', '-i', src, '-t', str(max_s), '-an', '-vf', vf,
+def probe_size(path):
+    """(width, height) as the video is shown, after its rotation tag; None if ffprobe can't tell."""
+    try:
+        r = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries',
+                            'stream=width,height:stream_tags=rotate:stream_side_data=rotation',
+                            '-of', 'json', path], capture_output=True, text=True, timeout=60)
+        st = json.loads(r.stdout)['streams'][0]
+        w, h = int(st['width']), int(st['height'])
+        rot = st.get('tags', {}).get('rotate')
+        for sd in st.get('side_data_list', []):
+            rot = sd.get('rotation', rot)
+        if rot is not None and abs(int(float(rot))) % 180 == 90:
+            w, h = h, w
+        return w, h
+    except Exception:
+        return None
+
+
+def convert(src, dst, max_s, land_crop=0.76):
+    """Portrait source: fill 540x960 and crop the edges. Landscape source (filmed sideways, as on 14/11): cropping to
+    9:16 would cut the hands off, so keep the middle land_crop of the width, whole, on a blurred copy of the frame."""
+    size = probe_size(src)
+    tail = 'fps=30,format=yuv420p,setsar=1'
+    if size and size[0] > size[1]:
+        fg = f'crop=trunc(iw*{land_crop}/2)*2:ih,scale=540:-2'
+        flt = ['-filter_complex',
+               f'[0:v]split[a][b];[a]scale=540:960:force_original_aspect_ratio=increase,crop=540:960,boxblur=20:2[bg];'
+               f'[b]{fg}[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2,{tail}[v]', '-map', '[v]']
+    else:
+        flt = ['-vf', f'scale=540:960:force_original_aspect_ratio=increase,crop=540:960,{tail}']
+    cmd = ['ffmpeg', '-y', '-v', 'error', '-i', src, '-t', str(max_s), '-an', *flt,
            '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '26', '-profile:v', 'main',
            '-movflags', '+faststart', dst]
     r = subprocess.run(cmd, capture_output=True, text=True)
@@ -278,6 +307,7 @@ def main():
     ap.add_argument('--pick', action='append', default=[], help='ID__signer=TAKE (repeatable)')
     ap.add_argument('--picks', help='CSV file with lines ID__signer,TAKE')
     ap.add_argument('--max', type=float, default=4.0, help='longest clip in seconds (default 4)')
+    ap.add_argument('--land-crop', type=float, default=0.76, help='landscape takes: share of the width kept around the signer (default 0.76)')
     ap.add_argument('--list', action='store_true', help='only list the takes and the default choice')
     ap.add_argument('--skip-existing', action='store_true', help='keep clips that already exist')
     ap.add_argument('--force', action='store_true', help='publish even without "use in the app" consent')
@@ -333,7 +363,7 @@ def main():
                     continue
                 src_d = probe_dur(t['path'])
                 try:
-                    convert(t['path'], dst, a.max)
+                    convert(t['path'], dst, a.max, a.land_crop)
                 except RuntimeError as e:
                     print(f'  ! {key}: ffmpeg failed: {e}')
                     continue
