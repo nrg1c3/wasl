@@ -6,6 +6,7 @@
    - every button / link is at least 48px tall (checkboxes inside a tappable label are fine)
    - the emergency button is fully visible on the home screen
    - the offline demo works: the four-scene list in the app, and the counter scene (counter.html?demo) with its errand summary
+   - document cards (docs.js): «هات البطاقة» shows the ID drawing on the translation screen
    Run from the repo root:   node tests/smoke.js
    Needs Playwright with Chromium (npm i -g playwright && npx playwright install chromium). */
 const http = require('http'), fs = require('fs'), path = require('path');
@@ -120,10 +121,31 @@ async function pastWelcome(page, choice) {
     await page.locator('#reqGrid button').first().click(); await page.waitForTimeout(2600);
     const msgs = await page.locator('#chat .m').count();
     msgs >= 2 ? pass('counter demo', 'pharmacist answered') : fail('counter demo', `only ${msgs} message(s) in the chat`);
+    // document card (docs.js): the pharmacist asks for the prescription → the drawing shows; «فاهم» closes it
+    if (await page.locator('#docPop:not(.hidden)').count()) { pass('counter demo', 'prescription card shown'); await page.click('#docPop .dok'); await page.waitForTimeout(200); }
     await page.click('#endBtn'); await page.waitForTimeout(300); await page.click('#doneY'); await page.waitForTimeout(500);
     const sum = await page.locator('#sumCard').count();
     sum ? pass('counter demo', 'errand summary shown') : fail('counter demo', 'no errand summary at the end');
     if (page.errs.length) fail('demo', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
+    await ctx.close();
+  }
+
+  // document cards: matched on the phone, big drawing with two 48px+ buttons, nothing sent
+  console.log('\n== document cards (375x667)');
+  {
+    const { ctx, page } = await newPage(browser, PHONES[0], base);
+    await page.goto(base + 'index.html'); await page.waitForTimeout(600); await pastWelcome(page, 'text');
+    await page.click('#openFree'); await page.waitForTimeout(300);
+    const r = await page.evaluate(() => { docAsk('هات البطاقة لو سمحت'); const b = document.getElementById('docPop');
+      return { on: !b.classList.contains('hidden'), word: b.querySelector('.dw').textContent, btns: [...b.querySelectorAll('button')].map(x => x.getBoundingClientRect().height), hs: document.documentElement.scrollWidth - innerWidth }; });
+    r.on && /البطاقة/.test(r.word) ? pass('docs', 'ID card shown') : fail('docs', 'no card for «هات البطاقة»');
+    r.btns.every(h => h >= 48) ? pass('docs', 'buttons 48px+') : fail('docs', 'buttons under 48px: ' + r.btns.join(','));
+    r.hs > 0 ? fail('docs', `scrolls sideways by ${r.hs}px`) : pass('docs', 'no sideways scroll');
+    const none = await page.evaluate(() => ['الدوا ده بخمسين جنيه', 'كاش ولا فيزا؟', 'بطاقة شحن', 'عندك فيزا للسفر؟'].filter(t => WaslDocs.find(t)));
+    none.length ? fail('docs', 'card where no paper is asked: ' + none.join(' | ')) : pass('docs', 'no card when no paper is asked (incl. «كاش ولا فيزا؟»)');
+    const id2 = await page.evaluate(() => (WaslDocs.find('رقمك القومي لو سمحت') || {}).id);
+    id2 === 'national' ? pass('docs', '«رقمك القومي» → ID card') : fail('docs', '«رقمك القومي» gave ' + id2);
+    if (page.errs.length) fail('docs', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
     await ctx.close();
   }
 

@@ -778,8 +778,11 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <button class="btn ghost" id="sfCancel">إلغاء</button>
 <div class="note" id="sfNote" aria-live="polite"></div>
 </div></div>
+<script src="docs.js"></script>
 <script>
 const EN={
+'مش فاهم أنهي ورقة محتاجها. اطلب منه يورّيهالي.':"I don't understand which paper they need. Ask them to show it to me.",
+'آسف، مش فاهم أنهي ورقة محتاجها. ممكن توريهالي؟':"Sorry, I don't understand which paper you need. Can you show me?",
 'عرض بالإشارة':'Show in sign',
 // ---- offline banner, welcome
 'مفيش نت.':'No internet.',
@@ -1341,6 +1344,8 @@ wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. T
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
+'مش فاهم أنهي ورقة محتاجها. اطلب منه يورّيهالي.':'ما فهمت أي ورقة يحتاجها. اطلب منه يوريني إياها.',
+'آسف، مش فاهم أنهي ورقة محتاجها. ممكن توريهالي؟':'آسف، ما فهمت أي ورقة تحتاجها. ممكن توريني إياها؟',
 'بدالك على الكاونتر: الموظف يكلمك':'بدالك على الكاونتر: الموظف يكلمك',
 'وريه كود على موبايلك، يعمل سكان ويتكلم، وإنت تقرا كلامه':'وريه كود على جوالك، يمسحه ويتكلم، وأنت تقرأ كلامه',
 'بدالك على الكاونتر':'بدالك على الكاونتر',
@@ -2041,6 +2046,12 @@ function fitHear(){const box=document.querySelector('#task .hear'),big=$('hBig')
  let px=parseFloat(getComputedStyle(big).fontSize)||30;let n=0;while(box.scrollHeight>box.clientHeight+1&&px>15&&n<30){px-=1.5;big.style.fontSize=px+'px';n++}}
 addEventListener('resize',()=>{try{fitHear()}catch(e){}});
 function setState(kind,text){$('tDot').className='dot'+(kind==='think'?' think':kind==='talk'?' talk':'');$('tState').textContent=text}
+/* document cards (docs.js): the other person asks for a paper → a big drawing of it. Matched on this phone, no server call.
+   «مش فاهم»: in a task, Badalak asks them to show it; on the translation screen, the phone says it. */
+function docAsk(text){try{if(!window.WaslDocs)return;const d=WaslDocs.find(text);if(!d)return;
+ WaslDocs.show(d,{en:UI==='en',buzz,onUnclear:()=>{
+  if(T&&!T.over&&$('task').classList.contains('on')){const q=tr('مش فاهم أنهي ورقة محتاجها. اطلب منه يورّيهالي.');T.history.push({role:'user',text:q});logMsg('user',q);agent({type:'typed',text:q})}
+  else fSpeak(trH('آسف، مش فاهم أنهي ورقة محتاجها. ممكن توريهالي؟'))}})}catch(e){}}
 function logMsg(role,text){if(!text)return;const d=document.createElement('div');d.className='msg '+(role==='hearing'?'h':role==='wasl'?'w':'u');
  d.innerHTML='<b>'+tr(role==='hearing'?'اللي قدامك':role==='wasl'?'بدالك قال':'إنت قررت')+'</b>'+nums(text);
  if(role==='wasl'&&!DEMO){const fb=document.createElement('button');fb.className='sayfix';fb.type='button';fb.textContent=tr('كلمة اتنطقت غلط؟');fb.onclick=()=>sayFixOpen(text);d.appendChild(fb)}
@@ -2123,7 +2134,7 @@ function playFiller(){if(DEMO||!T||T.over||!fillWanted||player||fillP||Date.now(
   if(!T||T.over||!fillWanted||player)return;stopListening();setHear(trH('لحظة واحدة'),t,trH('بدالك بيجهّز الرد.'));
   const url=URL.createObjectURL(b);AUD.defaultPlaybackRate=vRate();AUD.src=url;AUD.playbackRate=vRate();await new Promise(res=>{AUD.onended=AUD.onerror=res;const pl=AUD.play();if(pl)pl.catch(res)});URL.revokeObjectURL(url);
   if(T&&!T.over&&fillWanted)startListening()}catch(e){}finally{fillP=null}})()}
-function flushHeard(){heardTimer=null;if(!T||T.over||!heardBuf.trim())return;const t=heardBuf.trim();heardBuf='';T.history.push({role:'hearing',text:t});logMsg('hearing',t);
+function flushHeard(){heardTimer=null;if(!T||T.over||!heardBuf.trim())return;const t=heardBuf.trim();heardBuf='';T.history.push({role:'hearing',text:t});logMsg('hearing',t);docAsk(t);
  if(!$('tDecide').classList.contains('hidden')||!$('tOk').classList.contains('hidden'))return;agent({type:'heard',text:t})}
 async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think',tr('بدالك بيفكر...'));$('tDecide').classList.add('hidden');$('tOk').classList.add('hidden');asking(null);
@@ -2337,7 +2348,7 @@ $('openFree').onclick=()=>{show('free');fSid=null;fNoSmart=false;drawReplies(def
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent=tr('▶ ابدأ');$('fState').textContent=tr('متوقف');$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent=tr('المايك مقفول ({e}). اسمح بيه من إعدادات المتصفح',{e:ok});return}
  freeOn=true;bumpStat('free');if(!fSid){fSid=Date.now().toString(36);freeCount()}$('freeGo').textContent=tr('⏸ وقف');$('fDot').className='dot';$('fState').textContent=fNoSmart?tr('خلصت مهام الشهر: الكلام هيفضل يتكتب، من غير ردود ذكية'):tr('بسمع...');
- onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;smartReplies(t)};onInterim=t=>{const c=$('cap');if(t==='…'||!t){c.textContent=c.textContent.replace(/\s*…$/,'')+(t?' …':'')}else c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent=tr('المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')$('fState').textContent=NOSR_MSG;if(LISTEN_WHY[s]||s==='stuck'){$('fState').textContent=LISTEN_WHY[s]||tr('السماع وقف. دوس هنا');$('fState').onclick=()=>{$('fState').onclick=null;$('fState').textContent=tr('بسمع...');resumeListening()}}};
+ onHeard=t=>{const c=$('cap');c.innerHTML=nums(t);c.scrollTop=c.scrollHeight;docAsk(t);smartReplies(t)};onInterim=t=>{const c=$('cap');if(t==='…'||!t){c.textContent=c.textContent.replace(/\s*…$/,'')+(t?' …':'')}else c.innerHTML=nums(t);c.scrollTop=c.scrollHeight};onListenState=s=>{if(s==='blocked')$('fState').textContent=tr('المايك مقفول. اسمح بيه من إعدادات المتصفح');if(s==='nosr')$('fState').textContent=NOSR_MSG;if(LISTEN_WHY[s]||s==='stuck'){$('fState').textContent=LISTEN_WHY[s]||tr('السماع وقف. دوس هنا');$('fState').onclick=()=>{$('fState').onclick=null;$('fState').textContent=tr('بسمع...');resumeListening()}}};
  startListening()};
 $('freeBack').onclick=()=>{freeOn=false;haltListening();$('freeGo').textContent=tr('▶ ابدأ');onHeard=onInterim=onListenState=null;show('home')};
 $('fSay').onclick=()=>{const t=$('fInput').value.trim();if(t){$('fInput').value='';fSpeak(t)}};
