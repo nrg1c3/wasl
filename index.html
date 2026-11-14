@@ -456,9 +456,10 @@ html.hc :focus-visible{outline:3px solid #000;outline-offset:2px}
 <script>try{if(localStorage.getItem('wasl_pic')==='true')document.documentElement.classList.add('pm')}catch(e){}
 /* حجم الكلام and تباين عالي (بياناتي), before the first paint */
 try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')document.documentElement.classList.add('fs'+fz);if(localStorage.getItem('wasl_hc')==='true')document.documentElement.classList.add('hc')}catch(e){}
-/* App language (UI): the user's choice in بياناتي, else the phone's language: English phones get English, every other language Arabic. */
+/* App language (UI): the user's choice (بياناتي, the welcome card, or English in the dialect list), else Arabic.
+   Arabic by default even on an English phone: our users are Deaf people in Egypt, and many of them have English phones (#36). */
 (function(){var u=null,h=document.documentElement;try{u=JSON.parse(localStorage.getItem('wasl_ui'))}catch(e){}
- if(u!=='en'&&u!=='ar'){var l=(navigator.languages&&navigator.languages[0])||navigator.language||'';u=/^en\b/i.test(l)?'en':'ar'}
+ window.UI_PICKED=(u==='en'||u==='ar');if(!window.UI_PICKED)u='ar';
  window.UI=u;h.lang=u;h.dir=u==='en'?'ltr':'rtl';if(u==='en'){h.classList.add('en');setTimeout(function(){h.classList.add('tr')},1500)}
  /* Gulf screen (GULF): an Arabic app whose conversation dialect is Gulf. The dialect the user picked on the home screen wins;
     before any pick it follows the country (بياناتي / SOS), else the phone's time zone: Saudi, UAE, Kuwait, Qatar, Bahrain, Oman. */
@@ -470,6 +471,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <body>
 <div id="offBar" role="status" aria-live="polite"><p><b>مفيش نت.</b> شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.</p><p>مش شغّال: «اتكلم بدالي»، والردود الذكية، والسماع، والصوت المصري.</p></div>
 <div id="welcome" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="wTitle"><div class="card">
+<div class="seg" id="wLang" role="group" aria-label="اللغة · Language"><button type="button" id="wAr" lang="ar" dir="rtl">ع العربية</button><button type="button" id="wEn" lang="en" dir="ltr">🌐 English</button></div>
 <h3 id="wTitle">أهلاً بيك في بَدالَك</h3>
 <ul data-i18n="wList">
 <li>بَدالَك <b>مجاني</b>.</li>
@@ -1839,8 +1841,12 @@ const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
 
 /* ---------- language ---------- */
 /* The conversation language (how Badalak talks to the hearing person) is separate from the app language. First run on an English phone: English. */
-let LANG=store.get('wasl_lang',null);if(!LANG){LANG=UI==='en'?'en-US':GULF?'ar-SA':'ar-EG';if(UI==='en')store.set('wasl_lang',LANG)}if(LANG==='ar-AE')LANG='ar-SA';if(LANG==='ar-JO')LANG='ar-EG';$('lang').value=LANG;
-$('lang').onchange=()=>{LANG=$('lang').value;store.set('wasl_lang',LANG);if(UI!=='en'&&(LANG==='ar-SA')!==GULF)location.replace(location.pathname)}; // the screen follows a Gulf / Egyptian pick: reload in the new dialect
+let LANG=store.get('wasl_lang',null);if(LANG==='en-US'&&!UI_PICKED){LANG=null;store.set('wasl_lang',null)} // set by the old English-phone default, not by the user
+if(!LANG){LANG=UI==='en'?'en-US':GULF?'ar-SA':'ar-EG';if(UI==='en')store.set('wasl_lang',LANG)}if(LANG==='ar-AE')LANG='ar-SA';if(LANG==='ar-JO')LANG='ar-EG';$('lang').value=LANG;
+$('lang').onchange=()=>{LANG=$('lang').value;store.set('wasl_lang',LANG);
+ // one list for everything (#36): English turns the screen English, an Arabic dialect turns it Arabic in that dialect
+ const want=LANG==='en-US'?'en':'ar';if(want!==UI){store.set('wasl_ui',want);location.replace(location.pathname);return}
+ if(UI!=='en'&&(LANG==='ar-SA')!==GULF)location.replace(location.pathname)}; // the screen follows a Gulf / Egyptian pick: reload in the new dialect
 
 /* ---------- screens & tabs ---------- */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='home'&&window.waslMaybeReload)setTimeout(waslMaybeReload,300);if(id==='home'&&typeof drawStats==='function'){drawStats();drawRefills();if(typeof drawOrderChip==='function')drawOrderChip()}if(id==='mytasks'&&typeof drawKpis==='function')drawKpis()}
@@ -3013,6 +3019,11 @@ function showDeaf(){const f=$('flip');f.innerHTML=esc(trH('أنا أصم'))+'<sm
  $('wOk').onclick=()=>{store.set('wasl_welcome',true);setPic(false);W.classList.add('hidden')};
  $('wPic').onclick=()=>{store.set('wasl_welcome',true);setPic(true);W.classList.add('hidden')};
  $('wSos').onclick=()=>$('sosBtn').click();
+ /* language, once: shown until the user picks (the default is Arabic, #36) */
+ const wl=()=>{$('wAr').setAttribute('aria-pressed',String(UI!=='en'));$('wEn').setAttribute('aria-pressed',String(UI==='en'))};
+ if(UI_PICKED)$('wLang').classList.add('hidden');else wl();
+ $('wAr').onclick=()=>{buzz([30]);store.set('wasl_ui','ar');if(UI==='en'){store.set('wasl_lang',GULF?'ar-SA':'ar-EG');location.replace(location.pathname);return}$('wLang').classList.add('hidden')};
+ $('wEn').onclick=()=>{buzz([30]);store.set('wasl_ui','en');store.set('wasl_lang','en-US');location.replace(location.pathname)};
  if(!ok())W.classList.remove('hidden');
 })();
 /* Offline: a banner on every screen saying what still works. */
