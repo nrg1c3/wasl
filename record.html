@@ -303,6 +303,9 @@ const PEOPLE=[['d1','رحمة','صمّاء، بتعمل الإشارة'],['d2','
 const HIDE=new Set(['f1','f2']);
 let EXTRA=[];
 const pname=c=>(S.consent[c]&&S.consent[c].name)||((PEOPLE.concat(EXTRA)).find(p=>p[0]===c)||[c,'شخص '+c.replace(/\D/g,'')])[1];
+/* on screen, the team's people always show today's name, even if an old test consent on this phone has another name */
+const shown=c=>{const p=PEOPLE.find(x=>x[0]===c);return p?p[1]:pname(c)};
+const nameOff=c=>{const k=S.consent[c];return !!(k&&k.name&&PEOPLE.some(x=>x[0]===c)&&!normAr(k.name).includes(normAr(shown(c)).replace(/^ا\.\s*/,'').trim()))};
 const GROUP_AR={greetings:'تحية',basic:'أساسي',questions:'أسئلة',pharmacy:'صيدلية',doctor:'دكتور',body:'الجسم',feelings:'إحساس',transport:'مواصلات',places:'أماكن',shop:'شرا',money:'فلوس',government:'مصالح حكومية',numbers:'أرقام',time:'وقت',sos:'طوارئ',bank:'بنك',telecom:'شحن وفواتير',restaurant:'مطعم',delivery:'دليفري',service:'خدمة عملاء'};
 const S={vocab:[],takes:[],consent:{},signer:'d1',list:'P1',pos:{},cam:'environment',dur:4,state:'setup',stream:null,view:null,newTake:false,parts:[],wake:null,free:null};
 
@@ -367,9 +370,10 @@ async function storage(){
 function drawSetup(){
  if(HIDE.has(S.signer)){S.signer=PEOPLE[0][0];ls.set('wasl_rec_signer',S.signer)}
  const codes=[...new Set([...PEOPLE.map(p=>p[0]),...EXTRA.map(p=>p[0]),...Object.keys(S.consent),...S.takes.map(t=>t.signer),S.signer])].filter(c=>!HIDE.has(c));
- chips($('codes'),codes.map(c=>{const p=PEOPLE.find(x=>x[0]===c);return [c,`<b>${esc(pname(c))}</b>${p?`<small>${esc(p[2])}</small>`:''}`]}),S.signer,v=>{S.signer=v;ls.set('wasl_rec_signer',v);$('codeIn').value='';drawSetup()});
+ chips($('codes'),codes.map(c=>{const p=PEOPLE.find(x=>x[0]===c);return [c,`<b>${esc(shown(c))}</b>${p?`<small>${esc(p[2])}</small>`:''}`]}),S.signer,v=>{S.signer=v;ls.set('wasl_rec_signer',v);$('codeIn').value='';drawSetup()});
  const c=S.consent[S.signer];$('cStat').classList.toggle('okay',!!c);
- $('cTxt').textContent=c?`الموافقة متسجّلة: ${c.name} (${new Date(c.date).toLocaleDateString('ar-EG')})`:`لسه مفيش موافقة من ${pname(S.signer)}. هتظهر لما تدوس «ابدأ».`;
+ const other=nameOff(S.signer);if(other)$('cStat').classList.remove('okay');
+ $('cTxt').textContent=other?`⚠️ الموافقة متسجّلة باسم «${c.name}». دوس «غيّر الموافقة» وسجّلها باسم ${shown(S.signer)}.`:c?`الموافقة متسجّلة: ${c.name} (${new Date(c.date).toLocaleDateString('ar-EG')})`:`لسه مفيش موافقة من ${shown(S.signer)}. هتظهر لما تدوس «ابدأ».`;
  $('cEdit').textContent=c?'غيّر الموافقة':'الموافقة على التصوير';
  chips($('lists'),LISTS.map(([k,l])=>{const L=listOf(k);const d=L.filter(v=>doneFor(v.id,S.signer)).length;return [k,`${l} <small>${d}/${L.length}</small>`]}),S.list,v=>{S.list=v;ls.set('wasl_rec_list',v);drawSetup()});
  chips($('cams'),[['environment','الخلفية (أوضح)'],['user','الأمامية (سيلفي)']],S.cam,v=>{S.cam=v;ls.set('wasl_rec_cam',v);drawSetup()});
@@ -382,14 +386,14 @@ $('dPlus').onclick=()=>{S.dur=Math.min(6,S.dur+1);ls.set('wasl_rec_dur',S.dur);d
 $('cEdit').onclick=()=>openConsent(false);
 $('start').onclick=async()=>{const e=$('sErr');e.classList.add('hidden');
  if(!S.vocab.length){e.textContent='قايمة الإشارات ما اتحمّلتش. اتأكد من النت وافتح الصفحة تاني.';e.classList.remove('hidden');return}
- if(!S.consent[S.signer]||!S.consent[S.signer].uses.app)return openConsent(true);
+ if(!S.consent[S.signer]||!S.consent[S.signer].uses.app||nameOff(S.signer))return openConsent(true);
  openStudio()};
 function show(id){['setup','consent','studio','search'].forEach(x=>$(x).classList.toggle('hidden',x!==id&&!(id==='search'&&x==='studio')));scrollTo(0,0)}
 
 /* ---------- consent ---------- */
 let afterConsent=false,kHear='';
-function openConsent(go){afterConsent=go;const c=S.consent[S.signer]||{};show('consent');
- $('kCode').value=S.signer;$('kName').value=c.name||(pname(S.signer).startsWith('شخص ')?'':pname(S.signer));kHear=c.hearing||'';$('kAdult').checked=!!c.adult;
+function openConsent(go){afterConsent=go;const c=nameOff(S.signer)?{}:(S.consent[S.signer]||{});/* old test consent under another name: start clean for today's person */show('consent');
+ $('kCode').value=S.signer;$('kName').value=c.name||(shown(S.signer).startsWith('شخص ')?'':shown(S.signer));kHear=c.hearing||'';$('kAdult').checked=!!c.adult;
  const u=c.uses||{};$('uApp').checked=!!u.app;$('uTrain').checked=!!u.training;$('uComp').checked=!!u.competitions;$('uSocial').checked=!!u.social;
  $('kErr').classList.add('hidden');drawHear()}
 function drawHear(){chips($('kHear'),[['deaf','أصم / صمّاء'],['hoh','ضعيف سمع'],['hearing','سامع']],kHear,v=>{kHear=v;drawHear()})}
@@ -428,7 +432,7 @@ function fit(){const w=$('wrap'),s=$('stage');s.style.height='0';s.style.width='
 addEventListener('resize',fit);
 function draw(){const {L,i,v}=cur();if(!v)return;
  const done=L.filter(x=>doneFor(x.id,S.signer)).length;
- $('prog').innerHTML=`${i+1} من ${L.length}<small>${esc(LNAME(S.list))} · خلص ${done} · ${esc(pname(S.signer))}</small>`;
+ $('prog').innerHTML=`${i+1} من ${L.length}<small>${esc(LNAME(S.list))} · خلص ${done} · ${esc(shown(S.signer))}</small>`;
  $('wAr').textContent=v.ar;$('wId').textContent='';
  const ts=takesFor(v.id,S.signer),ok=ts.filter(t=>t.status==='ok').length;
  $('wInfo').textContent=`${GROUP_AR[v.group]||v.group} · ${v.pri} · تمام ${ok}`;
