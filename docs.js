@@ -20,11 +20,12 @@
   const DOCS = [
     { id: 'bankcard', ar: 'كارت البنك', en: 'Bank card',
       re: /(فيزا|ماستر ?كارد|كارت (ال)?بنك|كارت ال(ا)?ئتمان|بطاق(ه)? (ال)?(ا)?ئتمان|كريدت|\bvisa\b|credit card|debit card|bank card)/,
+      not: /(كاش|نقد|cash|سفر|travel)/, // «كاش ولا فيزا؟» is a choice for the user, «فيزا للسفر» is a visa
       svg: landscape('#1E3A47', '#13262F', '<rect x="22" y="40" width="34" height="26" rx="5" fill="#E9C46A"/><path d="M22 53h34M39 40v26" stroke="#B8902F" stroke-width="2"/>' +
         '<text x="22" y="98" direction="ltr" text-anchor="start" font-size="17" fill="#fff" font-family="monospace" letter-spacing="1">•••• •••• ••••</text>' + stamp(150, 40)) },
     { id: 'national', ar: 'البطاقة (الرقم القومي)', en: 'National ID card',
-      re: /(بطاق(ه|تك|ته) ?(ال)?(شخصي(ه)?|قومي(ه)?)?|(ال)?رقم (ال)?قومي|\bid card\b|national id|identity card|\bthe id\b|your id\b)/,
-      not: /تموين/, // the ration card is another paper
+      re: /(بطاق(ه|تك|ته) ?(ال)?(شخصي(ه)?|قومي(ه)?)?|(ال)?رقم(ك|ه)? (ال)?قومي|\bid card\b|national id|identity card|\bthe id\b|your id\b)/,
+      not: /(تموين|شحن)/, // the ration card and the top-up card are other papers
       svg: landscape('#E3F2E8', '#2E7D4F', person(16, 30, 1.6, '#2E7D4F') + lines(90, 34, 4, 90, '#9CC9AE') + stamp(140, 100)) },
     { id: 'passport', ar: 'الباسبور', en: 'Passport',
       re: /(باسبور|جواز (ال)?سفر|passport)/,

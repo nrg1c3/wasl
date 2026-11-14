@@ -141,8 +141,10 @@ async function pastWelcome(page, choice) {
     r.on && /البطاقة/.test(r.word) ? pass('docs', 'ID card shown') : fail('docs', 'no card for «هات البطاقة»');
     r.btns.every(h => h >= 48) ? pass('docs', 'buttons 48px+') : fail('docs', 'buttons under 48px: ' + r.btns.join(','));
     r.hs > 0 ? fail('docs', `scrolls sideways by ${r.hs}px`) : pass('docs', 'no sideways scroll');
-    const none = await page.evaluate(() => WaslDocs.find('الدوا ده بخمسين جنيه'));
-    none ? fail('docs', 'card for a sentence with no paper') : pass('docs', 'no card when no paper is asked');
+    const none = await page.evaluate(() => ['الدوا ده بخمسين جنيه', 'كاش ولا فيزا؟', 'بطاقة شحن', 'عندك فيزا للسفر؟'].filter(t => WaslDocs.find(t)));
+    none.length ? fail('docs', 'card where no paper is asked: ' + none.join(' | ')) : pass('docs', 'no card when no paper is asked (incl. «كاش ولا فيزا؟»)');
+    const id2 = await page.evaluate(() => (WaslDocs.find('رقمك القومي لو سمحت') || {}).id);
+    id2 === 'national' ? pass('docs', '«رقمك القومي» → ID card') : fail('docs', '«رقمك القومي» gave ' + id2);
     if (page.errs.length) fail('docs', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
     await ctx.close();
   }
