@@ -2,7 +2,7 @@
    - App pages: network first (so updates arrive), cached copy when offline.
    - Fonts, sound/sign models: cached after first use.
    - POST requests (AI, voice) are never cached. */
-const SHELL = 'wasl-shell-v77';
+const SHELL = 'wasl-shell-v78';
 const RUNTIME = 'wasl-rt-v1';
 const SIGNS = 'wasl-signs-v1'; // sign-language clips: kept across app updates (a clip's file name changes when it is re-recorded)
 const KEEP = [SHELL, RUNTIME, SIGNS, 'wasl-demo-v1', 'wasl-share'];
