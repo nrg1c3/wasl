@@ -1,8 +1,35 @@
 {
  "version": 1,
- "updated": "2026-11-03",
- "signers": {},
+ "updated": "2026-11-14",
+ "signers": {
+  "d1": {
+   "name": "d1"
+  },
+  "d2": {
+   "name": "d2"
+  }
+ },
  "signs": [
+  {
+   "id": "BADALAK",
+   "ar": "بدالك (اسم التطبيق)",
+   "group": "greetings",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🤝",
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/BADALAK__d1.mp4",
+     "dur": 4.0
+    },
+    {
+     "signer": "d2",
+     "src": "signs/clips/BADALAK__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
   {
    "id": "HELLO",
    "ar": "السلام عليكم / أهلاً",
@@ -10,7 +37,18 @@
    "dir": "both",
    "pri": "P1",
    "icon": "👋",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/HELLO__d1.mp4",
+     "dur": 4.0
+    },
+    {
+     "signer": "d2",
+     "src": "signs/clips/HELLO__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "GOOD-MORNING",
@@ -19,7 +57,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🌅",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/GOOD-MORNING__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "THANK-YOU",
@@ -28,7 +72,18 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🙏",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/THANK-YOU__d1.mp4",
+     "dur": 4.0
+    },
+    {
+     "signer": "d2",
+     "src": "signs/clips/THANK-YOU__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "PLEASE",
@@ -37,7 +92,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🤲",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/PLEASE__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SORRY",
@@ -46,7 +107,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "😔",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/SORRY__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "GOODBYE",
@@ -55,7 +122,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "👋",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/GOODBYE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "MY-NAME",
@@ -64,7 +137,13 @@
    "dir": "sign2voice",
    "pri": "P2",
    "icon": "🪪",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/MY-NAME__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "I-AM-DEAF",
@@ -73,7 +152,13 @@
    "dir": "sign2voice",
    "pri": "P1",
    "icon": "🧏",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/I-AM-DEAF__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SPEAK-TO-PHONE",
@@ -82,7 +167,13 @@
    "dir": "sign2voice",
    "pri": "P1",
    "icon": "📱",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/SPEAK-TO-PHONE__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "OK",
@@ -91,7 +182,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "👌",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/OK__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "YES",
@@ -100,7 +197,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "✅",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/YES__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "NO",
@@ -109,7 +212,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "❌",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/NO__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "WAIT",
@@ -118,7 +227,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "✋",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/WAIT__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "REPEAT",
@@ -127,7 +242,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🔁",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/REPEAT__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "NOT-UNDERSTAND",
@@ -136,7 +257,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "😕",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/NOT-UNDERSTAND__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "UNDERSTAND",
@@ -145,7 +272,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "💡",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/UNDERSTAND__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SLOWLY",
@@ -154,7 +287,13 @@
    "dir": "sign2voice",
    "pri": "P1",
    "icon": "🐢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/SLOWLY__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "DONT-KNOW",
@@ -163,7 +302,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🤷",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/DONT-KNOW__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "CAN_POSSIBLE",
@@ -172,7 +317,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🙆",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CAN_POSSIBLE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "FINISHED",
@@ -181,7 +332,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🏁",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/FINISHED__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "WHERE",
@@ -190,7 +347,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "📍",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/WHERE__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "WHEN",
@@ -199,7 +362,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🕒",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/WHEN__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "WHAT",
@@ -208,7 +377,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "❓",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/WHAT__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "WHO",
@@ -217,7 +392,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "👤",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/WHO__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "WHY",
@@ -226,7 +407,13 @@
    "dir": "both",
    "pri": "P3",
    "icon": "🤔",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/WHY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "HOW-MANY_HOW-MUCH",
@@ -235,7 +422,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🧮",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/HOW-MANY_HOW-MUCH__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "PHARMACY",
@@ -244,7 +437,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🏪",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/PHARMACY__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "MEDICINE",
@@ -253,7 +452,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "💊",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/MEDICINE__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "PRESCRIPTION",
@@ -262,7 +467,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "📝",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/PRESCRIPTION__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "PILLS",
@@ -271,7 +482,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "💊",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/PILLS__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SYRUP",
@@ -280,7 +497,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🧴",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/SYRUP__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "INJECTION",
@@ -289,7 +512,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "💉",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/INJECTION__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "TIMES-PER-DAY",
@@ -298,7 +527,13 @@
    "dir": "voice2sign",
    "pri": "P1",
    "icon": "🔂",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/TIMES-PER-DAY__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "BEFORE-FOOD",
@@ -307,7 +542,13 @@
    "dir": "voice2sign",
    "pri": "P1",
    "icon": "🍽️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/BEFORE-FOOD__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "AFTER-FOOD",
@@ -316,7 +557,13 @@
    "dir": "voice2sign",
    "pri": "P1",
    "icon": "🍽️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/AFTER-FOOD__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "ALTERNATIVE",
@@ -325,7 +572,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔄",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/ALTERNATIVE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "NOT-AVAILABLE",
@@ -334,7 +587,13 @@
    "dir": "voice2sign",
    "pri": "P1",
    "icon": "🚫",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/NOT-AVAILABLE__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "DOCTOR",
@@ -343,7 +602,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🧑‍⚕️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/DOCTOR__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "HOSPITAL",
@@ -352,7 +617,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🏥",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/HOSPITAL__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "CLINIC",
@@ -361,7 +632,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🩺",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CLINIC__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "APPOINTMENT",
@@ -370,7 +647,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "📅",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/APPOINTMENT__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "CHECKUP",
@@ -379,7 +662,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🩺",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CHECKUP__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "LAB-TEST",
@@ -388,7 +677,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🧪",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/LAB-TEST__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "X-RAY",
@@ -397,7 +692,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🩻",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/X-RAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "FEVER",
@@ -406,7 +707,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🤒",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/FEVER__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "BLOOD-PRESSURE",
@@ -415,7 +722,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🩸",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/BLOOD-PRESSURE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "DIABETES",
@@ -424,7 +737,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🍬",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/DIABETES__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "PREGNANT",
@@ -433,7 +752,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🤰",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/PREGNANT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "ALLERGY",
@@ -442,7 +767,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "⚠️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/ALLERGY__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "PAIN",
@@ -451,7 +782,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🤕",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/PAIN__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "HEAD",
@@ -460,7 +797,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🗣️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/HEAD__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "STOMACH",
@@ -469,7 +812,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🫃",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/STOMACH__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "TOOTH",
@@ -478,7 +827,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🦷",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/TOOTH__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "BACK",
@@ -487,7 +842,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🧍",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/BACK__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "CHEST",
@@ -496,7 +857,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🫁",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/CHEST__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "EYE",
@@ -505,7 +872,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "👁️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/EYE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "EAR",
@@ -514,7 +887,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "👂",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/EAR__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "LEG",
@@ -523,7 +902,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🦵",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/LEG__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "HAND_ARM",
@@ -532,7 +917,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "💪",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/HAND_ARM__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "DIZZY",
@@ -541,7 +932,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "😵‍💫",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/DIZZY__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SICK_TIRED",
@@ -550,7 +947,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🤢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/SICK_TIRED__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SCARED",
@@ -559,7 +962,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "😨",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/SCARED__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "FINE_GOOD",
@@ -568,7 +977,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🙂",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/FINE_GOOD__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "TAXI",
@@ -577,7 +992,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🚕",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/TAXI__d1.mp4",
+     "dur": 3.9
+    }
+   ]
   },
   {
    "id": "BUS",
@@ -586,7 +1007,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🚌",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/BUS__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "METRO",
@@ -595,7 +1022,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🚇",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/METRO__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "MICROBUS",
@@ -604,7 +1037,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🚐",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/MICROBUS__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "TUKTUK",
@@ -613,7 +1052,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🛺",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/TUKTUK__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "WANT-GO",
@@ -622,7 +1067,13 @@
    "dir": "sign2voice",
    "pri": "P1",
    "icon": "🚶",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/WANT-GO__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "STOP-HERE",
@@ -631,7 +1082,13 @@
    "dir": "sign2voice",
    "pri": "P1",
    "icon": "🛑",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/STOP-HERE__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "RIGHT",
@@ -640,7 +1097,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "➡️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/RIGHT__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "LEFT",
@@ -649,7 +1112,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "⬅️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/LEFT__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "STRAIGHT",
@@ -658,7 +1127,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "⬆️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/STRAIGHT__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "NEAR",
@@ -667,7 +1142,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🤏",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/NEAR__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "FAR",
@@ -676,7 +1157,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🛣️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/FAR__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "STATION",
@@ -685,7 +1172,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🚏",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/STATION__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "HOME",
@@ -694,7 +1187,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🏠",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/HOME__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "WORK",
@@ -703,7 +1202,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "💼",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/WORK__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SCHOOL",
@@ -712,16 +1217,28 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🏫",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/SCHOOL__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "BANK",
    "ar": "بنك",
    "group": "places",
    "dir": "both",
-   "pri": "P2",
+   "pri": "P1",
    "icon": "🏦",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/BANK__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "POLICE-STATION",
@@ -730,7 +1247,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🚓",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/POLICE-STATION__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "MARKET",
@@ -739,7 +1262,13 @@
    "dir": "both",
    "pri": "P3",
    "icon": "🛒",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/MARKET__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "MOSQUE",
@@ -748,7 +1277,13 @@
    "dir": "both",
    "pri": "P3",
    "icon": "🕌",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/MOSQUE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "CHURCH",
@@ -757,7 +1292,13 @@
    "dir": "both",
    "pri": "P3",
    "icon": "⛪",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CHURCH__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "TOILET",
@@ -766,7 +1307,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🚻",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/TOILET__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "WANT_NEED",
@@ -775,7 +1322,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🫴",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/WANT_NEED__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "THIS",
@@ -784,7 +1337,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "👉",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/THIS__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "EXPENSIVE",
@@ -793,7 +1352,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "💸",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/EXPENSIVE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "CHEAPER",
@@ -802,7 +1367,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🏷️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CHEAPER__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "BAG",
@@ -811,7 +1382,13 @@
    "dir": "both",
    "pri": "P3",
    "icon": "🛍️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/BAG__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "ANOTHER",
@@ -820,7 +1397,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "➕",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/ANOTHER__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SIZE",
@@ -829,7 +1412,13 @@
    "dir": "both",
    "pri": "P3",
    "icon": "📏",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/SIZE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "MONEY",
@@ -838,7 +1427,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "💵",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/MONEY__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "POUND",
@@ -847,7 +1442,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "💷",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/POUND__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SMALL-CHANGE",
@@ -856,7 +1457,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🪙",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/SMALL-CHANGE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "CHANGE-DUE",
@@ -865,7 +1472,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "💱",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/CHANGE-DUE__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "CARD",
@@ -874,7 +1487,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "💳",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CARD__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "CASH",
@@ -883,7 +1502,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "💵",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CASH__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "RECEIPT",
@@ -892,7 +1517,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🧾",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/RECEIPT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "PAY",
@@ -901,16 +1532,28 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🤝",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/PAY__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "MOBILE-WALLET",
    "ar": "محفظة موبايل",
    "group": "money",
    "dir": "both",
-   "pri": "P3",
+   "pri": "P1",
    "icon": "📲",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/MOBILE-WALLET__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "ID-CARD",
@@ -919,7 +1562,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🪪",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/ID-CARD__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "BIRTH-CERTIFICATE",
@@ -928,7 +1577,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "👶",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/BIRTH-CERTIFICATE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "PAPERS",
@@ -937,7 +1592,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "📄",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/PAPERS__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "STAMP",
@@ -946,7 +1607,13 @@
    "dir": "voice2sign",
    "pri": "P2",
    "icon": "🔏",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/STAMP__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "FORM",
@@ -955,7 +1622,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "📋",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/FORM__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "PHOTOCOPY",
@@ -964,7 +1637,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🖨️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/PHOTOCOPY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "COUNTER-WINDOW",
@@ -973,7 +1652,13 @@
    "dir": "voice2sign",
    "pri": "P1",
    "icon": "🪟",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/COUNTER-WINDOW__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "QUEUE_YOUR-TURN",
@@ -982,7 +1667,13 @@
    "dir": "voice2sign",
    "pri": "P1",
    "icon": "🧍‍♂️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/QUEUE_YOUR-TURN__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SIGNATURE",
@@ -991,7 +1682,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "✍️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/SIGNATURE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "DISABILITY-CARD",
@@ -1000,7 +1697,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "♿",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/DISABILITY-CARD__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "0",
@@ -1009,7 +1712,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "0️⃣",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/0__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "1",
@@ -1018,7 +1727,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "1️⃣",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/1__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "2",
@@ -1027,7 +1742,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "2️⃣",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/2__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "3",
@@ -1036,7 +1757,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "3️⃣",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/3__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "4",
@@ -1045,7 +1772,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "4️⃣",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/4__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "5",
@@ -1054,7 +1787,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "5️⃣",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/5__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "6",
@@ -1063,7 +1802,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "6️⃣",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/6__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "7",
@@ -1072,7 +1817,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "7️⃣",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/7__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "8",
@@ -1081,7 +1832,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "8️⃣",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/8__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "9",
@@ -1090,7 +1847,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "9️⃣",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/9__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "10",
@@ -1099,7 +1862,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🔟",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/10__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "11",
@@ -1108,7 +1877,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/11__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "12",
@@ -1117,7 +1892,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/12__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "13",
@@ -1126,7 +1907,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/13__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "14",
@@ -1135,7 +1922,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/14__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "15",
@@ -1144,7 +1937,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/15__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "16",
@@ -1153,7 +1952,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/16__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "17",
@@ -1162,7 +1967,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/17__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "18",
@@ -1171,7 +1982,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/18__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "19",
@@ -1180,7 +1997,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/19__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "20",
@@ -1189,7 +2012,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/20__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "30",
@@ -1198,7 +2027,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/30__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "40",
@@ -1207,7 +2042,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/40__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "50",
@@ -1216,7 +2057,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/50__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "60",
@@ -1225,7 +2072,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/60__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "70",
@@ -1234,7 +2087,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/70__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "80",
@@ -1243,7 +2102,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/80__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "90",
@@ -1252,7 +2117,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/90__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "100",
@@ -1261,7 +2132,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "💯",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/100__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "200",
@@ -1270,7 +2147,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/200__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "500",
@@ -1279,7 +2162,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/500__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "1000",
@@ -1288,7 +2177,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🔢",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d1",
+     "src": "signs/clips/1000__d1.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "TODAY",
@@ -1297,7 +2192,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "📆",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/TODAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "TOMORROW",
@@ -1306,7 +2207,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "⏭️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/TOMORROW__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "YESTERDAY",
@@ -1315,7 +2222,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "⏮️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/YESTERDAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "NOW",
@@ -1324,7 +2237,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "⏱️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/NOW__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "HOUR_O-CLOCK",
@@ -1333,7 +2252,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🕐",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/HOUR_O-CLOCK__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "MORNING",
@@ -1342,7 +2267,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "☀️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/MORNING__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "NIGHT",
@@ -1351,7 +2282,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "🌙",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/NIGHT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SATURDAY",
@@ -1360,7 +2297,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "📅",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/SATURDAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "SUNDAY",
@@ -1369,7 +2312,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "📅",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/SUNDAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "MONDAY",
@@ -1378,7 +2327,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "📅",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/MONDAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "TUESDAY",
@@ -1387,7 +2342,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "📅",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/TUESDAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "WEDNESDAY",
@@ -1396,7 +2357,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "📅",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/WEDNESDAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "THURSDAY",
@@ -1405,7 +2372,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "📅",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/THURSDAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "FRIDAY",
@@ -1414,7 +2387,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "📅",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/FRIDAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "HELP",
@@ -1423,7 +2402,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🆘",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/HELP__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "AMBULANCE",
@@ -1432,7 +2417,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🚑",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/AMBULANCE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "POLICE",
@@ -1441,7 +2432,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "👮",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/POLICE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "FIRE",
@@ -1450,7 +2447,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🔥",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/FIRE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "ACCIDENT",
@@ -1459,7 +2462,13 @@
    "dir": "both",
    "pri": "P1",
    "icon": "💥",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/ACCIDENT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "DANGER",
@@ -1468,7 +2477,13 @@
    "dir": "both",
    "pri": "P2",
    "icon": "⚠️",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/DANGER__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "ROBBED",
@@ -1477,7 +2492,13 @@
    "dir": "sign2voice",
    "pri": "P2",
    "icon": "👛",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/ROBBED__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "LOST",
@@ -1486,7 +2507,13 @@
    "dir": "sign2voice",
    "pri": "P1",
    "icon": "🧭",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/LOST__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "CALL-MY-FAMILY",
@@ -1495,7 +2522,13 @@
    "dir": "sign2voice",
    "pri": "P1",
    "icon": "📞",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CALL-MY-FAMILY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   },
   {
    "id": "BLEEDING",
@@ -1504,7 +2537,658 @@
    "dir": "both",
    "pri": "P1",
    "icon": "🩸",
-   "clips": []
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/BLEEDING__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "ACCOUNT",
+   "ar": "حساب في البنك",
+   "group": "bank",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🏦",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/ACCOUNT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "WITHDRAW",
+   "ar": "أسحب فلوس",
+   "group": "bank",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💵",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/WITHDRAW__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "DEPOSIT",
+   "ar": "أحط فلوس / إيداع",
+   "group": "bank",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📥",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/DEPOSIT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "TRANSFER",
+   "ar": "تحويل",
+   "group": "bank",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🔁",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/TRANSFER__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "ATM",
+   "ar": "ماكينة الفلوس (ATM)",
+   "group": "bank",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🏧",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/ATM__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "CARD-BLOCKED",
+   "ar": "الكارت اتقفل / الماكينة سحبته",
+   "group": "bank",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🚫",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CARD-BLOCKED__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "BALANCE",
+   "ar": "رصيد",
+   "group": "bank",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📊",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/BALANCE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "CUSTOMER-SERVICE",
+   "ar": "خدمة العملاء",
+   "group": "bank",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🎧",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CUSTOMER-SERVICE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "STATEMENT",
+   "ar": "كشف حساب",
+   "group": "bank",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🧾",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/STATEMENT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "LOAN",
+   "ar": "قرض",
+   "group": "bank",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "💳",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/LOAN__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "TOP-UP",
+   "ar": "شحن رصيد",
+   "group": "telecom",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📲",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/TOP-UP__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "DATA-BUNDLE",
+   "ar": "باقة نت",
+   "group": "telecom",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🌐",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/DATA-BUNDLE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "SIM",
+   "ar": "خط / شريحة",
+   "group": "telecom",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📶",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/SIM__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "BILL",
+   "ar": "فاتورة",
+   "group": "telecom",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🧾",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/BILL__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "ELECTRICITY",
+   "ar": "كهربا",
+   "group": "telecom",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💡",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/ELECTRICITY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "WATER",
+   "ar": "ميه (الشرب والفاتورة)",
+   "group": "telecom",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🚰",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/WATER__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "GAS",
+   "ar": "غاز",
+   "group": "telecom",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🔥",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/GAS__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "INSTALLMENT",
+   "ar": "قسط",
+   "group": "telecom",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🗓️",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/INSTALLMENT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "NOT-WORKING",
+   "ar": "النت مش شغال / الموبايل عطلان",
+   "group": "telecom",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "⚠️",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/NOT-WORKING__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "HOME-INTERNET",
+   "ar": "إنترنت البيت",
+   "group": "telecom",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🏠",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/HOME-INTERNET__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "RESTAURANT",
+   "ar": "مطعم",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🍽️",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/RESTAURANT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "MENU",
+   "ar": "المنيو",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📋",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/MENU__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "FOOD",
+   "ar": "أكل",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🍲",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/FOOD__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "DRINK",
+   "ar": "أشرب",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🥤",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/DRINK__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "EAT-HERE",
+   "ar": "آكل هنا",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🪑",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/EAT-HERE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "TAKEAWAY",
+   "ar": "تيك أواي",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🥡",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/TAKEAWAY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "WITHOUT",
+   "ar": "من غير...",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🚫",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/WITHOUT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "SPICY",
+   "ar": "حرّاق / سبايسي",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🌶️",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/SPICY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "THE-BILL",
+   "ar": "الحساب",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🧾",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/THE-BILL__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "TEA",
+   "ar": "شاي",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🍵",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/TEA__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "COFFEE",
+   "ar": "قهوة",
+   "group": "restaurant",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "☕",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/COFFEE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "DELIVERY",
+   "ar": "دليفري",
+   "group": "delivery",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🛵",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/DELIVERY__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "ADDRESS",
+   "ar": "العنوان",
+   "group": "delivery",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📍",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/ADDRESS__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "FLOOR-FLAT",
+   "ar": "الدور / الشقة",
+   "group": "delivery",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🏢",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/FLOOR-FLAT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "ORDER-LATE",
+   "ar": "الطلب اتأخر",
+   "group": "delivery",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "⏰",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/ORDER-LATE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "DOWNSTAIRS",
+   "ar": "انزل تحت / أنا تحت",
+   "group": "delivery",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "⬇️",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/DOWNSTAIRS__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "EMPLOYEE",
+   "ar": "موظف",
+   "group": "service",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "🧑‍💼",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/EMPLOYEE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "BRANCH",
+   "ar": "فرع",
+   "group": "service",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🏬",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/BRANCH__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "COMPLAINT",
+   "ar": "شكوى",
+   "group": "service",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📢",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/COMPLAINT__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "RECEIVE",
+   "ar": "استلام",
+   "group": "service",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "📦",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/RECEIVE__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "SUPERMARKET",
+   "ar": "سوبر ماركت",
+   "group": "service",
+   "dir": "both",
+   "pri": "P2",
+   "icon": "🛒",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/SUPERMARKET__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "CASHIER",
+   "ar": "كاشير",
+   "group": "service",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "💁",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/CASHIER__d2.mp4",
+     "dur": 4.0
+    }
+   ]
+  },
+  {
+   "id": "PHONE-NUMBER",
+   "ar": "رقم موبايل",
+   "group": "service",
+   "dir": "both",
+   "pri": "P1",
+   "icon": "📞",
+   "clips": [
+    {
+     "signer": "d2",
+     "src": "signs/clips/PHONE-NUMBER__d2.mp4",
+     "dur": 4.0
+    }
+   ]
   }
  ]
 }
