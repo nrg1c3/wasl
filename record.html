@@ -36,6 +36,14 @@ main{max-width:560px;margin:0 auto;padding:14px 16px 40px;display:flex;flex-dire
 #codes button{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:14px;padding:6px 14px;line-height:1.3;flex:1 1 calc(50% - 4px);min-width:0}
 #codes button b{font-size:18px;font-weight:800}
 #codes button small{display:block}
+#whoOk .chips button,#codes2 button{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:16px;padding:10px 14px;line-height:1.3;flex:1 1 calc(50% - 4px);min-width:0;min-height:72px}
+#codes2 button b{font-size:22px;font-weight:800}
+#codes2 button small{display:block}
+.who{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;margin:0 10px 6px;border:0;border-radius:14px;background:#FFD54A;color:#13262F;font:800 20px Cairo,Tahoma,sans-serif;padding:4px 12px;flex-shrink:0}
+.who small{font-weight:700;font-size:13px;opacity:.8}
+.sheetbg{position:fixed;inset:0;background:rgba(10,20,25,.6);z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.sheetbg>div{background:var(--bg);color:var(--ink);width:100%;max-width:560px;border-radius:20px 20px 0 0;padding:18px 16px 22px;display:flex;flex-direction:column;gap:12px}
+.sheetbg h2{margin:0;font-size:22px;text-align:center}
 .code{direction:ltr;font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700}
 label.f{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;color:var(--mute)}
 input[type=text],input[type=search]{min-height:52px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:600 17px Cairo,Tahoma,sans-serif;background:var(--bg);color:var(--ink);width:100%}
@@ -260,6 +268,7 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <div class="prog" id="prog"></div>
 <button class="tb" type="button" id="toSearch">🔍 دوّر</button>
 </div>
+<button class="who" type="button" id="who" aria-label="مين بيصوّر"></button>
 <div class="word"><p class="ar" id="wAr"></p><div class="meta"><span class="code" id="wId"></span><span id="wInfo"></span></div></div>
 <div class="stagewrap" id="wrap"><div class="stage" id="stage">
 <video id="live" playsinline muted autoplay></video>
@@ -288,6 +297,12 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <div id="sres"></div>
 </div>
 
+<div class="sheetbg hidden" id="whoOk" role="dialog" aria-modal="true" aria-labelledby="whoOkT"><div>
+<h2 id="whoOkT">🎥 مين بيصوّر دلوقتي؟</h2>
+<p class="note" id="whoOkN" style="text-align:center;margin:0"></p>
+<div class="chips" id="codes2"></div>
+<button class="btn" type="button" id="whoOkX">رجوع</button>
+</div></div>
 <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -305,6 +320,18 @@ let EXTRA=[];
 const pname=c=>(S.consent[c]&&S.consent[c].name)||((PEOPLE.concat(EXTRA)).find(p=>p[0]===c)||[c,'شخص '+c.replace(/\D/g,'')])[1];
 /* on screen, the team's people always show today's name, even if an old test consent on this phone has another name */
 const shown=c=>{const p=PEOPLE.find(x=>x[0]===c);return p?p[1]:pname(c)};
+/* who is filming: tapped on this page (S.picked) or brought back after the page reopened. Kept in localStorage and in the
+   address (#s=) so a reload keeps it even if storage writes fail. Clip 14/11: a reopened page fell back to d1 and 134 clips got the wrong id. */
+function signerCodes(){return [...new Set([...PEOPLE.map(p=>p[0]),...EXTRA.map(p=>p[0]),...Object.keys(S.consent),...S.takes.map(t=>t.signer),S.signer])].filter(c=>!HIDE.has(c))}
+function signerItems(){return signerCodes().map(c=>{const p=PEOPLE.find(x=>x[0]===c);return [c,`<b>${esc(shown(c))}</b>${p?`<small>${esc(p[2])}</small>`:''}`]})}
+function pickSigner(v){S.signer=v;S.picked=true;ls.set('wasl_rec_signer',v);try{history.replaceState(null,'','#s='+encodeURIComponent(v))}catch(e){}}
+function lastSigner(){let t=null;S.takes.forEach(x=>{if(!t||String(x.at)>String(t.at))t=x});return t&&t.signer}
+function askSigner(then){const L=lastSigner();
+ $('whoOkN').textContent=L?`آخر تسجيل على الموبايل ده كان لـ${shown(L)}.`:'اختار اللي هيعمل الإشارة.';
+ chips($('codes2'),signerItems(),null,v=>{pickSigner(v);$('whoOk').classList.add('hidden');drawSetup();then()});
+ $('whoOk').classList.remove('hidden');$('codes2').querySelector('button')?.focus()}
+$('whoOkX').onclick=()=>$('whoOk').classList.add('hidden');
+$('who').onclick=()=>$('toSetup').click();
 const nameOff=c=>{const k=S.consent[c];return !!(k&&k.name&&PEOPLE.some(x=>x[0]===c)&&!normAr(k.name).includes(normAr(shown(c)).replace(/^ا\.\s*/,'').trim()))};
 const GROUP_AR={greetings:'تحية',basic:'أساسي',questions:'أسئلة',pharmacy:'صيدلية',doctor:'دكتور',body:'الجسم',feelings:'إحساس',transport:'مواصلات',places:'أماكن',shop:'شرا',money:'فلوس',government:'مصالح حكومية',numbers:'أرقام',time:'وقت',sos:'طوارئ',bank:'بنك',telecom:'شحن وفواتير',restaurant:'مطعم',delivery:'دليفري',service:'خدمة عملاء'};
 const S={vocab:[],takes:[],consent:{},signer:'d1',list:'P1',pos:{},cam:'environment',dur:4,state:'setup',stream:null,view:null,newTake:false,parts:[],wake:null,free:null};
@@ -368,9 +395,8 @@ async function storage(){
 
 /* ---------- setup screen ---------- */
 function drawSetup(){
- if(HIDE.has(S.signer)){S.signer=PEOPLE[0][0];ls.set('wasl_rec_signer',S.signer)}
- const codes=[...new Set([...PEOPLE.map(p=>p[0]),...EXTRA.map(p=>p[0]),...Object.keys(S.consent),...S.takes.map(t=>t.signer),S.signer])].filter(c=>!HIDE.has(c));
- chips($('codes'),codes.map(c=>{const p=PEOPLE.find(x=>x[0]===c);return [c,`<b>${esc(shown(c))}</b>${p?`<small>${esc(p[2])}</small>`:''}`]}),S.signer,v=>{S.signer=v;ls.set('wasl_rec_signer',v);$('codeIn').value='';drawSetup()});
+ if(HIDE.has(S.signer)){S.signer=PEOPLE[0][0];S.picked=false;ls.set('wasl_rec_signer',S.signer)}
+ chips($('codes'),signerItems(),S.signer,v=>{pickSigner(v);$('codeIn').value='';drawSetup()});
  const c=S.consent[S.signer];$('cStat').classList.toggle('okay',!!c);
  const other=nameOff(S.signer);if(other)$('cStat').classList.remove('okay');
  $('cTxt').textContent=other?`⚠️ الموافقة متسجّلة باسم «${c.name}». دوس «غيّر الموافقة» وسجّلها باسم ${shown(S.signer)}.`:c?`الموافقة متسجّلة: ${c.name} (${new Date(c.date).toLocaleDateString('ar-EG')})`:`لسه مفيش موافقة من ${shown(S.signer)}. هتظهر لما تدوس «ابدأ».`;
@@ -380,12 +406,13 @@ function drawSetup(){
  $('dOut').textContent=S.dur+' ثواني';$('dMinus').disabled=S.dur<=3;$('dPlus').disabled=S.dur>=6;
  storage()}
 $('addP').onclick=()=>{const n=$('codeIn').value.trim();if(!n)return $('codeIn').focus();let k=1;const used=new Set([...PEOPLE,...EXTRA].map(p=>p[0]).concat(Object.keys(S.consent),S.takes.map(t=>t.signer)));while(used.has('p'+k))k++;
- EXTRA.push(['p'+k,n]);ls.set('wasl_rec_people',EXTRA);S.signer='p'+k;ls.set('wasl_rec_signer',S.signer);$('codeIn').value='';drawSetup()};
+ EXTRA.push(['p'+k,n]);ls.set('wasl_rec_people',EXTRA);pickSigner('p'+k);$('codeIn').value='';drawSetup()};
 $('dMinus').onclick=()=>{S.dur=Math.max(3,S.dur-1);ls.set('wasl_rec_dur',S.dur);drawSetup()};
 $('dPlus').onclick=()=>{S.dur=Math.min(6,S.dur+1);ls.set('wasl_rec_dur',S.dur);drawSetup()};
 $('cEdit').onclick=()=>openConsent(false);
 $('start').onclick=async()=>{const e=$('sErr');e.classList.add('hidden');
  if(!S.vocab.length){e.textContent='قايمة الإشارات ما اتحمّلتش. اتأكد من النت وافتح الصفحة تاني.';e.classList.remove('hidden');return}
+ if(!S.picked)return askSigner(()=>$('start').click());
  if(!S.consent[S.signer]||!S.consent[S.signer].uses.app||nameOff(S.signer))return openConsent(true);
  openStudio()};
 function show(id){['setup','consent','studio','search'].forEach(x=>$(x).classList.toggle('hidden',x!==id&&!(id==='search'&&x==='studio')));scrollTo(0,0)}
@@ -432,7 +459,8 @@ function fit(){const w=$('wrap'),s=$('stage');s.style.height='0';s.style.width='
 addEventListener('resize',fit);
 function draw(){const {L,i,v}=cur();if(!v)return;
  const done=L.filter(x=>doneFor(x.id,S.signer)).length;
- $('prog').innerHTML=`${i+1} من ${L.length}<small>${esc(LNAME(S.list))} · خلص ${done} · ${esc(shown(S.signer))}</small>`;
+ $('prog').innerHTML=`${i+1} من ${L.length}<small>${esc(LNAME(S.list))} · خلص ${done}</small>`;
+ $('who').innerHTML=`🎥 ${esc(shown(S.signer))} <small>(دوس للتغيير)</small>`;
  $('wAr').textContent=v.ar;$('wId').textContent='';
  const ts=takesFor(v.id,S.signer),ok=ts.filter(t=>t.status==='ok').length;
  $('wInfo').textContent=`${GROUP_AR[v.group]||v.group} · ${v.pri} · تمام ${ok}`;
@@ -594,7 +622,7 @@ $('freeBtn').onclick=async()=>{const b=$('freeBtn');if(!b.dataset.sure){b.datase
 
 /* ---------- start ---------- */
 (async function init(){
- EXTRA=ls.get('wasl_rec_people',[])||[];S.signer=ls.get('wasl_rec_signer','d1');S.list=ls.get('wasl_rec_list','P1');S.pos=ls.get('wasl_rec_pos',{})||{};S.cam=ls.get('wasl_rec_cam','environment');S.dur=Math.min(6,Math.max(3,+ls.get('wasl_rec_dur',4)||4));
+ EXTRA=ls.get('wasl_rec_people',[])||[];{const h=/[#&]s=([a-z]\d{1,2})/i.exec(location.hash);S.signer=(h&&decodeURIComponent(h[1]))||ls.get('wasl_rec_signer','d1');S.picked=false}S.list=ls.get('wasl_rec_list','P1');S.pos=ls.get('wasl_rec_pos',{})||{};S.cam=ls.get('wasl_rec_cam','environment');S.dur=Math.min(6,Math.max(3,+ls.get('wasl_rec_dur',4)||4));
  if(!LISTS.some(l=>l[0]===S.list))S.list='P1';
  try{await loadAll()}catch(e){$('sErr').textContent='المتصفح ده مش بيحفظ الفيديوهات (ممكن يكون تصفح متخفي). افتح الصفحة في Chrome أو Safari العادي.';$('sErr').classList.remove('hidden')}
  try{await loadVocab()}catch(e){$('sErr').textContent='قايمة الإشارات ما اتحمّلتش. اتأكد من النت وافتح الصفحة تاني.';$('sErr').classList.remove('hidden')}
