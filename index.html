@@ -690,6 +690,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div class="typerow"><label class="sr" for="fInput">اكتب كلامك</label><input id="fInput" placeholder="أو اكتب كلامك هنا..."><button class="fix" id="fFix" type="button">✨ ظبّطها</button><button id="fSay">انطق</button></div>
 <div class="card fixbox hidden" id="fFixBox" aria-live="polite"><label for="fFixT"><b>بدالك هيقول كده. تقدر تعدّل:</b></label><textarea id="fFixT" class="goal" rows="2"></textarea><small class="note" id="fFixNote"></small><div class="row"><button class="btn or" id="fFixSay" type="button">انطق</button><button class="btn ghost" id="fFixMine" type="button">رجّع كلامي</button><button class="btn ghost" id="fFixNo" type="button">إلغاء</button></div></div>
 <div class="row"><button class="btn ghost" id="fSign">إشارة</button><button class="btn ghost" id="fPay">الدفع</button><button class="btn ghost" id="fFlip">اعرض للي قدامي</button></div>
+<div class="row"><button class="btn ghost" id="fMed">💊 شكل الدوا في الصيدلية</button></div>
 <div class="note" id="fSaid"></div>
 </div>
 </section>
@@ -779,8 +780,11 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div class="note" id="sfNote" aria-live="polite"></div>
 </div></div>
 <script src="docs.js"></script>
+<script src="meds.js"></script>
 <script>
 const EN={
+'💊 شكل الدوا في الصيدلية':'💊 Medicine form (pharmacy)',
+'قولها للصيدلي':'Say it to the pharmacist',
 'مش فاهم أنهي ورقة محتاجها. اطلب منه يورّيهالي.':"I don't understand which paper they need. Ask them to show it to me.",
 'آسف، مش فاهم أنهي ورقة محتاجها. ممكن توريهالي؟':"Sorry, I don't understand which paper you need. Can you show me?",
 'عرض بالإشارة':'Show in sign',
@@ -1344,6 +1348,8 @@ wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. T
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
+'💊 شكل الدوا في الصيدلية':'💊 شكل الدوا في الصيدلية',
+'قولها للصيدلي':'قلها للصيدلي',
 'مش فاهم أنهي ورقة محتاجها. اطلب منه يورّيهالي.':'ما فهمت أي ورقة يحتاجها. اطلب منه يوريني إياها.',
 'آسف، مش فاهم أنهي ورقة محتاجها. ممكن توريهالي؟':'آسف، ما فهمت أي ورقة تحتاجها. ممكن توريني إياها؟',
 'بدالك على الكاونتر: الموظف يكلمك':'بدالك على الكاونتر: الموظف يكلمك',
@@ -2374,6 +2380,8 @@ function choosePay(p){closePay();const say=paySay(p.k);
   haltListening();T.history.push({role:'wasl',text:say});logMsg('wasl',say);T.lastSaid=say;setHear(trH('بدالك بيقول'),say,'');setState('talk',tr('بدالك بيتكلم...'));speak(say,listenForHearing);return}
  fSpeak(say)}
 $('tPay').onclick=()=>openPay('task');$('fPay').onclick=()=>openPay('free');
+/* medicine shapes (meds.js): the user picks tablets / syrup / drops..., confirms, and the phone says it to the pharmacist */
+$('fMed').onclick=()=>{buzz([30]);if(!window.WaslMeds)return;WaslMeds.open({lang:LANG==='en-US'?'en':LANG==='ar-SA'?'gulf':'ar',send:trH('قولها للصيدلي'),onPick:s=>fSpeak(s)})};
 $('payClose').onclick=closePay;$('paySheet').onclick=e=>{if(e.target.id==='paySheet')closePay()};
 
 /* ================= EMERGENCY ================= */
