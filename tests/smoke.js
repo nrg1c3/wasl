@@ -123,6 +123,15 @@ async function pastWelcome(page, choice) {
     msgs >= 2 ? pass('counter demo', 'pharmacist answered') : fail('counter demo', `only ${msgs} message(s) in the chat`);
     // document card (docs.js): the pharmacist asks for the prescription → the drawing shows; «فاهم» closes it
     if (await page.locator('#docPop:not(.hidden)').count()) { pass('counter demo', 'prescription card shown'); await page.click('#docPop .dok'); await page.waitForTimeout(200); }
+    // medicine forms (meds.js): pharmacy, customer phone → 8 picture cards, confirm, the sentence goes to the pharmacist
+    if (await page.locator('#medBtn').count()) {
+      await page.click('#medBtn'); await page.waitForTimeout(200);
+      const n = await page.locator('#medPop .mg button').count();
+      n === 8 ? pass('counter demo', '8 medicine forms') : fail('counter demo', `${n} medicine forms, expected 8`);
+      await page.locator('#medPop .mg button').nth(2).click(); await page.click('#medPop .mok'); await page.waitForTimeout(300);
+      const last = await page.locator('#chat .m.me').last().textContent();
+      /شراب/.test(last) ? pass('counter demo', 'medicine form sent') : fail('counter demo', 'medicine form not in the chat');
+    } else fail('counter demo', 'no medicine-form button at the pharmacy');
     await page.click('#endBtn'); await page.waitForTimeout(300); await page.click('#doneY'); await page.waitForTimeout(500);
     const sum = await page.locator('#sumCard').count();
     sum ? pass('counter demo', 'errand summary shown') : fail('counter demo', 'no errand summary at the end');
