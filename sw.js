@@ -7,7 +7,7 @@ const RUNTIME = 'wasl-rt-v1';
 const SIGNS = 'wasl-signs-v1'; // sign-language clips: kept across app updates (a clip's file name changes when it is re-recorded)
 const KEEP = [SHELL, RUNTIME, SIGNS, 'wasl-demo-v1', 'wasl-share'];
 const FILES = ['./', 'index.html', 'privacy.html', 'counter.html', 'manifest.webmanifest',
-  'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png', 'signs/s2v.js', 'signs/index.json'];
+  'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png', 'signs/s2v.js', 'signs/index.json', 'docs.js'];
 const RUNTIME_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdn.jsdelivr.net',
   'storage.googleapis.com', 'tfhub.dev'];
 
