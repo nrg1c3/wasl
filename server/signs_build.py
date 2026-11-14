@@ -244,6 +244,7 @@ def probe_size(path):
 def convert(src, dst, max_s, land_crop=0.76):
     """Portrait source: fill 540x960 and crop the edges. Landscape source (filmed sideways, as on 14/11): cropping to
     9:16 would cut the hands off, so keep the middle land_crop of the width, whole, on a blurred copy of the frame."""
+    land_crop = max(0.3, min(1.0, float(land_crop)))  # 0 or 1.5 would make ffmpeg fail with an unclear message
     size = probe_size(src)
     tail = 'fps=30,format=yuv420p,setsar=1'
     if size and size[0] > size[1]:
@@ -307,7 +308,7 @@ def main():
     ap.add_argument('--pick', action='append', default=[], help='ID__signer=TAKE (repeatable)')
     ap.add_argument('--picks', help='CSV file with lines ID__signer,TAKE')
     ap.add_argument('--max', type=float, default=4.0, help='longest clip in seconds (default 4)')
-    ap.add_argument('--land-crop', type=float, default=0.76, help='landscape takes: share of the width kept around the signer (default 0.76)')
+    ap.add_argument('--land-crop', type=float, default=0.76, help='landscape takes: share of the width kept around the signer, 0.3 to 1 (default 0.76). Smaller = bigger signer; check the hands stay in')
     ap.add_argument('--list', action='store_true', help='only list the takes and the default choice')
     ap.add_argument('--skip-existing', action='store_true', help='keep clips that already exist')
     ap.add_argument('--force', action='store_true', help='publish even without "use in the app" consent')
