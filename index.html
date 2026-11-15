@@ -785,6 +785,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <script src="meds.js"></script>
 <script>
 const EN={
+'إشارات أساسية (تجريبي)':'Basic signs (trial)','كلمة كلمة، مش جمل':'one word at a time, not sentences',
 '💊 شكل الدوا في الصيدلية':'💊 Medicine form (pharmacy)',
 'قولها للصيدلي':'Say it to the pharmacist',
 'مش فاهم أنهي ورقة محتاجها. اطلب منه يورّيهالي.':"I don't understand which paper they need. Ask them to show it to me.",
@@ -1350,6 +1351,7 @@ wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. T
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
+'كلمة كلمة، مش جمل':'كلمة كلمة، مو جمل',
 '💊 شكل الدوا في الصيدلية':'💊 شكل الدوا في الصيدلية',
 'قولها للصيدلي':'قلها للصيدلي',
 'مش فاهم أنهي ورقة محتاجها. اطلب منه يورّيهالي.':'ما فهمت أي ورقة يحتاجها. اطلب منه يوريني إياها.',
@@ -2680,6 +2682,7 @@ let sgOld=false;try{if(localStorage.getItem('signs')){const o=JSON.parse(localSt
 const SG_GUIDE='<svg class="sguide" viewBox="0 0 120 160" aria-hidden="true"><circle cx="60" cy="48" r="20"/><path d="M14 132c4-26 22-40 46-40s42 14 46 40"/></svg>';
 function sgBuild(){if(SG.ui)return;SG.ui=true;const b=$('signs');
  b.innerHTML=`<div class="shead"><b>${svgI('hand')} ${tr('إشارة')}</b><button class="back" id="sClose">${tr('إقفل')}</button></div>
+<p class="snote sbeta">🧪 <b>${tr('إشارات أساسية (تجريبي)')}</b> · ${tr('كلمة كلمة، مش جمل')}</p>
 <p class="snote">🔒 ${tr('الكاميرا بتشتغل على الموبايل بس، ومفيش فيديو بيتبعت')}</p>
 <div class="srow"><div class="cam" id="sCam"><video id="sv" playsinline muted></video><canvas id="sc"></canvas>${SG_GUIDE}<div id="slive" role="status" aria-live="polite">${tr('بيشغّل الكاميرا...')}</div></div>
 <button class="shold" id="sHold" aria-pressed="false"><span class="sgi" aria-hidden="true">✋</span><span>${tr('دوس وخليك دايس وإنت بتعمل الإشارة')}</span></button></div>
