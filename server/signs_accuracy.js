@@ -18,7 +18,7 @@
      node server/signs_accuracy.js --selftest              # synthetic data: checks the script, no templates needed
      node server/signs_accuracy.js --tpl DIR --test-signer t1
          # «قياس داخلي بس» (#43): the library = everyone except t1, the test = t1's takes only (a person it has never seen).
-         # Build DIR in a temp folder (signs_templates.py --clips signs/clips --takes <t1's ZIPs> --out DIR), never in the repo. */
+         # Build DIR in a temp folder (signs_templates.py --clips signs/clips --takes <folder with t1's ZIPs unpacked> --out DIR); inside the repo t1 is skipped. */
 'use strict';
 const fs = require('fs'), path = require('path');
 const REPO = path.resolve(__dirname, '..');

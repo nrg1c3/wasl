@@ -165,6 +165,21 @@ async function pastWelcome(page, choice) {
         ? pass('signs_build', 'measure-only signer skipped, also with --force') : fail('signs_build', 'measure-only signer reached the library: ' + out.slice(-300));
       fs.rmSync(T, { recursive: true, force: true });
     }
+    // signs_templates.py: the same signer gets no templates when --out is inside the repo (the app loads signs/templates),
+    // and is used when --out is a temp folder (the measuring run). --list stops before MediaPipe.
+    if (has('python3', '--version')) {
+      const T = fs.mkdtempSync(path.join(os.tmpdir(), 'wasl-measure-tpl-'));
+      fs.mkdirSync(path.join(T, 'clips')); fs.mkdirSync(path.join(T, 'zip1'));
+      fs.writeFileSync(path.join(T, 'zip1', 'PHARMACY__z9__1.webm'), 'x');
+      fs.writeFileSync(path.join(T, 'zip1', 'PHARMACY__d1__1.webm'), 'x');
+      fs.writeFileSync(path.join(T, 'zip1', 'consent.json'), JSON.stringify({ signers: [{ signer: 'z9', purpose: 'measure' }, { signer: 'd1', purpose: 'app' }] }));
+      const run = out => { try { return execFileSync('python3', [path.join(ROOT, 'server', 'signs_templates.py'), '--clips', path.join(T, 'clips'), '--takes', T, '--out', out, '--list'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); } catch (e) { return 'ERR ' + (e.stdout || '') + (e.stderr || ''); } };
+      const inRepo = run(path.join(ROOT, 'signs', 'templates')), outside = run(path.join(T, 'tpl'));
+      (/internal measuring only/.test(inRepo) && !/z9:/.test(inRepo) && /d1:/.test(inRepo) && /z9:/.test(outside))
+        ? pass('signs_templates', 'measure-only signer: no templates inside the repo, used with --out outside it')
+        : fail('signs_templates', 'measure-only signer guard: ' + (inRepo + ' | ' + outside).slice(-400));
+      fs.rmSync(T, { recursive: true, force: true });
+    }
   }
 
   // pharmacy from home (#40): straight to the pharmacy cards, no doctor / bills sections; «رجوع» goes home
