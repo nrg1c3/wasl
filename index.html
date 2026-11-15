@@ -2466,15 +2466,16 @@ const SVC={amb:'إسعاف',pol:'شرطة',fire:'مطافي',gas:'طوارئ ا�
 function sosDial(ty,c){c=c||country();let k=ty.need,n=c[k];if(!n&&c.gen){k='gen';n=c.gen}if(!n&&ty.need==='gas'&&c.fire){k='fire';n=c.fire}
  if(!n)return null;const svc=k==='fire'&&c.d!=='eg'?'الدفاع المدني':ty.id==='lost'&&k==='pol'&&c.d==='eg'?'مساعدة':SVC[k];return{num:n,svc}}
 // Egypt Red Crescent WhatsApp (still to be confirmed by the owner); shown only when the country is Egypt.
-const RC_WA='201152072077';
+/* Red Crescent WhatsApp: empty until Mohamed confirms the official number (digits with country code, e.g. 20…). While empty the button and link stay hidden. */
+const RC_WA='';
 let sosT=null,sosPos=null,sirenCtx=null,sirenOsc=null,torchTrack=null,torchT=null;
 function drawSosCountry(){const c=country(),eg=countryCode()==='EG';
  $('sosCtyName').textContent=cName(c);countryOptions($('sosCty'));
  $('sosNumsT').textContent=tr('أرقام الطوارئ في {c}',{c:cName(c)});
  $('sosNums').innerHTML=c.list.map(([n,l])=>`<a href="tel:${n}"${tr(l).length>14?' class="wide"':''}><span>${esc(tr(l))}</span><b dir="ltr">${n}</b></a>`).join('')+
   (c.deaf||[]).map(([n,h,l])=>`<a href="${h}"${/^https/.test(h)?' target="_blank" rel="noopener"':''} class="wide"><span>${esc(tr(l))}</span><b dir="ltr">${esc(n)}</b></a>`).join('')+
-  (eg?`<a href="https://wa.me/${RC_WA}" target="_blank" rel="noopener"><span>${tr('واتساب الهلال الأحمر')}</span><b>💬</b></a>`:'');
- $('sosRC').classList.toggle('hidden',!eg);
+  (eg&&RC_WA?`<a href="https://wa.me/${RC_WA}" target="_blank" rel="noopener"><span>${tr('واتساب الهلال الأحمر')}</span><b>💬</b></a>`:'');
+ $('sosRC').classList.toggle('hidden',!(eg&&RC_WA));
  const ts=SOS_TYPES.filter(t=>sosDial(t,c));
  $('sosTypes').innerHTML=ts.map(t=>`<button><span>${t.icon}</span>${esc(tr(t.ar))}</button>`).join('');
  $('sosTypes').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>pickSos(ts[i]));
