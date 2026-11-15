@@ -102,12 +102,12 @@ async function pastWelcome(page) {
         const nav = document.querySelector('.hnav').getBoundingClientRect(), H = innerHeight;
         const vis = el => { const b = el.getBoundingClientRect(); return b.height >= 48 && b.top >= 0 && b.bottom <= Math.min(H, nav.top) + 1; };
         const al = document.getElementById('openAlerts'), ab = al.getBoundingClientRect();
-        return { pm: document.documentElement.classList.contains('pm'), picSw: !!document.getElementById('picSw'),
+        return { pm: !document.getElementById('bigTalk') && !document.getElementById('openFree'), picSw: !!document.getElementById('picSw'),
           sit: [...document.querySelectorAll('#sitGrid button')].filter(vis).length, tools: [...document.querySelectorAll('#toolGrid button')].filter(vis).length,
           toolsAll: document.querySelectorAll('#toolGrid button').length, sos: vis(document.getElementById('sosBtn')),
           alerts: ab.height >= 48 && ab.bottom <= H + 1 && !!al.querySelector('svg') && /التنبيهات/.test(al.textContent), scroll: document.scrollingElement.scrollTop };
       });
-      r.pm && !r.picSw ? pass(where, 'one interface (no picture-mode switch)') : fail(where, `pm=${r.pm} picSw=${r.picSw}`);
+      r.pm && !r.picSw ? pass(where, 'one interface (no picture-mode switch, no old home buttons)') : fail(where, `old buttons gone=${r.pm} picSw=${r.picSw}`);
       r.sit === 6 && r.tools === r.toolsAll && r.sos ? pass(where, `6 situations + ${r.tools} tools + emergency, no scroll`) : fail(where, `visible: ${r.sit} situations, ${r.tools}/${r.toolsAll} tools, emergency ${r.sos}`);
       r.alerts ? pass(where, '«التنبيهات» in the bottom bar with its icon') : fail(where, '«التنبيهات» not visible in the bottom bar');
       if (page.errs.length) fail(where, 'console errors: ' + page.errs.join(' | ').slice(0, 300));

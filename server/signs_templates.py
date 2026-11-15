@@ -37,7 +37,7 @@ MODELS = {
     'pose_landmarker_lite.task': 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',
 }
 HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.dirname(HERE)
+REPO = os.path.realpath(os.path.dirname(HERE))  # realpath: the guard compares it with realpath(--out), symlinks included
 
 
 # ---------- features: a line-by-line copy of signs/s2v.js ----------
