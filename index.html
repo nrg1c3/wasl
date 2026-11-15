@@ -277,6 +277,8 @@ html.pm #sosBtn{min-height:72px;padding-block:8px}html.pm #sosBtn .ic{width:54px
 .bigopts button:active{background:var(--orl)}
 .bigopts .si{width:48px;height:48px;border-radius:14px;background:var(--orl);display:flex;align-items:center;justify-content:center;flex-shrink:0}.bigopts .si svg{width:30px;height:30px;stroke:var(--ord)}
 @media (max-height:720px){.sit button{min-height:88px;gap:4px}.sit .si{width:46px;height:46px}.sit.tools button{min-height:78px}#picHome{gap:8px}}
+/* short phones (about 667px): the six cards and the tools row shrink a bit so the «بدالك على الكاونتر» card is not half hidden behind the SOS bar */
+@media (max-height:700px){html.pm .sit button{padding-block:6px;gap:2px}html.pm .sit .si{width:36px;height:36px}html.pm .sit .si svg{width:22px;height:22px}html.pm .sit:not(.tools) button{min-height:72px}html.pm .sit.tools button{min-height:64px}}
 @media (min-height:780px){.sit button{min-height:112px}.sit .si{width:56px;height:56px}.sit .si svg{width:34px;height:34px}.sit.tools button{min-height:100px}}
 html.pm #refills:empty,html.pm #orderChip:empty{display:none}
 /* profile switch */
