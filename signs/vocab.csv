@@ -56,6 +56,10 @@ doctor,ميعاد / حجز,APPOINTMENT,both,P1
 doctor,كشف,CHECKUP,both,P2
 doctor,تحليل / تحاليل,LAB-TEST,both,P2
 doctor,أشعة,X-RAY,both,P2
+doctor,نتيجة,RESULT,both,P2
+doctor,تأمين صحي,HEALTH-INSURANCE,both,P2
+doctor,تحويل من دكتور,REFERRAL,both,P2
+doctor,استقبال / أول مرة,RECEPTION,both,P2
 doctor,سخونية,FEVER,both,P1
 doctor,ضغط,BLOOD-PRESSURE,both,P2
 doctor,سكر,DIABETES,both,P2
