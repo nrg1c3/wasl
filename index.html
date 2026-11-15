@@ -1884,7 +1884,7 @@ const PICS=[
   {i:'🏠',l:'الإيجار',g:'عايز أتكلم عن الإيجار'},{i:'🧾',l:'فاتورة كهربا أو غاز',cam:'فاتورة كهربا أو غاز',pick:1},{i:'📞',l:'مكالمة (تجريبي)',call:1}]},
  /* government (#46): «ورق حكومي» split in three, one tap to the cards; the errand only, nothing about rights or legal steps.
     The police station has «🚨 طوارئ» first: someone there may be in danger. */
- {i:'🪪',l:'السجل المدني',sub:[{i:'🪪',l:'بطاقة',g:'عايز أطلع أو أجدد البطاقة'},{i:'📜',l:'شهادة ميلاد',g:'عايز أطلع شهادة ميلاد'},{i:'❗',l:'بدل فاقد',g:'البطاقة ضاعت، عايز بدل فاقد'},
+ {i:'🏛️',l:'السجل المدني',sub:[{i:'🪪',l:'بطاقة',g:'عايز أطلع أو أجدد البطاقة'},{i:'📜',l:'شهادة ميلاد',g:'عايز أطلع شهادة ميلاد'},{i:'❗',l:'بدل فاقد',g:'البطاقة ضاعت، عايز بدل فاقد'},
   {i:'📋',l:'الورق المطلوب',g:'عايز أعرف الورق المطلوب'},{i:'📄',l:'ورقة معايا',cam:'ورقة حكومية',pick:1}]},
  {i:'🚦',l:'المرور',sub:[{i:'🪪',l:'رخصة سواقة',g:'عايز أطلع أو أجدد رخصة السواقة'},{i:'🚗',l:'رخصة عربية',g:'عايز أجدد رخصة العربية'},{i:'🧾',l:'مخالفة',g:'عايز أسأل عن مخالفة'},
   {i:'📄',l:'ورقة معايا',cam:'ورقة من المرور',pick:1}]},
@@ -1903,6 +1903,8 @@ function drawQty(x,cat){const list=[{i:'↩️',l:tr('رجوع'),back:1},...x.q.
 let taskPhoto=null,camHint='صورة',readSeq=0,picsFromHome=false,gridFromHome=false;
 function drawPics(cat,fromHome){if(!cat)gridFromHome=!!fromHome;picsFromHome=!!(cat&&fromHome);const bk={i:'↩️',l:tr('رجوع'),back:1},list=cat?[bk,...cat.sub]:gridFromHome?[bk,...PICS]:PICS;
  $('openOrder').classList.toggle('hidden',!(cat&&cat.ph));
+ /* a new list starts at the top: «رجوع» and the first card (the police station's «🚨 طوارئ») must be on screen, even when the place was low in the grid */
+ const sb=$('pics').closest('.body');if(sb)sb.scrollTop=0;
  $('pics').innerHTML=list.map(x=>`<button class="pic${x.back?' back':''}${x.cam?' pcam':''}${x.sos?' psos':''}"><i aria-hidden="true">${x.i}</i>${esc(x.l)}</button>`).join('');
  $('pics').querySelectorAll('button').forEach((b,k)=>b.onclick=()=>{const x=list[k];buzz([30]);
   if(x.back){if(!cat||picsFromHome){drawPics(null);return show('home')}return drawPics(null,gridFromHome)}if(x.sub)return drawPics(x);if(x.cam){camHint=x.cam;$(x.pick?'picIn':'camIn').click();return}if(x.q)return drawQty(x,cat);if(x.call)return callOpen();if(x.sos)return $('sosBtn').click();

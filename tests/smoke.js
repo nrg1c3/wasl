@@ -267,6 +267,9 @@ async function pastWelcome(page) {
     await page.locator('#pics button', { hasText: 'قسم الشرطة' }).click(); await page.waitForTimeout(200);
     t = await cards();
     const sosFirst = await page.evaluate(() => document.querySelectorAll('#pics button')[1].classList.contains('psos'));
+    // the red card is fully on screen, under the header, right after opening the place from the bottom of the grid
+    const sosVis = await page.evaluate(() => { const r = document.querySelector('#pics .psos').getBoundingClientRect(), h = document.querySelector('#talk .top').getBoundingClientRect(); return { top: Math.round(r.top), bottom: Math.round(r.bottom), head: Math.round(h.bottom), H: innerHeight }; });
+    sosVis.top >= sosVis.head && sosVis.bottom <= sosVis.H ? pass(tag + ' places', '«🚨 طوارئ» fully visible under the header') : fail(tag + ' places', `«🚨 طوارئ» hidden: ${JSON.stringify(sosVis)}`);
     t.length === 5 && /طوارئ/.test(t[1]) && sosFirst && t.some(x => /أعمل محضر/.test(x)) ? pass(tag + ' places', 'police: «🚨 طوارئ» first + 3 cards') : fail(tag + ' places', `police: ${t.join(' | ')}`);
     await page.locator('#pics button.psos').click(); await page.waitForTimeout(400);
     (await page.evaluate(() => document.getElementById('sos').classList.contains('on'))) ? pass(tag + ' places', '«🚨 طوارئ» opens the emergency screen') : fail(tag + ' places', '«🚨 طوارئ» did not open the emergency screen');
