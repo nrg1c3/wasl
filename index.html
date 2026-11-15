@@ -279,7 +279,7 @@ html.pm #sosBtn{min-height:72px;padding-block:8px}html.pm #sosBtn .ic{width:54px
 @media (max-height:720px){.sit button{min-height:88px;gap:4px}.sit .si{width:46px;height:46px}.sit.tools button{min-height:78px}#picHome{gap:8px}}
 @media (min-height:780px){.sit button{min-height:112px}.sit .si{width:56px;height:56px}.sit .si svg{width:34px;height:34px}.sit.tools button{min-height:100px}}
 html.pm #refills:empty,html.pm #orderChip:empty{display:none}
-#phT{display:flex;align-items:center;gap:10px}#phT svg{width:32px;height:32px;stroke:#1F6F80}
+
 /* profile switch */
 .psw{width:100%;display:flex;align-items:center;gap:12px;border:0;background:none;padding:0;text-align:start;color:var(--ink);min-height:56px}
 .psw .si{width:48px;height:48px;border-radius:14px;background:var(--orl);display:flex;align-items:center;justify-content:center;flex-shrink:0}.psw .si svg{width:28px;height:28px;stroke:var(--ord)}
@@ -517,6 +517,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <h2 style="font-size:32px">عايز إيه؟</h2>
 <button class="cambtn" id="camBtn"><span aria-hidden="true">📷</span>صوّر الروشتة أو الحاجة</button>
 <input type="file" id="camIn" accept="image/*" capture="environment" class="hidden">
+<input type="file" id="picIn" accept="image/*" class="hidden">
 <div class="picgrid" id="pics" role="group" aria-label="اختار بالصور"></div>
 <details class="typebox"><summary>أو اكتب طلبك</summary>
 <label class="sr" for="goal">اكتب طلبك</label>
@@ -767,11 +768,6 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <p class="lead">الطوارئ شغالة في أي وقت. والترجمة بتفضل تكتب الكلام، بس من غير ردود ذكية.</p>
 <button class="btn" id="qbFree">افتح الترجمة</button>
 <button class="btn ghost" id="qbOk">تمام</button>
-</div></div>
-<div id="phSheet" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="phT"><div class="card">
-<h3 id="phT"></h3>
-<div class="bigopts" id="phOpts"></div>
-<button class="btn ghost" id="phX">إلغاء</button>
 </div></div>
 <div id="sayFix" class="ovl hidden" role="dialog" aria-modal="true" aria-labelledby="sfTitle"><div class="card">
 <h3 id="sfTitle">أنهي كلمة اتنطقت غلط؟</h3>
@@ -1183,6 +1179,7 @@ const EN={
 'اكتب بنفسي':'Type it myself',
 'صوّر الروشتة':'Photo of the prescription','صوّر علبة الدوا':'Photo of the medicine box','اكتب اسم الدوا':'Type the medicine name',
 'عايز من الصيدلية: ':'I want from the pharmacy: ',
+'حاجة للمعدة':'Stomach ache','عايز حاجة لوجع المعدة':'I want something for a stomach ache','حاجة للسخونية':'Fever','عايز حاجة للسخونية':'I want something for a fever','أقيس الضغط':'Check my blood pressure','عايز أقيس الضغط':'I want to check my blood pressure','الدوا بكام؟':'How much is it?','الدوا ده سعره كام؟':'How much does this medicine cost?',
 'من فضلك اكتبلي، أو شاورلي':'Please write to me, or point',
 'دوس في أي حتة عشان تقفل':'Tap anywhere to close',
 // ---- pharmacy order
@@ -1350,6 +1347,7 @@ wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. T
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
+'حاجة للمعدة':'شي للمعدة','عايز حاجة لوجع المعدة':'أبي شي لوجع المعدة','حاجة للسخونية':'شي للحرارة','عايز حاجة للسخونية':'أبي شي للحرارة','أقيس الضغط':'أقيس الضغط','عايز أقيس الضغط':'أبي أقيس الضغط','الدوا بكام؟':'الدواء بكم؟','الدوا ده سعره كام؟':'هذا الدواء بكم؟',
 '💊 شكل الدوا في الصيدلية':'💊 شكل الدوا في الصيدلية',
 'قولها للصيدلي':'قلها للصيدلي',
 'مش فاهم أنهي ورقة محتاجها. اطلب منه يورّيهالي.':'ما فهمت أي ورقة يحتاجها. اطلب منه يوريني إياها.',
@@ -1864,30 +1862,35 @@ function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.to
 $('bigTalk').onclick=()=>{drawPics(null);taskPhoto=null;$('goal').value='';show('talk');quotaGet()};
 /* ---------- choose by pictures (no reading needed) ---------- */
 const PICS=[
- {i:'💊',l:'صيدلية',ph:1,sub:[{i:'📄',l:'أصرف روشتة',cam:'روشتة'},{i:'📦',l:'دوا معايا علبته',cam:'علبة دوا'},{i:'🤕',l:'مسكن للصداع',g:'عايز مسكن للصداع'},{i:'🤧',l:'دوا للبرد',g:'عايز دوا للبرد والكحة'}]},
+ /* pharmacy: the cards say the problem only, never a medicine name: the pharmacist suggests, the user decides (#40).
+    The two photo cards open the phone's pictures too (pick: no capture), since people photograph the paper at home. */
+ {i:'💊',l:'صيدلية',ph:1,sub:[{i:'📄',l:'أصرف روشتة',cam:'روشتة',pick:1},{i:'📦',l:'دوا معايا علبته',cam:'علبة دوا',pick:1},{i:'🤕',l:'مسكن للصداع',g:'عايز مسكن للصداع'},{i:'🤧',l:'دوا للبرد',g:'عايز دوا للبرد والكحة'},
+  {i:'🤢',l:'حاجة للمعدة',g:'عايز حاجة لوجع المعدة'},{i:'🤒',l:'حاجة للسخونية',g:'عايز حاجة للسخونية'},{i:'🩺',l:'أقيس الضغط',g:'عايز أقيس الضغط'},{i:'💵',l:'الدوا بكام؟',g:'الدوا ده سعره كام؟'}]},
  {i:'🩺',l:'دكتور',sub:[{i:'📅',l:'أحجز كشف',g:'عايز أحجز كشف'},{i:'🤒',l:'تعبان',g:'عايز أقول للدكتور إني تعبان وعايز أكشف'},{i:'🧪',l:'تحاليل',g:'عايز أعمل تحاليل'},{i:'📄',l:'ورقة معايا',cam:'ورقة من الدكتور'}]},
  {i:'🚕',l:'مواصلات',sub:[{i:'🏠',l:'أروح البيت',g:'عايز أروح البيت'},{i:'📍',l:'عنوان مكتوب',cam:'عنوان مكتوب'},{i:'💵',l:'الأجرة كام',g:'عايز أعرف الأجرة كام'},{i:'✋',l:'أنزل هنا',g:'عايز أنزل هنا لو سمحت'}]},
  {i:'🛒',l:'محل',sub:[{i:'📷',l:'حاجة زي دي',cam:'حاجة عايز أشتريها'},{i:'🏷️',l:'السعر كام',g:'عايز أعرف سعر الحاجة دي'},{i:'🔄',l:'أبدّل أو أرجّع',g:'عايز أبدّل أو أرجّع حاجة اشتريتها'},{i:'❓',l:'فين مكانها',g:'عايز أعرف مكان حاجة في المحل'}]},
  {i:'💳',l:'فلوس وفواتير',sub:[{i:'🧾',l:'أدفع فاتورة',cam:'فاتورة'},{i:'📱',l:'أشحن رصيد',g:'عايز أشحن رصيد'},{i:'🏦',l:'البنك',g:'عايز أخلّص حاجة في البنك'},{i:'💸',l:'أحوّل فلوس',g:'عايز أحوّل فلوس'}]},
  {i:'🏛️',l:'ورق حكومي',sub:[{i:'🪪',l:'البطاقة',g:'عايز أطلع أو أجدد البطاقة'},{i:'📜',l:'شهادة',g:'عايز أطلع شهادة'},{i:'📋',l:'الورق المطلوب',g:'عايز أعرف الورق المطلوب'},{i:'📄',l:'ورقة معايا',cam:'ورقة حكومية'}]}];
 if(UI==='en'||GULF)PICS.forEach(c=>{c.l=tr(c.l);c.sub.forEach(x=>{x.l=tr(x.l);if(x.g)x.g=tr(x.g)})});
-let taskPhoto=null,camHint='صورة',readSeq=0;
-function drawPics(cat){const list=cat?[{i:'↩️',l:tr('رجوع'),back:1},...cat.sub]:PICS;
+let taskPhoto=null,camHint='صورة',readSeq=0,picsFromHome=false;
+function drawPics(cat,fromHome){picsFromHome=!!(cat&&fromHome);const list=cat?[{i:'↩️',l:tr('رجوع'),back:1},...cat.sub]:PICS;
  $('openOrder').classList.toggle('hidden',!(cat&&cat.ph));
  $('pics').innerHTML=list.map(x=>`<button class="pic${x.back?' back':''}${x.cam?' pcam':''}"><i aria-hidden="true">${x.i}</i>${esc(x.l)}</button>`).join('');
  $('pics').querySelectorAll('button').forEach((b,k)=>b.onclick=()=>{const x=list[k];buzz([30]);
-  if(x.back)return drawPics(null);if(x.sub)return drawPics(x);if(x.cam){camHint=x.cam;$('camIn').click();return}
+  if(x.back){if(picsFromHome){drawPics(null);return show('home')}return drawPics(null)}if(x.sub)return drawPics(x);if(x.cam){camHint=x.cam;$(x.pick?'picIn':'camIn').click();return}
   taskPhoto=null;$('goal').value=x.g;$('startTask').click()})}
 $('camBtn').onclick=()=>{camHint='روشتة أو حاجة عايز أطلبها';$('camIn').click()};
 function shrink(file){return new Promise((ok,no)=>{const img=new Image();img.onload=()=>{const m=1024,k=Math.min(1,m/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(img.src);ok(c.toDataURL('image/jpeg',0.72))};img.onerror=no;img.src=URL.createObjectURL(file)})}
-$('camIn').onchange=async()=>{const f=$('camIn').files[0];$('camIn').value='';if(!f)return;const my=++readSeq;
+$('camIn').onchange=()=>{const f=$('camIn').files[0];$('camIn').value='';readPhoto(f)};
+$('picIn').onchange=()=>{const f=$('picIn').files[0];$('picIn').value='';readPhoto(f)};
+async function readPhoto(f){if(!f)return;const my=++readSeq;
  let data;try{data=await shrink(f)}catch(e){return}
  $('readImg').src=data;$('readT').textContent=tr('بقرا الصورة...');$('readOv').style.display='flex';
  try{const d=await postJSON(VISION_URL,{image:data,hint:camHint,lang:LANG,ui:UI},25000);
   if(my!==readSeq)return;
   if(!d.goal||d.clear===false){$('readT').textContent=tr('الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.');return}
   $('readOv').style.display='none';taskPhoto=data;$('goal').value=d.goal;$('startTask').click()}
- catch(e){if(my===readSeq)$('readT').textContent=tr('النت ضعيف. جرّب تاني.')}};
+ catch(e){if(my===readSeq)$('readT').textContent=tr('النت ضعيف. جرّب تاني.')}}
 $('readCancel').onclick=()=>{readSeq++;$('readOv').style.display='none'};
 $('talkBack').onclick=()=>show('home');
 $('openMe').onclick=()=>{loadMe();$('coNote').textContent='';show('me');quotaGet()};$('meBack').onclick=()=>show('home');
@@ -2871,17 +2874,11 @@ $('picHome').innerHTML=`<div class="phead"><b>${tr('اتكلم بدالي')}</b>
  `<div class="sit tools" id="toolGrid">${TOOLS.map(sitBtn).join('')}</div>`;
 function startSit(g){drawPics(null);taskPhoto=null;$('goal').value=g;$('startTask').click()}
 function typeGoal(pre){drawPics(null);taskPhoto=null;$('goal').value=pre||'';show('talk');quotaGet();const dt=$('goal').closest('details');if(dt)dt.open=true;setTimeout(()=>{const g=$('goal');g.focus();g.setSelectionRange(g.value.length,g.value.length)},60)}
-$('sitGrid').querySelectorAll('button').forEach(b=>b.onclick=gated(()=>{const x=SIT[+b.dataset.i];if(x.ph)openPh();else startSit(x.g)}));
+$('sitGrid').querySelectorAll('button').forEach(b=>b.onclick=gated(()=>{const x=SIT[+b.dataset.i];if(x.ph)openPharm();else startSit(x.g)}));
 $('toolGrid').querySelectorAll('button').forEach(b=>b.onclick=gated(()=>TOOLS[+b.dataset.i].go()));
 $('picWrite').onclick=gated(()=>typeGoal(''));
-/* pharmacy: Badalak never suggests a medicine. The user shows the prescription or the box, or writes the name. */
-const PH=[{k:'cam',l:'صوّر الروشتة',go:()=>{camHint='روشتة';$('camIn').click()}},{k:'box',l:'صوّر علبة الدوا',go:()=>{camHint='علبة دوا';$('camIn').click()}},{k:'pen',l:'اكتب اسم الدوا',go:()=>typeGoal(tr('عايز من الصيدلية: '))}];PH.forEach(x=>x.l=tr(x.l));
-$('phT').innerHTML=svgI('pill')+tr('صيدلية');
-$('phOpts').innerHTML=PH.map(x=>`<button><span class="si">${svgI(x.k)}</span>${esc(x.l)}</button>`).join('');
-$('phOpts').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{buzz([30]);$('phSheet').classList.add('hidden');drawPics(null);taskPhoto=null;PH[i].go()});
-function openPh(){$('phSheet').classList.remove('hidden')}
-$('phX').onclick=()=>$('phSheet').classList.add('hidden');
-$('phSheet').onclick=e=>{if(e.target.id==='phSheet')$('phSheet').classList.add('hidden')};
+/* pharmacy from home: straight to the pharmacy cards, the box ready for «عايز من الصيدلية: »; «رجوع» goes home (#40) */
+function openPharm(){drawPics(PICS[0],true);taskPhoto=null;$('goal').value=tr('عايز من الصيدلية: ');show('talk');quotaGet()}
 /* ================= «مكالمة»: Badalak phones a number for the user =================
    The user writes the number and what to say. The server (Wasl - Call Start / Session) dials with Telnyx, whose live voice
    assistant says first that it is an AI assistant speaking for a Deaf person, speaks for the user and writes down the other side.
