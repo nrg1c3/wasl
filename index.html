@@ -289,11 +289,11 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 /* first-run choice */
 .wgo{min-height:64px;border:0;border-radius:18px;background:var(--ink);color:#fff;font-size:22px;font-weight:800;padding:8px}.wgo:active{background:var(--ink2)}
 /* inside a task, translation and the order: bigger heard text, cards, buttons with icons */
-.live{min-height:96px}
+.live{min-height:96px;max-height:none;flex:0 1 auto}
 .live p{font-size:clamp(26px,8vw,34px);line-height:1.4}
 #task .thead,#task .prog{display:none}
 #tCards{flex-wrap:nowrap;overflow-x:auto}#tCards .pcard{flex:0 0 auto;max-width:none}
-.live{max-height:none;flex:0 1 auto}#task .tbody{flex:1 1 0;min-height:150px}#task.asking #tLive{min-height:0}.decide #tCards{margin:0}
+#task .tbody{flex:1 1 0;min-height:150px}#task.asking #tLive{min-height:0}.decide #tCards{margin:0}
 @media (max-height:720px){#tLiveLab{display:none}.live p{font-size:26px}#tCards .pcard{padding:6px 10px;min-width:96px}#tCards .pcard svg{width:38px;height:38px}#tCards .pcard b{font-size:26px}.opts button{min-height:60px;font-size:19px}.opts .ri{width:36px;height:36px}#tOk .opts button{min-height:84px}.okline{font-size:21px}}
 #tCards .pcard{min-width:110px;padding:12px}#tCards .pcard svg{width:44px;height:44px}#tCards .pcard b{font-size:30px}
 .ri{display:inline-flex;width:42px;height:42px;border-radius:12px;align-items:center;justify-content:center;background:var(--orl);flex-shrink:0}
@@ -307,24 +307,21 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 .pi{display:block;font-size:36px;line-height:1}
 #tOkYes{background:#2E7D5B;color:#fff}
 .okline{font-size:24px}
-.tfoot{gap:6px;padding-inline:10px}
-.tfoot button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:62px;font-size:13px;padding:4px 2px}
-.tfoot .end{flex:1;padding:4px 2px}
-.tfoot svg,#free .row svg{width:24px;height:24px}
 /* Face to face: a slimmer bottom bar, and while the user decides the top halves shrink so the question, the picture cards and every answer fit on the screen */
 .tfoot{padding:6px 10px calc(6px + env(safe-area-inset-bottom));gap:6px}
-.tfoot button{min-height:44px;font-size:14px;border-radius:12px;white-space:nowrap}
-.tfoot button{min-height:50px;font-size:12px;gap:1px}.tfoot svg{width:22px;height:22px}
+.tfoot button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:50px;font-size:12px;padding:4px 2px;border-radius:12px;white-space:nowrap}
+.tfoot .end{flex:1;padding:4px 2px}
+#free .row svg{width:24px;height:24px}.tfoot svg{width:22px;height:22px}
 #task.asking .hear{flex-basis:20%;padding:10px 16px;gap:4px}#task.asking .hear .sub,#task.asking .hear .lab{display:none}
 #task.asking .live{padding:6px 14px;min-height:0}#task.asking #tLiveLab{display:none}
-#task.asking .live p{font-size:19px;line-height:1.35}#task.asking .live p{font-size:22px}
+#task.asking .live p{font-size:22px;line-height:1.35}
 #task.asking #tCards{margin-top:4px;gap:6px}
-#task.asking #tCards .pcard,#task.asking #tCards .pcard{flex-direction:row;justify-content:center;gap:6px;padding:4px 8px;min-width:0;border-top-width:4px}
-#task.asking #tCards .pcard svg,#task.asking #tCards .pcard svg{width:26px;height:26px}
-#task.asking #tCards .pcard b,#task.asking #tCards .pcard b{font-size:20px}
+#task.asking #tCards .pcard{flex-direction:row;justify-content:center;gap:6px;padding:4px 8px;min-width:0;border-top-width:4px}
+#task.asking #tCards .pcard svg{width:26px;height:26px}
+#task.asking #tCards .pcard b{font-size:20px}
 #task.asking #tCards .pcard small{font-size:12px}
 #task.asking .tbody{padding-top:8px;gap:8px}
-#task.asking .decide .opts button{min-height:52px}#task.asking .decide .opts button{min-height:56px;font-size:19px;padding:6px 12px}
+#task.asking .decide .opts button{min-height:56px;font-size:19px;padding:6px 12px}
 #task.asking .decide .ri{width:34px;height:34px}#task.asking #tOk .opts button{min-height:80px}
 #free .row .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:64px;font-size:14px}
 #flip.up{transform:none;flex-direction:column;gap:18px}#flip small{display:block;font-size:26px;font-weight:700;line-height:1.5}#flip .fx{position:absolute;bottom:24px;font-size:16px;font-weight:700;color:#5B6870}
@@ -2685,7 +2682,6 @@ function sgBuild(){if(SG.ui)return;SG.ui=true;const b=$('signs');
 <p class="snote">🔒 ${tr('الكاميرا بتشتغل على الموبايل بس، ومفيش فيديو بيتبعت')}</p>
 <div class="srow"><div class="cam" id="sCam"><video id="sv" playsinline muted></video><canvas id="sc"></canvas>${SG_GUIDE}<div id="slive" role="status" aria-live="polite">${tr('بيشغّل الكاميرا...')}</div></div>
 <button class="shold" id="sHold" aria-pressed="false"><span class="sgi" aria-hidden="true">✋</span><span>${tr('دوس وخليك دايس وإنت بتعمل الإشارة')}</span></button></div>
-
 <div id="sPick" class="spick hidden" role="group" aria-labelledby="sPickQ"><b id="sPickQ">${tr('قصدك أنهي؟')}</b><div class="scards lg" id="sPickC"></div><button class="back" id="sPickNo">${tr('ولا واحدة')}</button></div>
 <div class="scards" id="sSent" aria-live="polite"></div>
 <div class="row"><button class="btn or" id="sUse">${tr('قوله')}</button><button class="btn ghost" id="sClear">${tr('امسح')}</button></div>
