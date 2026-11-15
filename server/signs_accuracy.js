@@ -15,7 +15,10 @@
      node server/signs_accuracy.js                         # P1 signs, signs/templates
      node server/signs_accuracy.js --all                   # every sign that has templates
      node server/signs_accuracy.js --tpl DIR --json out.json --md out.md
-     node server/signs_accuracy.js --selftest              # synthetic data: checks the script, no templates needed */
+     node server/signs_accuracy.js --selftest              # synthetic data: checks the script, no templates needed
+     node server/signs_accuracy.js --tpl DIR --test-signer t1
+         # «قياس داخلي بس» (#43): the library = everyone except t1, the test = t1's takes only (a person it has never seen).
+         # Build DIR in a temp folder (signs_templates.py --clips signs/clips --takes <t1's ZIPs> --out DIR), never in the repo. */
 'use strict';
 const fs = require('fs'), path = require('path');
 const REPO = path.resolve(__dirname, '..');
@@ -82,6 +85,32 @@ function report(samples, V, scope) {
   return { scope, feat: S.FEAT, thresholds: S.TH, signs: ids.length, samples: samples.length, signers, any_signer: any, new_signer: cross, weakest: weak.slice(0, 25) };
 }
 
+/* --test-signer: every take of one person (filmed for measuring only) is guessed against the library of the others */
+function reportSigner(all, V, code, p1only) {
+  const lib = all.filter(s => s.signer !== code);
+  let test = all.filter(s => s.signer === code);
+  if (p1only) test = test.filter(s => (V[s.id] || {}).pri === 'P1');
+  const per = {}, conf = {};
+  let n = 0, t1 = 0, t3 = 0, sureOk = 0, sureBad = 0, nolib = 0;
+  const R = new S.Recognizer(); R.set(lib);
+  const libIds = new Set(lib.map(t => t.id));
+  for (const s of test) {
+    const p = per[s.id] || (per[s.id] = { n: 0, t1: 0, t3: 0, alone: 0 });
+    if (!libIds.has(s.id)) { p.alone++; nolib++; continue; }
+    const r = R.recognize(s.seq, 3), ids = r.top.map(x => x.id);
+    n++; p.n++;
+    if (ids[0] === s.id) { t1++; p.t1++; if (r.sure) sureOk++; } else { if (r.sure) sureBad++; const k = `${s.id} → ${ids[0] || '-'}`; conf[k] = (conf[k] || 0) + 1; }
+    if (ids.includes(s.id)) { t3++; p.t3++; }
+  }
+  const pc = (a, b) => (b ? Math.round(1000 * a / b) / 10 : null);
+  const res = { tested: n, alone: nolib, top1: pc(t1, n), top3: pc(t3, n), sure_right: pc(sureOk, n), sure_wrong: pc(sureBad, n), per,
+    confusions: Object.entries(conf).sort((a, b) => b[1] - a[1]).slice(0, 15).map(([pair, count]) => ({ pair, count })) };
+  const weak = Object.entries(per).filter(([, w]) => w.n).map(([id, w]) => ({ id, ar: (V[id] || {}).ar || id, ...w, x: w }))
+    .sort((a, b) => a.t1 / a.n - b.t1 / b.n || a.id.localeCompare(b.id));
+  return { scope: `مصوّر القياس ${code}${p1only ? ' · P1' : ''}`, feat: S.FEAT, thresholds: S.TH, signs: new Set(test.map(s => s.id)).size, samples: test.length,
+    signers: [...new Set(lib.map(s => s.signer))].sort().concat([code + ' (اختبار)']), any_signer: res, new_signer: res, weakest: weak.slice(0, 25) };
+}
+
 function markdown(r) {
   const row = (name, t) => `| ${name} | ${t.tested} | ${t.top1 ?? '-'}% | ${t.top3 ?? '-'}% | ${t.sure_right ?? '-'}% | ${t.sure_wrong ?? '-'}% | ${t.alone} |`;
   let m = `## دقة التعرّف على الإشارة (${r.scope})\n\n`;
@@ -112,8 +141,17 @@ function selftest() {
     }
   }
   samples.push({ id: 'ALONE', signer: 'd1', src: 'lib', seq: new Float32Array(L), key: 'ALONE#d1#0' });
+  // a measuring signer t1: one noisy take per sign, guessed against d1+d2 only
+  for (let k = 0; k < 12; k++) {
+    const b = samples.find(x => x.id === 'S' + k).seq;
+    samples.push({ id: 'S' + k, signer: 't1', src: 'lib', seq: Float32Array.from(b, (v, i) => (i % S.DIM === 0 || i % S.DIM === S.HAND) ? v : v + (rnd() - 0.5) * 0.3), key: `S${k}#t1#0` });
+  }
+  const ts = reportSigner(samples, {}, 't1', false);
+  const tsOk = ts.new_signer.tested === 12 && ts.new_signer.top1 === 100 && !ts.signers.includes('t1');
+  console.log(`test-signer t1: ${ts.new_signer.tested} takes, top-1 ${ts.new_signer.top1}%`);
+  samples.splice(samples.length - 12, 12);
   const r = report(samples, {}, 'selftest');
-  const ok = r.any_signer.top1 === 100 && r.new_signer.top1 === 100 && r.any_signer.alone === 1 && r.any_signer.tested === 48;
+  const ok = tsOk && r.any_signer.top1 === 100 && r.new_signer.top1 === 100 && r.any_signer.alone === 1 && r.any_signer.tested === 48;
   console.log(markdown(r));
   console.log(ok ? 'selftest: ok' : 'selftest: FAILED');
   process.exit(ok ? 0 : 1);
@@ -124,6 +162,16 @@ else {
   const dir = opt('--tpl', path.join(REPO, 'signs', 'templates'));
   if (!fs.existsSync(dir)) { console.error(`No templates in ${dir}. Run: python3 server/signs_templates.py`); process.exit(2); }
   const V = vocab(), all = loadTemplates(dir);
+  if (opt('--test-signer')) {
+    const code = opt('--test-signer').toLowerCase();
+    if (!all.some(s => s.signer === code)) { console.error(`No templates for signer ${code} in ${dir}.`); process.exit(2); }
+    const r = reportSigner(all, V, code, !has('--all'));
+    const md = markdown(r).replace(/\| أي مصوّر[^\n]*\n/, '').replace('| مصوّر جديد (كل أخدات نفس المصوّر مستخبية)', `| مصوّر جديد (${code}، المكتبة من غيره)`);
+    console.log(md);
+    if (opt('--json')) fs.writeFileSync(opt('--json'), JSON.stringify(r, null, 1));
+    if (opt('--md')) fs.writeFileSync(opt('--md'), md);
+    process.exit(0);
+  }
   const samples = has('--all') ? all : all.filter(s => (V[s.id] || {}).pri === 'P1');
   const r = report(samples, V, has('--all') ? 'كل الإشارات' : 'الأولوية الأولى P1');
   const md = markdown(r);

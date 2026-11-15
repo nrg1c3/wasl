@@ -240,20 +240,27 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <header><div class="brand"><div><b>موافقة على التصوير</b><small>لكل شخص هيظهر في الفيديوهات</small></div></div></header>
 <main>
 <section class="card">
+<div><p class="q">الفيديوهات دي لإيه؟</p><div class="chips" id="kPurpose"></div></div>
 <div class="lawyer" id="cText">
+<div id="cApp">
 <p style="margin:0 0 8px">بنصوّر فيديوهات قصيرة لإشارات لغة الإشارة المصرية، عشان تطبيق <b>بَدالَك</b> المجاني للصم وضعاف السمع، من شركة NRG. الفيديو بيظهر فيه وشك وإيديك.</p>
 <p style="margin:0 0 8px">الفيديوهات بتتحفظ على الموبايل ده بس، لحد ما تتبعت لفريق بَدالَك، وممكن تتبعت لخبيرة لغة الإشارة بتاعة الفريق عشان تراجعها. مش بنبيعها لحد.</p>
 <p style="margin:0">تقدر ترجع في موافقتك في أي وقت برسالة لفريق بَدالَك: هنشيل فيديوهاتك من التطبيق في التحديث اللي بعده، ومش هنستخدمها في حاجة جديدة. الحاجات اللي اتنشرت قبل كده ممكن ما نقدرش نمسحها من كل مكان.</p>
 </div>
+<div id="cMeasure" class="hidden">
+<p style="margin:0 0 8px">بنصوّر فيديوهات قصيرة لإشارات لغة الإشارة المصرية، عشان <b>نقيس</b> تطبيق <b>بَدالَك</b> بيفهم الإشارة صح ولا لأ. الفيديو بيظهر فيه وشك وإيديك.</p>
+<p style="margin:0 0 8px"><b>الفيديوهات دي للقياس بس:</b> مش هتظهر في التطبيق، ولا في أي حاجة تانية، ولا هتتنشر. بتتحفظ على الموبايل ده لحد ما تتبعت لفريق بَدالَك، والفريق بيطلّع منها أرقام بس (التطبيق فهم كام إشارة صح).</p>
+<p style="margin:0">تقدر ترجع في موافقتك في أي وقت برسالة لفريق بَدالَك، وساعتها هنمسح فيديوهاتك.</p>
+</div></div>
 <input type="hidden" id="kCode">
 <label class="f">اسم اللي بيعمل الإشارة<input type="text" id="kName" maxlength="60" autocomplete="off"></label>
 <div><p class="q">هو/هي:</p><div class="chips" id="kHear"><button type="button" data-v="deaf">أصم / صمّاء</button><button type="button" data-v="hoh">ضعيف سمع</button><button type="button" data-v="hearing">سامع</button></div></div>
 <label class="check"><input type="checkbox" id="kAdult">سني 18 سنة أو أكتر.</label>
-<p class="q">موافق إن الفيديوهات تتستخدم في:</p>
+<div id="kUses"><p class="q">موافق إن الفيديوهات تتستخدم في:</p>
 <label class="check"><input type="checkbox" id="uApp">تطبيق بَدالَك: تظهر للناس اللي بتستخدم التطبيق. (لازم عشان نصوّر)</label>
 <label class="check"><input type="checkbox" id="uTrain">تعليم الموبايل يفهم الإشارات (التعرّف على الإشارة). الفيديوهات بتفضل عندنا.</label>
 <label class="check"><input type="checkbox" id="uComp">مسابقات وعروض للشركاء والرعاة.</label>
-<label class="check"><input type="checkbox" id="uSocial">السوشيال ميديا (فيسبوك، إنستجرام، يوتيوب، تيك توك).</label>
+<label class="check"><input type="checkbox" id="uSocial">السوشيال ميديا (فيسبوك، إنستجرام، يوتيوب، تيك توك).</label></div>
 <p class="err hidden" id="kErr"></p>
 <button class="go" type="button" id="kOk">موافق</button>
 <button class="btn" type="button" id="kBack">رجوع</button>
@@ -399,7 +406,7 @@ function drawSetup(){
  chips($('codes'),signerItems(),S.signer,v=>{pickSigner(v);$('codeIn').value='';drawSetup()});
  const c=S.consent[S.signer];$('cStat').classList.toggle('okay',!!c);
  const other=nameOff(S.signer);if(other)$('cStat').classList.remove('okay');
- $('cTxt').textContent=other?`⚠️ الموافقة متسجّلة باسم «${c.name}». دوس «غيّر الموافقة» وسجّلها باسم ${shown(S.signer)}.`:c?`الموافقة متسجّلة: ${c.name} (${new Date(c.date).toLocaleDateString('ar-EG')})`:`لسه مفيش موافقة من ${shown(S.signer)}. هتظهر لما تدوس «ابدأ».`;
+ $('cTxt').textContent=other?`⚠️ الموافقة متسجّلة باسم «${c.name}». دوس «غيّر الموافقة» وسجّلها باسم ${shown(S.signer)}.`:c?`الموافقة متسجّلة${c.purpose==='measure'?' (📏 قياس بس)':''}: ${c.name} (${new Date(c.date).toLocaleDateString('ar-EG')})`:`لسه مفيش موافقة من ${shown(S.signer)}. هتظهر لما تدوس «ابدأ».`;
  $('cEdit').textContent=c?'غيّر الموافقة':'الموافقة على التصوير';
  chips($('lists'),LISTS.map(([k,l])=>{const L=listOf(k);const d=L.filter(v=>doneFor(v.id,S.signer)).length;return [k,`${l} <small>${d}/${L.length}</small>`]}),S.list,v=>{S.list=v;ls.set('wasl_rec_list',v);drawSetup()});
  chips($('cams'),[['environment','الخلفية (أوضح)'],['user','الأمامية (سيلفي)']],S.cam,v=>{S.cam=v;ls.set('wasl_rec_cam',v);drawSetup()});
@@ -413,16 +420,20 @@ $('cEdit').onclick=()=>openConsent(false);
 $('start').onclick=async()=>{const e=$('sErr');e.classList.add('hidden');
  if(!S.vocab.length){e.textContent='قايمة الإشارات ما اتحمّلتش. اتأكد من النت وافتح الصفحة تاني.';e.classList.remove('hidden');return}
  if(!S.picked)return askSigner(()=>$('start').click());
- if(!S.consent[S.signer]||!S.consent[S.signer].uses.app||nameOff(S.signer))return openConsent(true);
+ const kc=S.consent[S.signer];if(!kc||!(kc.uses.app||kc.purpose==='measure')||nameOff(S.signer))return openConsent(true);
  openStudio()};
 function show(id){['setup','consent','studio','search'].forEach(x=>$(x).classList.toggle('hidden',x!==id&&!(id==='search'&&x==='studio')));scrollTo(0,0)}
 
 /* ---------- consent ---------- */
-let afterConsent=false,kHear='';
+let afterConsent=false,kHear='',kPurpose='app';
 function openConsent(go){afterConsent=go;const c=nameOff(S.signer)?{}:(S.consent[S.signer]||{});/* old test consent under another name: start clean for today's person */show('consent');
  $('kCode').value=S.signer;$('kName').value=c.name||(shown(S.signer).startsWith('شخص ')?'':shown(S.signer));kHear=c.hearing||'';$('kAdult').checked=!!c.adult;
  const u=c.uses||{};$('uApp').checked=!!u.app;$('uTrain').checked=!!u.training;$('uComp').checked=!!u.competitions;$('uSocial').checked=!!u.social;
- $('kErr').classList.add('hidden');drawHear()}
+ kPurpose=c.purpose==='measure'?'measure':'app';
+ $('kErr').classList.add('hidden');drawHear();drawPurpose()}
+/* «قياس داخلي بس» (#43): a person filmed only to measure recognition; the videos never go into the app or anywhere else */
+function drawPurpose(){chips($('kPurpose'),[['app','📲 للتطبيق'],['measure','📏 قياس داخلي بس']],kPurpose,v=>{kPurpose=v;drawPurpose()});
+ const m=kPurpose==='measure';$('cApp').classList.toggle('hidden',m);$('cMeasure').classList.toggle('hidden',!m);$('kUses').classList.toggle('hidden',m)}
 function drawHear(){chips($('kHear'),[['deaf','أصم / صمّاء'],['hoh','ضعيف سمع'],['hearing','سامع']],kHear,v=>{kHear=v;drawHear()})}
 $('kBack').onclick=()=>{show('setup');drawSetup()};
 $('kOk').onclick=async()=>{const say=t=>{$('kErr').textContent=t;$('kErr').classList.remove('hidden');$('kErr').scrollIntoView({block:'center'})};
@@ -430,8 +441,10 @@ $('kOk').onclick=async()=>{const say=t=>{$('kErr').textContent=t;$('kErr').class
  if(!name)return say('اكتب اسم اللي بيعمل الإشارة.');
  if(!kHear)return say('اختار: أصم، ضعيف سمع، أو سامع.');
  if(!$('kAdult').checked)return say('التصوير ده للي سنهم 18 سنة أو أكتر.');
- if(!$('uApp').checked)return say('محتاجين الموافقة على ظهور الفيديوهات في تطبيق بَدالَك عشان نصوّر.');
- const c={signer:S.signer,name,hearing:kHear,adult:true,uses:{app:true,training:$('uTrain').checked,competitions:$('uComp').checked,social:$('uSocial').checked},
+ const measure=kPurpose==='measure';
+ if(!measure&&!$('uApp').checked)return say('محتاجين الموافقة على ظهور الفيديوهات في تطبيق بَدالَك عشان نصوّر.');
+ const c={signer:S.signer,name,hearing:kHear,adult:true,purpose:measure?'measure':'app',
+  uses:measure?{app:false,training:true,competitions:false,social:false}:{app:true,training:$('uTrain').checked,competitions:$('uComp').checked,social:$('uSocial').checked},
   date:new Date().toISOString(),version:CONSENT_VER,text:$('cText').innerText.trim()};
  await tx('consent','readwrite',s=>{s.put(c,c.signer)});S.consent[c.signer]=c;
  if(afterConsent)openStudio();else{show('setup');drawSetup();toast('اتسجّلت الموافقة')}};
@@ -460,7 +473,7 @@ addEventListener('resize',fit);
 function draw(){const {L,i,v}=cur();if(!v)return;
  const done=L.filter(x=>doneFor(x.id,S.signer)).length;
  $('prog').innerHTML=`${i+1} من ${L.length}<small>${esc(LNAME(S.list))} · خلص ${done}</small>`;
- $('who').innerHTML=`🎥 ${esc(shown(S.signer))} <small>(دوس للتغيير)</small>`;
+ const kc=S.consent[S.signer];$('who').innerHTML=`🎥 ${esc(shown(S.signer))}${kc&&kc.purpose==='measure'?' · 📏 قياس بس':''} <small>(دوس للتغيير)</small>`;
  $('wAr').textContent=v.ar;$('wId').textContent='';
  const ts=takesFor(v.id,S.signer),ok=ts.filter(t=>t.status==='ok').length;
  $('wInfo').textContent=`${GROUP_AR[v.group]||v.group} · ${v.pri} · تمام ${ok}`;

@@ -139,6 +139,34 @@ async function pastWelcome(page, choice) {
     await ctx.close();
   }
 
+  // «قياس داخلي بس» (#43): a measure-only signer's takes never reach signs/clips or signs/index.json, even with --force
+  console.log('\n== signs_build: measure-only signer');
+  {
+    const { execFileSync } = require('child_process'), os = require('os');
+    const has = (c, f = '-version') => { try { execFileSync(c, [f], { stdio: 'ignore' }); return true; } catch (e) { return false; } };
+    if (!has('python3', '--version')) pass('signs_build', 'skipped (no python here)');
+    else if (!has('ffmpeg') || !has('ffprobe')) pass('signs_build', 'skipped (no ffmpeg here)');
+    else {
+      const T = fs.mkdtempSync(path.join(os.tmpdir(), 'wasl-measure-'));
+      fs.mkdirSync(path.join(T, 'server')); fs.mkdirSync(path.join(T, 'signs')); fs.mkdirSync(path.join(T, 'raw'));
+      fs.copyFileSync(path.join(ROOT, 'server', 'signs_build.py'), path.join(T, 'server', 'signs_build.py'));
+      fs.copyFileSync(path.join(ROOT, 'signs', 'vocab.csv'), path.join(T, 'signs', 'vocab.csv'));
+      fs.writeFileSync(path.join(T, 'raw', 'HELLO__z9__1.webm'), 'not a real video');
+      fs.writeFileSync(path.join(T, 'raw', 'takes.json'), JSON.stringify({ files: [{ file: 'HELLO__z9__1.webm', id: 'HELLO', signer: 'z9', take: 1, status: 'ok' }] }));
+      fs.writeFileSync(path.join(T, 'raw', 'consent.json'), JSON.stringify({ signers: [{ signer: 'z9', name: 'test', purpose: 'measure', uses: { app: false, training: true, competitions: false, social: false } }] }));
+      let out = '';
+      for (const extra of [[], ['--force']]) {
+        try { out += execFileSync('python3', [path.join(T, 'server', 'signs_build.py'), '--in', path.join(T, 'raw'), ...extra], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); }
+        catch (e) { out += (e.stdout || '') + (e.stderr || ''); }
+      }
+      const clips = fs.existsSync(path.join(T, 'signs', 'clips')) ? fs.readdirSync(path.join(T, 'signs', 'clips')) : [];
+      const idx = fs.existsSync(path.join(T, 'signs', 'index.json')) ? fs.readFileSync(path.join(T, 'signs', 'index.json'), 'utf8') : '';
+      (/internal measuring only/.test(out) && !clips.some(f => /z9/.test(f)) && !/z9/.test(idx))
+        ? pass('signs_build', 'measure-only signer skipped, also with --force') : fail('signs_build', 'measure-only signer reached the library: ' + out.slice(-300));
+      fs.rmSync(T, { recursive: true, force: true });
+    }
+  }
+
   // pharmacy from home (#40): straight to the pharmacy cards, no doctor / bills sections; «رجوع» goes home
   console.log('\n== pharmacy from home');
   for (const vp of PHONES) {
