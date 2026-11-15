@@ -253,6 +253,24 @@ async function pastWelcome(page) {
     await page.locator('#pics button.back').click(); await page.waitForTimeout(200);
     t = await cards();
     /رجوع/.test(t[0]) && t.some(x => /اتصالات/.test(x)) ? pass(tag + ' places', '«رجوع» from telecom goes back to the grid') : fail(tag + ' places', `after back: ${t.join(' | ')}`);
+    // government (#46 PR 5): «ورق حكومي» split in three; the police station starts with «🚨 طوارئ», which opens the emergency screen
+    t = await cards();
+    !t.some(x => /ورق حكومي/.test(x)) && ['السجل المدني', 'المرور', 'قسم الشرطة'].every(n => t.some(x => x.includes(n))) ? pass(tag + ' places', 'government split in three') : fail(tag + ' places', `grid: ${t.join(' | ')}`);
+    await page.locator('#pics button', { hasText: 'السجل المدني' }).click(); await page.waitForTimeout(200);
+    t = await cards();
+    t.length === 6 && t.some(x => /بدل فاقد/.test(x)) ? pass(tag + ' places', 'civil registry: 5 cards + back') : fail(tag + ' places', `civil registry: ${t.join(' | ')}`);
+    await page.locator('#pics button.back').click(); await page.waitForTimeout(200);
+    await page.locator('#pics button', { hasText: 'المرور' }).click(); await page.waitForTimeout(200);
+    t = await cards();
+    t.length === 5 && t.some(x => /مخالفة/.test(x)) ? pass(tag + ' places', 'traffic: 4 cards + back') : fail(tag + ' places', `traffic: ${t.join(' | ')}`);
+    await page.locator('#pics button.back').click(); await page.waitForTimeout(200);
+    await page.locator('#pics button', { hasText: 'قسم الشرطة' }).click(); await page.waitForTimeout(200);
+    t = await cards();
+    const sosFirst = await page.evaluate(() => document.querySelectorAll('#pics button')[1].classList.contains('psos'));
+    t.length === 5 && /طوارئ/.test(t[1]) && sosFirst && t.some(x => /أعمل محضر/.test(x)) ? pass(tag + ' places', 'police: «🚨 طوارئ» first + 3 cards') : fail(tag + ' places', `police: ${t.join(' | ')}`);
+    await page.locator('#pics button.psos').click(); await page.waitForTimeout(400);
+    (await page.evaluate(() => document.getElementById('sos').classList.contains('on'))) ? pass(tag + ' places', '«🚨 طوارئ» opens the emergency screen') : fail(tag + ' places', '«🚨 طوارئ» did not open the emergency screen');
+    await page.evaluate(() => { show('talk'); openPlaces(); }); await page.waitForTimeout(200);
     // hospital and labs (#46 PR 4): 6 cards, the referral card is a photo card
     await page.locator('#pics button', { hasText: 'مستشفى وتحاليل' }).click(); await page.waitForTimeout(200);
     t = await cards();

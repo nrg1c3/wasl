@@ -105,6 +105,7 @@ places,شغل,WORK,both,P2
 places,مدرسة,SCHOOL,both,P1
 places,بنك,BANK,both,P1
 places,قسم شرطة,POLICE-STATION,both,P2
+places,محضر,POLICE-REPORT,both,P2
 places,سوق,MARKET,both,P3
 places,جامع,MOSQUE,both,P3
 places,كنيسة,CHURCH,both,P3
@@ -134,6 +135,9 @@ money,إنستا باي,INSTAPAY,both,P2
 government,بطاقة رقم قومي,ID-CARD,both,P1
 government,شهادة ميلاد,BIRTH-CERTIFICATE,both,P2
 government,ورق / ورقة,PAPERS,both,P1
+government,سجل مدني,CIVIL-REGISTRY,both,P1
+government,بدل فاقد,REPLACEMENT,both,P2
+government,تجديد / أجدد,RENEW,both,P2
 government,ختم,STAMP,voice2sign,P2
 government,استمارة,FORM,both,P2
 government,صورة / تصوير ورق,PHOTOCOPY,both,P2
@@ -144,6 +148,8 @@ government,كارت الخدمات المتكاملة,DISABILITY-CARD,both,P2
 government,باسبور / جواز سفر,PASSPORT,both,P2
 government,رخصة سواقة,DRIVING-LICENSE,both,P2
 government,رخصة عربية,CAR-LICENSE,both,P2
+government,المرور,TRAFFIC,both,P1
+government,مخالفة,TRAFFIC-FINE,both,P2
 numbers,صفر,0,both,P1
 numbers,واحد,1,both,P1
 numbers,اتنين,2,both,P1
@@ -191,6 +197,7 @@ time,الأربع,WEDNESDAY,both,P2
 time,الخميس,THURSDAY,both,P2
 time,الجمعة,FRIDAY,both,P2
 sos,الحقوني / ساعدني,HELP,both,P1
+sos,طوارئ,EMERGENCY,both,P1
 sos,إسعاف,AMBULANCE,both,P1
 sos,شرطة,POLICE,both,P1
 sos,حريقة,FIRE,both,P1
@@ -223,7 +230,7 @@ telecom,النت مش شغال / الموبايل عطلان,NOT-WORKING,both,P2
 telecom,إنترنت البيت,HOME-INTERNET,both,P2
 telecom,اتصالات / شركة الموبايل,TELECOM,both,P1
 telecom,جديد,NEW,both,P2
-telecom,ضاع / اتسرق,LOST-ITEM,both,P2
+telecom,ضاع / اتسرق / ضاعت / اتسرقت,LOST-ITEM,both,P2
 restaurant,مطعم,RESTAURANT,both,P1
 restaurant,المنيو,MENU,both,P1
 restaurant,أكل,FOOD,both,P1

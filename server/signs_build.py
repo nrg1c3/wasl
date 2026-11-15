@@ -108,6 +108,7 @@ ICONS = {
     'TELECOM': '📶', 'NEW': '🆕', 'LOST-ITEM': '🔍', 'PLACE': '🏢',
     'POST-OFFICE': '📮', 'PENSION': '👴', 'PARCEL': '📬',
     'RESULT': '📋', 'HEALTH-INSURANCE': '🪪', 'REFERRAL': '📄', 'RECEPTION': '🛎️',
+    'CIVIL-REGISTRY': '🏛️', 'REPLACEMENT': '❗', 'RENEW': '🔄', 'TRAFFIC': '🚦', 'TRAFFIC-FINE': '🧾', 'POLICE-REPORT': '📝', 'EMERGENCY': '🚨',
     'HOME-REPAIR': '🔧', 'PLUMBER': '🚰', 'ELECTRICIAN': '💡', 'DOORMAN': '🧑', 'RENT': '🏠',
 }
 GROUP_ICONS = {'numbers': '🔢', 'time': '📅'}
