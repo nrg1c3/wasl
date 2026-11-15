@@ -253,6 +253,12 @@ async function pastWelcome(page) {
     await page.locator('#pics button.back').click(); await page.waitForTimeout(200);
     t = await cards();
     /رجوع/.test(t[0]) && t.some(x => /اتصالات/.test(x)) ? pass(tag + ' places', '«رجوع» from telecom goes back to the grid') : fail(tag + ' places', `after back: ${t.join(' | ')}`);
+    // hospital and labs (#46 PR 4): 6 cards, the referral card is a photo card
+    await page.locator('#pics button', { hasText: 'مستشفى وتحاليل' }).click(); await page.waitForTimeout(200);
+    t = await cards();
+    const hc = await page.evaluate(() => document.querySelectorAll('#pics button.pcam').length);
+    t.length === 7 && t.some(x => /أول مرة هنا/.test(x)) && t.some(x => /تأمين صحي/.test(x)) && hc === 1 ? pass(tag + ' places', 'hospital: 6 cards + back, 1 photo card') : fail(tag + ' places', `hospital: ${t.join(' | ')} (photo ${hc})`);
+    await page.locator('#pics button.back').click(); await page.waitForTimeout(200);
     // post office (#46 PR 2): 5 cards, the bill card is a photo card
     await page.locator('#pics button', { hasText: 'بريد' }).click(); await page.waitForTimeout(200);
     t = await cards();

@@ -106,7 +106,8 @@ ICONS = {
     # pharmacy amounts (#50) and places (#46)
     'BOX': '📦', 'STRIP': '💊', 'BOTTLE': '🧴', 'NOSE': '👃',
     'TELECOM': '📶', 'NEW': '🆕', 'LOST-ITEM': '🔍', 'PLACE': '🏢',
-    'POST-OFFICE': '📮', 'PENSION': '👴', 'PARCEL': '📦',
+    'POST-OFFICE': '📮', 'PENSION': '👴', 'PARCEL': '📬',
+    'RESULT': '📋', 'HEALTH-INSURANCE': '🪪', 'REFERRAL': '📄', 'RECEPTION': '🛎️',
     'HOME-REPAIR': '🔧', 'PLUMBER': '🚰', 'ELECTRICIAN': '💡', 'DOORMAN': '🧑', 'RENT': '🏠',
 }
 GROUP_ICONS = {'numbers': '🔢', 'time': '📅'}
