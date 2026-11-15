@@ -252,7 +252,7 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 .okline{margin:0;font-size:20px;font-weight:800;line-height:1.55;background:var(--orl);border-radius:12px;padding:10px 12px}
 #tOkNo{background:var(--bg);color:var(--ink);border:2px solid var(--line)}
 .sosnote{margin:0;background:#FBE6D4;color:#5A2A08;border-radius:14px;padding:10px 12px;font-size:15px;font-weight:700;line-height:1.6}
-/* ---------- picture mode (وضع الصور): big pictures, fewer words. Off by default; nothing changes unless <html> has class pm. ---------- */
+/* ---------- picture look: big pictures, fewer words. Since #48 <html> always has class pm (one interface for everyone). ---------- */
 .only-pic,#picHome,.pi,.ri{display:none}
 html.pm .only-pic{display:revert}html.pm .no-pic{display:none!important}
 html.pm #picHome{display:flex}
@@ -291,7 +291,7 @@ html.pm #refills:empty,html.pm #orderChip:empty{display:none}
 .swl{min-width:44px;font-size:14px;font-weight:800;color:var(--mute);text-align:center}.psw[aria-checked="true"] .swl{color:#1B5E3B}
 @media (prefers-reduced-motion:reduce){.sw i{transition:none}}
 /* first-run choice */
-.wq{margin:4px 0 0;font-size:18px;font-weight:800}
+.wgo{min-height:64px;border:0;border-radius:18px;background:var(--ink);color:#fff;font-size:22px;font-weight:800;padding:8px}.wgo:active{background:var(--ink2)}
 .wch{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .wch button{min-height:92px;border:0;border-radius:18px;background:var(--ink);color:#fff;font-size:19px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px}
 .wch button:active{background:var(--ink2)}.wch svg{width:34px;height:34px}
@@ -454,7 +454,7 @@ html.hc .btn.ghost,html.hc .chip,html.hc .tfoot button,html.hc .field input,html
 html.hc .card{border:2px solid #000}
 html.hc :focus-visible{outline:3px solid #000;outline-offset:2px}
 </style>
-<script>try{if(localStorage.getItem('wasl_pic')==='true')document.documentElement.classList.add('pm')}catch(e){}
+<script>document.documentElement.classList.add('pm'); /* one interface for everyone (#48): the old wasl_pic choice is kept in storage but no longer read */
 /* حجم الكلام and تباين عالي (بياناتي), before the first paint */
 try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')document.documentElement.classList.add('fs'+fz);if(localStorage.getItem('wasl_hc')==='true')document.documentElement.classList.add('hc')}catch(e){}
 /* App language (UI): the user's choice (بياناتي, the welcome card, or English in the dialect list), else Arabic.
@@ -480,8 +480,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <li>الطوارئ في بدالك <b>مساعدة</b>، مش بديل عن الإسعاف والشرطة.</li>
 <li>لو سنك <b>أقل من 18</b>، لازم أهلك يوافقوا.</li>
 </ul>
-<p class="wq">تحب بدالك يكون إزاي؟</p>
-<div class="wch"><button id="wOk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 3.5 5v14c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v14"/></svg>بقرا كويس</button><button id="wPic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>بفضّل الصور</button></div>
+<button class="wgo" id="wOk">✅ يلا نبدأ</button>
 <button class="wsos" id="wSos">🚨 عندي طوارئ دلوقتي</button>
 </div></div>
 
@@ -545,7 +544,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div class="body">
 <div class="card"><b id="uiT">لغة التطبيق</b><div class="seg" role="group" aria-labelledby="uiT"><button id="uiAr" lang="ar" dir="rtl">العربية</button><button id="uiEn" lang="en" dir="ltr">English</button></div><p class="lead" style="margin:0;font-size:14px">لغة الكلام مع اللي قدامك بتختارها من فوق في الرئيسية.</p></div>
 <div class="card"><div class="field"><label for="pCountry">البلد</label><select id="pCountry"></select></div><p class="lead" style="margin:0;font-size:14px">أرقام الطوارئ بتمشي على البلد ده.</p></div>
-<div class="card"><button class="psw" id="picSw" role="switch" aria-checked="false"><span class="si"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg></span><span class="tx"><b>وضع الصور</b><small>صور كبيرة وكلام أقل</small></span><span class="swl" id="picSwL">مقفول</span><span class="sw" aria-hidden="true"><i></i></span></button></div>
+<div id="meViewAt"></div>
 <p class="lead">بنستخدمها عشان نرد عنك من غير ما نسألك كل مرة. محفوظة على الموبايل ده بس، وأرقام الطوارئ مش بتخرج منه أبداً.</p>
 <div class="card">
 <div class="field"><label for="pName">الاسم</label><input id="pName" autocomplete="name"></div>
@@ -797,9 +796,7 @@ const EN={
 'شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.':'Still works: SOS (call, and a text to your family), «Show people», and typing.',
 'مش شغّال: «اتكلم بدالي»، والردود الذكية، والسماع، والصوت المصري.':'Not working: «Speak for me», smart replies, listening, and Badalak\'s voice.',
 'أهلاً بيك في بَدالَك':'Welcome to Badalak',
-'تحب بدالك يكون إزاي؟':'How do you want Badalak?',
-'بقرا كويس':'I read well',
-'بفضّل الصور':'I prefer pictures',
+'✅ يلا نبدأ':'✅ Let\'s start',
 '🚨 عندي طوارئ دلوقتي':'🚨 I have an emergency now',
 // ---- home
 'الرئيسية':'Home',
@@ -864,8 +861,6 @@ const EN={
 // ---- profile
 'لغة التطبيق':'App language',
 'لغة الكلام مع اللي قدامك بتختارها من فوق في الرئيسية.':'The language Badalak speaks to people is chosen at the top of the home screen.',
-'وضع الصور':'Picture mode',
-'صور كبيرة وكلام أقل':'Big pictures, fewer words',
 'مقفول':'Off','شغّال':'On',
 'بنستخدمها عشان نرد عنك من غير ما نسألك كل مرة. محفوظة على الموبايل ده بس، وأرقام الطوارئ مش بتخرج منه أبداً.':'Badalak uses this to answer for you without asking every time. It stays on this phone only, and your emergency numbers never leave it.',
 'الاسم':'Name','أنا':'I am','راجل':'A man','ست / بنت':'A woman / girl',
@@ -1369,9 +1364,7 @@ const GU={
 "شغّال: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.": "يشتغل: الطوارئ (اتصال ورسالة لأهلك)، و«اعرض للناس»، والكتابة.",
 "مش شغّال: «اتكلم بدالي»، والردود الذكية، والسماع، والصوت المصري.": "ما يشتغل: «تكلّم عني»، والردود الذكية، والسماع، والصوت.",
 "أهلاً بيك في بَدالَك": "هلا والله في بَدالَك",
-"تحب بدالك يكون إزاي؟": "كيف تبي بدالك يكون؟",
-"بقرا كويس": "أقرا زين",
-"بفضّل الصور": "أفضّل الصور",
+"✅ يلا نبدأ": "✅ يلا نبدأ",
 "🚨 عندي طوارئ دلوقتي": "🚨 عندي طوارئ الحين",
 "بيتكلم عنك ويخلّص المهمة": "يتكلم عنك ويخلّص المهمة",
 "ثبّت بَدالَك على موبايلك، ويشتغل من غير نت": "ثبّت بَدالَك على جوالك، ويشتغل بدون نت",
@@ -2828,8 +2821,8 @@ if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='fi
  if(go==='me'){history.replaceState(null,'',location.pathname);setTimeout(()=>{$('openMe').click();try{const d=JSON.parse(sessionStorage.getItem('wasl_me_draft')||'null');sessionStorage.removeItem('wasl_me_draft');if(d)for(const id in d)if($(id))$(id).value=d[id];if(sessionStorage.getItem('wasl_me_cty')){sessionStorage.removeItem('wasl_me_cty');$('savedNote').textContent=tr('اتحفظ ✓ أرقام الطوارئ دلوقتي بتاعة {c}.',{c:cName(country())})}}catch(e){}},50)}
 })();
 /* ================= PICTURE MODE (وضع الصور) =================
-   For users who read little (many Deaf users' first language is sign language). Off by default; turned on in بياناتي
-   or at the first-run choice «بفضّل الصور». Saved in localStorage (wasl_pic). When on: home becomes big situation
+   For users who read little (many Deaf users' first language is sign language). Since #48 it is the only interface:
+   html.pm is always set and the old choice (wasl_pic) is no longer read. Home is big situation
    pictures that start a task in one tap, heard words and picture cards are bigger, answers are big buttons with an icon.
    SOS is never hidden. No medicine is ever suggested: the pharmacy picture asks for a photo or the name. */
 const IC={
@@ -2861,10 +2854,7 @@ const IC={
  phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>'};
 const svgI=(k,cls)=>`<svg${cls?` class="${cls}"`:''} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]||IC.talk}</svg>`;
 function picOn(){return document.documentElement.classList.contains('pm')}
-function setPic(on){on=!!on;store.set('wasl_pic',on);document.documentElement.classList.toggle('pm',on);
- $('picSw').setAttribute('aria-checked',String(on));$('picSwL').textContent=tr(on?'شغّال':'مقفول');if($('free').classList.contains('on')&&!freeOn)drawReplies(defaultReplies(),false)}
-setPic(store.get('wasl_pic',false)===true);
-$('picSw').onclick=()=>{buzz([30]);setPic(!picOn())};
+function setPic(){document.documentElement.classList.add('pm')} // one interface (#48): kept so older calls still work; removed in the cleanup PR
 /* an icon for an answer button, picked from its words (only in picture mode) */
 function riKey(t){t=String(t||'');
  if(/^\s*(أيوه|ايوه|آه|اه|نعم|تمام|موافق|ماشي|هاخد|خده|خدها|إيه|ايه|إي|باخذ|خذه|خذها|زين|أبي|ابي)/.test(t)||/^\s*(yes|ok|okay|sure|i'?ll take|take it|agree)/i.test(t))return'ok';
@@ -3055,8 +3045,7 @@ function showDeaf(){const f=$('flip');f.innerHTML=esc(trH('أنا أصم'))+'<sm
 (function(){const ok=()=>store.get('wasl_welcome',false)===true,W=$('welcome');
  ['bigTalk','openFree'].forEach(id=>{const b=$(id),f=b.onclick;b.onclick=e=>{if(!ok()){W.classList.remove('hidden');$('wOk').focus();return}f&&f.call(b,e)}});
  const sos=$('sosBtn').onclick;$('sosBtn').onclick=e=>{W.classList.add('hidden');sos&&sos.call($('sosBtn'),e)};
- $('wOk').onclick=()=>{store.set('wasl_welcome',true);setPic(false);W.classList.add('hidden')};
- $('wPic').onclick=()=>{store.set('wasl_welcome',true);setPic(true);W.classList.add('hidden')};
+ $('wOk').onclick=()=>{buzz([30]);store.set('wasl_welcome',true);W.classList.add('hidden')};
  $('wSos').onclick=()=>$('sosBtn').click();
  /* language, once: shown until the user picks (the default is Arabic, #36) */
  const wl=()=>{$('wAr').setAttribute('aria-pressed',String(UI!=='en'));$('wEn').setAttribute('aria-pressed',String(UI==='en'))};
@@ -3332,7 +3321,7 @@ const SIGN_URL=API_BASE+'wasl-sign';
 // On by default in picture mode, off in text mode; the user's own choice is remembered.
 // Hidden until the library has at least one recorded clip (no clips = nothing real to show yet).
 let vsReady=false;
-function signOn(){if(!vsReady)return false;const v=store.get('wasl_signview',null);return v==null?picOn():!!v}
+function signOn(){if(!vsReady)return false;const v=store.get('wasl_signview',null);return v==null?false:!!v}
 let vsSeq=0;const vsLast={task:'',free:''};
 function vsBox(where){return $(where==='task'?'tSg':'fSg')}
 function vsHome(id,where){const b=$(id);if(!b)return;const ws=vsBox(where).querySelector('.ws'),inPlayer=signOn()&&!!vsLast[where]&&ws;
@@ -3458,7 +3447,7 @@ ${sw('saSw','<path d="M3 12h2M7 8v8M11 5v14M15 8v8M19 11v2"/>','تنبيه ال�
 <div id="phList"></div><div class="field"><label for="phIn">${esc(tr('جملة جديدة'))}</label><div class="addrow"><input id="phIn" maxlength="${PH_LEN}" placeholder="${esc(tr('مثلاً: أنا أصم، اكتبلي لو سمحت'))}"><button class="btn" id="phAdd" type="button">${esc(tr('ضيف'))}</button></div></div><div class="note" id="phNote" aria-live="polite"></div></div>
 <div class="card" id="wdCard"><b>${esc(tr('كلماتي'))}</b><p class="lead" style="margin:0;font-size:14px">${esc(tr('أسماء وكلمات تخصك: اسم دكتورك، شارعك، الدوا اللي بتاخده، أسماء أهلك. بدالك بيبعتها مع الطلبات للذكاء الاصطناعي عشان يكتبها صح. محفوظة على الموبايل ده.'))}</p>
 <div class="wlist" id="wdList"></div><div class="field"><label for="wdIn">${esc(tr('كلمة جديدة'))}</label><div class="addrow"><input id="wdIn" maxlength="${W_LEN}" placeholder="${esc(tr('مثلاً: د. سامي، شارع التحرير'))}"><button class="btn" id="wdAdd" type="button">${esc(tr('ضيف'))}</button></div></div><div class="note" id="wdNote" aria-live="polite"></div></div>`;
-$('picSw').closest('.card').insertAdjacentHTML('afterend',html);
+$('meViewAt').outerHTML=html;
 
 function setFs(v){const h=document.documentElement;h.classList.remove('fsl','fsx');if(v==='l'||v==='x')h.classList.add('fs'+v);store.set('wasl_fs',v==='l'||v==='x'?v:'n');drawView();try{fitHear()}catch(e){}}
 function setSw(id,on){$(id).setAttribute('aria-checked',String(on));$(id+'L').textContent=tr(on?'شغّال':'مقفول')}

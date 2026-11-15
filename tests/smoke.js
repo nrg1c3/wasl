@@ -52,10 +52,10 @@ async function newPage(browser, viewport, base) {
   return { ctx, page };
 }
 
-// first run: the welcome card asks how the user likes the app; pick one so the home screen shows
-async function pastWelcome(page, choice) {
-  const b = page.getByText(choice === 'pics' ? 'بفضّل الصور' : 'بقرا كويس');
-  if (await b.first().isVisible().catch(() => false)) { await b.first().click(); await page.waitForTimeout(400); } // ?go=sos skips the welcome on purpose
+// first run: the welcome card has one start button (#48: one interface for everyone)
+async function pastWelcome(page) {
+  const b = page.locator('#wOk');
+  if (await b.isVisible().catch(() => false)) { await b.click(); await page.waitForTimeout(400); } // ?go=sos skips the welcome on purpose
 }
 
 (async () => {
@@ -72,7 +72,7 @@ async function pastWelcome(page, choice) {
       try {
         await page.goto(base + pg, { waitUntil: 'load', timeout: 20000 });
         await page.waitForTimeout(1200);
-        if (pg.startsWith('index')) await pastWelcome(page, 'text');
+        if (pg.startsWith('index')) await pastWelcome(page);
         const r = await page.evaluate(() => ({
           hscroll: document.documentElement.scrollWidth - innerWidth,
           dir: document.documentElement.dir,
@@ -90,13 +90,27 @@ async function pastWelcome(page, choice) {
       await ctx.close();
     }
 
-    // emergency button fully visible above the bottom bar, in both home modes
-    for (const mode of ['text', 'pics']) {
-      const where = `${tag} home (${mode})`;
+    // one home for everyone (#48): the 6 situations, the tools (counter included) and the emergency button all show without
+    // scrolling, above the bottom bar; «التنبيهات» is in the bottom bar with its icon; a user who once chose «بقرا كويس»
+    // (wasl_pic=false) gets the same home
+    for (const old of [null, 'false']) {
+      const where = `${tag} home${old ? ' (old wasl_pic=false)' : ''}`;
       const { ctx, page } = await newPage(browser, vp, base);
-      await page.goto(base + 'index.html'); await page.waitForTimeout(600); await pastWelcome(page, mode);
-      const ok = await page.evaluate(() => { const s = document.getElementById('sosBtn').getBoundingClientRect(), n = document.querySelector('.hnav').getBoundingClientRect(); return s.top >= 0 && s.bottom <= n.top + 1 && s.height >= 48; });
-      ok ? pass(where, 'emergency button visible') : fail(where, 'emergency button hidden or cut off');
+      if (old) await page.addInitScript(v => { localStorage.setItem('wasl_pic', v); localStorage.setItem('wasl_welcome', 'true'); }, old);
+      await page.goto(base + 'index.html'); await page.waitForTimeout(600); await pastWelcome(page);
+      const r = await page.evaluate(() => {
+        const nav = document.querySelector('.hnav').getBoundingClientRect(), H = innerHeight;
+        const vis = el => { const b = el.getBoundingClientRect(); return b.height >= 48 && b.top >= 0 && b.bottom <= Math.min(H, nav.top) + 1; };
+        const al = document.getElementById('openAlerts'), ab = al.getBoundingClientRect();
+        return { pm: document.documentElement.classList.contains('pm'), picSw: !!document.getElementById('picSw'),
+          sit: [...document.querySelectorAll('#sitGrid button')].filter(vis).length, tools: [...document.querySelectorAll('#toolGrid button')].filter(vis).length,
+          toolsAll: document.querySelectorAll('#toolGrid button').length, sos: vis(document.getElementById('sosBtn')),
+          alerts: ab.height >= 48 && ab.bottom <= H + 1 && !!al.querySelector('svg') && /التنبيهات/.test(al.textContent), scroll: document.scrollingElement.scrollTop };
+      });
+      r.pm && !r.picSw ? pass(where, 'one interface (no picture-mode switch)') : fail(where, `pm=${r.pm} picSw=${r.picSw}`);
+      r.sit === 6 && r.tools === r.toolsAll && r.sos ? pass(where, `6 situations + ${r.tools} tools + emergency, no scroll`) : fail(where, `visible: ${r.sit} situations, ${r.tools}/${r.toolsAll} tools, emergency ${r.sos}`);
+      r.alerts ? pass(where, '«التنبيهات» in the bottom bar with its icon') : fail(where, '«التنبيهات» not visible in the bottom bar');
+      if (page.errs.length) fail(where, 'console errors: ' + page.errs.join(' | ').slice(0, 300));
       await ctx.close();
     }
   }
@@ -107,7 +121,7 @@ async function pastWelcome(page, choice) {
     const { ctx, page } = await newPage(browser, PHONES[0], base);
     await page.unroute('**/*');
     await page.route('**/*', r => r.request().url().startsWith(base) ? r.continue() : r.abort());
-    await page.goto(base + 'index.html?demo'); await page.waitForTimeout(600); await pastWelcome(page, 'pics');
+    await page.goto(base + 'index.html?demo'); await page.waitForTimeout(600); await pastWelcome(page);
     await page.click('#demoFab'); await page.waitForTimeout(300);
     const n = await page.locator('#dmOpts button').count();
     n === 4 ? pass('demo list', '4 scenes') : fail('demo list', `${n} scenes, expected 4`);
@@ -144,7 +158,7 @@ async function pastWelcome(page, choice) {
   for (const vp of PHONES) {
     const tag = `${vp.width}x${vp.height}`;
     const { ctx, page } = await newPage(browser, vp, base);
-    await page.goto(base + 'index.html'); await page.waitForTimeout(600); await pastWelcome(page, 'pics');
+    await page.goto(base + 'index.html'); await page.waitForTimeout(600); await pastWelcome(page);
     const i = await page.evaluate(() => SIT.findIndex(x => x.ph));
     await page.locator(`#sitGrid button[data-i="${i}"]`).click(); await page.waitForTimeout(400);
     const r = await page.evaluate(() => ({ on: document.getElementById('talk').classList.contains('on'), t: [...document.querySelectorAll('#pics button')].map(x => x.textContent),
@@ -178,8 +192,8 @@ async function pastWelcome(page, choice) {
   console.log('\n== document cards (375x667)');
   {
     const { ctx, page } = await newPage(browser, PHONES[0], base);
-    await page.goto(base + 'index.html'); await page.waitForTimeout(600); await pastWelcome(page, 'text');
-    await page.click('#openFree'); await page.waitForTimeout(300);
+    await page.goto(base + 'index.html'); await page.waitForTimeout(600); await pastWelcome(page);
+    await page.locator('#toolGrid button[data-i="0"]').click(); await page.waitForTimeout(300); // «ترجمة»
     const r = await page.evaluate(() => { docAsk('هات البطاقة لو سمحت'); const b = document.getElementById('docPop');
       return { on: !b.classList.contains('hidden'), word: b.querySelector('.dw').textContent, btns: [...b.querySelectorAll('button')].map(x => x.getBoundingClientRect().height), hs: document.documentElement.scrollWidth - innerWidth }; });
     r.on && /البطاقة/.test(r.word) ? pass('docs', 'ID card shown') : fail('docs', 'no card for «هات البطاقة»');
