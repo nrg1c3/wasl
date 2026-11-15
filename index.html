@@ -137,7 +137,6 @@ nav svg{width:24px;height:24px}
 .srow:has(.cam.err) .shold{display:none}
 .shold{flex:1;min-height:120px;border:3px dashed var(--or);border-radius:16px;background:var(--ink2);color:var(--bg);font-size:17px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px;touch-action:none;user-select:none;-webkit-user-select:none}
 .shold .sgi{font-size:40px;line-height:1}.shold.on{background:var(--or);border-style:solid;color:#fff}
-.shint{margin:0;font-size:15px;color:#cfe3ea}
 .scards{display:flex;flex-wrap:wrap;gap:8px;min-height:64px;align-items:flex-start}
 .scard{background:#fff;color:#13262F;border:0;border-radius:14px;border-top:5px solid var(--or);padding:6px 10px;min-width:84px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:inherit}
 .scard .sgi{font-size:28px;line-height:1}.scard b{font-size:20px;line-height:1.2;unicode-bidi:plaintext}
@@ -152,7 +151,7 @@ nav svg{width:24px;height:24px}
 .sdots{display:flex;gap:8px;justify-content:center;margin:8px 0}.sdots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--bg)}.sdots i.on{background:var(--or);border-color:var(--or)}.sdots i.ok{background:#2E7D5B;border-color:#2E7D5B}
 .tags span{display:inline-flex;align-items:center;gap:4px;background:var(--ink);border-radius:8px;padding:4px 10px;margin:3px;font-size:15px}
 .sdel{min-width:44px;min-height:44px;border:0;background:transparent;color:#ffd7b0;font-size:16px}
-html.pm .shint{display:none}html.pm .scard b{font-size:22px}
+.scard b{font-size:22px}
 @media (max-height:700px){.cam{max-height:30vh}.shold{min-height:96px}}
 #paySheet{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;z-index:25}
 .pbox{background:var(--card);width:100%;border-radius:20px 20px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px}
@@ -168,7 +167,7 @@ html.pm .shint{display:none}html.pm .scard b{font-size:22px}
 /* new home */
 .hhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:calc(16px + env(safe-area-inset-top)) 18px 6px}
 .hbrand{display:flex;align-items:center;gap:10px}.hbrand .logo{width:46px;height:46px;flex-shrink:0}
-.hbrand b{display:block;font-size:28px;font-weight:800;line-height:1.1}.hbrand small{display:block;font-size:13px;font-weight:700;color:var(--mute)}
+.hbrand b{display:block;font-size:28px;font-weight:800;line-height:1.1}
 .hhead select{background:#fff;color:var(--ink);border:1px solid var(--line)}
 .hbody{flex:1;display:flex;flex-direction:column;gap:14px;padding:10px 18px;min-height:0;overflow-y:auto}
 @media (max-height:780px){.hbody{gap:10px}.big{min-height:78px;padding:12px 16px;gap:12px;border-radius:22px}.big .ic{width:52px;height:52px;border-radius:16px}.big .ic svg{width:30px;height:30px}.big b{font-size:22px}.big small{font-size:13.5px}}
@@ -186,12 +185,11 @@ html.pm .shint{display:none}html.pm .scard b{font-size:22px}
 .qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .qbtn{min-height:58px;border:0;border-radius:16px;background:#fff;font-size:17px;font-weight:700;color:var(--ink)}
 .qbtn:active{background:var(--orl)}
-.tip{display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:14px 16px;font-size:16px;font-weight:600;line-height:1.5}.tip svg{width:30px;height:30px;flex-shrink:0}
 .ordlink{display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;padding:12px 14px;border:2px solid #1F6B47;border-radius:18px;background:#EEF6F1;color:#1F6B47;text-align:start;font-family:inherit}.ordlink svg{width:30px;height:30px;flex:0 0 30px}.ordlink b{display:block;font-size:17px;font-weight:800}.ordlink small{display:block;font-size:14px;color:#3D5A4A;margin-top:2px}
 .cambtn{min-height:68px;border:2px dashed #C9501E;border-radius:20px;background:#FFF4EC;color:#7A3A0E;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px}.cambtn span{font-size:30px}
 .picgrid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:104px;gap:10px;flex-shrink:0}
 .pic{min-height:100px;border:0;border-radius:20px;background:#fff;color:var(--ink);font-size:17px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px}
-.pic i{font-style:normal;font-size:42px;line-height:1}.pic i svg{width:52px;height:52px;display:block}.qhead{grid-column:1/-1;margin:0;font-size:20px;font-weight:800;text-align:center;align-self:center;display:flex;align-items:center;justify-content:center;gap:8px}.qhead span{font-size:34px}.pic.back{background:#E9E3D8}.pic.pcam{outline:2px dashed #C9501E;outline-offset:-4px}
+.pic i{font-style:normal;font-size:42px;line-height:1}.pic i svg{width:52px;height:52px;display:block}.picgrid:has(.qhead){grid-template-rows:auto}.qhead{grid-column:1/-1;padding-block:4px;margin:0;font-size:20px;font-weight:800;text-align:center;align-self:center;display:flex;align-items:center;justify-content:center;gap:8px}.qhead span{font-size:34px}.pic.back{background:#E9E3D8}.pic.pcam{outline:2px dashed #C9501E;outline-offset:-4px}
 .typebox{background:#fff;border-radius:18px;padding:10px 14px}.typebox summary{font-size:16px;font-weight:700;min-height:36px;display:flex;align-items:center;cursor:pointer}.typebox .goal{margin-top:8px}
 #hPhoto{max-height:34%;max-width:100%;object-fit:contain;border-radius:12px;align-self:center;background:#fff}
 #readOv{position:fixed;inset:0;z-index:26;background:rgba(19,38,47,.94);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#fff;padding:24px;text-align:center}
@@ -252,15 +250,13 @@ html.off #offBar{display:block}html.off .screen{top:var(--offh,0px)}
 .okline{margin:0;font-size:20px;font-weight:800;line-height:1.55;background:var(--orl);border-radius:12px;padding:10px 12px}
 #tOkNo{background:var(--bg);color:var(--ink);border:2px solid var(--line)}
 .sosnote{margin:0;background:#FBE6D4;color:#5A2A08;border-radius:14px;padding:10px 12px;font-size:15px;font-weight:700;line-height:1.6}
-/* ---------- picture look: big pictures, fewer words. Since #48 <html> always has class pm (one interface for everyone). ---------- */
-.only-pic,#picHome,.pi,.ri{display:none}
-html.pm .only-pic{display:revert}html.pm .no-pic{display:none!important}
-html.pm #picHome{display:flex}
-html.pm #bigTalk,html.pm #openFree,html.pm .hbrand small,html.pm #sosBtn small,html.pm .alchip:not(.on){display:none}
-html.pm #sosBtn{flex:0 0 auto;min-height:74px;margin-top:auto}
+/* ---------- picture look: big pictures, fewer words. One interface for everyone (#48). ---------- */
+#picHome{display:flex}
+.alchip:not(.on){display:none}
+#sosBtn{flex:0 0 auto;min-height:74px;margin-top:auto}
 /* Emergency is always on screen: it stays stuck above the bottom bar when the home screen scrolls (small phones). */
 #sosBtn{position:sticky;bottom:0;z-index:3;flex-shrink:0;box-shadow:0 -10px 0 var(--bg),0 4px 14px rgba(0,0,0,.18)}
-html.pm #sosBtn{min-height:72px;padding-block:8px}html.pm #sosBtn .ic{width:54px;height:54px}
+#sosBtn{min-height:72px;padding-block:8px}#sosBtn .ic{width:54px;height:54px}
 #picHome{flex-direction:column;gap:10px;flex-shrink:0}
 .phead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0}.phead b{font-size:17px;font-weight:800;color:var(--mute)}
 .sit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
@@ -278,9 +274,9 @@ html.pm #sosBtn{min-height:72px;padding-block:8px}html.pm #sosBtn .ic{width:54px
 .bigopts .si{width:48px;height:48px;border-radius:14px;background:var(--orl);display:flex;align-items:center;justify-content:center;flex-shrink:0}.bigopts .si svg{width:30px;height:30px;stroke:var(--ord)}
 @media (max-height:720px){.sit button{min-height:88px;gap:4px}.sit .si{width:46px;height:46px}.sit.tools button{min-height:78px}#picHome{gap:8px}}
 /* short phones (about 667px): the six cards and the tools row shrink a bit so the «بدالك على الكاونتر» card is not half hidden behind the SOS bar */
-@media (max-height:700px){html.pm .sit button{padding-block:6px;gap:2px}html.pm .sit .si{width:36px;height:36px}html.pm .sit .si svg{width:22px;height:22px}html.pm .sit:not(.tools) button{min-height:72px}html.pm .sit.tools button{min-height:64px}}
+@media (max-height:700px){.sit button{padding-block:6px;gap:2px}.sit .si{width:36px;height:36px}.sit .si svg{width:22px;height:22px}.sit:not(.tools) button{min-height:72px}.sit.tools button{min-height:64px}}
 @media (min-height:780px){.sit button{min-height:112px}.sit .si{width:56px;height:56px}.sit .si svg{width:34px;height:34px}.sit.tools button{min-height:100px}}
-html.pm #refills:empty,html.pm #orderChip:empty{display:none}
+#refills:empty,#orderChip:empty{display:none}
 /* profile switch */
 .psw{width:100%;display:flex;align-items:center;gap:12px;border:0;background:none;padding:0;text-align:start;color:var(--ink);min-height:56px}
 .psw .si{width:48px;height:48px;border-radius:14px;background:var(--orl);display:flex;align-items:center;justify-content:center;flex-shrink:0}.psw .si svg{width:28px;height:28px;stroke:var(--ord)}
@@ -292,49 +288,45 @@ html.pm #refills:empty,html.pm #orderChip:empty{display:none}
 @media (prefers-reduced-motion:reduce){.sw i{transition:none}}
 /* first-run choice */
 .wgo{min-height:64px;border:0;border-radius:18px;background:var(--ink);color:#fff;font-size:22px;font-weight:800;padding:8px}.wgo:active{background:var(--ink2)}
-.wch{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.wch button{min-height:92px;border:0;border-radius:18px;background:var(--ink);color:#fff;font-size:19px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px}
-.wch button:active{background:var(--ink2)}.wch svg{width:34px;height:34px}
 /* inside a task, translation and the order: bigger heard text, cards, buttons with icons */
-html.pm .live{min-height:96px}
-html.pm .live p{font-size:clamp(26px,8vw,34px);line-height:1.4}
-html.pm #task .thead,html.pm #task .prog{display:none}
-html.pm #tCards{flex-wrap:nowrap;overflow-x:auto}html.pm #tCards .pcard{flex:0 0 auto;max-width:none}
-html.pm .live{max-height:none;flex:0 1 auto}html.pm #task .tbody{flex:1 1 0;min-height:150px}html.pm #task.asking #tLive{min-height:0}html.pm .decide #tCards{margin:0}
-@media (max-height:720px){html.pm #tLiveLab{display:none}html.pm .live p{font-size:26px}html.pm #tCards .pcard{padding:6px 10px;min-width:96px}html.pm #tCards .pcard svg{width:38px;height:38px}html.pm #tCards .pcard b{font-size:26px}html.pm .opts button{min-height:60px;font-size:19px}html.pm .opts .ri{width:36px;height:36px}html.pm #tOk .opts button{min-height:84px}html.pm .okline{font-size:21px}}
-html.pm #tCards .pcard{min-width:110px;padding:12px}html.pm #tCards .pcard svg{width:44px;height:44px}html.pm #tCards .pcard b{font-size:30px}
-html.pm .ri{display:inline-flex;width:42px;height:42px;border-radius:12px;align-items:center;justify-content:center;background:var(--orl);flex-shrink:0}
-html.pm .ri svg{width:26px;height:26px}
-html.pm .sug button{min-height:68px;font-size:21px;display:flex;align-items:center;gap:12px}
-html.pm .opts{grid-template-columns:1fr}
-html.pm .opts button{min-height:72px;font-size:20px;display:flex;align-items:center;gap:12px;text-align:start;padding:10px 14px}
-html.pm .opts .ri{background:rgba(255,255,255,.2)}
-html.pm #tOk .opts{grid-template-columns:1fr 1fr}
-html.pm #tOk .opts button{min-height:100px;flex-direction:column;justify-content:center;text-align:center;gap:4px;font-size:22px}
-html.pm .pi{display:block;font-size:36px;line-height:1}
-html.pm #tOkYes{background:#2E7D5B;color:#fff}
-html.pm .okline{font-size:24px}
-html.pm .tfoot{gap:6px;padding-inline:10px}
-html.pm .tfoot button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:62px;font-size:13px;padding:4px 2px}
-html.pm .tfoot .end{flex:1;padding:4px 2px}
+.live{min-height:96px}
+.live p{font-size:clamp(26px,8vw,34px);line-height:1.4}
+#task .thead,#task .prog{display:none}
+#tCards{flex-wrap:nowrap;overflow-x:auto}#tCards .pcard{flex:0 0 auto;max-width:none}
+.live{max-height:none;flex:0 1 auto}#task .tbody{flex:1 1 0;min-height:150px}#task.asking #tLive{min-height:0}.decide #tCards{margin:0}
+@media (max-height:720px){#tLiveLab{display:none}.live p{font-size:26px}#tCards .pcard{padding:6px 10px;min-width:96px}#tCards .pcard svg{width:38px;height:38px}#tCards .pcard b{font-size:26px}.opts button{min-height:60px;font-size:19px}.opts .ri{width:36px;height:36px}#tOk .opts button{min-height:84px}.okline{font-size:21px}}
+#tCards .pcard{min-width:110px;padding:12px}#tCards .pcard svg{width:44px;height:44px}#tCards .pcard b{font-size:30px}
+.ri{display:inline-flex;width:42px;height:42px;border-radius:12px;align-items:center;justify-content:center;background:var(--orl);flex-shrink:0}
+.ri svg{width:26px;height:26px}
+.sug button{min-height:68px;font-size:21px;display:flex;align-items:center;gap:12px}
+.opts{grid-template-columns:1fr}
+.opts button{min-height:72px;font-size:20px;display:flex;align-items:center;gap:12px;text-align:start;padding:10px 14px}
+.opts .ri{background:rgba(255,255,255,.2)}
+#tOk .opts{grid-template-columns:1fr 1fr}
+#tOk .opts button{min-height:100px;flex-direction:column;justify-content:center;text-align:center;gap:4px;font-size:22px}
+.pi{display:block;font-size:36px;line-height:1}
+#tOkYes{background:#2E7D5B;color:#fff}
+.okline{font-size:24px}
+.tfoot{gap:6px;padding-inline:10px}
+.tfoot button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:62px;font-size:13px;padding:4px 2px}
+.tfoot .end{flex:1;padding:4px 2px}
 .tfoot svg,#free .row svg{width:24px;height:24px}
 /* Face to face: a slimmer bottom bar, and while the user decides the top halves shrink so the question, the picture cards and every answer fit on the screen */
 .tfoot{padding:6px 10px calc(6px + env(safe-area-inset-bottom));gap:6px}
-.tfoot button{min-height:44px;font-size:14px;padding:2px 4px;border-radius:12px;white-space:nowrap}
-.tfoot .end{padding:0 12px}
-html.pm .tfoot button{min-height:50px;font-size:12px;gap:1px}html.pm .tfoot svg{width:22px;height:22px}
+.tfoot button{min-height:44px;font-size:14px;border-radius:12px;white-space:nowrap}
+.tfoot button{min-height:50px;font-size:12px;gap:1px}.tfoot svg{width:22px;height:22px}
 #task.asking .hear{flex-basis:20%;padding:10px 16px;gap:4px}#task.asking .hear .sub,#task.asking .hear .lab{display:none}
 #task.asking .live{padding:6px 14px;min-height:0}#task.asking #tLiveLab{display:none}
-#task.asking .live p{font-size:19px;line-height:1.35}html.pm #task.asking .live p{font-size:22px}
+#task.asking .live p{font-size:19px;line-height:1.35}#task.asking .live p{font-size:22px}
 #task.asking #tCards{margin-top:4px;gap:6px}
-#task.asking #tCards .pcard,html.pm #task.asking #tCards .pcard{flex-direction:row;justify-content:center;gap:6px;padding:4px 8px;min-width:0;border-top-width:4px}
-#task.asking #tCards .pcard svg,html.pm #task.asking #tCards .pcard svg{width:26px;height:26px}
-#task.asking #tCards .pcard b,html.pm #task.asking #tCards .pcard b{font-size:20px}
+#task.asking #tCards .pcard,#task.asking #tCards .pcard{flex-direction:row;justify-content:center;gap:6px;padding:4px 8px;min-width:0;border-top-width:4px}
+#task.asking #tCards .pcard svg,#task.asking #tCards .pcard svg{width:26px;height:26px}
+#task.asking #tCards .pcard b,#task.asking #tCards .pcard b{font-size:20px}
 #task.asking #tCards .pcard small{font-size:12px}
 #task.asking .tbody{padding-top:8px;gap:8px}
-#task.asking .decide .opts button{min-height:52px}html.pm #task.asking .decide .opts button{min-height:56px;font-size:19px;padding:6px 12px}
-html.pm #task.asking .decide .ri{width:34px;height:34px}html.pm #task.asking #tOk .opts button{min-height:80px}
-html.pm #free .row .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:64px;font-size:14px}
+#task.asking .decide .opts button{min-height:52px}#task.asking .decide .opts button{min-height:56px;font-size:19px;padding:6px 12px}
+#task.asking .decide .ri{width:34px;height:34px}#task.asking #tOk .opts button{min-height:80px}
+#free .row .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:64px;font-size:14px}
 #flip.up{transform:none;flex-direction:column;gap:18px}#flip small{display:block;font-size:26px;font-weight:700;line-height:1.5}#flip .fx{position:absolute;bottom:24px;font-size:16px;font-weight:700;color:#5B6870}
 /* app language: English pages are left to right; hide the page until it is translated (never more than 1.5 s) */
 html.en:not(.tr) body{visibility:hidden}
@@ -355,10 +347,10 @@ html.en:not(.tr) body{visibility:hidden}
 .cheard p{margin:4px 0 0;font-size:clamp(21px,6.2vw,27px);line-height:1.45;font-weight:700;max-height:34vh;overflow-y:auto}
 .csaid{margin:0;font-size:16px;line-height:1.55;background:var(--orl);border-radius:12px;padding:8px 12px}.csaid b{display:block;font-size:12px;opacity:.75}
 #call.asking .cheard{min-height:0}#call.asking .cheard p{font-size:20px;max-height:22vh}#call.asking .csaid{display:none}
-html.pm .cheard p{font-size:clamp(26px,8vw,34px)}html.pm #call.asking .cheard p{font-size:22px}
-html.pm #cOk .opts{grid-template-columns:1fr 1fr}html.pm #cOk .opts button{min-height:96px;flex-direction:column;justify-content:center;text-align:center;gap:4px;font-size:22px}html.pm #cOkYes{background:#2E7D5B;color:#fff}
-@media (max-height:720px){#call.asking .cbody{gap:8px;padding-top:8px}#call.asking .state{display:none}#call.asking .cheard{padding:8px 12px}#call.asking .cheard p,html.pm #call.asking .cheard p{font-size:18px;max-height:14vh}#call.asking #cCards{margin-top:4px}#call.asking #cCards .pcard{padding:3px 8px;min-width:76px;border-top-width:4px}#call.asking #cCards .pcard svg{width:24px;height:24px}#call.asking #cCards .pcard b{font-size:19px}#call.asking .decide{padding:10px;gap:8px}#call.asking .decide .q{font-size:16px;line-height:1.45}html.pm #call.asking .opts button{min-height:52px;font-size:18px}html.pm #call.asking .opts .ri{width:32px;height:32px}html.pm #call.asking #cOk .opts button{min-height:76px}}
-html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.tools button:nth-child(5){grid-column:1/-1;flex-direction:row;justify-content:center;gap:10px;min-height:64px;font-size:17px}html.pm .sit.tools button:nth-child(5) .si{width:40px;height:40px}html.pm .sit.tools button{font-size:15px;padding:8px 2px}
+.cheard p{font-size:clamp(26px,8vw,34px)}#call.asking .cheard p{font-size:22px}
+#cOk .opts{grid-template-columns:1fr 1fr}#cOk .opts button{min-height:96px;flex-direction:column;justify-content:center;text-align:center;gap:4px;font-size:22px}#cOkYes{background:#2E7D5B;color:#fff}
+@media (max-height:720px){#call.asking .cbody{gap:8px;padding-top:8px}#call.asking .state{display:none}#call.asking .cheard{padding:8px 12px}#call.asking .cheard p{font-size:18px;max-height:14vh}#call.asking #cCards{margin-top:4px}#call.asking #cCards .pcard{padding:3px 8px;min-width:76px;border-top-width:4px}#call.asking #cCards .pcard svg{width:24px;height:24px}#call.asking #cCards .pcard b{font-size:19px}#call.asking .decide{padding:10px;gap:8px}#call.asking .decide .q{font-size:16px;line-height:1.45}#call.asking .opts button{min-height:52px;font-size:18px}#call.asking .opts .ri{width:32px;height:32px}#call.asking #cOk .opts button{min-height:76px}}
+.sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}.sit.tools button:nth-child(5){grid-column:1/-1;flex-direction:row;justify-content:center;gap:10px;min-height:64px;font-size:17px}.sit.tools button:nth-child(5) .si{width:40px;height:40px}.sit.tools button{font-size:15px;padding:8px 2px}
 /* voice → sign: the «إشارة» switch and the sign player (task + translation screens) */
 .sgt{float:left;margin:0 8px 4px 0;min-height:44px;display:inline-flex;align-items:center;gap:6px;border:1px solid #4A5A62;background:#1B2A31;color:#FFD7B0;border-radius:999px;padding:0 8px 0 12px;font-size:15px;font-weight:800}
 .sgt i{display:inline-block;width:36px;height:22px;border-radius:999px;background:#59656B;position:relative;flex:0 0 auto}
@@ -427,8 +419,7 @@ html.pm .sit.tools{grid-template-columns:repeat(4,minmax(0,1fr))}html.pm .sit.to
 /* حجم الكلام: the other person's words, the cards and the captions grow; the question box in a task stays compact */
 html{--fz:1}html.fsl{--fz:1.2}html.fsx{--fz:1.4}
 html.fsl #cap,html.fsx #cap{font-size:calc(28px*var(--fz))}
-html.fsl .live p,html.fsx .live p{font-size:calc(clamp(20px,6vw,26px)*var(--fz))}
-html.fsl.pm .live p,html.fsx.pm .live p{font-size:calc(clamp(26px,8vw,34px)*1.12)}
+html.fsl .live p,html.fsx .live p{font-size:calc(clamp(26px,8vw,34px)*1.12)}
 html.fsl .msg,html.fsx .msg{font-size:calc(16px*var(--fz))}html.fsl .msg.h,html.fsx .msg.h{font-size:calc(18px*var(--fz))}
 html.fsl .pcard b,html.fsx .pcard b{font-size:min(calc(24px*var(--fz)),32px)}html.fsl .pcard.long b,html.fsx .pcard.long b{font-size:calc(18px*var(--fz))}
 html.fsl .cards.lg .pcard b,html.fsx .cards.lg .pcard b{font-size:min(calc(30px*var(--fz)),38px)}
@@ -436,11 +427,10 @@ html.fsl .pcard small,html.fsx .pcard small{font-size:calc(13px*var(--fz))}
 html.fsl .sug button,html.fsx .sug button{font-size:calc(19px*min(var(--fz),1.2))}
 html.fsl .decide .q,html.fsx .decide .q{font-size:20px}
 html.fsl .okline,html.fsx .okline{font-size:22px}
-html.fsl #task.asking .live p{font-size:21px}html.fsx #task.asking .live p{font-size:22px}
-html.fsl.pm #task.asking .live p,html.fsx.pm #task.asking .live p{font-size:23px}
+html.fsl #task.asking .live p,html.fsx #task.asking .live p{font-size:23px}
 html.fsl .ws-cap,html.fsx .ws-cap{font-size:calc(clamp(26px,8vw,34px)*min(var(--fz),1.2))}
 html.fsl #task.asking .ws-cap,html.fsx #task.asking .ws-cap{font-size:22px}
-@media (max-height:720px){html.fsx #task.asking .live p,html.fsl #task.asking .live p{font-size:20px}html.fsx #task.asking .decide .q,html.fsl #task.asking .decide .q{font-size:18px}html.fsx #task .ws-cap,html.fsl #task .ws-cap{font-size:26px}html.fsx #task.asking .ws-cap,html.fsl #task.asking .ws-cap{font-size:22px}}
+@media (max-height:720px){html.fsx #task.asking .decide .q,html.fsl #task.asking .decide .q{font-size:18px}html.fsx #task .ws-cap,html.fsl #task .ws-cap{font-size:26px}html.fsx #task.asking .ws-cap,html.fsl #task.asking .ws-cap{font-size:22px}}
 /* تباين عالي: stronger colours, the other person's words white on black */
 html.hc{--ink:#000;--ink2:#1A1A1A;--mute:#2B3237;--line:#5E574C;--bg:#FFFFFF;--card:#FFFFFF;--ord:#6A3008;--orl:#FFE2C7}
 html.hc #cap,html.hc .live{background:#000;color:#fff}
@@ -454,7 +444,7 @@ html.hc .btn.ghost,html.hc .chip,html.hc .tfoot button,html.hc .field input,html
 html.hc .card{border:2px solid #000}
 html.hc :focus-visible{outline:3px solid #000;outline-offset:2px}
 </style>
-<script>document.documentElement.classList.add('pm'); /* one interface for everyone (#48): the old wasl_pic choice is kept in storage but no longer read */
+<script>/* one interface for everyone (#48): the old wasl_pic choice stays in storage but is not read */
 /* حجم الكلام and تباين عالي (بياناتي), before the first paint */
 try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')document.documentElement.classList.add('fs'+fz);if(localStorage.getItem('wasl_hc')==='true')document.documentElement.classList.add('hc')}catch(e){}
 /* App language (UI): the user's choice (بياناتي, the welcome card, or English in the dialect list), else Arabic.
@@ -488,7 +478,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <section id="home" class="screen on" aria-label="الرئيسية">
 <button id="demoFab" class="hidden" style="position:fixed;top:72px;left:16px;min-height:48px;z-index:40;background:#E4602A;color:#fff;border:0;border-radius:24px;padding:10px 16px;font:800 16px Cairo,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.2)">▶ عرض تجريبي</button>
 <div class="hhead">
-<div class="hbrand"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#13262F"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>بَدالَك</b><small>بيتكلم عنك ويخلّص المهمة</small></div></div>
+<div class="hbrand"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="30" fill="#13262F"/><rect x="22" y="44" width="11" height="32" rx="5.5" fill="#E4602A"/><rect x="39" y="30" width="11" height="60" rx="5.5" fill="#E4602A"/><rect x="56" y="48" width="11" height="24" rx="5.5" fill="#E4602A"/><rect x="74" y="40" width="26" height="10" rx="5" fill="#fff"/><rect x="74" y="55" width="19" height="10" rx="5" fill="#fff"/><rect x="74" y="70" width="23" height="10" rx="5" fill="#fff"/></svg><div><b>بَدالَك</b></div></div>
 <label class="sr" for="lang">لهجة اللي قدامك</label>
 <select id="lang"><option value="ar-EG">مصري</option><option value="ar-SA">خليجي</option><option value="en-US">English</option></select>
 </div>
@@ -500,9 +490,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div id="refills"></div>
 <div id="orderChip"></div>
 <div id="picHome"></div>
-<button class="big" id="bigTalk" style="background:#C9501E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/><path d="M9 10.5h6M9 13.5h4"/></svg></span><span class="tx"><b>اتكلم بدالي</b><small>قول عايز إيه، وأنا أتكلم مع اللي قدامك</small></span></button>
-<button class="big" id="openFree" style="background:#13262F"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 10h4M13 10h4M7 14h7"/></svg></span><span class="tx"><b>ترجمة</b><small>كلام اللي قدامك يظهر مكتوب وبالصور</small></span></button>
-<button class="big sm" id="sosBtn" style="background:#B3261E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.5"/></svg></span><span class="tx"><b>طوارئ</b><small>إسعاف · شرطة · مطافي · أهلك</small></span></button>
+<button class="big sm" id="sosBtn" style="background:#B3261E"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.5"/></svg></span><span class="tx"><b>طوارئ</b></span></button>
 </div>
 <nav class="hnav" aria-label="باقي التطبيق">
 <button id="openMe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>بياناتي</button>
@@ -528,7 +516,6 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <button class="ordlink calllink" id="openCall"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span><b>مكالمة: بدالك يتصل عنك</b><small>اكتب الرقم واللي عايزه، وبدالك يكلمهم ويكتبلك ردهم</small></span></button>
 <button class="ordlink calllink" id="openCounter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg><span><b>بدالك على الكاونتر: الموظف يكلمك</b><small>وريه كود على موبايلك، يعمل سكان ويتكلم، وإنت تقرا كلامه</small></span></button>
 <div style="flex:1"></div>
-<div class="tip no-pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><span>حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.</span></div>
 <p class="qleft hidden" id="qLeft" aria-live="polite"></p>
 <button class="btn or startbig" id="startTask">▶ ابدأ</button>
 </div>
@@ -666,7 +653,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <p class="note srvnote">الموبايل ده بيسمع عن طريق سيرفر بدالك، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.</p>
 <div class="log" id="tLog"></div>
 <div class="decide hidden" id="tDecide"><div class="q" id="tQ"></div><div class="opts" id="tOpts"></div></div>
-<div class="decide hidden" id="tOk" role="alertdialog" aria-labelledby="tOkQ"><div class="q" id="tOkQ"><span class="no-pic">بدالك هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:</span><span class="only-pic">اتأكد الأول:</span></div><p class="okline" id="tOkT"></p><div class="opts"><button id="tOkYes"><span class="pi" aria-hidden="true">✓</span>قوله</button><button id="tOkNo"><span class="pi" aria-hidden="true">✋</span>لأ، استنى</button></div></div>
+<div class="decide hidden" id="tOk" role="alertdialog" aria-labelledby="tOkQ"><div class="q" id="tOkQ">اتأكد الأول:</div><p class="okline" id="tOkT"></p><div class="opts"><button id="tOkYes"><span class="pi" aria-hidden="true">✓</span>قوله</button><button id="tOkNo"><span class="pi" aria-hidden="true">✋</span>لأ، استنى</button></div></div>
 <div class="typerow hidden" id="tType"><label class="sr" for="tInput">اكتب لبدالك</label><input id="tInput" placeholder="اكتب اللي عايز بدالك يقوله أو يعرفه"><button id="tSend">ابعت</button></div><div class="phr hidden" id="tPhr"></div>
 <div class="summary hidden" id="tSum"><b>✓ المهمة خلصت</b><p id="tSumText"></p><div class="rate" id="tRate"><span>بَدالَك ساعدك؟</span><button data-r="up" aria-label="ساعدني">👍</button><button data-r="down" aria-label="ماساعدنيش">👎</button></div><div class="refill hidden" id="tRefill" style="background:var(--orl);border-radius:14px;padding:12px;margin:0 0 10px"><b id="tRefQ" style="display:block;margin-bottom:8px"></b><div class="why" id="tRefOpts" style="margin:0"><button data-d="7">أسبوع</button><button data-d="14">أسبوعين</button><button data-d="30">شهر</button><button data-d="0">مش عايز</button></div><p id="tRefOk" class="hidden" style="margin:8px 0 0;font-weight:700"></p><button class="btn ghost hidden" id="tRefCal" style="min-height:44px;font-size:16px;margin-top:8px;width:100%">📅 ضيفه لتقويم الموبايل</button></div>
 <div class="why hidden" id="tWhy"><button>مفهمش اللي قدامي</button><button>بطيء</button><button>الصوت مش واضح</button><button>قال حاجة غلط</button><button>حاجة تانية</button></div><button class="btn ghost" id="tShare" style="margin-bottom:8px">ابعت الملخص</button><button class="btn" id="tHome">رجوع للرئيسية</button></div>
@@ -809,7 +796,6 @@ const EN={
 '▶ عرض تجريبي':'▶ Demo',
 'عرض تجريبي':'Demo',
 'بَدالَك':'Badalak',
-'بيتكلم عنك ويخلّص المهمة':'Speaks for you and gets it done',
 'لهجة اللي قدامك':'Language Badalak speaks to the person in front of you',
 'مصري':'Arabic (Egypt)',
 'خليجي':'Arabic (Gulf)',
@@ -819,11 +805,8 @@ const EN={
 'تنبيهات الأصوات مقفولة · شغّلها':'Sound alerts are off · Turn on',
 'تنبيهات الأصوات شغالة':'Sound alerts are on',
 'اتكلم بدالي':'Speak for me',
-'قول عايز إيه، وأنا أتكلم مع اللي قدامك':'Say what you want, and I talk to the person in front of you',
 'ترجمة':'Translate',
-'كلام اللي قدامك يظهر مكتوب وبالصور':'What they say shows as text and pictures',
 'طوارئ':'SOS',
-'إسعاف · شرطة · مطافي · أهلك':'Ambulance · Police · Fire · Family',
 'باقي التطبيق':'More',
 'بياناتي':'My info',
 'مهامي':'My tasks',
@@ -838,7 +821,6 @@ const EN={
 'مثلاً: عايز دوا الضغط اللي في الروشتة':'Example: I want the blood pressure medicine on my prescription',
 'مش في الصيدلية؟ اطلب دوا للبيت':'Not at the pharmacy? Order medicine to your home',
 'أكتب للصيدلية على واتساب، وأقرالك ردهم':'I write to the pharmacy on WhatsApp and read you their reply',
-'حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.':'Put the phone between you and the other person. Their words will show as text and pictures.',
 '▶ ابدأ':'▶ Start',
 'رجوع':'Back',
 'صيدلية':'Pharmacy','أصرف روشتة':'Fill a prescription','دوا معايا علبته':'I have the medicine box','مسكن للصداع':'Headache medicine','عايز مسكن للصداع':'I want something for a headache','دوا للبرد':'Cold medicine','عايز دوا للبرد والكحة':'I want medicine for a cold and cough',
@@ -952,7 +934,6 @@ const EN={
 'اللي قدامك بيقول دلوقتي':'They are saying now',
 'آخر كلام قاله اللي قدامك':'The last thing they said',
 'الموبايل ده بيسمع عن طريق سيرفر بدالك، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.':'This phone listens through Badalak\'s server, so it needs internet and uses a bit more data.',
-'بدالك هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:':'Badalak will say this. It has numbers, money or medicine. Check it:',
 'اتأكد الأول:':'Check first:',
 'قوله':'Say it',
 'لأ، استنى':'No, wait',
@@ -1176,7 +1157,7 @@ const EN={
 'بيسجل: {l} ({n})':'Recording: {l} ({n})',
 'اتسجلت ✓ سجّلها مرتين كمان':'Recorded ✓ Record it 2 more times',
 'تمسح كل الإشارات؟':'Delete all signs?',
-// ---- install, picture mode
+// ---- install
 'ثبّت بَدالَك: دوس زرار المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»':'Install Badalak: tap the Share button ⬆️ below, then «Add to Home Screen»',
 'كاشير':'Cashier','عايز أدفع حساب الحاجات دي عند الكاشير':'I want to pay for these things at the cashier',
 'حجز دكتور':'Doctor booking','عايز أحجز كشف عند الدكتور':'I want to book a visit with the doctor',
@@ -1298,7 +1279,6 @@ const EN={
 'بدالك بيتصل دلوقتي بأرقام مصر والإمارات والسعودية وبريطانيا وأمريكا بس.':'For now Badalak can only call numbers in Egypt, the UAE, Saudi Arabia, the UK and the US.',
 'بدالك بيفكر في الرد...':'Badalak is thinking of a reply...',
 'بدالك محتاج قرارك · الطرف التاني مستني':'Badalak needs your decision · they are waiting',
-'بدالك هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:':'Badalak will say this sentence. It has numbers or money, check it:',
 'بدالك يتصل بالرقم ويتكلم بالنيابة عنك، وكلام الطرف التاني يظهر لك مكتوب.':'Badalak calls the number and speaks for you, and the other person\'s words show up as text.',
 'وصلت لأقصى عدد مكالمات النهارده. جرّب بكرة.':'You reached today\'s call limit. Try tomorrow.',
 '✓ المكالمة خلصت':'✓ The call is done',
@@ -1341,7 +1321,6 @@ const EN={
 'مش لاقي كاميرا أمامية في الموبايل ده.':'No front camera found on this phone.',
 'مش متأكد. اختار الصح':'Not sure. Pick the right one',
 'مشفتش إيدك. خلّي إيدك جوه الصورة':'I didn\'t see your hand. Keep your hand inside the picture',
-'نزّل إيدك، اعمل الإشارة، ونزّل إيدك تاني.':'Hands down, make the sign, then hands down again.',
 'نزّل إيدك، وبعدين اعمل الإشارة':'Hands down, then make the sign',
 'بدالك لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور':'Badalak hasn\'t learned any signs yet. Teach it below, or pick from pictures',
 'ولا واحدة':'None of these'
@@ -1378,21 +1357,16 @@ const GU={
 "أهلاً بيك في بَدالَك": "هلا والله في بَدالَك",
 "✅ يلا نبدأ": "✅ يلا نبدأ",
 "🚨 عندي طوارئ دلوقتي": "🚨 عندي طوارئ الحين",
-"بيتكلم عنك ويخلّص المهمة": "يتكلم عنك ويخلّص المهمة",
 "ثبّت بَدالَك على موبايلك، ويشتغل من غير نت": "ثبّت بَدالَك على جوالك، ويشتغل بدون نت",
 "تنبيهات الأصوات مقفولة · شغّلها": "تنبيهات الأصوات مقفلة · شغّلها",
 "تنبيهات الأصوات شغالة": "تنبيهات الأصوات شغّالة",
 "اتكلم بدالي": "تكلّم عني",
-"قول عايز إيه، وأنا أتكلم مع اللي قدامك": "قل وش تبي، وأنا أتكلم مع اللي قدامك",
-"كلام اللي قدامك يظهر مكتوب وبالصور": "كلام اللي قدامك يطلع مكتوب وبالصور",
-"إسعاف · شرطة · مطافي · أهلك": "إسعاف · شرطة · دفاع مدني · أهلك",
 "عايز إيه؟": "وش تبي؟",
 "صوّر الروشتة أو الحاجة": "صوّر الوصفة أو الغرض",
 "اختار بالصور": "اختر بالصور",
 "مثلاً: عايز دوا الضغط اللي في الروشتة": "مثلاً: أبي دواء الضغط اللي في الوصفة",
 "مش في الصيدلية؟ اطلب دوا للبيت": "مو في الصيدلية؟ اطلب دواء للبيت",
 "أكتب للصيدلية على واتساب، وأقرالك ردهم": "أكتب للصيدلية على واتساب، وأقرا لك ردهم",
-"حط الموبايل بينك وبين اللي قدامك. الكلام هيظهر لك مكتوب وبالصور.": "حط الجوال بينك وبين اللي قدامك. الكلام يطلع لك مكتوب وبالصور.",
 "أصرف روشتة": "أصرف وصفة",
 "دوا معايا علبته": "دواء معي علبته",
 "مسكن للصداع": "مسكّن للصداع",
@@ -1497,7 +1471,6 @@ const GU={
 "كلام اللي قدامك هيظهر هنا": "كلام اللي قدامك يطلع هنا",
 "اللي قدامك بيقول دلوقتي": "اللي قدامك يقول الحين",
 "الموبايل ده بيسمع عن طريق سيرفر بدالك، فلازم يكون فيه نت، وبيصرف نت أكتر شوية.": "هذا الجوال يسمع عن طريق سيرفر بدالك، فلازم يكون فيه نت، ويصرف نت أكثر شوي.",
-"بدالك هيقول الجملة دي. فيها أرقام أو فلوس أو دوا، اتأكد منها:": "بدالك بيقول هذي الجملة. فيها أرقام أو فلوس أو دواء، تأكد منها:",
 "اتأكد الأول:": "تأكد أول:",
 "قوله": "قلها",
 "لأ، استنى": "لا، انتظر",
@@ -1764,7 +1737,6 @@ const GU={
 "الخط اتقفل عشان الرد اتأخر، وبدالك قالهم إننا هنكلمهم تاني.": "الخط تسكّر لأن الرد تأخر، وبدالك قال لهم إننا بنكلمهم مرة ثانية.",
 "✓ المكالمة خلصت": "✓ خلصت المكالمة",
 "المكالمة اتقفلت": "تسكّرت المكالمة",
-"بدالك هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:": "بدالك بيقول هالجملة. فيها أرقام أو فلوس، تأكد منها:",
 "قبل أول مكالمة:\n\nبدالك هيتصل بالرقم ده، ويقول في الأول إنه مساعد بالذكاء الاصطناعي بيتكلم بالنيابة عنك.\n\nالكلام بيعدّي على شركة الاتصالات ومساعدها الصوتي عشان يتقال ويتكتب. المساعد بياخد اسمك وهدف المكالمة بس، وأي حاجة تانية بيسألك الأول.\n\nالمكالمة مش بتتسجّل، والكلام بيتمسح أول ما المكالمة تخلص.\n\nموافق؟": "قبل أول مكالمة:\n\nبدالك بيتصل بهالرقم، ويقول في البداية إنه مساعد بالذكاء الاصطناعي يتكلم بالنيابة عنك.\n\nالكلام يمر على شركة الاتصالات ومساعدها الصوتي عشان ينقال وينكتب. المساعد ياخذ اسمك وهدف المكالمة بس، وأي شي ثاني يسألك قبل.\n\nالمكالمة ما تتسجّل، والكلام ينمسح أول ما تخلص المكالمة.\n\nموافق؟",
 "اتعلمتها ✓ جرّبها دلوقتي": "تعلّمتها ✓ جرّبها الحين",
 "اعمل الإشارة دلوقتي ({k} من 3)": "سوّ الإشارة الحين ({k} من 3)",
@@ -1790,7 +1762,6 @@ const GU={
 "مش لاقي كاميرا أمامية في الموبايل ده.": "ما لقيت كاميرا أمامية في هذا الجوال.",
 "مش متأكد. اختار الصح": "مو متأكد. اختار الصح",
 "مشفتش إيدك. خلّي إيدك جوه الصورة": "ما شفت يدك. خلّ يدك داخل الصورة",
-"نزّل إيدك، اعمل الإشارة، ونزّل إيدك تاني.": "نزّل يدك، سوّ الإشارة، ونزّل يدك مرة ثانية.",
 "نزّل إيدك، وبعدين اعمل الإشارة": "نزّل يدك، وبعدين سوّ الإشارة",
 "بدالك لسه ما اتعلمش إشارات. علّمه من تحت، أو اختار بالصور": "بدالك للحين ما تعلّم إشارات. علّمه من تحت، أو اختار من الصور",
 "ولا واحدة": "ولا وحدة"
@@ -1873,7 +1844,6 @@ $('lang').onchange=()=>{LANG=$('lang').value;store.set('wasl_lang',LANG);
 
 /* ---------- screens & tabs ---------- */
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));if(id==='home'&&window.waslMaybeReload)setTimeout(waslMaybeReload,300);if(id==='home'&&typeof drawStats==='function'){drawStats();drawRefills();if(typeof drawOrderChip==='function')drawOrderChip()}if(id==='mytasks'&&typeof drawKpis==='function')drawKpis()}
-$('bigTalk').onclick=()=>{drawPics(null);taskPhoto=null;$('goal').value='';show('talk');quotaGet()};
 /* ---------- choose by pictures (no reading needed) ---------- */
 const PICS=[
  /* pharmacy: the cards say the problem only, never a medicine name: the pharmacist suggests, the user decides (#40).
@@ -2118,7 +2088,7 @@ function quotaShow(q){q=q||QS||{};const n=q.limit||30,co=q.company||'';
  $('qbText').textContent=(co?tr('استخدمت الـ {n} مهمة بتوعك مع {co} الشهر ده.',{n,co}):tr('استخدمت الـ {n} مهمة المجانية بتاعة الشهر ده.',{n}))+(q.renews?tr(' هيرجعوا تاني يوم {d}.',{d:arDate(q.renews)}):'');
  $('quotaBox').classList.remove('hidden');buzz([200,100,200])}
 $('qbOk').onclick=()=>$('quotaBox').classList.add('hidden');
-$('qbFree').onclick=()=>{$('quotaBox').classList.add('hidden');$('openFree').click()};
+$('qbFree').onclick=()=>{$('quotaBox').classList.add('hidden');openFreeScreen()};
 $('coGo').onclick=async()=>{const c=$('coCode').value.trim();if(!c){$('coCode').focus();return}$('coNote').textContent=tr('بتأكد من الكود...');$('coGo').disabled=true;
  try{const r=await postJSON(QUOTA_URL,{op:'join',code:c},8000);QS=r;quotaDraw();$('coNote').textContent=tr('اتفعّل ✓ الموبايل ده بقى مع {co}.',{co:r.company||tr('الجهة دي')});$('coCode').value=''}
  catch(e){const W={code:'الكود ده مش صح. اتأكد منه واكتبه تاني.',expired:'اشتراك الكود ده خلص. كلّم الجهة اللي إدّتك الكود.',full:'الكود ده وصل لأقصى عدد موبايلات. كلّم الجهة اللي إدّتك الكود.',tries:'جربت كتير. استنى ساعة وجرّب تاني.',nodevice:'مقدرتش أتأكد من الموبايل. جرّب تاني بعد شوية.'};$('coNote').textContent=tr((e&&W[e.why])||'النت ضعيف. جرّب تاني.')}
@@ -2224,7 +2194,7 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  if(d.say&&hold)holdSay(d.say,listenForHearing);else if(d.say){setState('talk',tr('بدالك بيتكلم...'));setHear(trH('بدالك بيقول'),d.say,'');speak(d.say,listenForHearing)}else listenForHearing()}
 /* Lines with numbers, money or medicine are shown to the user first; Badalak says them only after «قوله». */
 /* Picture mode: while the user decides, the picture cards sit inside the question box, next to the answers. */
-function asking(box){$('task').classList.toggle('asking',!!box);setTimeout(()=>{try{fitHear()}catch(e){}},0);const c=$('tCards'),to=box&&picOn()?$(box):$('tLive');
+function asking(box){$('task').classList.toggle('asking',!!box);setTimeout(()=>{try{fitHear()}catch(e){}},0);const c=$('tCards'),to=box?$(box):$('tLive');
  if(c.parentNode!==to){if(to===$('tLive'))to.appendChild(c);else to.insertBefore(c,to.querySelector('.opts'))}}
 /* Bring a question box into view from its top (the question first), not the bottom of the log. */
 function showBox(id){const tb=$('tbody'),b=$(id);if(!tb||!b)return;requestAnimationFrame(()=>{tb.scrollTop+=b.getBoundingClientRect().top-tb.getBoundingClientRect().top-8})}
@@ -2386,13 +2356,14 @@ async function freeCount(){if(DEMO)return;const sid=fSid;
 const DEFAULT_REPLIES_AR=['ممكن تتكلم أبطأ شوية؟','أنا أصم، اقرا كلامي من الشاشة','ممكن تكتبلي؟','شكراً جزيلاً'];
 const DEFAULT_REPLIES_EN=['Could you speak a little slower?',"I'm Deaf. Please read my words on the screen.",'Could you write it for me?','Thank you very much.'];
 const defaultReplies=()=>LANG==='en-US'?DEFAULT_REPLIES_EN:DEFAULT_REPLIES_AR;
-function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${optIc(t)}${smart&&!picOn()?'✨ ':''}${esc(t)}</button>`).join('');
+function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${optIc(t)}${esc(t)}</button>`).join('');
  $('fSug').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>fSpeak(list[i]))}
 function fSpeak(t){$('fSaid').textContent=tr('اتقال: ')+t;speak(t,()=>{if(freeOn)startListening()})}
 async function smartReplies(text){if(fNoSmart)return;const n=++fSeq;$('fState').textContent=tr('✨ بيجهّز ردود...');
  try{const d=await postJSON(REPLY_URL,{text,situation:'عام',lang:LANG,ui:UI},12000);
   if(n!==fSeq)return;drawCards('fCards',d.cards||[]);if(d.replies&&d.replies.length){drawReplies(d.replies,true);$('fState').textContent=tr('✨ ردود على حسب الكلام')+(d.situation&&d.situation!=='عام'?' · '+tr(d.situation):'')}}catch(e){if(n===fSeq)$('fState').textContent=tr('بسمع...')}}
-$('openFree').onclick=()=>{show('free');fSid=null;fNoSmart=false;drawReplies(defaultReplies(),false)};
+/* «ترجمة»: opened from the home tool (TOOLS), the quota box and ?go=free */
+let openFreeScreen=()=>{show('free');fSid=null;fNoSmart=false;drawReplies(defaultReplies(),false)};
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent=tr('▶ ابدأ');$('fState').textContent=tr('متوقف');$('fDot').className='dot';return}
  const ok=await micOk();if(ok!==true){$('fState').textContent=tr('المايك مقفول ({e}). اسمح بيه من إعدادات المتصفح',{e:ok});return}
  freeOn=true;bumpStat('free');if(!fSid){fSid=Date.now().toString(36);freeCount()}$('freeGo').textContent=tr('⏸ وقف');$('fDot').className='dot';$('fState').textContent=fNoSmart?tr('خلصت مهام الشهر: الكلام هيفضل يتكتب، من غير ردود ذكية'):tr('بسمع...');
@@ -2721,7 +2692,7 @@ function sgBuild(){if(SG.ui)return;SG.ui=true;const b=$('signs');
 <p class="snote">🔒 ${tr('الكاميرا بتشتغل على الموبايل بس، ومفيش فيديو بيتبعت')}</p>
 <div class="srow"><div class="cam" id="sCam"><video id="sv" playsinline muted></video><canvas id="sc"></canvas>${SG_GUIDE}<div id="slive" role="status" aria-live="polite">${tr('بيشغّل الكاميرا...')}</div></div>
 <button class="shold" id="sHold" aria-pressed="false"><span class="sgi" aria-hidden="true">✋</span><span>${tr('دوس وخليك دايس وإنت بتعمل الإشارة')}</span></button></div>
-<p class="shint no-pic" id="sHint">${tr('نزّل إيدك، اعمل الإشارة، ونزّل إيدك تاني.')}</p>
+
 <div id="sPick" class="spick hidden" role="group" aria-labelledby="sPickQ"><b id="sPickQ">${tr('قصدك أنهي؟')}</b><div class="scards lg" id="sPickC"></div><button class="back" id="sPickNo">${tr('ولا واحدة')}</button></div>
 <div class="scards" id="sSent" aria-live="polite"></div>
 <div class="row"><button class="btn or" id="sUse">${tr('قوله')}</button><button class="btn ghost" id="sClear">${tr('امسح')}</button></div>
@@ -2835,13 +2806,12 @@ if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='fi
  $('instX').onclick=()=>{bar.classList.add('hidden');try{localStorage.setItem('wasl_inst_x','1')}catch(e){}};
  window.addEventListener('appinstalled',()=>bar.classList.add('hidden'));
  const go=new URLSearchParams(location.search).get('go');
- if(go==='sos')setTimeout(()=>$('sosBtn').click(),300);if(go==='free')setTimeout(()=>$('openFree').click(),300);
+ if(go==='sos')setTimeout(()=>$('sosBtn').click(),300);if(go==='free')setTimeout(()=>{if(!welcomed()){$('welcome').classList.remove('hidden');return}openFreeScreen()},300);
  /* back from switching the app language: open بياناتي again with what was typed */
  if(go==='me'){history.replaceState(null,'',location.pathname);setTimeout(()=>{$('openMe').click();try{const d=JSON.parse(sessionStorage.getItem('wasl_me_draft')||'null');sessionStorage.removeItem('wasl_me_draft');if(d)for(const id in d)if($(id))$(id).value=d[id];if(sessionStorage.getItem('wasl_me_cty')){sessionStorage.removeItem('wasl_me_cty');$('savedNote').textContent=tr('اتحفظ ✓ أرقام الطوارئ دلوقتي بتاعة {c}.',{c:cName(country())})}}catch(e){}},50)}
 })();
-/* ================= PICTURE MODE (وضع الصور) =================
-   For users who read little (many Deaf users' first language is sign language). Since #48 it is the only interface:
-   html.pm is always set and the old choice (wasl_pic) is no longer read. Home is big situation
+/* ================= PICTURES (one interface for everyone, #48) =================
+   For users who read little (many Deaf users' first language is sign language). Home is big situation
    pictures that start a task in one tap, heard words and picture cards are bigger, answers are big buttons with an icon.
    SOS is never hidden. No medicine is ever suggested: the pharmacy picture asks for a photo or the name. */
 const IC={
@@ -2851,7 +2821,6 @@ const IC={
  bus:'<rect x="4" y="3" width="16" height="14" rx="3"/><path d="M4 10h16M8 17v3M16 17v3"/><path d="M8 13.5h.01M16 13.5h.01"/>',
  bank:'<path d="M3 9l9-5 9 5z"/><path d="M5 9v8M9.5 9v8M14.5 9v8M19 9v8M3 20h18"/>',
  places:'<path d="M3 21h18"/><path d="M5 21V8l7-4 7 4v13"/><path d="M10 21v-5h4v5"/><path d="M9 10h.01M15 10h.01M9 13.5h.01M15 13.5h.01"/>',
- where:'<path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><path d="M10 8.3a2 2 0 1 1 2.7 1.9c-.4.2-.7.6-.7 1.1v.4M12 14.2v.01"/>',
  chat:'<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 10h4M13 10h4M7 14h7"/>',
  homeRx:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 12v5M9.5 14.5h5"/>',
  deaf:'<path d="M7 10a5 5 0 0 1 10 0c0 3-3 4-3 7a3 3 0 0 1-5.2 2"/><path d="M10 10a2 2 0 0 1 4 0"/><path d="M3 3l18 18"/>',
@@ -2873,9 +2842,7 @@ const IC={
  qr:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/>',
  phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>'};
 const svgI=(k,cls)=>`<svg${cls?` class="${cls}"`:''} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]||IC.talk}</svg>`;
-function picOn(){return document.documentElement.classList.contains('pm')}
-function setPic(){document.documentElement.classList.add('pm')} // one interface (#48): kept so older calls still work; removed in the cleanup PR
-/* an icon for an answer button, picked from its words (only in picture mode) */
+/* an icon for an answer button, picked from its words */
 function riKey(t){t=String(t||'');
  if(/^\s*(أيوه|ايوه|آه|اه|نعم|تمام|موافق|ماشي|هاخد|خده|خدها|إيه|ايه|إي|باخذ|خذه|خذها|زين|أبي|ابي)/.test(t)||/^\s*(yes|ok|okay|sure|i'?ll take|take it|agree)/i.test(t))return'ok';
  if(/^\s*(لأ|لا[\s،,.]|لا$|مش عايز|مش هاخد|بلاش|ما أبي|ما ابي|مابي)/.test(t)||/^\s*(no\b|not now|don'?t)/i.test(t))return'stop';
@@ -2888,8 +2855,8 @@ function riKey(t){t=String(t||'');
  if(/شكر|متشكر/.test(t)||/thank/i.test(t))return'heart';
  if(/تاني|ثاني|كرر|عيد/.test(t)||/again|repeat/i.test(t))return'repeat';
  return'talk'}
-function optIc(t){return picOn()?`<span class="ri">${svgI(riKey(t))}</span>`:''}
-[['tWrite','pen'],['tSign','hand'],['tPay','money'],['tMap','pin'],['tEnd','x'],['fSign','hand'],['fPay','money'],['fFlip','flip']].forEach(([id,k])=>$(id).insertAdjacentHTML('afterbegin',svgI(k,'only-pic')));
+function optIc(t){return `<span class="ri">${svgI(riKey(t))}</span>`}
+[['tWrite','pen'],['tSign','hand'],['tPay','money'],['tMap','pin'],['tEnd','x'],['fSign','hand'],['fPay','money'],['fFlip','flip']].forEach(([id,k])=>$(id).insertAdjacentHTML('afterbegin',svgI(k)));
 /* home: ready situations for «اتكلم بدالي», then the other tools. Each starts in one tap. */
 const SIT=[
  {k:'pill',l:'صيدلية',c:'#1F6F80',t:'#E1EFF1',ph:1},
@@ -2898,7 +2865,7 @@ const SIT=[
  {k:'bus',l:'مواصلات',c:'#7A5A00',t:'#F5EDD3',g:'عايز أركب مواصلة، وأعرف أنزل فين والأجرة كام'},
  {k:'bank',l:'بنك',c:'#13262F',t:'#E4EAEC',g:'عايز أخلّص حاجة في البنك'},
  {k:'places',l:'أماكن تانية',c:'#8F4612',t:'#F6E6D8',more:1}];
-const TOOLS=[{k:'chat',l:'ترجمة',go:()=>$('openFree').click()},{k:'homeRx',l:'دوا للبيت',go:()=>oOpen()},{k:'deaf',l:'أنا أصم',go:showDeaf},{k:'phone',l:'مكالمة',tag:'تجريبي',go:()=>callOpen()},{k:'qr',l:'بدالك على الكاونتر',go:()=>{location.href='counter.html'+(GULF?'?l=ar-SA':UI==='en'?'?l=en-US':'')}}];
+const TOOLS=[{k:'chat',l:'ترجمة',go:()=>openFreeScreen()},{k:'homeRx',l:'دوا للبيت',go:()=>oOpen()},{k:'deaf',l:'أنا أصم',go:showDeaf},{k:'phone',l:'مكالمة',tag:'تجريبي',go:()=>callOpen()},{k:'qr',l:'بدالك على الكاونتر',go:()=>{location.href='counter.html'+(GULF?'?l=ar-SA':UI==='en'?'?l=en-US':'')}}];
 if(UI==='en'||GULF){SIT.forEach(x=>{x.l=tr(x.l);if(x.g)x.g=tr(x.g)});TOOLS.forEach(x=>x.l=tr(x.l))}
 const welcomed=()=>store.get('wasl_welcome',false)===true;
 const gated=fn=>()=>{buzz([30]);if(!welcomed()){$('welcome').classList.remove('hidden');return}fn()};
@@ -2947,13 +2914,13 @@ function callBuild(){$('call').setAttribute('aria-label',tr('مكالمة'));
 <div class="cheard" aria-live="polite"><small id="cHeardLab">${tr('الطرف التاني بيقول')}</small><p id="cHeard"></p><div class="cards" id="cCards"></div></div>
 <p class="csaid hidden" id="cSaid"><b>${tr('بدالك قال')}</b><span id="cSaidT"></span></p>
 <div class="decide hidden" id="cDecide" role="alertdialog" aria-labelledby="cQ"><div class="q" id="cQ"></div><div class="opts" id="cOpts"></div></div>
-<div class="decide hidden" id="cOk" role="alertdialog" aria-labelledby="cOkQ"><div class="q" id="cOkQ"><span class="no-pic">${tr('بدالك هيقول الجملة دي. فيها أرقام أو فلوس، اتأكد منها:')}</span><span class="only-pic">${tr('اتأكد الأول:')}</span></div><p class="okline" id="cOkT"></p><div class="opts"><button id="cOkYes"><span class="pi" aria-hidden="true">✓</span>${tr('قوله')}</button><button id="cOkNo"><span class="pi" aria-hidden="true">✋</span>${tr('لأ، استنى')}</button></div></div>
+<div class="decide hidden" id="cOk" role="alertdialog" aria-labelledby="cOkQ"><div class="q" id="cOkQ">${tr('اتأكد الأول:')}</div><p class="okline" id="cOkT"></p><div class="opts"><button id="cOkYes"><span class="pi" aria-hidden="true">✓</span>${tr('قوله')}</button><button id="cOkNo"><span class="pi" aria-hidden="true">✋</span>${tr('لأ، استنى')}</button></div></div>
 <div class="typerow hidden" id="cType"><label class="sr" for="cIn">${tr('اكتب ردك')}</label><input id="cIn" placeholder="${esc(tr('اكتب اللي عايز بدالك يقوله'))}"><button id="cSend">${tr('ابعت')}</button></div>
 <div class="summary hidden" id="cSum"><b id="cSumH">${tr('✓ المكالمة خلصت')}</b><p id="cSumT"></p><button class="btn" id="cHome">${tr('رجوع للرئيسية')}</button></div>
 <details class="typebox" id="cLogBox"><summary>${tr('كل كلام المكالمة')}</summary><div class="log" id="cLog"></div></details>
 </div>
 </div>
-<div class="tfoot hidden" id="cFoot"><button id="cWrite">${svgI('pen','only-pic')}${tr('اكتب ردك')}</button><button class="end" id="cEnd">${svgI('x','only-pic')}${tr('إنهاء المكالمة')}</button></div>`;
+<div class="tfoot hidden" id="cFoot"><button id="cWrite">${svgI('pen')}${tr('اكتب ردك')}</button><button class="end" id="cEnd">${svgI('x')}${tr('إنهاء المكالمة')}</button></div>`;
  const IDEAS=[['📅','أحجز كشف','عايز أحجز كشف عند الدكتور'],['💊','أسأل على دوا','عايز أسأل لو الدوا ده موجود: '],['📦','أسأل على طلب','عايز أسأل على طلب: '],['🕘','أسأل على المواعيد','عايز أعرف مواعيد الشغل']];
  $('cIdeas').innerHTML=IDEAS.map(x=>`<button class="qbtn"><span aria-hidden="true">${x[0]}</span> ${esc(tr(x[1]))}</button>`).join('');
  $('cIdeas').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{buzz([30]);const g=$('cGoal');g.value=tr(IDEAS[i][2]);g.focus();g.setSelectionRange(g.value.length,g.value.length)});
@@ -3064,7 +3031,6 @@ function showDeaf(){const f=$('flip');f.innerHTML=esc(trH('أنا أصم'))+'<sm
 /* ================= FIRST RUN + NO NETWORK ================= */
 /* One-time welcome before the first real use. SOS never waits for it. */
 (function(){const ok=()=>store.get('wasl_welcome',false)===true,W=$('welcome');
- ['bigTalk','openFree'].forEach(id=>{const b=$(id),f=b.onclick;b.onclick=e=>{if(!ok()){W.classList.remove('hidden');$('wOk').focus();return}f&&f.call(b,e)}});
  const sos=$('sosBtn').onclick;$('sosBtn').onclick=e=>{W.classList.add('hidden');sos&&sos.call($('sosBtn'),e)};
  $('wOk').onclick=()=>{buzz([30]);store.set('wasl_welcome',true);W.classList.add('hidden')};
  $('wSos').onclick=()=>$('sosBtn').click();
@@ -3339,7 +3305,7 @@ window.WaslSigns=(function(){
 
 /* ---------- sign view in the task and translation screens ---------- */
 const SIGN_URL=API_BASE+'wasl-sign';
-// On by default in picture mode, off in text mode; the user's own choice is remembered.
+// Off until the user turns it on (#48: the library is still a trial and clips cost data); the user's choice is remembered.
 // Hidden until the library has at least one recorded clip (no clips = nothing real to show yet).
 let vsReady=false;
 function signOn(){if(!vsReady)return false;const v=store.get('wasl_signview',null);return v==null?false:!!v}
@@ -3380,8 +3346,7 @@ async function signShow(where,text){text=String(text||'').trim();if(!text)return
  // a new task / leaving the screen: nothing old stays on screen
  const st=$('startTask').onclick;$('startTask').onclick=function(){vsLast.task='';WaslSigns.stop($('tSg'));vsDraw();return st&&st.apply(this,arguments)};
  const fb=$('freeBack').onclick;$('freeBack').onclick=function(){WaslSigns.stop($('fSg'));return fb.apply(this,arguments)};
- const of=$('openFree').onclick;$('openFree').onclick=function(){vsLast.free='';WaslSigns.stop($('fSg'));vsDraw();return of&&of.apply(this,arguments)};
- const sp=window.setPic;if(typeof sp==='function')window.setPic=function(){const r=sp.apply(this,arguments);vsDraw();return r};
+ const of=openFreeScreen;openFreeScreen=function(){vsLast.free='';WaslSigns.stop($('fSg'));vsDraw();return of.apply(this,arguments)};
  vsDraw();
  // load the library early (small file; the service worker keeps it for offline use)
  setTimeout(()=>{WaslSigns.load().then(m=>{vsReady=(m&&m.signs||[]).some(x=>x.clips&&x.clips.length);vsDraw()}).catch(()=>{})},1500);
@@ -3524,7 +3489,7 @@ let fHeard=[],fixSeq=0,fixOrig='';
 const fg=$('freeGo').onclick;$('freeGo').onclick=async function(){const r=await fg.apply(this,arguments);
  if(freeOn&&typeof onHeard==='function'&&!onHeard.__rf){const oh=onHeard;onHeard=function(t){const s=clean(t,300);if(s){fHeard.push(s);if(fHeard.length>6)fHeard.shift()}return oh.apply(this,arguments)};onHeard.__rf=true;onHeard.__sg=oh.__sg}
  return r};
-const ofr=$('openFree').onclick;$('openFree').onclick=function(){fHeard=[];fixSeq++;$('fFixBox').classList.add('hidden');$('fFix').disabled=false;$('fFix').textContent=tr('✨ ظبّطها');drawPhrBtns();return ofr&&ofr.apply(this,arguments)};
+const ofr=openFreeScreen;openFreeScreen=function(){fHeard=[];fixSeq++;$('fFixBox').classList.add('hidden');$('fFix').disabled=false;$('fFix').textContent=tr('✨ ظبّطها');drawPhrBtns();return ofr&&ofr.apply(this,arguments)};
 const st=$('startTask').onclick;$('startTask').onclick=function(){drawPhrBtns();return st&&st.apply(this,arguments)};
 function fixKeep(){$('fSaid').textContent=tr('النت ضعيف. سيبت كلامك زي ما هو.')}
 $('fFix').onclick=async()=>{const t=clean($('fInput').value,300),b=$('fFix');if(!t){$('fSaid').textContent=tr('اكتب كلامك الأول');$('fInput').focus();return}
