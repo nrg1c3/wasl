@@ -20,6 +20,7 @@ Landscape takes are not cropped to 9:16 (that cuts the hands off): the middle --
 (default 0.76) is kept whole, centred on a blurred copy of the frame.
 
 A signer whose consent.json does not allow "use in the app" is skipped unless --force.
+A signer filmed for internal measuring only (purpose "measure") is always skipped, even with --force.
 Needs ffmpeg and ffprobe on PATH. Standard library only.
 """
 import argparse, csv, datetime, json, os, re, shutil, subprocess, sys, tempfile, zipfile
@@ -360,6 +361,10 @@ def main():
                     print(f'  ! {key}: ID not in vocab.csv, skipped')
                     continue
                 c = consent.get(t['signer'])
+                if c and c.get('purpose') == 'measure':
+                    # «قياس داخلي بس» (#43): filmed only to measure recognition, never published, not even with --force
+                    print(f'  ! {key}: {t["signer"]} agreed to internal measuring only, never put in the app (skipped)')
+                    continue
                 if not a.force and not (c and (c.get('uses') or {}).get('app')):
                     print(f'  ! {key}: no consent for "use in the app" from {t["signer"]}, skipped (--force to override)')
                     continue

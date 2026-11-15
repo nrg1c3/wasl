@@ -22,7 +22,10 @@ Setup (once, on a PC or the server — not needed by the app):
   python3 server/signs_templates.py           # models are downloaded to server/models/ on first run
 Options:
   --clips DIR   (default signs/clips)   --out DIR (default signs/templates)   --only ID,ID
-  --takes DIR   also use raw takes (unpacked record.html ZIPs); run after signs_build.py so the IDs match
+  --takes DIR   also use raw takes (a folder with record.html ZIPs unpacked into it); run after signs_build.py so the IDs match
+  --list        print which clips and takes would be used, then stop (no MediaPipe needed)
+A signer filmed for internal measuring only (consent.json purpose "measure", #43) never gets templates inside the repo:
+the app loads signs/templates. With --out outside the repo (a temp folder for server/signs_accuracy.js) it is used.
   --selftest FIXTURE.json   check this file's feature code against the app's (used by the tests; no MediaPipe needed)
 """
 import argparse, base64, csv, datetime, glob, json, math, os, re, sys, urllib.request
@@ -210,6 +213,21 @@ class Landmarks:
         return frames, ts
 
 
+def measure_signers(folder):
+    """Signer codes whose consent.json (inside the unpacked record.html ZIPs) says purpose "measure"."""
+    out = set()
+    for f in glob.glob(os.path.join(folder, '**', 'consent.json'), recursive=True):
+        try:
+            j = json.load(open(f, encoding='utf-8'))
+        except Exception:
+            print('  ! could not read', f)
+            continue
+        for c in j.get('signers', []):
+            if c.get('signer') and c.get('purpose') == 'measure':
+                out.add(str(c['signer']).lower())
+    return out
+
+
 def vocab_ids(path):
     ids = set()
     with open(path, encoding='utf-8') as fh:
@@ -227,6 +245,7 @@ def main():
     ap.add_argument('--only', default='')
     ap.add_argument('--takes', default='', help='folder with raw takes ID__signer__take.ext (optional)')
     ap.add_argument('--selftest', default='')
+    ap.add_argument('--list', action='store_true', help='print the clips and takes that would be used, then stop')
     a = ap.parse_args()
 
     if a.selftest:  # fixture: {"cases":[{"frames":[{"hands":..,"pose":..}],"ts":[..],"asp":..,"feat0":[..],"seq":[..],"b64":".."}]}
@@ -262,6 +281,23 @@ def main():
         if (only and sid not in only) or (allowed is not None and sid not in allowed):
             continue
         clips.setdefault(sid, []).append((m.group('signer').lower(), p))
+    # «قياس داخلي بس» (#43): a measure-only signer's takes stay out of anything the app (or the public repo) can load
+    measure = measure_signers(a.takes) if a.takes else set()
+    out_real = os.path.realpath(a.out)
+    if measure and (out_real == REPO or out_real.startswith(REPO + os.sep)):
+        for sid in list(clips):
+            kept = [x for x in clips[sid] if x[0] not in measure]
+            for signer, p in clips[sid]:
+                if signer in measure:
+                    print(f'  ! {os.path.basename(p)}: {signer} was filmed for internal measuring only, skipped (use --out outside the repo)')
+            if kept:
+                clips[sid] = kept
+            else:
+                del clips[sid]
+    if a.list:
+        for sid, lst in sorted(clips.items()):
+            print(sid, ' '.join(f'{s}:{os.path.basename(p)}' for s, p in lst))
+        return
     if not clips:
         print('no clips found in', a.clips)
         return
