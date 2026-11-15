@@ -37,6 +37,9 @@ pharmacy,قبل الأكل,BEFORE-FOOD,voice2sign,P1
 pharmacy,بعد الأكل,AFTER-FOOD,voice2sign,P1
 pharmacy,بديل / نوع تاني,ALTERNATIVE,both,P2
 pharmacy,مش موجود / خلصان,NOT-AVAILABLE,voice2sign,P1
+pharmacy,علبة,BOX,both,P2
+pharmacy,شريط,STRIP,both,P2
+pharmacy,إزازة / زجاجة,BOTTLE,both,P2
 doctor,دكتور,DOCTOR,both,P1
 doctor,مستشفى,HOSPITAL,both,P1
 doctor,عيادة,CLINIC,both,P2
@@ -56,6 +59,7 @@ body,سنان,TOOTH,both,P2
 body,ضهر,BACK,both,P2
 body,صدر,CHEST,both,P1
 body,عين,EYE,both,P2
+body,مناخير / أنف,NOSE,both,P2
 body,ودن,EAR,both,P2
 body,رجل,LEG,both,P2
 body,إيد,HAND/ARM,both,P2

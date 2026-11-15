@@ -149,9 +149,25 @@ async function pastWelcome(page, choice) {
     await page.locator(`#sitGrid button[data-i="${i}"]`).click(); await page.waitForTimeout(400);
     const r = await page.evaluate(() => ({ on: document.getElementById('talk').classList.contains('on'), t: [...document.querySelectorAll('#pics button')].map(x => x.textContent),
       hs: document.documentElement.scrollWidth - innerWidth }));
-    r.on && r.t.length === 9 && r.t.some(x => /روشتة/.test(x)) ? pass(tag + ' pharmacy', '8 pharmacy cards + back') : fail(tag + ' pharmacy', `cards: ${r.t.join(' | ')}`);
+    r.on && r.t.length === 13 && r.t.some(x => /روشتة/.test(x)) && r.t.some(x => /قطرة للعين/.test(x)) ? pass(tag + ' pharmacy', '12 pharmacy cards + back') : fail(tag + ' pharmacy', `cards: ${r.t.join(' | ')}`);
     r.t.some(x => /دكتور|فلوس وفواتير/.test(x)) ? fail(tag + ' pharmacy', 'old sections shown') : pass(tag + ' pharmacy', 'no doctor / bills sections');
     r.hs > 0 ? fail(tag + ' pharmacy', `scrolls sideways by ${r.hs}px`) : pass(tag + ' pharmacy', 'no sideways scroll');
+    // box / strip / bottle (#50): pictures after the card, «رجوع» back to the cards, the choice goes in the sentence
+    await page.evaluate(() => { document.getElementById('startTask').click = () => {}; });
+    const cards = async () => page.evaluate(() => [...document.querySelectorAll('#pics button')].map(x => x.textContent));
+    await page.locator('#pics button', { hasText: 'مسكن للصداع' }).click(); await page.waitForTimeout(200);
+    let q = await cards();
+    q.length === 4 && /علبة/.test(q[1]) && /شريط/.test(q[2]) && /مش مهم/.test(q[3]) ? pass(tag + ' pharmacy', 'headache: box / strip / doesn\'t matter') : fail(tag + ' pharmacy', `qty: ${q.join(' | ')}`);
+    await page.locator('#pics button.back').click(); await page.waitForTimeout(200);
+    (await cards()).length === 13 ? pass(tag + ' pharmacy', 'qty «رجوع» back to the cards') : fail(tag + ' pharmacy', 'qty «رجوع» lost the cards');
+    await page.locator('#pics button', { hasText: 'دوا للبرد' }).click(); await page.waitForTimeout(200);
+    q = await cards();
+    const qs = await page.evaluate(() => { const b = [...document.querySelectorAll('#pics button')]; return { hs: document.documentElement.scrollWidth - innerWidth, small: b.filter(x => x.offsetHeight < 48 || x.offsetWidth < 48).length }; });
+    q.length === 5 && /إزازة/.test(q[3]) && !qs.hs && !qs.small ? pass(tag + ' pharmacy', 'cold: box / strip / bottle, 48px+, no sideways scroll') : fail(tag + ' pharmacy', `qty: ${q.join(' | ')} ${JSON.stringify(qs)}`);
+    await page.locator('#pics button', { hasText: 'شريط' }).click(); await page.waitForTimeout(200);
+    const goal = await page.evaluate(() => document.getElementById('goal').value);
+    goal === 'عايز شريط دوا للبرد والكحة' ? pass(tag + ' pharmacy', 'sentence: ' + goal) : fail(tag + ' pharmacy', 'sentence: ' + goal);
+    await page.evaluate(() => drawPics(PICS[0], true)); await page.waitForTimeout(200);
     await page.locator('#pics button.back').click(); await page.waitForTimeout(300);
     (await page.evaluate(() => document.getElementById('home').classList.contains('on'))) ? pass(tag + ' pharmacy', '«رجوع» goes home') : fail(tag + ' pharmacy', '«رجوع» did not go home');
     if (page.errs.length) fail(tag + ' pharmacy', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
