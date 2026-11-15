@@ -102,6 +102,9 @@ ICONS = {
     # sos
     'HELP': '🆘', 'AMBULANCE': '🚑', 'POLICE': '👮', 'FIRE': '🔥', 'ACCIDENT': '💥',
     'DANGER': '⚠️', 'ROBBED': '👛', 'LOST': '🧭', 'CALL-MY-FAMILY': '📞', 'BLEEDING': '🩸',
+    # pharmacy amounts (#50) and places (#46)
+    'BOX': '📦', 'STRIP': '💊', 'BOTTLE': '🧴', 'NOSE': '👃',
+    'TELECOM': '📶', 'NEW': '🆕', 'LOST-ITEM': '❓', 'PLACE': '🏢',
 }
 GROUP_ICONS = {'numbers': '🔢', 'time': '📅'}
 
