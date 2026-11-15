@@ -181,6 +181,7 @@ class Landmarks:
         self.pose = V.PoseLandmarker.create_from_options(V.PoseLandmarkerOptions(
             base_options=mpt.BaseOptions(model_asset_path=os.path.join(d, 'pose_landmarker_lite.task')),
             running_mode=V.RunningMode.VIDEO, num_poses=1))
+        self.clock = 0  # VIDEO mode needs timestamps that keep growing across clips, not restart at 0 for each one
 
     def clip(self, path):
         import cv2
@@ -198,12 +199,14 @@ class Landmarks:
             next_t = t + 1000.0 / FPS
             h, w = img.shape[:2]
             im = self.mp.Image(image_format=self.mp.ImageFormat.SRGB, data=cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-            hr = self.hand.detect_for_video(im, int(t))
-            pr = self.pose.detect_for_video(im, int(t))
+            ms = self.clock + int(t)
+            hr = self.hand.detect_for_video(im, ms)
+            pr = self.pose.detect_for_video(im, ms)
             pose = pr.pose_landmarks[0] if pr.pose_landmarks else None
             frames.append(frame_features(hr.hand_landmarks or [], pose, w / h))
             ts.append(t)
         cap.release()
+        self.clock += int(i * 1000.0 / fps) + 1000
         return frames, ts
 
 

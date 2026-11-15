@@ -279,7 +279,6 @@ html.pm #sosBtn{min-height:72px;padding-block:8px}html.pm #sosBtn .ic{width:54px
 @media (max-height:720px){.sit button{min-height:88px;gap:4px}.sit .si{width:46px;height:46px}.sit.tools button{min-height:78px}#picHome{gap:8px}}
 @media (min-height:780px){.sit button{min-height:112px}.sit .si{width:56px;height:56px}.sit .si svg{width:34px;height:34px}.sit.tools button{min-height:100px}}
 html.pm #refills:empty,html.pm #orderChip:empty{display:none}
-
 /* profile switch */
 .psw{width:100%;display:flex;align-items:center;gap:12px;border:0;background:none;padding:0;text-align:start;color:var(--ink);min-height:56px}
 .psw .si{width:48px;height:48px;border-radius:14px;background:var(--orl);display:flex;align-items:center;justify-content:center;flex-shrink:0}.psw .si svg{width:28px;height:28px;stroke:var(--ord)}
@@ -781,6 +780,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <script src="meds.js"></script>
 <script>
 const EN={
+'علّم بدالك إشاراتك، كلمة كلمة':'teach Badalak your signs, one word at a time',
 '💊 شكل الدوا في الصيدلية':'💊 Medicine form (pharmacy)',
 'قولها للصيدلي':'Say it to the pharmacist',
 'مش فاهم أنهي ورقة محتاجها. اطلب منه يورّيهالي.':"I don't understand which paper they need. Ask them to show it to me.",
@@ -1347,8 +1347,7 @@ wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. T
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
-'حاجة للمعدة':'شي للمعدة','عايز حاجة لوجع المعدة':'أبي شي لوجع المعدة','حاجة للسخونية':'شي للحرارة','عايز حاجة للسخونية':'أبي شي للحرارة','أقيس الضغط':'أقيس الضغط','عايز أقيس الضغط':'أبي أقيس الضغط','الدوا بكام؟':'الدواء بكم؟','الدوا ده سعره كام؟':'هذا الدواء بكم؟',
-'💊 شكل الدوا في الصيدلية':'💊 شكل الدوا في الصيدلية',
+'حاجة للمعدة':'شي للمعدة','عايز حاجة لوجع المعدة':'أبي شي لوجع المعدة','حاجة للسخونية':'شي للحرارة','عايز حاجة للسخونية':'أبي شي للحرارة','عايز أقيس الضغط':'أبي أقيس الضغط','الدوا بكام؟':'الدواء بكم؟','الدوا ده سعره كام؟':'هذا الدواء بكم؟',
 'قولها للصيدلي':'قلها للصيدلي',
 'مش فاهم أنهي ورقة محتاجها. اطلب منه يورّيهالي.':'ما فهمت أي ورقة يحتاجها. اطلب منه يوريني إياها.',
 'آسف، مش فاهم أنهي ورقة محتاجها. ممكن توريهالي؟':'آسف، ما فهمت أي ورقة تحتاجها. ممكن توريني إياها؟',
@@ -2684,6 +2683,7 @@ let sgOld=false;try{if(localStorage.getItem('signs')){const o=JSON.parse(localSt
 const SG_GUIDE='<svg class="sguide" viewBox="0 0 120 160" aria-hidden="true"><circle cx="60" cy="48" r="20"/><path d="M14 132c4-26 22-40 46-40s42 14 46 40"/></svg>';
 function sgBuild(){if(SG.ui)return;SG.ui=true;const b=$('signs');
  b.innerHTML=`<div class="shead"><b>${svgI('hand')} ${tr('إشارة')}</b><button class="back" id="sClose">${tr('إقفل')}</button></div>
+<p class="snote sbeta">🧪 <b>${tr('تجريبي')}</b> · ${tr('علّم بدالك إشاراتك، كلمة كلمة')}</p>
 <p class="snote">🔒 ${tr('الكاميرا بتشتغل على الموبايل بس، ومفيش فيديو بيتبعت')}</p>
 <div class="srow"><div class="cam" id="sCam"><video id="sv" playsinline muted></video><canvas id="sc"></canvas>${SG_GUIDE}<div id="slive" role="status" aria-live="polite">${tr('بيشغّل الكاميرا...')}</div></div>
 <button class="shold" id="sHold" aria-pressed="false"><span class="sgi" aria-hidden="true">✋</span><span>${tr('دوس وخليك دايس وإنت بتعمل الإشارة')}</span></button></div>
