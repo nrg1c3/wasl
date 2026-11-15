@@ -11,8 +11,14 @@ const FILES = ['./', 'index.html', 'privacy.html', 'counter.html', 'manifest.web
 const RUNTIME_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdn.jsdelivr.net',
   'storage.googleapis.com', 'tfhub.dev'];
 
-/* The most used signs (P1) are saved at install, so they play offline from the start. Best effort: never blocks the install. */
+/* The most used signs (P1) are saved at install, so they play offline from the start. Best effort: never blocks the install.
+   Not on a weak or metered line (about 10 MB): with «data saver» on, or on 2G/3G, clips are saved only when they first play. */
+function slowLine() {
+  try { const c = self.navigator && self.navigator.connection; return !!(c && (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType || ''))); }
+  catch (e) { return false; }
+}
 async function precacheSigns() {
+  if (slowLine()) return;
   try {
     const m = await (await fetch('signs/index.json', { cache: 'no-cache' })).json();
     const c = await caches.open(SIGNS);
