@@ -253,6 +253,19 @@ async function pastWelcome(page) {
     await page.locator('#pics button.back').click(); await page.waitForTimeout(200);
     t = await cards();
     /رجوع/.test(t[0]) && t.some(x => /اتصالات/.test(x)) ? pass(tag + ' places', '«رجوع» from telecom goes back to the grid') : fail(tag + ' places', `after back: ${t.join(' | ')}`);
+    // post office (#46 PR 2): 5 cards, the bill card is a photo card
+    await page.locator('#pics button', { hasText: 'بريد' }).click(); await page.waitForTimeout(200);
+    t = await cards();
+    const pc = await page.evaluate(() => document.querySelectorAll('#pics button.pcam').length);
+    t.length === 6 && t.some(x => /معاش/.test(x)) && t.some(x => /استلام طرد/.test(x)) && pc === 1 ? pass(tag + ' places', 'post office: 5 cards + back, 1 photo card') : fail(tag + ' places', `post office: ${t.join(' | ')} (photo ${pc})`);
+    await page.locator('#pics button.back').click(); await page.waitForTimeout(200);
+    // home repairs (#46 PR 3): 5 cards + the call card, which opens «مكالمة (تجريبي)»
+    await page.locator('#pics button', { hasText: 'صيانة البيت' }).click(); await page.waitForTimeout(200);
+    t = await cards();
+    t.length === 7 && t.some(x => /سبّاك/.test(x)) && t.some(x => /مكالمة \(تجريبي\)/.test(x)) ? pass(tag + ' places', 'home repairs: 5 cards + call + back') : fail(tag + ' places', `home repairs: ${t.join(' | ')}`);
+    await page.locator('#pics button', { hasText: 'مكالمة (تجريبي)' }).click(); await page.waitForTimeout(400);
+    (await page.evaluate(() => document.getElementById('call').classList.contains('on'))) ? pass(tag + ' places', 'call card opens the call screen') : fail(tag + ' places', 'call card did not open the call screen');
+    await page.evaluate(() => { show('talk'); openPlaces(); }); await page.waitForTimeout(200);
     await page.locator('#pics button.back').click(); await page.waitForTimeout(300);
     (await page.evaluate(() => document.getElementById('home').classList.contains('on'))) ? pass(tag + ' places', '«رجوع» from the grid goes home') : fail(tag + ' places', 'grid «رجوع» did not go home');
     if (page.errs.length) fail(tag + ' places', 'console errors: ' + page.errs.join(' | ').slice(0, 300));

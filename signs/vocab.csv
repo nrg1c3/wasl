@@ -92,6 +92,11 @@ transport,بعيد,FAR,both,P2
 transport,محطة,STATION,both,P2
 transport,مواصلات,TRANSPORT,both,P2
 places,بيت,HOME,both,P1
+places,صيانة / تصليح,HOME-REPAIR,both,P1
+places,سبّاك,PLUMBER,both,P2
+places,كهربائي,ELECTRICIAN,both,P2
+places,بوّاب,DOORMAN,both,P2
+places,إيجار,RENT,both,P2
 places,شغل,WORK,both,P2
 places,مدرسة,SCHOOL,both,P1
 places,بنك,BANK,both,P1
@@ -101,6 +106,8 @@ places,جامع,MOSQUE,both,P3
 places,كنيسة,CHURCH,both,P3
 places,حمّام,TOILET,both,P1
 places,مكان / أماكن,PLACE,both,P1
+places,بريد / بوسطة,POST-OFFICE,both,P1
+places,طرد / جواب,PARCEL,both,P2
 shop,عايز / محتاج,WANT/NEED,both,P1
 shop,ده / دي,THIS,both,P1
 shop,غالي,EXPENSIVE,both,P2
@@ -190,9 +197,10 @@ sos,تايه,LOST,sign2voice,P1
 sos,كلّم أهلي,CALL-MY-FAMILY,sign2voice,P1
 sos,نزيف / دم,BLEEDING,both,P1
 bank,حساب في البنك,ACCOUNT,both,P1
-bank,أسحب فلوس,WITHDRAW,both,P1
+bank,أسحب فلوس / سحب,WITHDRAW,both,P1
 bank,أحط فلوس / إيداع,DEPOSIT,both,P1
 bank,تحويل,TRANSFER,both,P1
+bank,معاش,PENSION,both,P2
 bank,ماكينة الفلوس (ATM),ATM,both,P1
 bank,الكارت اتقفل / الماكينة سحبته,CARD-BLOCKED,both,P1
 bank,رصيد,BALANCE,both,P1
