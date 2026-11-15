@@ -100,6 +100,7 @@ places,سوق,MARKET,both,P3
 places,جامع,MOSQUE,both,P3
 places,كنيسة,CHURCH,both,P3
 places,حمّام,TOILET,both,P1
+places,مكان / أماكن,PLACE,both,P1
 shop,عايز / محتاج,WANT/NEED,both,P1
 shop,ده / دي,THIS,both,P1
 shop,غالي,EXPENSIVE,both,P2
@@ -208,6 +209,9 @@ telecom,غاز,GAS,both,P1
 telecom,قسط,INSTALLMENT,both,P1
 telecom,النت مش شغال / الموبايل عطلان,NOT-WORKING,both,P2
 telecom,إنترنت البيت,HOME-INTERNET,both,P2
+telecom,اتصالات / شركة الموبايل,TELECOM,both,P1
+telecom,جديد,NEW,both,P2
+telecom,ضاع / اتسرق,LOST-ITEM,both,P2
 restaurant,مطعم,RESTAURANT,both,P1
 restaurant,المنيو,MENU,both,P1
 restaurant,أكل,FOOD,both,P1

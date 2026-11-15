@@ -231,6 +231,34 @@ async function pastWelcome(page) {
     await ctx.close();
   }
 
+  // other places from home (#46): the 6th square opens the places grid with «رجوع»; a place's «رجوع» goes back to the grid,
+  // the grid's goes home; telecom has its 6 cards; «فين المكان؟» is a card in the grid
+  console.log('\n== other places from home');
+  for (const vp of PHONES) {
+    const tag = `${vp.width}x${vp.height}`;
+    const { ctx, page } = await newPage(browser, vp, base);
+    await page.goto(base + 'index.html'); await page.waitForTimeout(600); await pastWelcome(page);
+    const cards = () => page.evaluate(() => [...document.querySelectorAll('#pics button')].map(x => x.textContent));
+    const i = await page.evaluate(() => SIT.findIndex(x => x.more));
+    await page.locator(`#sitGrid button[data-i="${i}"]`).click(); await page.waitForTimeout(400);
+    let t = await cards();
+    const on = await page.evaluate(() => document.getElementById('talk').classList.contains('on'));
+    on && /رجوع/.test(t[0]) && t.some(x => /اتصالات/.test(x)) && t.some(x => /فين المكان/.test(x)) && t.some(x => /صيدلية/.test(x))
+      ? pass(tag + ' places', `grid: ${t.length - 1} places + back`) : fail(tag + ' places', `grid: ${t.join(' | ')}`);
+    await page.locator('#pics button', { hasText: 'اتصالات' }).click(); await page.waitForTimeout(200);
+    t = await cards();
+    const m = await page.evaluate(() => { const b = [...document.querySelectorAll('#pics button')]; return { hs: document.documentElement.scrollWidth - innerWidth, small: b.filter(x => x.offsetHeight < 48).length }; });
+    t.length === 7 && t.some(x => /خط جديد/.test(x)) && t.some(x => /شكوى/.test(x)) && !m.hs && !m.small
+      ? pass(tag + ' places', 'telecom: 6 cards + back, 48px+, no sideways scroll') : fail(tag + ' places', `telecom: ${t.join(' | ')} ${JSON.stringify(m)}`);
+    await page.locator('#pics button.back').click(); await page.waitForTimeout(200);
+    t = await cards();
+    /رجوع/.test(t[0]) && t.some(x => /اتصالات/.test(x)) ? pass(tag + ' places', '«رجوع» from telecom goes back to the grid') : fail(tag + ' places', `after back: ${t.join(' | ')}`);
+    await page.locator('#pics button.back').click(); await page.waitForTimeout(300);
+    (await page.evaluate(() => document.getElementById('home').classList.contains('on'))) ? pass(tag + ' places', '«رجوع» from the grid goes home') : fail(tag + ' places', 'grid «رجوع» did not go home');
+    if (page.errs.length) fail(tag + ' places', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
+    await ctx.close();
+  }
+
   // document cards: matched on the phone, big drawing with two 48px+ buttons, nothing sent
   console.log('\n== document cards (375x667)');
   {
