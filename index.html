@@ -1059,7 +1059,7 @@ const EN={
 'هتدفع إزاي؟':'How will you pay?',
 'بدالك هيقول طريقة الدفع للي قدامك':'Badalak will tell them how you pay',
 'إلغاء':'Cancel',
-'كاش':'Cash','فيزا':'Card','محفظة إلكترونية':'Mobile wallet','إنستاباي':'InstaPay',
+'كاش':'Cash','فيزا':'Card','محفظة إلكترونية':'Mobile wallet','إنستا باي':'InstaPay',
 'طريقة الدفع: {p}':'Payment: {p}',
 'هدفع {p}':'I\'ll pay by {p}',
 // ---- SOS
@@ -1709,7 +1709,7 @@ const GU={
 "بحضّر الأصوات {n}/{m}...": "أجهّز الأصوات {n}/{m}...",
 "الأصوات جاهزة ✓ (يشتغل من غير نت)": "الأصوات جاهزة ✓ (يشتغل بدون نت)",
 "اتحضّر {n} من {m}، جرّب تاني": "تجهّز {n} من {m}، جرّب مرة ثانية",
-"إنستاباي": "Apple Pay",
+"إنستا باي": "Apple Pay",
 // ---- «مكالمة» (phone call for the user)
 "مكالمة: بدالك يتصل عنك": "مكالمة: بدالك يتصل عنك",
 "اكتب الرقم واللي عايزه، وبدالك يكلمهم ويكتبلك ردهم": "اكتب الرقم وش تبي، وبدالك يكلمهم ويكتب لك ردهم",
@@ -2374,8 +2374,8 @@ $('flip').onclick=()=>{$('flip').style.display='none';$('flip').classList.remove
 $('fSign').onclick=()=>openSigns('free');
 
 /* ================= PAYMENT STAMPS ================= */
-const PAY=[{k:'cash',i:'💵',l:'كاش'},{k:'card',i:'💳',l:'فيزا'},{k:'wallet',i:'📱',l:'محفظة إلكترونية'},{k:'instapay',i:'⚡',l:'إنستاباي'}];PAY.forEach(p=>p.l=tr(p.l));
-const PAY_SAY={eg:{cash:'الدفع هيكون كاش، لو سمحت.',card:'الدفع هيكون بالفيزا، لو سمحت.',wallet:'الدفع هيكون بمحفظة إلكترونية زي فودافون كاش، لو سمحت.',instapay:'الدفع هيكون بإنستاباي. ممكن رقم أو حساب إنستاباي بتاعكم؟'},
+const PAY=[{k:'cash',i:'💵',l:'كاش'},{k:'card',i:'💳',l:'فيزا'},{k:'wallet',i:'📱',l:'محفظة إلكترونية'},{k:'instapay',i:'⚡',l:'إنستا باي'}];PAY.forEach(p=>p.l=tr(p.l));
+const PAY_SAY={eg:{cash:'الدفع هيكون كاش، لو سمحت.',card:'الدفع هيكون بالفيزا، لو سمحت.',wallet:'الدفع هيكون بمحفظة إلكترونية زي فودافون كاش، لو سمحت.',instapay:'الدفع هيكون بإنستا باي. ممكن رقم أو حساب إنستا باي بتاعكم؟'},
  gulf:{cash:'الدفع بيكون كاش، لو سمحت.',card:'الدفع بيكون بالبطاقة، لو سمحت.',wallet:'الدفع بيكون بمحفظة إلكترونية، لو سمحت.',instapay:'الدفع بيكون تحويل بنكي. ممكن رقم الحساب؟'},
  lev:{cash:'رح يكون الدفع كاش، لو سمحت.',card:'رح يكون الدفع بالبطاقة، لو سمحت.',wallet:'رح يكون الدفع بمحفظة إلكترونية، لو سمحت.',instapay:'رح يكون الدفع تحويل. ممكن رقم الحساب؟'},
  en:{cash:'Payment will be in cash, please.',card:'Payment will be by card, please.',wallet:'Payment will be by mobile wallet, please.',instapay:'Payment will be by bank transfer. Could you share the account details?'}};
