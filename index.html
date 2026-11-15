@@ -189,7 +189,7 @@ nav svg{width:24px;height:24px}
 .cambtn{min-height:68px;border:2px dashed #C9501E;border-radius:20px;background:#FFF4EC;color:#7A3A0E;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px}.cambtn span{font-size:30px}
 .picgrid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:104px;gap:10px;flex-shrink:0}
 .pic{min-height:100px;border:0;border-radius:20px;background:#fff;color:var(--ink);font-size:17px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px}
-.pic i{font-style:normal;font-size:42px;line-height:1}.pic i svg{width:52px;height:52px;display:block}.picgrid:has(.qhead){grid-template-rows:auto}.qhead{grid-column:1/-1;padding-block:4px;margin:0;font-size:20px;font-weight:800;text-align:center;align-self:center;display:flex;align-items:center;justify-content:center;gap:8px}.qhead span{font-size:34px}.pic.back{background:#E9E3D8}.pic.pcam{outline:2px dashed #C9501E;outline-offset:-4px}
+.pic i{font-style:normal;font-size:42px;line-height:1}.pic i svg{width:52px;height:52px;display:block}.picgrid:has(.qhead){grid-template-rows:auto}.qhead{grid-column:1/-1;padding-block:4px;margin:0;font-size:20px;font-weight:800;text-align:center;align-self:center;display:flex;align-items:center;justify-content:center;gap:8px}.qhead span{font-size:34px}.pic.back{background:#E9E3D8}.pic.pcam{outline:2px dashed #C9501E;outline-offset:-4px}.pic.psos{background:#B3261E;color:#fff}
 .typebox{background:#fff;border-radius:18px;padding:10px 14px}.typebox summary{font-size:16px;font-weight:700;min-height:36px;display:flex;align-items:center;cursor:pointer}.typebox .goal{margin-top:8px}
 #hPhoto{max-height:34%;max-width:100%;object-fit:contain;border-radius:12px;align-self:center;background:#fff}
 #readOv{position:fixed;inset:0;z-index:26;background:rgba(19,38,47,.94);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#fff;padding:24px;text-align:center}
@@ -765,6 +765,9 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <script src="meds.js"></script>
 <script>
 const EN={
+'السجل المدني':'Civil registry','بطاقة':'ID card','شهادة ميلاد':'Birth certificate','عايز أطلع شهادة ميلاد':'I want to get a birth certificate','بدل فاقد':'Lost card','البطاقة ضاعت، عايز بدل فاقد':'I lost my ID card, I want a replacement',
+'المرور':'Traffic office','رخصة سواقة':'Driving licence','عايز أطلع أو أجدد رخصة السواقة':'I want to get or renew my driving licence','رخصة عربية':'Car licence','عايز أجدد رخصة العربية':'I want to renew my car licence','مخالفة':'Traffic fine','عايز أسأل عن مخالفة':'I want to ask about a traffic fine',
+'قسم الشرطة':'Police station','أعمل محضر':'File a report','عايز أعمل محضر':'I want to file a police report','اتسرق أو ضاع':'Stolen or lost','حاجة بتاعتي اتسرقت أو ضاعت، عايز أعمل محضر':'Something of mine was stolen or lost, I want to file a report',
 'مستشفى وتحاليل':'Hospital and lab','أول مرة هنا':'First time here','أول مرة آجي هنا، أروح فين؟':'It is my first time here. Where do I go?','حجز':'Booking','عايز أحجز ميعاد':'I want to book an appointment',
 'تحليل أو أشعة':'Test or X-ray','عايز أعمل تحليل أو أشعة':'I want to do a lab test or an X-ray','تحويل من دكتور':'Doctor\'s referral','تأمين صحي':'Health insurance','عندي تأمين صحي، أعمل إيه؟':'I have health insurance. What do I do?',
 'نتيجة':'Result','عايز أستلم نتيجة التحليل أو الأشعة':'I want to collect my test or X-ray result',
@@ -830,7 +833,7 @@ const EN={
 'مواصلات':'Transport','أروح البيت':'Go home','عايز أروح البيت':'I want to go home','عنوان مكتوب':'Written address','الأجرة كام':'How much is the fare','عايز أعرف الأجرة كام':'I want to know how much the fare is','أنزل هنا':'Stop here','عايز أنزل هنا لو سمحت':'I want to get off here, please',
 'محل':'Shop','حاجة زي دي':'Something like this','السعر كام':'What is the price','عايز أعرف سعر الحاجة دي':'I want to know the price of this','أبدّل أو أرجّع':'Exchange or return','عايز أبدّل أو أرجّع حاجة اشتريتها':'I want to exchange or return something I bought','فين مكانها':'Where is it','عايز أعرف مكان حاجة في المحل':'I want to know where something is in the shop',
 'فلوس وفواتير':'Money and bills','أدفع فاتورة':'Pay a bill','أشحن رصيد':'Top up my phone','عايز أشحن رصيد':'I want to top up my phone credit','البنك':'The bank','عايز أخلّص حاجة في البنك':'I want to do something at the bank','أحوّل فلوس':'Send money','عايز أحوّل فلوس':'I want to send money',
-'ورق حكومي':'Government papers','البطاقة':'ID card','عايز أطلع أو أجدد البطاقة':'I want to get or renew my ID card','شهادة':'Certificate','عايز أطلع شهادة':'I want to get a certificate','الورق المطلوب':'Papers needed','عايز أعرف الورق المطلوب':'I want to know which papers are needed',
+'البطاقة':'ID card','عايز أطلع أو أجدد البطاقة':'I want to get or renew my ID card','الورق المطلوب':'Papers needed','عايز أعرف الورق المطلوب':'I want to know which papers are needed',
 'عايز أصرف الروشتة دي':'I want to fill this prescription','عايز أدفع فاتورة الكهربا':'I want to pay the electricity bill','عايز أشتري حاجة':'I want to buy something',
 ' (زي المرة اللي فاتت)':' (like last time)',
 'بقرا الصورة...':'Reading the photo...',
@@ -1335,6 +1338,9 @@ wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. T
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
+'السجل المدني':'الأحوال المدنية','بطاقة':'الهوية','شهادة ميلاد':'شهادة ميلاد','عايز أطلع شهادة ميلاد':'أبي أطلّع شهادة ميلاد','بدل فاقد':'بدل فاقد','البطاقة ضاعت، عايز بدل فاقد':'الهوية ضاعت، أبي بدل فاقد',
+'المرور':'المرور','رخصة سواقة':'رخصة قيادة','عايز أطلع أو أجدد رخصة السواقة':'أبي أطلّع أو أجدد رخصة القيادة','رخصة عربية':'استمارة السيارة','عايز أجدد رخصة العربية':'أبي أجدد استمارة السيارة','مخالفة':'مخالفة','عايز أسأل عن مخالفة':'أبي أسأل عن مخالفة',
+'قسم الشرطة':'مركز الشرطة','أعمل محضر':'أسوي بلاغ','عايز أعمل محضر':'أبي أسوي بلاغ','اتسرق أو ضاع':'انسرق أو ضاع','حاجة بتاعتي اتسرقت أو ضاعت، عايز أعمل محضر':'شي حقي انسرق أو ضاع، أبي أسوي بلاغ',
 'مستشفى وتحاليل':'مستشفى ومختبر','أول مرة هنا':'أول مرة هنا','أول مرة آجي هنا، أروح فين؟':'أول مرة أجي هنا، وين أروح؟','حجز':'حجز','عايز أحجز ميعاد':'أبي أحجز موعد',
 'تحليل أو أشعة':'تحليل أو أشعة','عايز أعمل تحليل أو أشعة':'أبي أسوي تحليل أو أشعة','تحويل من دكتور':'تحويل من دكتور','تأمين صحي':'تأمين صحي','عندي تأمين صحي، أعمل إيه؟':'عندي تأمين صحي، وش أسوي؟',
 'نتيجة':'نتيجة','عايز أستلم نتيجة التحليل أو الأشعة':'أبي أستلم نتيجة التحليل أو الأشعة',
@@ -1398,10 +1404,8 @@ const GU={
 "عايز أشحن رصيد": "أبي أشحن رصيد",
 "عايز أخلّص حاجة في البنك": "أبي أخلّص شي في البنك",
 "عايز أحوّل فلوس": "أبي أحوّل فلوس",
-"ورق حكومي": "أوراق حكومية",
 "البطاقة": "الهوية",
 "عايز أطلع أو أجدد البطاقة": "أبي أطلّع أو أجدّد الهوية",
-"عايز أطلع شهادة": "أبي أطلّع شهادة",
 "الورق المطلوب": "الأوراق المطلوبة",
 "عايز أعرف الورق المطلوب": "أبي أعرف الأوراق المطلوبة",
 "عايز أصرف الروشتة دي": "أبي أصرف هذي الوصفة",
@@ -1878,7 +1882,14 @@ const PICS=[
     since plumbers and electricians are often reached by phone */
  {i:'🔧',l:'صيانة البيت',sub:[{i:'🚰',l:'سبّاك',g:'عايز سبّاك ييجي البيت'},{i:'💡',l:'كهربائي',g:'عايز كهربائي ييجي البيت'},{i:'🧑',l:'البوّاب',g:'عايز أكلّم البوّاب'},
   {i:'🏠',l:'الإيجار',g:'عايز أتكلم عن الإيجار'},{i:'🧾',l:'فاتورة كهربا أو غاز',cam:'فاتورة كهربا أو غاز',pick:1},{i:'📞',l:'مكالمة (تجريبي)',call:1}]},
- {i:'🏛️',l:'ورق حكومي',sub:[{i:'🪪',l:'البطاقة',g:'عايز أطلع أو أجدد البطاقة'},{i:'📜',l:'شهادة',g:'عايز أطلع شهادة'},{i:'📋',l:'الورق المطلوب',g:'عايز أعرف الورق المطلوب'},{i:'📄',l:'ورقة معايا',cam:'ورقة حكومية'}]},
+ /* government (#46): «ورق حكومي» split in three, one tap to the cards; the errand only, nothing about rights or legal steps.
+    The police station has «🚨 طوارئ» first: someone there may be in danger. */
+ {i:'🏛️',l:'السجل المدني',sub:[{i:'🪪',l:'بطاقة',g:'عايز أطلع أو أجدد البطاقة'},{i:'📜',l:'شهادة ميلاد',g:'عايز أطلع شهادة ميلاد'},{i:'❗',l:'بدل فاقد',g:'البطاقة ضاعت، عايز بدل فاقد'},
+  {i:'📋',l:'الورق المطلوب',g:'عايز أعرف الورق المطلوب'},{i:'📄',l:'ورقة معايا',cam:'ورقة حكومية',pick:1}]},
+ {i:'🚦',l:'المرور',sub:[{i:'🪪',l:'رخصة سواقة',g:'عايز أطلع أو أجدد رخصة السواقة'},{i:'🚗',l:'رخصة عربية',g:'عايز أجدد رخصة العربية'},{i:'🧾',l:'مخالفة',g:'عايز أسأل عن مخالفة'},
+  {i:'📄',l:'ورقة معايا',cam:'ورقة من المرور',pick:1}]},
+ {i:'🚓',l:'قسم الشرطة',sub:[{i:'🚨',l:'طوارئ',sos:1},{i:'📝',l:'أعمل محضر',g:'عايز أعمل محضر'},{i:'👜',l:'اتسرق أو ضاع',g:'حاجة بتاعتي اتسرقت أو ضاعت، عايز أعمل محضر'},
+  {i:'📄',l:'ورقة معايا',cam:'ورقة من القسم',pick:1}]},
  {i:'📍',l:'فين المكان؟',g:'عايز أسأل عن مكان'}];
 if(UI==='en'||GULF)PICS.forEach(c=>{c.l=tr(c.l);if(c.g)c.g=tr(c.g);(c.sub||[]).forEach(x=>{x.l=tr(x.l);if(x.g)x.g=tr(x.g);if(x.n){x.n=tr(x.n);if(UI==='en')x.n=x.n[0].toLowerCase()+x.n.slice(1)}})});
 /* box / strip / bottle: drawn, not emoji (there is no emoji for a strip of pills) */
@@ -1892,9 +1903,11 @@ function drawQty(x,cat){const list=[{i:'↩️',l:tr('رجوع'),back:1},...x.q.
 let taskPhoto=null,camHint='صورة',readSeq=0,picsFromHome=false,gridFromHome=false;
 function drawPics(cat,fromHome){if(!cat)gridFromHome=!!fromHome;picsFromHome=!!(cat&&fromHome);const bk={i:'↩️',l:tr('رجوع'),back:1},list=cat?[bk,...cat.sub]:gridFromHome?[bk,...PICS]:PICS;
  $('openOrder').classList.toggle('hidden',!(cat&&cat.ph));
- $('pics').innerHTML=list.map(x=>`<button class="pic${x.back?' back':''}${x.cam?' pcam':''}"><i aria-hidden="true">${x.i}</i>${esc(x.l)}</button>`).join('');
+ /* a new list starts at the top: «رجوع» and the first card (the police station's «🚨 طوارئ») must be on screen, even when the place was low in the grid */
+ const sb=$('pics').closest('.body');if(sb)sb.scrollTop=0;
+ $('pics').innerHTML=list.map(x=>`<button class="pic${x.back?' back':''}${x.cam?' pcam':''}${x.sos?' psos':''}"><i aria-hidden="true">${x.i}</i>${esc(x.l)}</button>`).join('');
  $('pics').querySelectorAll('button').forEach((b,k)=>b.onclick=()=>{const x=list[k];buzz([30]);
-  if(x.back){if(!cat||picsFromHome){drawPics(null);return show('home')}return drawPics(null,gridFromHome)}if(x.sub)return drawPics(x);if(x.cam){camHint=x.cam;$(x.pick?'picIn':'camIn').click();return}if(x.q)return drawQty(x,cat);if(x.call)return callOpen();
+  if(x.back){if(!cat||picsFromHome){drawPics(null);return show('home')}return drawPics(null,gridFromHome)}if(x.sub)return drawPics(x);if(x.cam){camHint=x.cam;$(x.pick?'picIn':'camIn').click();return}if(x.q)return drawQty(x,cat);if(x.call)return callOpen();if(x.sos)return $('sosBtn').click();
   taskPhoto=null;$('goal').value=x.g;$('startTask').click()})}
 $('camBtn').onclick=()=>{camHint='روشتة أو حاجة عايز أطلبها';$('camIn').click()};
 function shrink(file){return new Promise((ok,no)=>{const img=new Image();img.onload=()=>{const m=1024,k=Math.min(1,m/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(img.src);ok(c.toDataURL('image/jpeg',0.72))};img.onerror=no;img.src=URL.createObjectURL(file)})}
