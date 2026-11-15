@@ -781,6 +781,8 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <script src="meds.js"></script>
 <script>
 const EN={
+'بريد':'Post office','معاش':'Pension','عايز أصرف المعاش':'I want to collect my pension','سحب':'Withdraw','عايز أسحب فلوس من حسابي':'I want to withdraw money from my account',
+'تحويل':'Transfer','استلام طرد':'Pick up a parcel','عايز أستلم طرد أو جواب':'I want to pick up a parcel or a letter',
 'أماكن تانية':'Other places','اتصالات':'Phone company','خط جديد':'New line','عايز أطلع خط جديد':'I want to get a new phone line',
 'الخط اتقفل أو ضاع':'Line blocked or lost','الخط بتاعي اتقفل أو ضاع، عايز أرجّعه':'My phone line was blocked or lost, I want it back',
 'فاتورة':'Bill','باقة':'Package','عايز أغيّر الباقة':'I want to change my package','الخط أو النت مش شغّال':'Line or internet not working',
@@ -1352,6 +1354,8 @@ wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. T
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
+'بريد':'البريد','معاش':'التقاعد','عايز أصرف المعاش':'أبي أصرف راتب التقاعد','سحب':'سحب','عايز أسحب فلوس من حسابي':'أبي أسحب فلوس من حسابي',
+'تحويل':'تحويل','أدفع فاتورة':'أدفع فاتورة','استلام طرد':'استلام طرد','عايز أستلم طرد أو جواب':'أبي أستلم طرد أو رسالة',
 'أماكن تانية':'أماكن ثانية','اتصالات':'شركة الاتصالات','خط جديد':'خط جديد','عايز أطلع خط جديد':'أبي أطلّع خط جديد',
 'الخط اتقفل أو ضاع':'الخط انقفل أو ضاع','الخط بتاعي اتقفل أو ضاع، عايز أرجّعه':'خطي انقفل أو ضاع، أبي أرجّعه',
 'باقة':'باقة','عايز أغيّر الباقة':'أبي أغيّر الباقة','الخط أو النت مش شغّال':'الخط أو النت ما يشتغل',
@@ -1887,6 +1891,9 @@ const PICS=[
  /* telecom (#46): the errand only, no fees or steps invented; the bill card reads a photo like the other photo cards */
  {i:'📶',l:'اتصالات',sub:[{i:'🆕',l:'خط جديد',g:'عايز أطلع خط جديد'},{i:'🚫',l:'الخط اتقفل أو ضاع',g:'الخط بتاعي اتقفل أو ضاع، عايز أرجّعه'},{i:'🧾',l:'فاتورة',cam:'فاتورة موبايل',pick:1},
   {i:'🌐',l:'باقة',g:'عايز أغيّر الباقة'},{i:'⚠️',l:'الخط أو النت مش شغّال',g:'الخط أو النت مش شغّال كويس'},{i:'📢',l:'شكوى',g:'عايز أقدّم شكوى'}]},
+ /* post office (#46): the errand only; the bill card reads a photo like the other photo cards */
+ {i:'📮',l:'بريد',sub:[{i:'👴',l:'معاش',g:'عايز أصرف المعاش'},{i:'💵',l:'سحب',g:'عايز أسحب فلوس من حسابي'},{i:'🧾',l:'أدفع فاتورة',cam:'فاتورة',pick:1},
+  {i:'💸',l:'تحويل',g:'عايز أحوّل فلوس'},{i:'📦',l:'استلام طرد',g:'عايز أستلم طرد أو جواب'}]},
  {i:'🏛️',l:'ورق حكومي',sub:[{i:'🪪',l:'البطاقة',g:'عايز أطلع أو أجدد البطاقة'},{i:'📜',l:'شهادة',g:'عايز أطلع شهادة'},{i:'📋',l:'الورق المطلوب',g:'عايز أعرف الورق المطلوب'},{i:'📄',l:'ورقة معايا',cam:'ورقة حكومية'}]},
  {i:'📍',l:'فين المكان؟',g:'عايز أسأل عن مكان'}];
 if(UI==='en'||GULF)PICS.forEach(c=>{c.l=tr(c.l);if(c.g)c.g=tr(c.g);(c.sub||[]).forEach(x=>{x.l=tr(x.l);if(x.g)x.g=tr(x.g);if(x.n){x.n=tr(x.n);if(UI==='en')x.n=x.n[0].toLowerCase()+x.n.slice(1)}})});
