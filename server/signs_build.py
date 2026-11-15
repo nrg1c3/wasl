@@ -35,6 +35,10 @@ CLIP_RE = re.compile(r'^(?P<id>.+?)__(?P<signer>[a-z]\d{1,2})\.mp4$', re.I)
 # One emoji per sign: the picture card shown when a sign has no clip yet.
 ICONS = {
     # the app's name (its sign is chosen by the sign expert)
+    # medicine forms, price and papers (#49)
+    'CAPSULE': '💊', 'CREAM': '🧴', 'DROPS': '💧', 'INHALER': '🌬️', 'SUPPOSITORY': '💊', 'DOSE': '🥄', 'PRICE': '🏷️',
+    'INSTAPAY': '⚡', 'PASSPORT': '🛂', 'DRIVING-LICENSE': '🪪', 'CAR-LICENSE': '🚗',
+    'HEADACHE': '🤕', 'TRANSPORT': '🚌', 'SHOP': '🏪', 'EXCHANGE': '🔄', 'TRANSLATE': '💬', 'PHONE-CALL': '📞',
     'BADALAK': '🤝',
     # bank
     'ACCOUNT': '🏦', 'WITHDRAW': '💵', 'DEPOSIT': '📥', 'TRANSFER': '🔁', 'ATM': '🏧', 'CARD-BLOCKED': '🚫',

@@ -20,6 +20,8 @@ basic,بالراحة,SLOWLY,sign2voice,P1
 basic,مش عارف,DONT-KNOW,both,P2
 basic,ممكن؟,CAN/POSSIBLE,both,P2
 basic,خلاص / خلصت,FINISHED,both,P1
+basic,ترجمة,TRANSLATE,both,P2
+basic,مكالمة,PHONE-CALL,both,P2
 questions,فين؟,WHERE,both,P1
 questions,إمتى؟,WHEN,both,P1
 questions,إيه؟,WHAT,both,P1
@@ -37,12 +39,19 @@ pharmacy,قبل الأكل,BEFORE-FOOD,voice2sign,P1
 pharmacy,بعد الأكل,AFTER-FOOD,voice2sign,P1
 pharmacy,بديل / نوع تاني,ALTERNATIVE,both,P2
 pharmacy,مش موجود / خلصان,NOT-AVAILABLE,voice2sign,P1
+pharmacy,كبسولة / كبسولات,CAPSULE,both,P1
+pharmacy,كريم / مرهم,CREAM,both,P1
+pharmacy,نقط / قطرة,DROPS,both,P1
+pharmacy,بخّاخ,INHALER,both,P1
+pharmacy,لبوس / تحميلة,SUPPOSITORY,both,P1
+pharmacy,جرعة,DOSE,both,P1
+pharmacy,سعر,PRICE,both,P1
 doctor,دكتور,DOCTOR,both,P1
 doctor,مستشفى,HOSPITAL,both,P1
 doctor,عيادة,CLINIC,both,P2
 doctor,ميعاد / حجز,APPOINTMENT,both,P1
 doctor,كشف,CHECKUP,both,P2
-doctor,تحليل,LAB-TEST,both,P2
+doctor,تحليل / تحاليل,LAB-TEST,both,P2
 doctor,أشعة,X-RAY,both,P2
 doctor,سخونية,FEVER,both,P1
 doctor,ضغط,BLOOD-PRESSURE,both,P2
@@ -51,7 +60,7 @@ doctor,حامل,PREGNANT,both,P2
 doctor,حساسية,ALLERGY,both,P1
 body,وجع / بيوجعني,PAIN,both,P1
 body,راس,HEAD,both,P1
-body,بطن,STOMACH,both,P1
+body,بطن / معدة,STOMACH,both,P1
 body,سنان,TOOTH,both,P2
 body,ضهر,BACK,both,P2
 body,صدر,CHEST,both,P1
@@ -59,6 +68,7 @@ body,عين,EYE,both,P2
 body,ودن,EAR,both,P2
 body,رجل,LEG,both,P2
 body,إيد,HAND/ARM,both,P2
+body,صداع,HEADACHE,both,P2
 feelings,دايخ,DIZZY,both,P1
 feelings,تعبان / عيان,SICK/TIRED,both,P1
 feelings,خايف,SCARED,both,P2
@@ -69,13 +79,14 @@ transport,مترو,METRO,both,P2
 transport,ميكروباص,MICROBUS,both,P1
 transport,توكتوك,TUKTUK,both,P2
 transport,عايز أروح...,WANT-GO,sign2voice,P1
-transport,وقف هنا,STOP-HERE,sign2voice,P1
+transport,وقف هنا / أنزل هنا,STOP-HERE,sign2voice,P1
 transport,يمين,RIGHT,both,P1
 transport,شمال,LEFT,both,P1
 transport,على طول,STRAIGHT,both,P1
 transport,قريب,NEAR,both,P2
 transport,بعيد,FAR,both,P2
 transport,محطة,STATION,both,P2
+transport,مواصلات,TRANSPORT,both,P2
 places,بيت,HOME,both,P1
 places,شغل,WORK,both,P2
 places,مدرسة,SCHOOL,both,P1
@@ -90,8 +101,10 @@ shop,ده / دي,THIS,both,P1
 shop,غالي,EXPENSIVE,both,P2
 shop,أرخص,CHEAPER,both,P2
 shop,كيس,BAG,both,P3
-shop,واحد تاني,ANOTHER,both,P2
+shop,واحد تاني / حاجة تانية,ANOTHER,both,P2
 shop,مقاس,SIZE,both,P3
+shop,محل,SHOP,both,P2
+shop,أبدّل / أرجّع,EXCHANGE,both,P2
 money,فلوس,MONEY,both,P1
 money,جنيه,POUND,both,P1
 money,فكّة,SMALL-CHANGE,both,P2
@@ -101,9 +114,10 @@ money,كاش,CASH,both,P2
 money,إيصال,RECEIPT,both,P2
 money,ادفع,PAY,both,P1
 money,محفظة موبايل,MOBILE-WALLET,both,P1
+money,إنستا باي,INSTAPAY,both,P2
 government,بطاقة رقم قومي,ID-CARD,both,P1
 government,شهادة ميلاد,BIRTH-CERTIFICATE,both,P2
-government,ورق,PAPERS,both,P1
+government,ورق / ورقة,PAPERS,both,P1
 government,ختم,STAMP,voice2sign,P2
 government,استمارة,FORM,both,P2
 government,صورة / تصوير ورق,PHOTOCOPY,both,P2
@@ -111,6 +125,9 @@ government,شبّاك,COUNTER-WINDOW,voice2sign,P1
 government,طابور / دورك,QUEUE/YOUR-TURN,voice2sign,P1
 government,إمضا,SIGNATURE,both,P2
 government,كارت الخدمات المتكاملة,DISABILITY-CARD,both,P2
+government,باسبور / جواز سفر,PASSPORT,both,P2
+government,رخصة سواقة,DRIVING-LICENSE,both,P2
+government,رخصة عربية,CAR-LICENSE,both,P2
 numbers,صفر,0,both,P1
 numbers,واحد,1,both,P1
 numbers,اتنين,2,both,P1
