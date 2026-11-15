@@ -770,6 +770,8 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 const EN={
 'بريد':'Post office','معاش':'Pension','عايز أصرف المعاش':'I want to collect my pension','سحب':'Withdraw','عايز أسحب فلوس من حسابي':'I want to withdraw money from my account',
 'تحويل':'Transfer','استلام طرد':'Pick up a parcel','عايز أستلم طرد أو جواب':'I want to pick up a parcel or a letter',
+'صيانة البيت':'Home repairs','سبّاك':'Plumber','عايز سبّاك ييجي البيت':'I need a plumber to come to my home','كهربائي':'Electrician','عايز كهربائي ييجي البيت':'I need an electrician to come to my home',
+'البوّاب':'Doorman','عايز أكلّم البوّاب':'I want to talk to the doorman','الإيجار':'Rent','عايز أتكلم عن الإيجار':'I want to talk about the rent','فاتورة كهربا أو غاز':'Electricity or gas bill',
 'أماكن تانية':'Other places','اتصالات':'Phone company','خط جديد':'New line','عايز أطلع خط جديد':'I want to get a new phone line',
 'الخط اتقفل أو ضاع':'Line blocked or lost','الخط بتاعي اتقفل أو ضاع، عايز أرجّعه':'My phone line was blocked or lost, I want it back',
 'فاتورة':'Bill','باقة':'Package','عايز أغيّر الباقة':'I want to change my package','الخط أو النت مش شغّال':'Line or internet not working',
@@ -1335,6 +1337,8 @@ wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. T
 const GU={
 'بريد':'البريد','معاش':'التقاعد','عايز أصرف المعاش':'أبي أصرف راتب التقاعد','سحب':'سحب','عايز أسحب فلوس من حسابي':'أبي أسحب فلوس من حسابي',
 'تحويل':'تحويل','أدفع فاتورة':'أدفع فاتورة','استلام طرد':'استلام طرد','عايز أستلم طرد أو جواب':'أبي أستلم طرد أو رسالة',
+'صيانة البيت':'صيانة البيت','سبّاك':'سبّاك','عايز سبّاك ييجي البيت':'أبي سبّاك يجي البيت','كهربائي':'كهربائي','عايز كهربائي ييجي البيت':'أبي كهربائي يجي البيت',
+'البوّاب':'الحارس','عايز أكلّم البوّاب':'أبي أكلّم حارس العمارة','الإيجار':'الإيجار','عايز أتكلم عن الإيجار':'أبي أتكلم عن الإيجار','فاتورة كهربا أو غاز':'فاتورة كهرباء أو غاز','مكالمة (تجريبي)':'مكالمة (تجريبي)',
 'أماكن تانية':'أماكن ثانية','اتصالات':'شركة الاتصالات','خط جديد':'خط جديد','عايز أطلع خط جديد':'أبي أطلّع خط جديد',
 'الخط اتقفل أو ضاع':'الخط انقفل أو ضاع','الخط بتاعي اتقفل أو ضاع، عايز أرجّعه':'خطي انقفل أو ضاع، أبي أرجّعه',
 'باقة':'باقة','عايز أغيّر الباقة':'أبي أغيّر الباقة','الخط أو النت مش شغّال':'الخط أو النت ما يشتغل',
@@ -1864,6 +1868,10 @@ const PICS=[
  /* post office (#46): the errand only; the bill card reads a photo like the other photo cards */
  {i:'📮',l:'بريد',sub:[{i:'👴',l:'معاش',g:'عايز أصرف المعاش'},{i:'💵',l:'سحب',g:'عايز أسحب فلوس من حسابي'},{i:'🧾',l:'أدفع فاتورة',cam:'فاتورة',pick:1},
   {i:'💸',l:'تحويل',g:'عايز أحوّل فلوس'},{i:'📦',l:'استلام طرد',g:'عايز أستلم طرد أو جواب'}]},
+ /* home repairs (#46): who is needed, said so the listener knows it is for the home; the call card opens «مكالمة (تجريبي)»,
+    since plumbers and electricians are often reached by phone */
+ {i:'🔧',l:'صيانة البيت',sub:[{i:'🚰',l:'سبّاك',g:'عايز سبّاك ييجي البيت'},{i:'💡',l:'كهربائي',g:'عايز كهربائي ييجي البيت'},{i:'🧑',l:'البوّاب',g:'عايز أكلّم البوّاب'},
+  {i:'🏠',l:'الإيجار',g:'عايز أتكلم عن الإيجار'},{i:'🧾',l:'فاتورة كهربا أو غاز',cam:'فاتورة كهربا أو غاز',pick:1},{i:'📞',l:'مكالمة (تجريبي)',call:1}]},
  {i:'🏛️',l:'ورق حكومي',sub:[{i:'🪪',l:'البطاقة',g:'عايز أطلع أو أجدد البطاقة'},{i:'📜',l:'شهادة',g:'عايز أطلع شهادة'},{i:'📋',l:'الورق المطلوب',g:'عايز أعرف الورق المطلوب'},{i:'📄',l:'ورقة معايا',cam:'ورقة حكومية'}]},
  {i:'📍',l:'فين المكان؟',g:'عايز أسأل عن مكان'}];
 if(UI==='en'||GULF)PICS.forEach(c=>{c.l=tr(c.l);if(c.g)c.g=tr(c.g);(c.sub||[]).forEach(x=>{x.l=tr(x.l);if(x.g)x.g=tr(x.g);if(x.n){x.n=tr(x.n);if(UI==='en')x.n=x.n[0].toLowerCase()+x.n.slice(1)}})});
@@ -1880,7 +1888,7 @@ function drawPics(cat,fromHome){if(!cat)gridFromHome=!!fromHome;picsFromHome=!!(
  $('openOrder').classList.toggle('hidden',!(cat&&cat.ph));
  $('pics').innerHTML=list.map(x=>`<button class="pic${x.back?' back':''}${x.cam?' pcam':''}"><i aria-hidden="true">${x.i}</i>${esc(x.l)}</button>`).join('');
  $('pics').querySelectorAll('button').forEach((b,k)=>b.onclick=()=>{const x=list[k];buzz([30]);
-  if(x.back){if(!cat||picsFromHome){drawPics(null);return show('home')}return drawPics(null,gridFromHome)}if(x.sub)return drawPics(x);if(x.cam){camHint=x.cam;$(x.pick?'picIn':'camIn').click();return}if(x.q)return drawQty(x,cat);
+  if(x.back){if(!cat||picsFromHome){drawPics(null);return show('home')}return drawPics(null,gridFromHome)}if(x.sub)return drawPics(x);if(x.cam){camHint=x.cam;$(x.pick?'picIn':'camIn').click();return}if(x.q)return drawQty(x,cat);if(x.call)return callOpen();
   taskPhoto=null;$('goal').value=x.g;$('startTask').click()})}
 $('camBtn').onclick=()=>{camHint='روشتة أو حاجة عايز أطلبها';$('camIn').click()};
 function shrink(file){return new Promise((ok,no)=>{const img=new Image();img.onload=()=>{const m=1024,k=Math.min(1,m/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(img.src);ok(c.toDataURL('image/jpeg',0.72))};img.onerror=no;img.src=URL.createObjectURL(file)})}

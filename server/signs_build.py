@@ -107,6 +107,7 @@ ICONS = {
     'BOX': '📦', 'STRIP': '💊', 'BOTTLE': '🧴', 'NOSE': '👃',
     'TELECOM': '📶', 'NEW': '🆕', 'LOST-ITEM': '🔍', 'PLACE': '🏢',
     'POST-OFFICE': '📮', 'PENSION': '👴', 'PARCEL': '📦',
+    'HOME-REPAIR': '🔧', 'PLUMBER': '🚰', 'ELECTRICIAN': '💡', 'DOORMAN': '🧑', 'RENT': '🏠',
 }
 GROUP_ICONS = {'numbers': '🔢', 'time': '📅'}
 
