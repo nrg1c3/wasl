@@ -92,6 +92,11 @@ transport,بعيد,FAR,both,P2
 transport,محطة,STATION,both,P2
 transport,مواصلات,TRANSPORT,both,P2
 places,بيت,HOME,both,P1
+places,صيانة / تصليح,HOME-REPAIR,both,P1
+places,سبّاك,PLUMBER,both,P2
+places,كهربائي,ELECTRICIAN,both,P2
+places,بوّاب,DOORMAN,both,P2
+places,إيجار,RENT,both,P2
 places,شغل,WORK,both,P2
 places,مدرسة,SCHOOL,both,P1
 places,بنك,BANK,both,P1
