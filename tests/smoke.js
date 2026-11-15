@@ -139,6 +139,25 @@ async function pastWelcome(page, choice) {
     await ctx.close();
   }
 
+  // pharmacy from home (#40): straight to the pharmacy cards, no doctor / bills sections; «رجوع» goes home
+  console.log('\n== pharmacy from home');
+  for (const vp of PHONES) {
+    const tag = `${vp.width}x${vp.height}`;
+    const { ctx, page } = await newPage(browser, vp, base);
+    await page.goto(base + 'index.html'); await page.waitForTimeout(600); await pastWelcome(page, 'pics');
+    const i = await page.evaluate(() => SIT.findIndex(x => x.ph));
+    await page.locator(`#sitGrid button[data-i="${i}"]`).click(); await page.waitForTimeout(400);
+    const r = await page.evaluate(() => ({ on: document.getElementById('talk').classList.contains('on'), t: [...document.querySelectorAll('#pics button')].map(x => x.textContent),
+      hs: document.documentElement.scrollWidth - innerWidth }));
+    r.on && r.t.length === 9 && r.t.some(x => /روشتة/.test(x)) ? pass(tag + ' pharmacy', '8 pharmacy cards + back') : fail(tag + ' pharmacy', `cards: ${r.t.join(' | ')}`);
+    r.t.some(x => /دكتور|فلوس وفواتير/.test(x)) ? fail(tag + ' pharmacy', 'old sections shown') : pass(tag + ' pharmacy', 'no doctor / bills sections');
+    r.hs > 0 ? fail(tag + ' pharmacy', `scrolls sideways by ${r.hs}px`) : pass(tag + ' pharmacy', 'no sideways scroll');
+    await page.locator('#pics button.back').click(); await page.waitForTimeout(300);
+    (await page.evaluate(() => document.getElementById('home').classList.contains('on'))) ? pass(tag + ' pharmacy', '«رجوع» goes home') : fail(tag + ' pharmacy', '«رجوع» did not go home');
+    if (page.errs.length) fail(tag + ' pharmacy', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
+    await ctx.close();
+  }
+
   // document cards: matched on the phone, big drawing with two 48px+ buttons, nothing sent
   console.log('\n== document cards (375x667)');
   {
