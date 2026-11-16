@@ -1339,6 +1339,7 @@ wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. T
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
+'المكالمات لسه تجريبية.':'المكالمات للحين تجريبية.',
 'عايز سبّاك أو كهربائي ييجي البيت':'أبي سبّاك أو كهربائي يجي البيت',
 'السجل المدني':'الأحوال المدنية','بطاقة':'الهوية','شهادة ميلاد':'شهادة ميلاد','عايز أطلع شهادة ميلاد':'أبي أطلّع شهادة ميلاد','بدل فاقد':'بدل فاقد','البطاقة ضاعت، عايز بدل فاقد':'الهوية ضاعت، أبي بدل فاقد',
 'المرور':'المرور','رخصة سواقة':'رخصة قيادة','عايز أطلع أو أجدد رخصة السواقة':'أبي أطلّع أو أجدد رخصة القيادة','رخصة عربية':'استمارة السيارة','عايز أجدد رخصة العربية':'أبي أجدد استمارة السيارة','مخالفة':'مخالفة','عايز أسأل عن مخالفة':'أبي أسأل عن مخالفة',
@@ -2384,7 +2385,8 @@ async function freeCount(){if(DEMO)return;const sid=fSid;
 /* Replies are spoken to the hearing person, so they follow the conversation language. */
 const DEFAULT_REPLIES_AR=['ممكن تتكلم أبطأ شوية؟','أنا أصم، اقرا كلامي من الشاشة','ممكن تكتبلي؟','شكراً جزيلاً'];
 const DEFAULT_REPLIES_EN=['Could you speak a little slower?',"I'm Deaf. Please read my words on the screen.",'Could you write it for me?','Thank you very much.'];
-const defaultReplies=()=>LANG==='en-US'?DEFAULT_REPLIES_EN:DEFAULT_REPLIES_AR;
+const DEFAULT_REPLIES_GU=['ممكن تتكلم أبطأ شوي؟','أنا أصم، اقرا كلامي من الشاشة','ممكن تكتب لي؟','شكراً جزيلاً'];
+const defaultReplies=()=>LANG==='en-US'?DEFAULT_REPLIES_EN:LANG==='ar-SA'?DEFAULT_REPLIES_GU:DEFAULT_REPLIES_AR;
 function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${optIc(t)}${esc(t)}</button>`).join('');
  $('fSug').querySelectorAll('button').forEach((b,i)=>b.onclick=()=>fSpeak(list[i]))}
 function fSpeak(t){$('fSaid').textContent=tr('اتقال: ')+t;speak(t,()=>{if(freeOn)startListening()})}
@@ -2874,7 +2876,7 @@ const svgI=(k,cls)=>`<svg${cls?` class="${cls}"`:''} viewBox="0 0 24 24" fill="n
 function riKey(t){t=String(t||'');
  if(/^\s*(أيوه|ايوه|آه|اه|نعم|تمام|موافق|ماشي|هاخد|خده|خدها|إيه|ايه|إي|باخذ|خذه|خذها|زين|أبي|ابي)/.test(t)||/^\s*(yes|ok|okay|sure|i'?ll take|take it|agree)/i.test(t))return'ok';
  if(/^\s*(لأ|لا[\s،,.]|لا$|مش عايز|مش هاخد|بلاش|ما أبي|ما ابي|مابي)/.test(t)||/^\s*(no\b|not now|don'?t)/i.test(t))return'stop';
- if(/اكتب|هكتب|بكتب|بنفسي|تكتبلي|ورقة/.test(t)||/\btype\b|\bwrite\b|myself|paper/i.test(t))return'pen';
+ if(/اكتب|هكتب|بكتب|تكتب|بنفسي|ورقة/.test(t)||/\btype\b|\bwrite\b|myself|paper/i.test(t))return'pen';
  if(/خريطة|عنوان|مكان|فين|وين|شارع/.test(t)||/\bmap\b|address|place|where|street|landmark/i.test(t))return'pin';
  if(/فلوس|ادفع|دفع|كاش|فيزا|سعر|جنيه|بكام|درهم|ريال|شبكة|بكم/.test(t)||/money|\bpay|cash|card|price|pound|cost|how much/i.test(t))return'money';
  if(/بديل|غيره/.test(t)||/alternative|another/i.test(t))return'swap';

@@ -331,6 +331,20 @@ async function pastWelcome(page) {
     await ctx.close();
   }
 
+  // Gulf conversation (ar-SA): the quick replies in «ترجمة» are said in Gulf, each with its icon; the call trial note is Gulf
+  console.log('\n== Gulf screen (375x667)');
+  {
+    const { ctx, page } = await newPage(browser, PHONES[0], base);
+    await page.addInitScript(() => { localStorage.setItem('wasl_lang', '"ar-SA"'); localStorage.setItem('wasl_welcome', 'true'); });
+    await page.goto(base + 'index.html'); await page.waitForTimeout(600);
+    const r = await page.evaluate(() => { openFreeScreen(); const t = [...document.querySelectorAll('#fSug button')].map(b => [b.textContent, b.querySelector('.ri use, .ri svg') ? 1 : 0]);
+      callOpen(); return { t, note: document.querySelector('#call .cnote') ? document.querySelector('#call .cnote').textContent : '' }; });
+    r.t.length === 4 && /شوي؟/.test(r.t[0][0]) && /تكتب لي/.test(r.t[2][0]) && r.t.every(x => x[1]) ? pass('gulf', 'quick replies in Gulf, each with an icon') : fail('gulf', 'replies: ' + JSON.stringify(r.t));
+    /للحين/.test(r.note) && !/لسه/.test(r.note) ? pass('gulf', 'call trial note in Gulf') : fail('gulf', 'call note: ' + r.note);
+    if (page.errs.length) fail('gulf', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
+    await ctx.close();
+  }
+
   // document cards: matched on the phone, big drawing with two 48px+ buttons, nothing sent
   console.log('\n== document cards (375x667)');
   {
