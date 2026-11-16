@@ -305,6 +305,32 @@ async function pastWelcome(page) {
     await ctx.close();
   }
 
+  // «مكالمة (تجريبي)» with a fake server: the call connects, the other side speaks, then asks with 4 choices.
+  // The question and every choice are on screen above the bottom bar, 48px+, no sideways scroll.
+  console.log('\n== call (trial), fake server');
+  for (const vp of PHONES) {
+    const tag = `${vp.width}x${vp.height}`;
+    const { ctx, page } = await newPage(browser, vp, base);
+    page.on('dialog', d => d.accept());
+    let polls = 0;
+    await page.route(/wasl-call-start/, r => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ cid: 'c1', mode: 'live' }) }));
+    await page.route(/wasl-call$/, r => { polls++; r.fulfill({ contentType: 'application/json', body: JSON.stringify({ state: 'live',
+      lines: [{ r: 'wasl', t: 'أهلاً، أنا مساعد بالذكاء الاصطناعي بتكلم بالنيابة عن عميل أصم. عايز أحجز كشف.' },
+        { r: 'callee', t: 'عندنا ميعاد بكرة الساعة خمسة، أو بعد بكرة الساعة عشرة الصبح. حضرتك تحب أنهي ميعاد؟' }],
+      pending: polls > 1 ? { q: 'تختار أنهي ميعاد؟', o: ['بكرة الساعة خمسة', 'بعد بكرة الساعة عشرة', 'اسأل عن ميعاد تاني', 'أنا هكتب'] } : null }) }); });
+    await page.addInitScript(() => { localStorage.setItem('wasl_welcome', 'true'); localStorage.setItem('wasl_consent_call2', 'true'); });
+    await page.goto(base + 'index.html'); await page.waitForTimeout(600);
+    await page.evaluate(() => { callOpen(); document.getElementById('cNum').value = '01001234567'; document.getElementById('cGoal').value = 'عايز أحجز كشف'; });
+    await page.click('#cGo'); await page.waitForTimeout(4500);
+    const r = await page.evaluate(() => { const d = document.getElementById('cDecide'), f = document.getElementById('cFoot'), top = document.querySelector('#call .top').getBoundingClientRect().bottom;
+      const fr = f.classList.contains('hidden') ? innerHeight : f.getBoundingClientRect().top, b = [...d.querySelectorAll('button')].map(x => x.getBoundingClientRect());
+      return { shown: !d.classList.contains('hidden'), heard: document.getElementById('cHeard').textContent.length > 0, n: b.length,
+        vis: b.filter(x => x.top >= top - 1 && x.bottom <= fr + 1).length, minH: Math.min(...b.map(x => x.height)), hs: document.documentElement.scrollWidth - innerWidth }; });
+    r.shown && r.heard && r.n === 4 && r.vis === 4 && r.minH >= 48 && r.hs <= 0 ? pass(tag + ' call', 'question + 4 choices on screen, 48px+, no sideways scroll') : fail(tag + ' call', JSON.stringify(r));
+    if (page.errs.length) fail(tag + ' call', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
+    await ctx.close();
+  }
+
   // document cards: matched on the phone, big drawing with two 48px+ buttons, nothing sent
   console.log('\n== document cards (375x667)');
   {
