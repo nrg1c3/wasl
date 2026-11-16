@@ -292,6 +292,12 @@ async function pastWelcome(page) {
     t.length === 7 && t.some(x => /سبّاك/.test(x)) && t.some(x => /مكالمة \(تجريبي\)/.test(x)) ? pass(tag + ' places', 'home repairs: 5 cards + call + back') : fail(tag + ' places', `home repairs: ${t.join(' | ')}`);
     await page.locator('#pics button', { hasText: 'مكالمة (تجريبي)' }).click(); await page.waitForTimeout(400);
     (await page.evaluate(() => document.getElementById('call').classList.contains('on'))) ? pass(tag + ' places', 'call card opens the call screen') : fail(tag + ' places', 'call card did not open the call screen');
+    const cg = await page.evaluate(() => document.getElementById('cGoal').value);
+    cg === 'عايز سبّاك أو كهربائي ييجي البيت' ? pass(tag + ' places', 'call request box starts with the home-repair sentence') : fail(tag + ' places', 'call request box: ' + cg);
+    // opened again without a sentence (home tool, call link): the untouched ready sentence is gone; what the user typed stays
+    const after = await page.evaluate(() => { callOpen(); const a = document.getElementById('cGoal').value;
+      callOpen('عايز سبّاك أو كهربائي ييجي البيت'); document.getElementById('cGoal').value = 'عايز أحجز كشف'; callOpen(); return [a, document.getElementById('cGoal').value]; });
+    after[0] === '' && after[1] === 'عايز أحجز كشف' ? pass(tag + ' places', 'ready sentence cleared on a plain open, typed text kept') : fail(tag + ' places', 'after reopen: ' + JSON.stringify(after));
     await page.evaluate(() => { show('talk'); openPlaces(); }); await page.waitForTimeout(200);
     await page.locator('#pics button.back').click(); await page.waitForTimeout(300);
     (await page.evaluate(() => document.getElementById('home').classList.contains('on'))) ? pass(tag + ' places', '«رجوع» from the grid goes home') : fail(tag + ' places', 'grid «رجوع» did not go home');

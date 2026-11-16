@@ -765,6 +765,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <script src="meds.js"></script>
 <script>
 const EN={
+'عايز سبّاك أو كهربائي ييجي البيت':'I need a plumber or an electrician to come to my home',
 'السجل المدني':'Civil registry','بطاقة':'ID card','شهادة ميلاد':'Birth certificate','عايز أطلع شهادة ميلاد':'I want to get a birth certificate','بدل فاقد':'Lost card','البطاقة ضاعت، عايز بدل فاقد':'I lost my ID card, I want a replacement',
 'المرور':'Traffic office','رخصة سواقة':'Driving licence','عايز أطلع أو أجدد رخصة السواقة':'I want to get or renew my driving licence','رخصة عربية':'Car licence','عايز أجدد رخصة العربية':'I want to renew my car licence','مخالفة':'Traffic fine','عايز أسأل عن مخالفة':'I want to ask about a traffic fine',
 'قسم الشرطة':'Police station','أعمل محضر':'File a report','عايز أعمل محضر':'I want to file a police report','اتسرق أو ضاع':'Stolen or lost','حاجة بتاعتي اتسرقت أو ضاعت، عايز أعمل محضر':'Something of mine was stolen or lost, I want to file a report',
@@ -1338,6 +1339,7 @@ wList:'<li>Badalak is <b>free</b>.</li><li>Your words are <b>not recorded</b>. T
    screen is shown in simple Gulf. Same keys as EN; a sentence that is the same in both dialects is not listed.
    Spoken text follows its own language (LANG / the country's emergency dialect), not this map. */
 const GU={
+'عايز سبّاك أو كهربائي ييجي البيت':'أبي سبّاك أو كهربائي يجي البيت',
 'السجل المدني':'الأحوال المدنية','بطاقة':'الهوية','شهادة ميلاد':'شهادة ميلاد','عايز أطلع شهادة ميلاد':'أبي أطلّع شهادة ميلاد','بدل فاقد':'بدل فاقد','البطاقة ضاعت، عايز بدل فاقد':'الهوية ضاعت، أبي بدل فاقد',
 'المرور':'المرور','رخصة سواقة':'رخصة قيادة','عايز أطلع أو أجدد رخصة السواقة':'أبي أطلّع أو أجدد رخصة القيادة','رخصة عربية':'استمارة السيارة','عايز أجدد رخصة العربية':'أبي أجدد استمارة السيارة','مخالفة':'مخالفة','عايز أسأل عن مخالفة':'أبي أسأل عن مخالفة',
 'قسم الشرطة':'مركز الشرطة','أعمل محضر':'أسوي بلاغ','عايز أعمل محضر':'أبي أسوي بلاغ','اتسرق أو ضاع':'انسرق أو ضاع','حاجة بتاعتي اتسرقت أو ضاعت، عايز أعمل محضر':'شي حقي انسرق أو ضاع، أبي أسوي بلاغ',
@@ -1881,7 +1883,7 @@ const PICS=[
  /* home repairs (#46): who is needed, said so the listener knows it is for the home; the call card opens «مكالمة (تجريبي)»,
     since plumbers and electricians are often reached by phone */
  {i:'🔧',l:'صيانة البيت',sub:[{i:'🚰',l:'سبّاك',g:'عايز سبّاك ييجي البيت'},{i:'💡',l:'كهربائي',g:'عايز كهربائي ييجي البيت'},{i:'🧑',l:'البوّاب',g:'عايز أكلّم البوّاب'},
-  {i:'🏠',l:'الإيجار',g:'عايز أتكلم عن الإيجار'},{i:'🧾',l:'فاتورة كهربا أو غاز',cam:'فاتورة كهربا أو غاز',pick:1},{i:'📞',l:'مكالمة (تجريبي)',call:1}]},
+  {i:'🏠',l:'الإيجار',g:'عايز أتكلم عن الإيجار'},{i:'🧾',l:'فاتورة كهربا أو غاز',cam:'فاتورة كهربا أو غاز',pick:1},{i:'📞',l:'مكالمة (تجريبي)',call:1,cg:'عايز سبّاك أو كهربائي ييجي البيت'}]},
  /* government (#46): «ورق حكومي» split in three, one tap to the cards; the errand only, nothing about rights or legal steps.
     The police station has «🚨 طوارئ» first: someone there may be in danger. */
  {i:'🏛️',l:'السجل المدني',sub:[{i:'🪪',l:'بطاقة',g:'عايز أطلع أو أجدد البطاقة'},{i:'📜',l:'شهادة ميلاد',g:'عايز أطلع شهادة ميلاد'},{i:'❗',l:'بدل فاقد',g:'البطاقة ضاعت، عايز بدل فاقد'},
@@ -1891,7 +1893,7 @@ const PICS=[
  {i:'🚓',l:'قسم الشرطة',sub:[{i:'🚨',l:'طوارئ',sos:1},{i:'📝',l:'أعمل محضر',g:'عايز أعمل محضر'},{i:'👜',l:'اتسرق أو ضاع',g:'حاجة بتاعتي اتسرقت أو ضاعت، عايز أعمل محضر'},
   {i:'📄',l:'ورقة معايا',cam:'ورقة من القسم',pick:1}]},
  {i:'📍',l:'فين المكان؟',g:'عايز أسأل عن مكان'}];
-if(UI==='en'||GULF)PICS.forEach(c=>{c.l=tr(c.l);if(c.g)c.g=tr(c.g);(c.sub||[]).forEach(x=>{x.l=tr(x.l);if(x.g)x.g=tr(x.g);if(x.n){x.n=tr(x.n);if(UI==='en')x.n=x.n[0].toLowerCase()+x.n.slice(1)}})});
+if(UI==='en'||GULF)PICS.forEach(c=>{c.l=tr(c.l);if(c.g)c.g=tr(c.g);(c.sub||[]).forEach(x=>{x.l=tr(x.l);if(x.g)x.g=tr(x.g);if(x.cg)x.cg=tr(x.cg);if(x.n){x.n=tr(x.n);if(UI==='en')x.n=x.n[0].toLowerCase()+x.n.slice(1)}})});
 /* box / strip / bottle: drawn, not emoji (there is no emoji for a strip of pills) */
 const QTY={b:{l:'علبة',s:'عايز علبة {n}',svg:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 16l16-8 16 8v20l-16 8-16-8z" fill="#FFF6DC" stroke="#B8902F" stroke-width="3" stroke-linejoin="round"/><path d="M8 16l16 8 16-8M24 24v20" stroke="#B8902F" stroke-width="3" fill="none"/><path d="M14 28l6 3" stroke="#C0392B" stroke-width="3" stroke-linecap="round"/></svg>'},
  s:{l:'شريط',s:'عايز شريط {n}',svg:'<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="12" width="40" height="24" rx="5" fill="#E7ECEE" stroke="#5B6B73" stroke-width="3"/><g fill="#fff" stroke="#2B67B5" stroke-width="2.5"><circle cx="13" cy="20" r="4"/><circle cx="24" cy="20" r="4"/><circle cx="35" cy="20" r="4"/><circle cx="13" cy="29" r="4"/><circle cx="24" cy="29" r="4"/><circle cx="35" cy="29" r="4"/></g></svg>'},
@@ -1907,7 +1909,7 @@ function drawPics(cat,fromHome){if(!cat)gridFromHome=!!fromHome;picsFromHome=!!(
  const sb=$('pics').closest('.body');if(sb)sb.scrollTop=0;
  $('pics').innerHTML=list.map(x=>`<button class="pic${x.back?' back':''}${x.cam?' pcam':''}${x.sos?' psos':''}"><i aria-hidden="true">${x.i}</i>${esc(x.l)}</button>`).join('');
  $('pics').querySelectorAll('button').forEach((b,k)=>b.onclick=()=>{const x=list[k];buzz([30]);
-  if(x.back){if(!cat||picsFromHome){drawPics(null);return show('home')}return drawPics(null,gridFromHome)}if(x.sub)return drawPics(x);if(x.cam){camHint=x.cam;$(x.pick?'picIn':'camIn').click();return}if(x.q)return drawQty(x,cat);if(x.call)return callOpen();if(x.sos)return $('sosBtn').click();
+  if(x.back){if(!cat||picsFromHome){drawPics(null);return show('home')}return drawPics(null,gridFromHome)}if(x.sub)return drawPics(x);if(x.cam){camHint=x.cam;$(x.pick?'picIn':'camIn').click();return}if(x.q)return drawQty(x,cat);if(x.call)return callOpen(x.cg);if(x.sos)return $('sosBtn').click();
   taskPhoto=null;$('goal').value=x.g;$('startTask').click()})}
 $('camBtn').onclick=()=>{camHint='روشتة أو حاجة عايز أطلبها';$('camIn').click()};
 function shrink(file){return new Promise((ok,no)=>{const img=new Image();img.onload=()=>{const m=1024,k=Math.min(1,m/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(img.src);ok(c.toDataURL('image/jpeg',0.72))};img.onerror=no;img.src=URL.createObjectURL(file)})}
@@ -2961,7 +2963,11 @@ function callBuild(){$('call').setAttribute('aria-label',tr('مكالمة'));
  $('cOkYes').onclick=()=>callReply('ok');
  $('cOkNo').onclick=()=>callReply('no')}
 function callErr(id,msg){const e=$(id);e.textContent=msg;e.classList.toggle('hidden',!msg)}
-function callOpen(){if(!$('cSetup'))callBuild();CL=null;
+/* goal: a sentence to start the request box with (from a place card, #46); the user can change it before calling.
+   Opened later without one, a ready sentence the user never touched is cleared, so it is not said to someone else. */
+let cGoalPre='';
+function callOpen(goal){if(!$('cSetup'))callBuild();CL=null;const g=$('cGoal');
+ if(typeof goal==='string'&&goal){g.value=goal;cGoalPre=goal}else if(cGoalPre&&g.value===cGoalPre){g.value='';cGoalPre=''}
  $('cSetup').classList.remove('hidden');$('cLive').classList.add('hidden');$('cFoot').classList.add('hidden');$('cBadge').classList.add('hidden');$('cSp').classList.remove('hidden');
  ['cNumErr','cGoalErr','cErr'].forEach(id=>callErr(id,''));$('cGo').disabled=false;$('cGo').textContent=tr('📞 اتصل');
  const rec=store.get('wasl_call_recent',[]);$('cRecent').innerHTML=rec.map(n=>`<button class="chip">${esc(n)}</button>`).join('');
