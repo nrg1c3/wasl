@@ -2963,8 +2963,11 @@ function callBuild(){$('call').setAttribute('aria-label',tr('مكالمة'));
  $('cOkYes').onclick=()=>callReply('ok');
  $('cOkNo').onclick=()=>callReply('no')}
 function callErr(id,msg){const e=$(id);e.textContent=msg;e.classList.toggle('hidden',!msg)}
-/* goal: a sentence to start the request box with (from a place card, #46); the user can change it before calling */
-function callOpen(goal){if(!$('cSetup'))callBuild();CL=null;if(typeof goal==='string'&&goal)$('cGoal').value=goal;
+/* goal: a sentence to start the request box with (from a place card, #46); the user can change it before calling.
+   Opened later without one, a ready sentence the user never touched is cleared, so it is not said to someone else. */
+let cGoalPre='';
+function callOpen(goal){if(!$('cSetup'))callBuild();CL=null;const g=$('cGoal');
+ if(typeof goal==='string'&&goal){g.value=goal;cGoalPre=goal}else if(cGoalPre&&g.value===cGoalPre){g.value='';cGoalPre=''}
  $('cSetup').classList.remove('hidden');$('cLive').classList.add('hidden');$('cFoot').classList.add('hidden');$('cBadge').classList.add('hidden');$('cSp').classList.remove('hidden');
  ['cNumErr','cGoalErr','cErr'].forEach(id=>callErr(id,''));$('cGo').disabled=false;$('cGo').textContent=tr('📞 اتصل');
  const rec=store.get('wasl_call_recent',[]);$('cRecent').innerHTML=rec.map(n=>`<button class="chip">${esc(n)}</button>`).join('');
