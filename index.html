@@ -2227,7 +2227,8 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
 function asking(box){$('task').classList.toggle('asking',!!box);setTimeout(()=>{try{fitHear()}catch(e){}},0);const c=$('tCards'),to=box?$(box):$('tLive');
  if(c.parentNode!==to){if(to===$('tLive'))to.appendChild(c);else to.insertBefore(c,to.querySelector('.opts'))}}
 /* Bring a question box into view from its top (the question first), not the bottom of the log. */
-function showBox(id){const tb=$('tbody'),b=$(id);if(!tb||!b)return;requestAnimationFrame(()=>{tb.scrollTop+=b.getBoundingClientRect().top-tb.getBoundingClientRect().top-8})}
+/* bring a question box into view inside its own scroller: the task (.tbody) or the call (.cbody), even if the user had scrolled away */
+function showBox(id){const b=$(id),tb=b&&b.closest('.tbody,.cbody');if(!tb||!b)return;requestAnimationFrame(()=>{tb.scrollTop+=b.getBoundingClientRect().top-tb.getBoundingClientRect().top-8})}
 function needsOk(d){if(DEMO)return false;const t=String(d.say||'');
  return /[0-9\u0660-\u0669%٪]|جنيه|جنية|ج\.م|ريال|درهم|دولار|قرش/.test(t)||/pound|\bEGP\b|\bLE\b|dollar|riyal|dirham/i.test(t)||!!d.med||(d.cards||[]).some(c=>c&&c.k==='dose')}
 function holdSay(t,after){haltListening();buzz([200,100,200]);setHear(trH('لحظة واحدة'),trH('لحظة واحدة من فضلك'),trH('صاحب الموبايل بيراجع الكلام.'));

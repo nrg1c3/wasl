@@ -312,12 +312,13 @@ async function pastWelcome(page) {
     const tag = `${vp.width}x${vp.height}`;
     const { ctx, page } = await newPage(browser, vp, base);
     page.on('dialog', d => d.accept());
-    let polls = 0;
+    let polls = 0, round = 1;
     await page.route(/wasl-call-start/, r => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ cid: 'c1', mode: 'live' }) }));
     await page.route(/wasl-call$/, r => { polls++; r.fulfill({ contentType: 'application/json', body: JSON.stringify({ state: 'live',
       lines: [{ r: 'wasl', t: 'أهلاً، أنا مساعد بالذكاء الاصطناعي بتكلم بالنيابة عن عميل أصم. عايز أحجز كشف.' },
+        ...Array.from({ length: 12 }, (_, i) => ({ r: i % 2 ? 'callee' : 'wasl', t: 'كلام في نص المكالمة عشان سجل المكالمة يطوّل، رقم ' + (i + 1) })),
         { r: 'callee', t: 'عندنا ميعاد بكرة الساعة خمسة، أو بعد بكرة الساعة عشرة الصبح. حضرتك تحب أنهي ميعاد؟' }],
-      pending: polls > 1 ? { q: 'تختار أنهي ميعاد؟', o: ['بكرة الساعة خمسة', 'بعد بكرة الساعة عشرة', 'اسأل عن ميعاد تاني', 'أنا هكتب'] } : null }) }); });
+      pending: polls > 1 ? { q: round === 1 ? 'تختار أنهي ميعاد؟' : 'الكشف بمية وخمسين جنيه. توافق؟', o: ['بكرة الساعة خمسة', 'بعد بكرة الساعة عشرة', 'اسأل عن ميعاد تاني', 'أنا هكتب'] } : null }) }); });
     await page.addInitScript(() => { localStorage.setItem('wasl_welcome', 'true'); localStorage.setItem('wasl_consent_call2', 'true'); });
     await page.goto(base + 'index.html'); await page.waitForTimeout(600);
     await page.evaluate(() => { callOpen(); document.getElementById('cNum').value = '01001234567'; document.getElementById('cGoal').value = 'عايز أحجز كشف'; });
@@ -327,6 +328,12 @@ async function pastWelcome(page) {
       return { shown: !d.classList.contains('hidden'), heard: document.getElementById('cHeard').textContent.length > 0, n: b.length,
         vis: b.filter(x => x.top >= top - 1 && x.bottom <= fr + 1).length, minH: Math.min(...b.map(x => x.height)), hs: document.documentElement.scrollWidth - innerWidth }; });
     r.shown && r.heard && r.n === 4 && r.vis === 4 && r.minH >= 48 && r.hs <= 0 ? pass(tag + ' call', 'question + 4 choices on screen, 48px+, no sideways scroll') : fail(tag + ' call', JSON.stringify(r));
+    // the user scrolled down to read the whole call; a new question still comes into view (showBox scrolls the call, #65)
+    await page.evaluate(() => { document.getElementById('cLogBox').open = true; const c = document.querySelector('#call .cbody'); c.scrollTop = c.scrollHeight; });
+    round = 2; await page.waitForTimeout(3000);
+    const q2 = await page.evaluate(() => { const q = document.getElementById('cQ'), top = document.querySelector('#call .top').getBoundingClientRect().bottom, f = document.getElementById('cFoot');
+      const fr = f.classList.contains('hidden') ? innerHeight : f.getBoundingClientRect().top, rc = q.getBoundingClientRect(); return { t: q.textContent, top: Math.round(rc.top), vis: rc.top >= top - 1 && rc.bottom <= fr + 1 }; });
+    /توافق/.test(q2.t) && q2.vis ? pass(tag + ' call', 'new question scrolled into view after reading the log') : fail(tag + ' call', 'question hidden: ' + JSON.stringify(q2));
     if (page.errs.length) fail(tag + ' call', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
     await ctx.close();
   }
