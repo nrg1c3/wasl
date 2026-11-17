@@ -143,7 +143,7 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 <section class="card">
 <h2>٢. القايمة</h2>
 <div class="chips" id="lists"></div>
-<p class="note">ابدأوا بـ«الأهم»، وبعدين «المهم»، وبعدين «الباقي».</p>
+<p class="note" id="lNote">ابدأوا بـ«الناقص الأول»: الكلمات اللي المكتبة محتاجاها أكتر.</p>
 </section>
 
 <section class="card">
@@ -317,7 +317,12 @@ details.guide summary::after{content:'＋';margin-inline-start:auto;font-size:22
 const $=id=>document.getElementById(id);
 const MAX_TAKES=5, PART_BYTES=50*1024*1024, CONSENT_VER='2026-11-09';
 const LISTS=[['NEED','الناقص الأول'],['P1','الأهم'],['P2','المهم'],['P3','الباقي'],['ALL','الكل']];
-const LNAME=k=>(LISTS.find(l=>l[0]===k)||[k,k])[1];
+/* a measure-only signer (#43) films words the library already has, so the app can be measured on them (#67) */
+const MLIST=['LIBM','📏 كلمات المكتبة'];
+const isMeasure=()=>{const c=S.consent[S.signer];return !!(c&&c.purpose==='measure')};
+const listsNow=()=>isMeasure()?[MLIST,...LISTS]:LISTS;
+function fixList(){if(isMeasure()){if(!S.userList&&S.list==='NEED')S.list='LIBM'}else if(S.list==='LIBM')S.list='NEED'}
+const LNAME=k=>([MLIST,...LISTS].find(l=>l[0]===k)||[k,k])[1];
 /* internal ids stay in file names only; the screen shows names */
 /* [id, name, what they do]. Ids are in clip file names: never change them. First names only (the repo is public). */
 const PEOPLE=[['d1','رحمة','صمّاء، بتعمل الإشارة'],['d2','محمد','أصم، بيعمل الإشارة'],['f2','إسراء','سامعة، بتقرا الكلمة'],['f1','أ. ميادة','خبيرة الإشارة']];
@@ -387,10 +392,11 @@ const PRI_RANK={P1:0,P2:1,P3:2};
 function needList(sg){S.need=S.need||{};if(S.need[sg])return S.need[sg];
  return S.need[sg]=S.vocab.map((v,i)=>({v,i})).filter(({v})=>libN(v.id)<3&&!(S.lib&&S.lib[v.id]||[]).includes(sg))
   .sort((a,b)=>libN(a.v.id)-libN(b.v.id)||(PRI_RANK[a.v.pri]??9)-(PRI_RANK[b.v.pri]??9)||a.i-b.i).map(x=>x.v)}
-const listOf=l=>l==='NEED'?needList(S.signer):l==='ALL'?S.vocab:S.vocab.filter(v=>v.pri===l);
+const libList=()=>S.vocab.map((v,i)=>({v,i})).filter(({v})=>libN(v.id)>=1).sort((a,b)=>(PRI_RANK[a.v.pri]??9)-(PRI_RANK[b.v.pri]??9)||a.i-b.i).map(x=>x.v);
+const listOf=l=>l==='LIBM'?libList():l==='NEED'?needList(S.signer):l==='ALL'?S.vocab:S.vocab.filter(v=>v.pri===l);
 const takesFor=(id,sg)=>S.takes.filter(t=>t.id===id&&t.signer===sg).sort((a,b)=>a.take-b.take);
 const doneFor=(id,sg)=>takesFor(id,sg).some(t=>t.status==='ok');
-function cur(){const L=listOf(S.list);const i=Math.min(Math.max(0,(S.pos[S.signer]||{})[S.list]||0),L.length-1);return {L,i,v:L[i]}}
+function cur(){fixList();const L=listOf(S.list);const i=Math.min(Math.max(0,(S.pos[S.signer]||{})[S.list]||0),L.length-1);return {L,i,v:L[i]}}
 function setPos(i){S.pos[S.signer]=S.pos[S.signer]||{};S.pos[S.signer][S.list]=i;ls.set('wasl_rec_pos',S.pos)}
 
 /* ---------- storage indicator ---------- */
@@ -418,7 +424,9 @@ function drawSetup(){
  const other=nameOff(S.signer);if(other)$('cStat').classList.remove('okay');
  $('cTxt').textContent=other?`⚠️ الموافقة متسجّلة باسم «${c.name}». دوس «غيّر الموافقة» وسجّلها باسم ${shown(S.signer)}.`:c?`الموافقة متسجّلة${c.purpose==='measure'?' (📏 قياس بس)':''}: ${c.name} (${new Date(c.date).toLocaleDateString('ar-EG')})`:`لسه مفيش موافقة من ${shown(S.signer)}. هتظهر لما تدوس «ابدأ».`;
  $('cEdit').textContent=c?'غيّر الموافقة':'الموافقة على التصوير';
- chips($('lists'),LISTS.map(([k,l])=>{const L=listOf(k);const d=L.filter(v=>doneFor(v.id,S.signer)).length;return [k,`${l} <small>${d}/${L.length}</small>`]}),S.list,v=>{S.list=v;ls.set('wasl_rec_list',v);drawSetup()});
+ fixList();
+ $('lNote').textContent=isMeasure()?'📏 بتصوّر كلمات موجودة في المكتبة، عشان نقيس التطبيق بيفهمها ولا لأ.':'ابدأوا بـ«الناقص الأول»: الكلمات اللي المكتبة محتاجاها أكتر.';
+ chips($('lists'),listsNow().map(([k,l])=>{const L=listOf(k);const d=L.filter(v=>doneFor(v.id,S.signer)).length;return [k,`${l} <small>${d}/${L.length}</small>`]}),S.list,v=>{S.userList=true;S.list=v;ls.set('wasl_rec_list',v);drawSetup()});
  chips($('cams'),[['environment','الخلفية (أوضح)'],['user','الأمامية (سيلفي)']],S.cam,v=>{S.cam=v;ls.set('wasl_rec_cam',v);drawSetup()});
  $('dOut').textContent=S.dur+' ثواني';$('dMinus').disabled=S.dur<=3;$('dPlus').disabled=S.dur>=6;
  storage()}
@@ -486,7 +494,7 @@ function draw(){const {L,i,v}=cur();if(!v)return;
  const kc=S.consent[S.signer];$('who').innerHTML=`🎥 ${esc(shown(S.signer))}${kc&&kc.purpose==='measure'?' · 📏 قياس بس':''} <small>(دوس للتغيير)</small>`;
  $('wAr').textContent=v.ar;$('wId').textContent='';
  const ts=takesFor(v.id,S.signer),ok=ts.filter(t=>t.status==='ok').length;
- $('wInfo').textContent=`${GROUP_AR[v.group]||v.group} · ${v.pri} · تمام ${ok} · في المكتبة: ${libN(v.id)} ${libN(v.id)===1?'شخص':'أشخاص'}`;
+ $('wInfo').textContent=`${GROUP_AR[v.group]||v.group} · ${v.pri} · تمام ${ok} · في المكتبة: ${libN(v.id)===2?'شخصين':libN(v.id)+' '+(libN(v.id)===1?'شخص':'أشخاص')}`;
  requestAnimationFrame(fit);
  const strip=$('strip');strip.innerHTML='';
  if(!ts.length)strip.appendChild(el('span',{class:'hint'},'لسه مفيش أخدات للإشارة دي. اعمل من 3 لـ 5.'));
@@ -646,7 +654,7 @@ $('freeBtn').onclick=async()=>{const b=$('freeBtn');if(!b.dataset.sure){b.datase
 /* ---------- start ---------- */
 (async function init(){
  EXTRA=ls.get('wasl_rec_people',[])||[];{const h=/[#&]s=([a-z]\d{1,2})/i.exec(location.hash);S.signer=(h&&decodeURIComponent(h[1]))||ls.get('wasl_rec_signer','d1');S.picked=false}S.list=ls.get('wasl_rec_list','NEED');S.pos=ls.get('wasl_rec_pos',{})||{};S.cam=ls.get('wasl_rec_cam','environment');S.dur=Math.min(6,Math.max(3,+ls.get('wasl_rec_dur',4)||4));
- if(!LISTS.some(l=>l[0]===S.list))S.list='NEED';
+ if(![MLIST,...LISTS].some(l=>l[0]===S.list))S.list='NEED';
  try{await loadAll()}catch(e){$('sErr').textContent='المتصفح ده مش بيحفظ الفيديوهات (ممكن يكون تصفح متخفي). افتح الصفحة في Chrome أو Safari العادي.';$('sErr').classList.remove('hidden')}
  try{await loadVocab();await loadLib()}catch(e){$('sErr').textContent='قايمة الإشارات ما اتحمّلتش. اتأكد من النت وافتح الصفحة تاني.';$('sErr').classList.remove('hidden')}
  drawSetup();drawRev();

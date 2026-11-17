@@ -365,6 +365,13 @@ async function pastWelcome(page) {
     r.list === 'NEED' && /الناقص الأول/.test(r.chip) ? pass('record', '«الناقص الأول» is the default list') : fail('record', 'default list: ' + JSON.stringify(r));
     r.first && r.first[0] === 'P1' && r.first[1] === 0 && r.sorted ? pass('record', 'unfilmed P1 words first, then fewer people first, by priority') : fail('record', 'order: ' + JSON.stringify(r));
     !r.mine && r.hs <= 0 ? pass('record', "a signer's own library words are left out, no sideways scroll") : fail('record', JSON.stringify(r));
+    // a measure-only signer (#43) gets «📏 كلمات المكتبة» by default: the 211 library words by priority, so they can be measured (#67)
+    const m = await page.evaluate(() => { S.consent.t1 = { signer: 't1', name: 'test', purpose: 'measure', uses: { app: false, training: true }, date: Date.now() };
+      pickSigner('t1'); S.userList = false; S.list = 'NEED'; drawSetup(); const L = listOf(S.list), chipsT = [...document.querySelectorAll('#lists button')].map(b => b.textContent);
+      return { list: S.list, n: L.length, lib: Object.keys(S.lib).length, allInLib: L.every(v => libN(v.id) >= 1), firstPri: L[0] && L[0].pri,
+        chip: chipsT[0] || '', hasNeed: chipsT.some(t => /الناقص الأول/.test(t)), note: document.getElementById('lNote').textContent }; });
+    m.list === 'LIBM' && m.n === m.lib && m.allInLib && m.firstPri === 'P1' && /كلمات المكتبة/.test(m.chip) && m.hasNeed && /موجودة/.test(m.note)
+      ? pass('record', `measure-only signer: ${m.n} library words by default, «الناقص الأول» still there`) : fail('record', 'measure list: ' + JSON.stringify(m));
     if (page.errs.length) fail('record', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
     await ctx.close();
   }
