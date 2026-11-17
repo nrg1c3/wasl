@@ -352,6 +352,23 @@ async function pastWelcome(page) {
     await ctx.close();
   }
 
+  // record.html «الناقص الأول» (#22): the default list puts what the library needs first: words nobody filmed (P1 first),
+  // then words filmed by one person, then two; words this signer already has in the library are left out
+  console.log('\n== record: missing first');
+  {
+    const { ctx, page } = await newPage(browser, PHONES[0], base);
+    await page.goto(base + 'record.html#s=d3'); await page.waitForTimeout(1200);
+    const r = await page.evaluate(() => { const L = listOf('NEED'), n = L.map(v => libN(v.id)), rank = { P1: 0, P2: 1, P3: 2 };
+      const sorted = n.every((x, i) => !i || n[i - 1] <= x) && L.every((v, i) => !i || n[i - 1] < n[i] || rank[L[i - 1].pri] <= rank[v.pri]);
+      return { list: S.list, chip: (document.querySelector('#lists button.on') || {}).textContent || '', first: L[0] && [L[0].pri, n[0]], sorted, mine: needList('d1').some(v => (S.lib[v.id] || []).includes('d1')),
+        hs: document.documentElement.scrollWidth - innerWidth }; });
+    r.list === 'NEED' && /الناقص الأول/.test(r.chip) ? pass('record', '«الناقص الأول» is the default list') : fail('record', 'default list: ' + JSON.stringify(r));
+    r.first && r.first[0] === 'P1' && r.first[1] === 0 && r.sorted ? pass('record', 'unfilmed P1 words first, then fewer people first, by priority') : fail('record', 'order: ' + JSON.stringify(r));
+    !r.mine && r.hs <= 0 ? pass('record', "a signer's own library words are left out, no sideways scroll") : fail('record', JSON.stringify(r));
+    if (page.errs.length) fail('record', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
+    await ctx.close();
+  }
+
   // document cards: matched on the phone, big drawing with two 48px+ buttons, nothing sent
   console.log('\n== document cards (375x667)');
   {
