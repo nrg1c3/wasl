@@ -206,7 +206,7 @@ async function pastWelcome(page) {
     await page.locator(`#sitGrid button[data-i="${i}"]`).click(); await page.waitForTimeout(400);
     const r = await page.evaluate(() => ({ on: document.getElementById('talk').classList.contains('on'), t: [...document.querySelectorAll('#pics button')].map(x => x.textContent),
       hs: document.documentElement.scrollWidth - innerWidth }));
-    r.on && r.t.length === 13 && r.t.some(x => /روشتة/.test(x)) && r.t.some(x => /قطرة للعين/.test(x)) ? pass(tag + ' pharmacy', '12 pharmacy cards + back') : fail(tag + ' pharmacy', `cards: ${r.t.join(' | ')}`);
+    r.on && r.t.length === 14 && r.t.some(x => /روشتة/.test(x)) && /دوا بتاعي/.test(r.t[13]) && r.t.some(x => /قطرة للعين/.test(x)) ? pass(tag + ' pharmacy', '12 pharmacy cards + back + «➕ دوا بتاعي»') : fail(tag + ' pharmacy', `cards: ${r.t.join(' | ')}`);
     r.t.some(x => /دكتور|فلوس وفواتير/.test(x)) ? fail(tag + ' pharmacy', 'old sections shown') : pass(tag + ' pharmacy', 'no doctor / bills sections');
     r.hs > 0 ? fail(tag + ' pharmacy', `scrolls sideways by ${r.hs}px`) : pass(tag + ' pharmacy', 'no sideways scroll');
     // box / strip / bottle (#50): pictures after the card, «رجوع» back to the cards, the choice goes in the sentence
@@ -216,7 +216,7 @@ async function pastWelcome(page) {
     let q = await cards();
     q.length === 4 && /علبة/.test(q[1]) && /شريط/.test(q[2]) && /مش مهم/.test(q[3]) ? pass(tag + ' pharmacy', 'headache: box / strip / doesn\'t matter') : fail(tag + ' pharmacy', `qty: ${q.join(' | ')}`);
     await page.locator('#pics button.back').click(); await page.waitForTimeout(200);
-    (await cards()).length === 13 ? pass(tag + ' pharmacy', 'qty «رجوع» back to the cards') : fail(tag + ' pharmacy', 'qty «رجوع» lost the cards');
+    (await cards()).length === 14 ? pass(tag + ' pharmacy', 'qty «رجوع» back to the cards') : fail(tag + ' pharmacy', 'qty «رجوع» lost the cards');
     await page.locator('#pics button', { hasText: 'دوا للبرد' }).click(); await page.waitForTimeout(200);
     q = await cards();
     const qs = await page.evaluate(() => { const b = [...document.querySelectorAll('#pics button')]; return { hs: document.documentElement.scrollWidth - innerWidth, small: b.filter(x => x.offsetHeight < 48 || x.offsetWidth < 48).length }; });
@@ -366,6 +366,60 @@ async function pastWelcome(page) {
     r.first && r.first[0] === 'P1' && r.first[1] === 0 && r.sorted ? pass('record', 'unfilmed P1 words first, then fewer people first, by priority') : fail('record', 'order: ' + JSON.stringify(r));
     !r.mine && r.hs <= 0 ? pass('record', "a signer's own library words are left out, no sideways scroll") : fail('record', JSON.stringify(r));
     if (page.errs.length) fail('record', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
+    await ctx.close();
+  }
+
+  // «أدويتي» (#50): consent once, write a name, ask for it with box/strip; a box photo shows the read name to check and is
+  // saved only on «احفظ»; a reply without «name» saves nothing (never «goal»); edit/delete; at most 10
+  console.log('\n== my medicines');
+  for (const vp of PHONES) {
+    const tag = `${vp.width}x${vp.height}`;
+    const { ctx, page } = await newPage(browser, vp, base);
+    let vision = { name: 'كونكور 5', clear: true, goal: 'عايز علبة كونكور' };
+    await page.route(/wasl-vision/, r => r.fulfill({ contentType: 'application/json', body: JSON.stringify(vision) }));
+    await page.addInitScript(() => localStorage.setItem('wasl_welcome', 'true'));
+    await page.goto(base + 'index.html'); await page.waitForTimeout(600);
+    await page.evaluate(() => { openPharm(); document.getElementById('startTask').click = () => {}; });
+    const cards = () => page.evaluate(() => [...document.querySelectorAll('#pics button')].map(b => b.textContent));
+    const pop = () => page.evaluate(() => { const p = document.getElementById('medsPop'); return p && !p.classList.contains('hidden') ? p.innerText.replace(/\s+/g, ' ') : ''; });
+    let t = await cards();
+    t.some(x => /دوا بتاعي/.test(x)) && !t.some(x => /عدّل أدويتي/.test(x)) ? pass(tag + ' meds', '«➕ دوا بتاعي» after the ready cards') : fail(tag + ' meds', 'cards: ' + t.join(' | '));
+    await page.locator('#pics button', { hasText: 'دوا بتاعي' }).click(); await page.waitForTimeout(150);
+    /موبايلك بس/.test(await pop()) ? pass(tag + ' meds', 'consent before the first one') : fail(tag + ' meds', 'no consent: ' + await pop());
+    await page.locator('#medsPop button', { hasText: 'لأ' }).click(); await page.waitForTimeout(100);
+    const no = await page.evaluate(() => ({ ok: localStorage.getItem('wasl_meds_ok'), m: localStorage.getItem('wasl_meds') }));
+    !(await pop()) && !no.ok && !no.m ? pass(tag + ' meds', '«لأ» closes and saves nothing') : fail(tag + ' meds', JSON.stringify(no));
+    await page.locator('#pics button', { hasText: 'دوا بتاعي' }).click(); await page.locator('#medsPop button', { hasText: 'موافق' }).click();
+    await page.locator('#medsPop button', { hasText: 'أكتب الاسم' }).click(); await page.fill('#mmIn', 'بانادول إكسترا');
+    await page.locator('#medsPop button', { hasText: 'احفظ' }).click(); await page.waitForTimeout(150);
+    t = await cards();
+    t.some(x => /بانادول إكسترا/.test(x)) && t.some(x => /عدّل أدويتي/.test(x)) ? pass(tag + ' meds', 'written name saved as a card') : fail(tag + ' meds', 'after save: ' + t.join(' | '));
+    await page.locator('#pics button.pmine').click(); await page.waitForTimeout(100);
+    await page.locator('#pics button', { hasText: 'شريط' }).click();
+    const g = await page.evaluate(() => document.getElementById('goal').value);
+    g === 'عايز شريط بانادول إكسترا' ? pass(tag + ' meds', 'sentence: ' + g) : fail(tag + ' meds', 'sentence: ' + g);
+    // photo of the box: the read name shows in the box to edit; nothing saved until «احفظ»
+    const readPhoto = () => page.evaluate(() => new Promise(ok => { const c = document.createElement('canvas'); c.width = c.height = 40; c.getContext('2d').fillRect(0, 0, 40, 40);
+      c.toBlob(b => { medRead(new File([b], 'box.png', { type: 'image/png' })); ok(); }); }));
+    await page.evaluate(() => openPharm()); await readPhoto(); await page.waitForTimeout(800);
+    const r1 = await page.evaluate(() => ({ v: (document.getElementById('mmIn') || {}).value, img: !!document.querySelector('#medsPop img'), n: medsGet().length }));
+    r1.v === 'كونكور 5' && r1.img && r1.n === 1 ? pass(tag + ' meds', 'photo: read name shown to edit, not saved yet') : fail(tag + ' meds', 'photo: ' + JSON.stringify(r1));
+    await page.locator('#medsPop button', { hasText: 'رجوع' }).click(); await page.waitForTimeout(100);
+    vision = { goal: 'عايز علبة كونكور', clear: true }; await readPhoto(); await page.waitForTimeout(800);
+    const r2 = await page.evaluate(() => ({ t: document.getElementById('medsPop').innerText, box: !!document.getElementById('mmIn'), n: medsGet().length }));
+    /ما قدرتش أقرا الاسم/.test(r2.t) && !r2.box && r2.n === 1 ? pass(tag + ' meds', 'reply without «name»: nothing saved, «goal» ignored') : fail(tag + ' meds', 'no name: ' + JSON.stringify(r2));
+    // popup buttons 48px+, no sideways scroll
+    const sz = await page.evaluate(() => ({ small: [...document.querySelectorAll('#medsPop button')].filter(b => b.offsetHeight && b.offsetHeight < 48).length, hs: document.documentElement.scrollWidth - innerWidth }));
+    !sz.small && sz.hs <= 0 ? pass(tag + ' meds', 'popup buttons 48px+, no sideways scroll') : fail(tag + ' meds', JSON.stringify(sz));
+    await page.evaluate(() => medsClose());
+    // delete, then the limit of 10
+    await page.evaluate(() => medEdit()); await page.locator('#medsPop [data-d="0"]').click(); await page.locator('#medsPop .mmb button', { hasText: 'امسح' }).click(); await page.waitForTimeout(100);
+    const del = await page.evaluate(() => medsGet().length);
+    del === 0 ? pass(tag + ' meds', 'delete after «تمسح…؟»') : fail(tag + ' meds', 'after delete: ' + del);
+    await page.evaluate(() => { medsSet(Array.from({ length: 10 }, (_, i) => ({ id: 'x' + i, name: 'دوا ' + (i + 1), at: 1 }))); openPharm(); medAdd(); });
+    t = await cards();
+    !t.some(x => /دوا بتاعي/.test(x)) && /عندك 10 أدوية/.test(await pop()) ? pass(tag + ' meds', 'at 10: no «➕», delete one first') : fail(tag + ' meds', 'limit: ' + await pop());
+    if (page.errs.length) fail(tag + ' meds', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
     await ctx.close();
   }
 
