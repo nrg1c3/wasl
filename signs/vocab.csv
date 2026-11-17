@@ -30,6 +30,7 @@ questions,ليه؟,WHY,both,P3
 questions,كام؟,HOW-MANY/HOW-MUCH,both,P1
 pharmacy,صيدلية,PHARMACY,both,P1
 pharmacy,دوا,MEDICINE,both,P1
+pharmacy,دوايا / أدويتي,MY-MEDICINE,both,P2
 pharmacy,روشتة,PRESCRIPTION,both,P1
 pharmacy,أقراص / حبوب,PILLS,both,P1
 pharmacy,شراب,SYRUP,both,P2
