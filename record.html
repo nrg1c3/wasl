@@ -468,14 +468,31 @@ $('kOk').onclick=async()=>{const say=t=>{$('kErr').textContent=t;$('kErr').class
  if(afterConsent)openStudio();else{show('setup');drawSetup();toast('اتسجّلت الموافقة')}};
 
 /* ---------- camera ---------- */
+/* #74: some phones (Android Chrome) give a landscape 1920×1080 stream even when the phone stands upright, so the person was
+   small in the middle of the take. Then the middle of each frame is cut out as an upright 9:16 picture on a canvas, and the
+   canvas is what is shown and recorded: what the signer sees is exactly what is saved (608×1080 from 1920×1080). */
+const CAM_Q={width:{ideal:1080},height:{ideal:1920},aspectRatio:{ideal:9/16},resizeMode:{ideal:'crop-and-scale'},frameRate:{ideal:30,max:30}};
+function portrait(raw){return new Promise((ok,bad)=>{const sv=document.createElement('video');sv.muted=true;sv.playsInline=true;sv.srcObject=raw;
+ const go=()=>{const W=sv.videoWidth,H=sv.videoHeight;if(!W||!H)return bad(new Error('no size'));
+  const cw=2*Math.round(H*9/32),c=document.createElement('canvas');c.width=cw;c.height=H;const g=c.getContext('2d',{alpha:false});
+  const loop={on:true,sv};const paint=()=>{if(!loop.on)return;const w=sv.videoWidth,h=sv.videoHeight;
+   if(w&&h){if(w>h){const sw=Math.min(w,h*c.width/c.height);g.drawImage(sv,(w-sw)/2,0,sw,h,0,0,c.width,c.height)}
+    else g.drawImage(sv,0,0,c.width,c.height)}
+   if(sv.requestVideoFrameCallback)sv.requestVideoFrameCallback(paint);else requestAnimationFrame(paint)};
+  paint();const out=c.captureStream(30);S.loop=loop;S.dims={w:cw,h:H,src:`${W}×${H}`,crop:true};ok(out)};
+ sv.onloadedmetadata=()=>{sv.play().then(go,go)};setTimeout(()=>{if(!S.loop)bad(new Error('timeout'))},4000)})}
 async function startCam(){stopCam();const msg=$('stageMsg');msg.classList.add('hidden');
- try{S.stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:S.cam},width:{ideal:1080},height:{ideal:1920},frameRate:{ideal:30,max:30}}});
+ try{const raw=await navigator.mediaDevices.getUserMedia({audio:false,video:Object.assign({facingMode:{ideal:S.cam}},CAM_Q)});S.raw=raw;
+  const st=raw.getVideoTracks()[0].getSettings();S.dims={w:st.width||0,h:st.height||0,src:`${st.width||'?'}×${st.height||'?'}`,crop:false};
+  S.stream=st.width&&st.height&&st.width>st.height?await portrait(raw):raw;
   const v=$('live');v.srcObject=S.stream;v.classList.toggle('mirror',S.cam==='user');try{await v.play()}catch(e){}
-  const st=S.stream.getVideoTracks()[0].getSettings();$('resP').textContent=`${st.width||'?'}×${st.height||'?'} · ${Math.round(st.frameRate||30)}fps`;
-  if(st.width&&st.height&&st.width>st.height)toast('الكاميرا بتصوّر بالعرض. لفّ الموبايل بالطول.',4000);
- }catch(e){S.stream=null;msg.innerHTML='📷 الكاميرا مش شغالة.<br>اسمح للصفحة تستخدم الكاميرا من إعدادات المتصفح، وبعدين دوس «جرّب تاني».';msg.appendChild(el('button',{type:'button',class:'btn',style:'margin-top:10px',on:{click:startCam}},'جرّب تاني'));msg.classList.remove('hidden')}
+  $('resP').textContent=`${S.dims.w||'?'}×${S.dims.h||'?'} · ${Math.round(st.frameRate||30)}fps${S.dims.crop?' ✂':''}`;
+  const land=screen.orientation&&/landscape/.test(screen.orientation.type);
+  if(land)toast('لفّ الموبايل بالطول.',4000);
+ }catch(e){stopCam();msg.innerHTML='📷 الكاميرا مش شغالة.<br>اسمح للصفحة تستخدم الكاميرا من إعدادات المتصفح، وبعدين دوس «جرّب تاني».';msg.appendChild(el('button',{type:'button',class:'btn',style:'margin-top:10px',on:{click:startCam}},'جرّب تاني'));msg.classList.remove('hidden')}
  draw()}
-function stopCam(){if(S.stream){S.stream.getTracks().forEach(t=>t.stop());S.stream=null}}
+function stopCam(){if(S.loop){S.loop.on=false;try{S.loop.sv.srcObject=null}catch(e){}S.loop=null}
+ [S.stream,S.raw].forEach(x=>{if(x)x.getTracks().forEach(t=>t.stop())});S.stream=null;S.raw=null}
 function pickMime(){const M=['video/mp4;codecs=avc1.42E01E','video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'];
  if(!window.MediaRecorder)return null;for(const m of M){try{if(MediaRecorder.isTypeSupported(m))return m}catch(e){}}return ''}
 async function wake(){try{if('wakeLock' in navigator&&!S.wake&&S.state!=='setup'){S.wake=await navigator.wakeLock.request('screen');S.wake.addEventListener('release',()=>S.wake=null)}}catch(e){}}
@@ -542,9 +559,9 @@ async function record(){const {v}=cur();if(!v||!S.stream||S.state!=='live')retur
  stage.classList.remove('recording');$('recP').classList.add('hidden');hp.classList.add('hidden');tb.classList.add('hidden');buzz([80,60,80]);
  const type=(rec.mimeType||mime||'video/webm').split(';')[0];const blob=new Blob(chunks,{type});rec=null;
  if(cancelled||!blob.size){S.state='live';draw();if(!blob.size&&!cancelled)toast('الأخدة طلعت فاضية. جرّب تاني.');return}
- const st=(S.stream&&S.stream.getVideoTracks()[0].getSettings())||{};
+ const st=S.dims||{};
  const take=await nextSeq(v.id+'__'+S.signer),ext=/mp4/.test(type)?'mp4':'webm';
- const m={name:`${v.id}__${S.signer}__${take}.${ext}`,id:v.id,signer:S.signer,take,ext,mime:type,size:blob.size,dur:Math.round((t1-t0)/100)/10,w:st.width||0,h:st.height||0,cam:S.cam,status:'pending',at:new Date().toISOString(),exported:false,freed:false};
+ const m={name:`${v.id}__${S.signer}__${take}.${ext}`,id:v.id,signer:S.signer,take,ext,mime:type,size:blob.size,dur:Math.round((t1-t0)/100)/10,w:st.w||0,h:st.h||0,orientation:st.w&&st.h?(st.h>=st.w?'portrait':'landscape'):'',src:st.crop?st.src:'',cam:S.cam,status:'pending',at:new Date().toISOString(),exported:false,freed:false};
  try{await putTake(m,blob)}catch(e){S.state='live';draw();return toast('ما قدرناش نحفظ الأخدة: المساحة ممكن تكون خلصت. حمّل وامسح اللي اتحمّل.',5000)}
  S.takes.push(m);openReview(m,true,blob);storage()}
 function stopNow(){if(S.state==='count'){cancelled=true;return}if(rec&&rec.state!=='inactive'){clearT();try{rec.stop()}catch(e){}}}
@@ -630,7 +647,7 @@ async function exportZips(onlyNew){const msg=$('expMsg');
  try{for(let i=0;i<batches.length;i++){msg.textContent=`بيجهّز الملف ${i+1} من ${batches.length}...`;
    const files=[];for(const t of batches[i]){const b=await getBlob(t.name);if(b)files.push({name:t.name,blob:b,t})}
    const takesJson={version:1,app:'wasl-record',made:new Date().toISOString(),part:i+1,parts:batches.length,
-    files:files.map(f=>({file:f.t.name,id:f.t.id,signer:f.t.signer,take:f.t.take,status:f.t.status,dur:f.t.dur,mime:f.t.mime,size:f.t.size,width:f.t.w,height:f.t.h,camera:f.t.cam,recorded:f.t.at}))};
+    files:files.map(f=>({file:f.t.name,id:f.t.id,signer:f.t.signer,take:f.t.take,status:f.t.status,dur:f.t.dur,mime:f.t.mime,size:f.t.size,width:f.t.w,height:f.t.h,orientation:f.t.orientation||(f.t.w&&f.t.h?(f.t.h>=f.t.w?'portrait':'landscape'):''),...(f.t.src?{cropped_from:f.t.src}:{}),camera:f.t.cam,recorded:f.t.at}))};
    const consent={version:CONSENT_VER,signers:Object.values(S.consent)};
    const zip=await makeZip([...files.map(f=>({name:f.name,blob:f.blob})),{name:'takes.json',blob:jsonBlob(takesJson)},{name:'consent.json',blob:jsonBlob(consent)}]);
    const name=`wasl-signs_${signers}_${stamp}_${i+1}of${batches.length}.zip`;S.parts.push({name,zip,url:URL.createObjectURL(zip),takes:files.map(f=>f.t)})}

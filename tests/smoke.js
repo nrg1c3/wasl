@@ -450,6 +450,35 @@ async function pastWelcome(page) {
     await ctx.close();
   }
 
+  // record.html (#74): a phone that gives a landscape 1920×1080 stream while standing upright → the take is saved upright (9:16)
+  console.log('\n== record: upright takes from a landscape camera');
+  {
+    const cam = await chromium.launch({ args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'] });
+    for (const vp of PHONES) {
+      const ctx = await cam.newContext({ viewport: vp, locale: 'ar-EG', serviceWorkers: 'block', permissions: ['camera'] });
+      const page = await ctx.newPage(); const errs = [];
+      page.on('pageerror', e => errs.push(e.message)); page.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
+      await page.addInitScript(() => { const g = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+        navigator.mediaDevices.getUserMedia = () => g({ audio: false, video: { width: { exact: 1920 }, height: { exact: 1080 } } }); });
+      await page.goto(base + 'record.html#s=d3'); await page.waitForTimeout(1000);
+      await page.evaluate(async () => { S.consent.d3 = { signer: 'd3', name: 'test', purpose: 'library', uses: { app: true, training: true }, date: Date.now() }; S.dur = 3; await openStudio(); });
+      await page.waitForTimeout(1200);
+      const a = await page.evaluate(() => ({ dims: S.dims, vw: $('live').videoWidth, vh: $('live').videoHeight, hs: document.documentElement.scrollWidth - innerWidth }));
+      await page.evaluate(() => record()); await page.waitForTimeout(7800);
+      const r = await page.evaluate(async () => { const t = S.takes[S.takes.length - 1]; if (!t) return null;
+        const v = document.createElement('video'); v.muted = true; v.src = URL.createObjectURL(await getBlob(t.name));
+        await new Promise(ok => { v.onloadedmetadata = ok; setTimeout(ok, 3000); }); return { w: t.w, h: t.h, o: t.orientation, src: t.src, vw: v.videoWidth, vh: v.videoHeight }; });
+      const tag = `${vp.width}x${vp.height}`;
+      a.dims && a.dims.crop && a.dims.w === 608 && a.dims.h === 1080 && a.vw === 608 && a.vh === 1080 && a.hs <= 0
+        ? pass('record', `${tag}: 1920×1080 camera shown upright 608×1080, no sideways scroll`) : fail('record', `${tag} preview: ` + JSON.stringify(a));
+      r && r.vw === 608 && r.vh === 1080 && r.w === 608 && r.h === 1080 && r.o === 'portrait' && r.src === '1920×1080'
+        ? pass('record', `${tag}: the saved take is 608×1080, marked portrait, cut from 1920×1080`) : fail('record', `${tag} take: ` + JSON.stringify(r));
+      if (errs.length) fail('record', 'console errors: ' + errs.join(' | ').slice(0, 300));
+      await ctx.close();
+    }
+    await cam.close();
+  }
+
   await browser.close(); srv.close();
   console.log(failures ? `\n${failures} problem(s) found.` : '\nAll good.');
   process.exit(failures ? 1 : 0);
