@@ -392,7 +392,7 @@ const PRI_RANK={P1:0,P2:1,P3:2};
 function needList(sg){S.need=S.need||{};if(S.need[sg])return S.need[sg];
  return S.need[sg]=S.vocab.map((v,i)=>({v,i})).filter(({v})=>libN(v.id)<3&&!(S.lib&&S.lib[v.id]||[]).includes(sg))
   .sort((a,b)=>libN(a.v.id)-libN(b.v.id)||(PRI_RANK[a.v.pri]??9)-(PRI_RANK[b.v.pri]??9)||a.i-b.i).map(x=>x.v)}
-const libList=()=>S.vocab.map((v,i)=>({v,i})).filter(({v})=>libN(v.id)>=1).sort((a,b)=>(PRI_RANK[a.v.pri]??9)-(PRI_RANK[b.v.pri]??9)||a.i-b.i).map(x=>x.v);
+const libList=()=>S.vocab.map((v,i)=>({v,i})).filter(({v})=>libN(v.id)>=1&&(v.dir==='both'||v.dir==='sign2voice')).sort((a,b)=>(PRI_RANK[a.v.pri]??9)-(PRI_RANK[b.v.pri]??9)||a.i-b.i).map(x=>x.v);
 const listOf=l=>l==='LIBM'?libList():l==='NEED'?needList(S.signer):l==='ALL'?S.vocab:S.vocab.filter(v=>v.pri===l);
 const takesFor=(id,sg)=>S.takes.filter(t=>t.id===id&&t.signer===sg).sort((a,b)=>a.take-b.take);
 const doneFor=(id,sg)=>takesFor(id,sg).some(t=>t.status==='ok');
