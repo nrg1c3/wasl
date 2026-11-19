@@ -312,7 +312,7 @@ def main():
     lm = Landmarks()
     os.makedirs(a.out, exist_ok=True)
     today = datetime.date.today().isoformat()
-    done, skipped, retake = [], [], []  # retake: published library clips that gave no template (#76)
+    done, skipped, retake, made = [], [], [], set()  # retake / made: published library clips with no template / with one (#76, #78)
     for sid, lst in sorted(clips.items()):
         samples = []
         for signer, p in lst:
@@ -330,6 +330,8 @@ def main():
                 if clip_re.match(os.path.basename(p)):
                     retake.append(os.path.basename(p)[:-4])
                 continue
+            if clip_re.match(os.path.basename(p)):
+                made.add(os.path.basename(p)[:-4])
             samples.append({'signer': signer, 'src': os.path.relpath(p, REPO).replace(os.sep, '/'), 'ms': int(r[1][-1] - r[1][0]), 'b64': encode(seq)})
         if samples:
             json.dump({'v': 1, 'feat': FEAT, 'id': sid, 'len': T_LEN, 'dim': DIM, 'q': Q, 'updated': today, 'samples': samples},
@@ -340,10 +342,17 @@ def main():
     print('templates written:', len(done), '· total in index:', len(ids))
     # library clips (codes only, like signs/index.json) that gave no template: copy to signs/retake.json so record.html
     # puts these words first in «الناقص الأول» again. Takes (--takes) never go here: a measure-only signer stays out.
-    if retake:
-        json.dump({'v': 1, 'updated': today, 'why': f'hands seen in fewer than {MIN_HAND_FRAMES} of {T_LEN} frames', 'clips': sorted(set(retake))},
-                  open(os.path.join(a.out, 'retake.json'), 'w', encoding='utf-8'), indent=1)
-        print('library clips to film again:', len(set(retake)), '→', os.path.join(a.out, 'retake.json'))
+    # Merged with the file already there, so a run with --only keeps the other words: clips that now give a template leave it.
+    rp = os.path.join(a.out, 'retake.json')
+    try:
+        old = set(json.load(open(rp, encoding='utf-8')).get('clips', []))
+    except Exception:
+        old = set()
+    keep = sorted((old - made) | set(retake))
+    if keep or old:
+        json.dump({'v': 1, 'updated': today, 'why': f'hands seen in fewer than {MIN_HAND_FRAMES} of {T_LEN} frames', 'clips': keep},
+                  open(rp, 'w', encoding='utf-8'), indent=1)
+        print('library clips to film again:', len(keep), '→', rp, f'(new {len(set(retake) - old)}, fixed {len(old & made)})')
     for s in skipped:
         print('skipped:', s)
 
