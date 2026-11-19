@@ -650,7 +650,7 @@ async function exportZips(onlyNew){const msg=$('expMsg');
     files:files.map(f=>({file:f.t.name,id:f.t.id,signer:f.t.signer,take:f.t.take,status:f.t.status,dur:f.t.dur,mime:f.t.mime,size:f.t.size,width:f.t.w,height:f.t.h,orientation:f.t.orientation||(f.t.w&&f.t.h?(f.t.h>=f.t.w?'portrait':'landscape'):''),...(f.t.src?{cropped_from:f.t.src}:{}),camera:f.t.cam,recorded:f.t.at}))};
    const consent={version:CONSENT_VER,signers:Object.values(S.consent)};
    const zip=await makeZip([...files.map(f=>({name:f.name,blob:f.blob})),{name:'takes.json',blob:jsonBlob(takesJson)},{name:'consent.json',blob:jsonBlob(consent)}]);
-   const name=`wasl-signs_${signers}_${stamp}_${i+1}of${batches.length}.zip`;S.parts.push({name,zip,url:URL.createObjectURL(zip),takes:files.map(f=>f.t)})}
+   const name=`badalak-signs_${signers}_${stamp}_${i+1}of${batches.length}.zip`;S.parts.push({name,zip,url:URL.createObjectURL(zip),takes:files.map(f=>f.t)})}
   drawParts();msg.textContent=`جاهز: ${S.parts.length} ملف. لو التحميل ما بدأش، دوس «حمّل» جنب كل ملف.`;
   for(const p of S.parts){await download(p);await sleep(800)}
  }catch(e){msg.textContent='حصلت مشكلة وإحنا بنجهّز الملف. جرّب «حمّل الجديد بس» أو قفّل تابات تانية وجرّب تاني.'}

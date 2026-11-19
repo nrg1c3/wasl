@@ -1,8 +1,8 @@
-/* Wasl service worker: app works offline after the first visit.
+/* Badalak service worker: app works offline after the first visit.
    - App pages: network first (so updates arrive), cached copy when offline.
    - Fonts, sound/sign models: cached after first use.
    - POST requests (AI, voice) are never cached. */
-const SHELL = 'wasl-shell-v108';
+const SHELL = 'wasl-shell-v109';
 const RUNTIME = 'wasl-rt-v1';
 const SIGNS = 'wasl-signs-v1'; // sign-language clips: kept across app updates (a clip's file name changes when it is re-recorded)
 const KEEP = [SHELL, RUNTIME, SIGNS, 'wasl-demo-v1', 'wasl-share'];
@@ -72,7 +72,7 @@ async function signClip(req) {
   return res;
 }
 
-/* WhatsApp replies shared to Wasl (text or a voice note) arrive here as a POST.
+/* WhatsApp replies shared to Badalak (text or a voice note) arrive here as a POST.
    Keep them in a small cache and open the app, which picks them up. */
 async function takeShare(req) {
   try {

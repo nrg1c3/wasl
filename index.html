@@ -2338,7 +2338,7 @@ $('tRefOpts').querySelectorAll('button').forEach(b=>b.onclick=()=>{const d=+b.da
  $('tRefOpts').classList.add('hidden');$('tRefQ').textContent=tr('💊 تذكير {m}',{m:refillMed});$('tRefOk').textContent=tr('✓ هفكّرك يوم {d}، قبل ما يخلص بـ 3 أيام.',{d:when});$('tRefOk').classList.remove('hidden');$('tRefCal').classList.remove('hidden');buzz([40])});
 $('tRefCal').onclick=()=>{const f=t=>new Date(t).toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';const st=new Date(refillDue);st.setHours(10,0,0,0);
  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Badalak//AR','BEGIN:VEVENT','UID:wasl-'+Date.now()+'@wasl','DTSTAMP:'+f(Date.now()),'DTSTART:'+f(st),'DTEND:'+f(st.getTime()+18e5),'SUMMARY:'+tr('💊 {m} قرب يخلص - اطلبه من بدالك',{m:refillMed}),'DESCRIPTION:'+tr('افتح بدالك ودوس اطلبه تاني'),'BEGIN:VALARM','TRIGGER:PT0M','ACTION:DISPLAY','DESCRIPTION:'+tr('{m} قرب يخلص',{m:refillMed}),'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
- const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='wasl-'+refillMed.replace(/\s+/g,'-')+'.ics';a.click()};
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='badalak-'+refillMed.replace(/\s+/g,'-')+'.ics';a.click()};
 function drawRefills(){const now=Date.now(),r=store.get('wasl_refills',[]).filter(x=>x.due<=now);
  $('refills').innerHTML=r.map(x=>`<div style="display:flex;align-items:center;gap:10px;background:#FBE6D4;border-radius:16px;padding:10px 12px;margin-bottom:8px"><span style="font-size:26px">💊</span><b style="flex:1;font-size:15px;line-height:1.4">${esc(tr('{m} قرب يخلص',{m:x.med}))}</b><button data-id="${x.id}" class="rfGo" style="background:#13262F;color:#fff;border:0;border-radius:12px;padding:8px 12px;font:800 15px Cairo,sans-serif">${tr('اطلبه تاني')}</button><button data-id="${x.id}" class="rfX" aria-label="${tr('خلاص')}" style="background:none;border:0;font-size:20px;color:#5B6870">✕</button></div>`).join('');
  const drop=id=>store.set('wasl_refills',store.get('wasl_refills',[]).filter(x=>x.id!==id));
@@ -2354,8 +2354,8 @@ function drawStats(){const d=statsData(),el=$('stats');const parts=[];const pl=n
  el.innerHTML=parts.map(p=>'<span>'+p+'</span>').join('');el.classList.toggle('hidden',!parts.length)}
 function drawKpis(){const d=statsData();$('kpis').innerHTML=`<div><b>${d.done}</b><small>${tr('مهمة خلصت')}</small></div><div><b>${d.free}</b><small>${tr('مرة ترجمة')}</small></div><div><b>${d.rated?Math.round(100*d.up/d.rated)+'%':'—'}</b><small>${tr('ساعدتك')}</small></div>`;$('shareRates').classList.toggle('hidden',!d.rated)}
 $('shareRates').onclick=async()=>{const t=store.get('wasl_tasks',[]).filter(x=>x.rating);const csv='date,completed,rating,reason\n'+t.map(x=>[new Date(x.id||0).toISOString().slice(0,16),x.done?1:0,x.rating,'"'+(x.why||'').replace(/"/g,'')+'"'].join(',')).join('\n');
- try{const f=new File([csv],'wasl-ratings.csv',{type:'text/csv'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:tr('تقييمات بدالك')});return}}catch(e){}
- const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='wasl-ratings.csv';a.click()};
+ try{const f=new File([csv],'badalak-ratings.csv',{type:'text/csv'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:tr('تقييمات بدالك')});return}}catch(e){}
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='badalak-ratings.csv';a.click()};
 function bumpStat(k){const st=store.get('wasl_stats',{});st[k]=(st[k]||0)+1;store.set('wasl_stats',st)}
 $('tShare').onclick=async()=>{const t=$('tSumText').innerText;try{if(navigator.share){await navigator.share({title:tr('بدالك'),text:t});return}await navigator.clipboard.writeText(t);$('tShare').textContent=tr('اتنسخ ✓')}catch(e){}};
 

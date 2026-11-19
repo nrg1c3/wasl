@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Wasl sign library builder.
+"""Badalak sign library builder.
 
 Takes the raw takes filmed with record.html (a folder, or the ZIPs it exports),
 picks one take per sign and signer, converts it to a small portrait clip and
 rebuilds signs/index.json (the manifest the app reads).
 
   python3 server/signs_build.py                       # only rebuild signs/index.json
-  python3 server/signs_build.py --in ~/Downloads/wasl-signs_m1_*.zip
+  python3 server/signs_build.py --in ~/Downloads/badalak-signs_m1_*.zip   (old ZIPs named wasl-signs_*.zip work the same)
   python3 server/signs_build.py --in raw/ --pick PHARMACY__m1=2 --max 4
   python3 server/signs_build.py --in raw/ --list      # show the takes, convert nothing
 

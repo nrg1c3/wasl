@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Wasl — build sign templates for sign → voice from the expert's clips.
+"""Badalak — build sign templates for sign → voice from the expert's clips.
 
 For every published clip signs/clips/<ID>__<signer>.mp4 (made by server/signs_build.py; with --takes DIR also the
 raw takes <ID>__<signer>__<take>.webm/.mp4 from record.html, which gives more templates per sign),
