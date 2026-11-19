@@ -312,7 +312,7 @@ def main():
     lm = Landmarks()
     os.makedirs(a.out, exist_ok=True)
     today = datetime.date.today().isoformat()
-    done, skipped = [], []
+    done, skipped, retake = [], [], []  # retake: published library clips that gave no template (#76)
     for sid, lst in sorted(clips.items()):
         samples = []
         for signer, p in lst:
@@ -320,20 +320,30 @@ def main():
             r = trim_active(fr, ts)
             if not r or len(r[0]) < 6:
                 skipped.append(os.path.basename(p) + ' (no hands seen)')
+                if clip_re.match(os.path.basename(p)):
+                    retake.append(os.path.basename(p)[:-4])
                 continue
             seq = resample(r[0], r[1], T_LEN)
             hf = hand_frames(seq)
             if hf < MIN_HAND_FRAMES:  # such a template sits near «nothing» and pulls the guesses of other signs to it (#71)
                 skipped.append(f'{os.path.basename(p)} (hands seen in only {hf} of {T_LEN} frames)')
+                if clip_re.match(os.path.basename(p)):
+                    retake.append(os.path.basename(p)[:-4])
                 continue
             samples.append({'signer': signer, 'src': os.path.relpath(p, REPO).replace(os.sep, '/'), 'ms': int(r[1][-1] - r[1][0]), 'b64': encode(seq)})
         if samples:
             json.dump({'v': 1, 'feat': FEAT, 'id': sid, 'len': T_LEN, 'dim': DIM, 'q': Q, 'updated': today, 'samples': samples},
                       open(os.path.join(a.out, sid + '.json'), 'w', encoding='utf-8'), separators=(',', ':'))
             done.append(sid)
-    ids = sorted(set(done) | set(os.path.basename(x)[:-5] for x in glob.glob(os.path.join(a.out, '*.json')) if not x.endswith('index.json')))
+    ids = sorted(set(done) | set(os.path.basename(x)[:-5] for x in glob.glob(os.path.join(a.out, '*.json')) if os.path.basename(x) not in ('index.json', 'retake.json')))
     json.dump({'v': 1, 'feat': FEAT, 'updated': today, 'ids': ids}, open(os.path.join(a.out, 'index.json'), 'w', encoding='utf-8'), separators=(',', ':'))
     print('templates written:', len(done), '· total in index:', len(ids))
+    # library clips (codes only, like signs/index.json) that gave no template: copy to signs/retake.json so record.html
+    # puts these words first in «الناقص الأول» again. Takes (--takes) never go here: a measure-only signer stays out.
+    if retake:
+        json.dump({'v': 1, 'updated': today, 'why': f'hands seen in fewer than {MIN_HAND_FRAMES} of {T_LEN} frames', 'clips': sorted(set(retake))},
+                  open(os.path.join(a.out, 'retake.json'), 'w', encoding='utf-8'), indent=1)
+        print('library clips to film again:', len(set(retake)), '→', os.path.join(a.out, 'retake.json'))
     for s in skipped:
         print('skipped:', s)
 
