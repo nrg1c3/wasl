@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Wasl smoke test: opens every page on a small phone (375x667) and a normal one (390x844), with the server
+/* Badalak smoke test: opens every page on a small phone (375x667) and a normal one (390x844), with the server
    mocked (no request leaves this machine), and checks what CLAUDE.md asks for before a commit:
    - no JS errors in the console
    - no sideways scrolling
@@ -473,6 +473,19 @@ async function pastWelcome(page) {
         ? pass('record', `${tag}: 1920×1080 camera shown upright 608×1080, no sideways scroll`) : fail('record', `${tag} preview: ` + JSON.stringify(a));
       r && r.vw === 608 && r.vh === 1080 && r.w === 608 && r.h === 1080 && r.o === 'portrait' && r.src === '1920×1080'
         ? pass('record', `${tag}: the saved take is 608×1080, marked portrait, cut from 1920×1080`) : fail('record', `${tag} take: ` + JSON.stringify(r));
+      // #70: the ZIP is named badalak-signs_…, and signs_build.py reads it
+      const z = await page.evaluate(async () => { await keep(); await exportZips(false); const p = S.parts[0]; if (!p) return null;
+        const b = new Uint8Array(await p.zip.arrayBuffer()); let s = ''; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000));
+        return { name: p.name, b64: btoa(s) }; });
+      if (vp === PHONES[0]) {
+        const { execFileSync } = require('child_process'), os = require('os');
+        const D = fs.mkdtempSync(path.join(os.tmpdir(), 'wasl-zip-')); let listed = '';
+        if (z) { fs.writeFileSync(path.join(D, z.name), Buffer.from(z.b64, 'base64'));
+          try { listed = execFileSync('python3', [path.join(ROOT, 'server', 'signs_build.py'), '--in', path.join(D, z.name), '--list'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); } catch (e) { listed = 'ERR ' + (e.stdout || '') + (e.stderr || ''); } }
+        fs.rmSync(D, { recursive: true, force: true });
+        z && /^badalak-signs_d3_\d{8}-\d{4}_1of1\.zip$/.test(z.name) && /Found 1 takes/.test(listed) && /__d3: 1\*\(ok\)/.test(listed)
+          ? pass('record', `ZIP is ${z.name.replace(/_\d{8}-\d{4}_/, '_<stamp>_')}, and signs_build.py reads it`) : fail('record', 'ZIP: ' + (z && z.name) + ' | ' + listed.slice(-300));
+      } else z && /^badalak-signs_/.test(z.name) ? pass('record', `${tag}: ZIP named badalak-signs_…`) : fail('record', `${tag} ZIP: ` + (z && z.name));
       if (errs.length) fail('record', 'console errors: ' + errs.join(' | ').slice(0, 300));
       await ctx.close();
     }
