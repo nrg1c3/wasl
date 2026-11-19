@@ -386,7 +386,11 @@ async function loadVocab(){const r=await fetch('signs/vocab.csv',{cache:'no-cach
    Words nobody filmed yet come first, then words filmed by one person, then by two (the goal is 3–4 people per word),
    each by priority. Words this signer already has in the library are left out: a new person helps recognition more. */
 async function loadLib(){S.lib={};try{const r=await fetch('signs/index.json',{cache:'no-cache'});if(!r.ok)return;const j=await r.json();
- (j.signs||[]).forEach(x=>{S.lib[x.id]=[...new Set((x.clips||[]).map(c=>c.signer))]})}catch(e){}S.need={}}
+ (j.signs||[]).forEach(x=>{S.lib[x.id]=[...new Set((x.clips||[]).map(c=>c.signer))]})}catch(e){}
+ /* #76: library clips where the hands hardly show give no template, so they do not count: the word goes back up in «الناقص الأول» */
+ S.retake=new Set();try{const r=await fetch('signs/retake.json',{cache:'no-cache'});if(r.ok)((await r.json()).clips||[]).forEach(c=>{const k=String(c).lastIndexOf('__');if(k<1)return;
+  const id=c.slice(0,k),sg=c.slice(k+2);if(S.lib[id]){S.lib[id]=S.lib[id].filter(x=>x!==sg);S.retake.add(id)}})}catch(e){}
+ S.need={}}
 const libN=id=>(S.lib&&S.lib[id]||[]).length;
 const PRI_RANK={P1:0,P2:1,P3:2};
 function needList(sg){S.need=S.need||{};if(S.need[sg])return S.need[sg];
@@ -511,7 +515,7 @@ function draw(){const {L,i,v}=cur();if(!v)return;
  const kc=S.consent[S.signer];$('who').innerHTML=`🎥 ${esc(shown(S.signer))}${kc&&kc.purpose==='measure'?' · 📏 قياس بس':''} <small>(دوس للتغيير)</small>`;
  $('wAr').textContent=v.ar;$('wId').textContent='';
  const ts=takesFor(v.id,S.signer),ok=ts.filter(t=>t.status==='ok').length;
- $('wInfo').textContent=`${GROUP_AR[v.group]||v.group} · ${v.pri} · تمام ${ok} · في المكتبة: ${libN(v.id)===2?'شخصين':libN(v.id)+' '+(libN(v.id)===1?'شخص':'أشخاص')}`;
+ $('wInfo').textContent=`${GROUP_AR[v.group]||v.group} · ${v.pri} · تمام ${ok} · في المكتبة: ${libN(v.id)===2?'شخصين':libN(v.id)+' '+(libN(v.id)===1?'شخص':'أشخاص')}${S.retake&&S.retake.has(v.id)?' · ↺ صوّرها تاني: الإيد مش باينة':''}`;
  requestAnimationFrame(fit);
  const strip=$('strip');strip.innerHTML='';
  if(!ts.length)strip.appendChild(el('span',{class:'hint'},'لسه مفيش أخدات للإشارة دي. اعمل من 3 لـ 5.'));

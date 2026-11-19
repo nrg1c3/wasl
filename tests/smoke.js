@@ -370,6 +370,11 @@ async function pastWelcome(page) {
     r.list === 'NEED' && /الناقص الأول/.test(r.chip) ? pass('record', '«الناقص الأول» is the default list') : fail('record', 'default list: ' + JSON.stringify(r));
     r.first && r.first[0] === 'P1' && r.first[1] === 0 && r.sorted ? pass('record', 'unfilmed P1 words first, then fewer people first, by priority') : fail('record', 'order: ' + JSON.stringify(r));
     !r.mine && r.hs <= 0 ? pass('record', "a signer's own library words are left out, no sideways scroll") : fail('record', JSON.stringify(r));
+    // #76: library clips listed in signs/retake.json (hands hardly show, no template) do not count: FRIDAY (only d2's clip) is
+    // «nobody filmed» again, also for d2, and the word line says to film it again
+    const rt = await page.evaluate(() => { const rj = S.retake && S.retake.has('FRIDAY'), L = needList('d2'), i = L.findIndex(v => v.id === 'FRIDAY');
+      S.list = 'NEED'; setPos(listOf('NEED').findIndex(v => v.id === 'FRIDAY')); return { rj, n: libN('FRIDAY'), inD2: i >= 0, unfilmedBefore: L.slice(0, i).every(v => libN(v.id) === 0) }; });
+    rt.rj && rt.n === 0 && rt.inD2 && rt.unfilmedBefore ? pass('record', 'retake.json: FRIDAY counts as not filmed again (also for d2)') : fail('record', 'retake: ' + JSON.stringify(rt));
     // a measure-only signer (#43) gets «📏 كلمات المكتبة» by default: the library words the app can recognise (both / sign2voice), by priority (#67, #71)
     const m = await page.evaluate(() => { S.consent.t1 = { signer: 't1', name: 'test', purpose: 'measure', uses: { app: false, training: true }, date: Date.now() };
       pickSigner('t1'); S.userList = false; S.list = 'NEED'; drawSetup(); const L = listOf(S.list), chipsT = [...document.querySelectorAll('#lists button')].map(b => b.textContent);
