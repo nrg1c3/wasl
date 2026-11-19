@@ -193,6 +193,11 @@ async function pastWelcome(page) {
         ? pass('signs_templates', 'measure-only signer: no templates inside the repo, used with --out outside it')
         : fail('signs_templates', 'measure-only signer guard: ' + (inRepo + ' | ' + outside).slice(-400));
       fs.rmSync(T, { recursive: true, force: true });
+      // #71: a take with hands in fewer than half of its 32 frames is left out (it pulled other signs' guesses to it)
+      const hf = (() => { try { return execFileSync('python3', ['-c', 'import sys;sys.path.insert(0,sys.argv[1]);import signs_templates as s;D,H=s.DIM,s.HAND\n' +
+        'def seq(n):\n  q=[0.0]*(s.T_LEN*D)\n  for k in range(n): q[k*D+(H if k%2 else 0)]=1.0\n  return q\n' +
+        'print(s.MIN_HAND_FRAMES, s.hand_frames(seq(15)), s.hand_frames(seq(16)), s.hand_frames(seq(32)))', path.join(ROOT, 'server')], { encoding: 'utf8' }).trim(); } catch (e) { return 'ERR ' + e.message; } })();
+      hf === '16 15 16 32' ? pass('signs_templates', 'takes with hands in fewer than 16 of 32 frames are left out') : fail('signs_templates', 'hand frames: ' + hf);
     }
   }
 
