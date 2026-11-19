@@ -127,6 +127,14 @@ def trim_active(frames, ts, pre=2):
     return g[a:b + 1], ts[a:b + 1]
 
 
+MIN_HAND_FRAMES = T_LEN // 2  # #71: a take whose hands show in fewer than half its 32 frames is mostly «hands down»
+
+
+def hand_frames(seq):
+    """How many of the T_LEN resampled frames have a hand in them (after gap filling)."""
+    return sum(1 for k in range(len(seq) // DIM) if seq[k * DIM] > 0.5 or seq[k * DIM + HAND] > 0.5)
+
+
 def resample(frames, ts, n=T_LEN):
     L = len(frames)
     out = [0.0] * (n * DIM)
@@ -314,6 +322,10 @@ def main():
                 skipped.append(os.path.basename(p) + ' (no hands seen)')
                 continue
             seq = resample(r[0], r[1], T_LEN)
+            hf = hand_frames(seq)
+            if hf < MIN_HAND_FRAMES:  # such a template sits near «nothing» and pulls the guesses of other signs to it (#71)
+                skipped.append(f'{os.path.basename(p)} (hands seen in only {hf} of {T_LEN} frames)')
+                continue
             samples.append({'signer': signer, 'src': os.path.relpath(p, REPO).replace(os.sep, '/'), 'ms': int(r[1][-1] - r[1][0]), 'b64': encode(seq)})
         if samples:
             json.dump({'v': 1, 'feat': FEAT, 'id': sid, 'len': T_LEN, 'dim': DIM, 'q': Q, 'updated': today, 'samples': samples},
