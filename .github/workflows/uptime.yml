@@ -1,10 +1,11 @@
-# Badalak uptime check: every 10 minutes GitHub checks the Badalak app and its server.
+# Badalak uptime check: every 2 hours GitHub checks the Badalak app and its server.
+# Run it by hand from the Actions tab for an instant check.
 # (Other NRG projects are watched by the server's own alerts, not from this public repo.)
 # If something is down the run fails, and GitHub emails the repo owner.
 name: Uptime check
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "23 */2 * * *"
   workflow_dispatch:
 permissions:
   contents: read
