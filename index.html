@@ -843,6 +843,11 @@ const EN={
 'بقرا الصورة...':'Reading the photo...',
 'الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.':'The photo is not clear. Take it again, closer and without shadow.',
 'النت ضعيف. جرّب تاني.':'Weak internet. Try again.',
+'الخدمة الذكية واقفة دلوقتي. جرّب بعد شوية.':'The smart service is down right now. Try again a bit later.',
+'الخدمة الذكية واقفة دلوقتي. اكتب الاسم بإيدك.':'The smart service is down right now. Type the name yourself.',
+'الخدمة الذكية واقفة دلوقتي، بجرّب تاني...':'The smart service is down right now, trying again...',
+'الخدمة الذكية واقفة دلوقتي. دوس هنا عشان تجرّب تاني':'The smart service is down right now. Tap here to try again',
+'بسمع... الردود الذكية واقفة دلوقتي':'Listening... smart replies are down right now',
 // ---- my tasks
 '📝 قولنا رأيك في بَدالَك':'📝 Tell us what you think of Badalak',
 'شارك التقييمات':'Share ratings',
@@ -1424,6 +1429,11 @@ const GU={
 "بقرا الصورة...": "أقرا الصورة...",
 "الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.": "الصورة مو واضحة. صوّر مرة ثانية من قريب وبدون ظل.",
 "النت ضعيف. جرّب تاني.": "النت ضعيف. جرّب مرة ثانية.",
+"الخدمة الذكية واقفة دلوقتي. جرّب بعد شوية.": "الخدمة الذكية واقفة الحين. جرّب بعد شوي.",
+"الخدمة الذكية واقفة دلوقتي. اكتب الاسم بإيدك.": "الخدمة الذكية واقفة الحين. اكتب الاسم بنفسك.",
+"الخدمة الذكية واقفة دلوقتي، بجرّب تاني...": "الخدمة الذكية واقفة الحين، أجرّب مرة ثانية...",
+"الخدمة الذكية واقفة دلوقتي. دوس هنا عشان تجرّب تاني": "الخدمة الذكية واقفة الحين. اضغط هنا عشان تجرّب مرة ثانية",
+"بسمع... الردود الذكية واقفة دلوقتي": "أسمع... الردود الذكية واقفة الحين",
 "📝 قولنا رأيك في بَدالَك": "📝 قل لنا رأيك في بَدالَك",
 "بيبعت التاريخ والتقييم بس، من غير أي كلام أو بيانات. للمشاركين في التجربة.": "يرسل التاريخ والتقييم بس، بدون أي كلام أو بيانات. للمشاركين في التجربة.",
 "اتقفلت قبل ما تخلص.": "انقفلت قبل ما تخلص.",
@@ -1823,6 +1833,10 @@ const SAYFIX_URL=API_BASE+'wasl-say-report';
 async function postJSON(url,body,ms){const ac=new AbortController();const to=setTimeout(()=>ac.abort(),ms);
  try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({k:API_K},body)),signal:ac.signal});
   if(!r.ok){const e=new Error('http '+r.status);e.status=r.status;try{e.data=await r.json();e.why=e.data&&e.data.why}catch(_){}throw e}return await r.json()}finally{clearTimeout(to)}}
+/* the smart service (Claude on the server) is down, e.g. its key expired: the server says why:'ai' (or error:'ai' /
+   'claude' / 'vision' in a 200), or answers 5xx. Then say so plainly instead of «النت ضعيف» or «الصورة مش واضحة». */
+const aiDown=x=>!!x&&(x.why==='ai'||x.error==='ai'||x.error==='claude'||x.error==='vision'||(x.status>=500&&x.status<600));
+const AI_DOWN='الخدمة الذكية واقفة دلوقتي. جرّب بعد شوية.';
 // Per-phone token: the server signs one for this phone and limits each phone per day.
 // Every call to the server gets it added automatically; a rejected token is renewed once.
 (function(){
@@ -1951,8 +1965,9 @@ async function medRead(f){const my=++medSeq;let data;try{data=await shrink(f)}ca
  medsPop(`<img alt="" src="${data}"><p class="mmn">${esc(tr('بقرا الاسم...'))}</p><div class="mmb">${mmBtn('mmno','↩',tr('رجوع'))}</div>`).querySelector('.mmno').onclick=()=>{medSeq++;medAdd()};
  try{const d=await postJSON(VISION_URL,{image:data,hint:MED_HINT,lang:LANG,ui:UI},25000);if(my!==medSeq)return;
   const n=d&&typeof d.name==='string'?d.name.replace(/\s+/g,' ').trim().slice(0,40):'';
+  if(aiDown(d))return medNoName(tr('الخدمة الذكية واقفة دلوقتي. اكتب الاسم بإيدك.'));
   if(!n||d.clear===false)return medNoName();medWrite(n,data,null)}
- catch(e){if(my===medSeq)medNoName(tr('النت ضعيف. جرّب تاني، أو اكتب الاسم.'))}}
+ catch(e){if(my===medSeq)medNoName(tr(aiDown(e)?'الخدمة الذكية واقفة دلوقتي. اكتب الاسم بإيدك.':'النت ضعيف. جرّب تاني، أو اكتب الاسم.'))}}
 function medNoName(msg){const c=medsPop(`<p class="mmn">${esc(msg||tr('ما قدرتش أقرا الاسم. اكتبه بإيدك.'))}</p><div class="mmb">${mmBtn('mmgo','✍️',tr('أكتب الاسم'))}${mmBtn('mmno','↩',tr('رجوع'))}</div>`);
  c.querySelector('.mmgo').onclick=()=>{buzz([30]);medWrite('',null,null)};c.querySelector('.mmno').onclick=medAdd}
 function medEdit(){const m=medsGet();if(!m.length){medsClose();return medsRedraw()}
@@ -1981,9 +1996,10 @@ async function readPhoto(f){if(!f)return;const my=++readSeq;
  $('readImg').src=data;$('readT').textContent=tr('بقرا الصورة...');$('readOv').style.display='flex';
  try{const d=await postJSON(VISION_URL,{image:data,hint:camHint,lang:LANG,ui:UI},25000);
   if(my!==readSeq)return;
+  if(aiDown(d)){$('readT').textContent=tr(AI_DOWN);return}
   if(!d.goal||d.clear===false){$('readT').textContent=tr('الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.');return}
   $('readOv').style.display='none';taskPhoto=data;$('goal').value=d.goal;$('startTask').click()}
- catch(e){if(my===readSeq)$('readT').textContent=tr('النت ضعيف. جرّب تاني.')}}
+ catch(e){if(my===readSeq)$('readT').textContent=tr(aiDown(e)?AI_DOWN:'النت ضعيف. جرّب تاني.')}}
 $('readCancel').onclick=()=>{readSeq++;$('readOv').style.display='none'};
 $('talkBack').onclick=()=>show('home');
 $('openMe').onclick=()=>{loadMe();$('coNote').textContent='';show('me');quotaGet()};$('meBack').onclick=()=>show('home');
@@ -2248,12 +2264,12 @@ async function agent(event){if(!T||T.over)return;const my=++T.seq;
  setState('think',tr('بدالك بيفكر...'));$('tDecide').classList.add('hidden');$('tOk').classList.add('hidden');asking(null);
  let d=null;
  try{if(DEMO){await new Promise(r=>setTimeout(r,900));d=demoStep(event)}else{if(event.type==='heard'){fillWanted=true;var ft=setTimeout(playFiller,2800)}
-  d=await postJSON(AGENT_URL,{goal:T.goal,lang:LANG,ui:UI,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:vg()},20000)}}catch(e){if(e&&e.why==='quota'){if(typeof ft!=='undefined')clearTimeout(ft);fillWanted=false;T.over=true;stopListening();show('home');quotaShow(e.data);return}}
+  d=await postJSON(AGENT_URL,{goal:T.goal,lang:LANG,ui:UI,profile:taskProfile(),memory:taskMemory(),history:T.history.slice(-20),event,name:voiceName(),agender:vg()},20000)}}catch(e){T.lastErr=e;if(e&&e.why==='quota'){if(typeof ft!=='undefined')clearTimeout(ft);fillWanted=false;T.over=true;stopListening();show('home');quotaShow(e.data);return}}
  if(typeof ft!=='undefined')clearTimeout(ft);fillWanted=false;const filled=!!fillP||Date.now()-lastFill<8000;if(fillP)await fillP;
  if(filled&&d&&typeof d.say==='string')d.say=d.say.replace(/^\s*(لحظة|ثانية) (واحدة|بس)( لو سمحت| من فضلك)?[،,.]\s*/,'').replace(/^\s*(one moment|just a second),? please[.,]\s*/i,''); // don't repeat "one moment" right after the filler
  if(!T||my!==T.seq||T.over)return;
  if(d&&!d.error&&(heardBuf.trim()||Date.now()-lastVoiceAt<1500)){if(!heardTimer&&heardBuf.trim())heardTimer=setTimeout(flushHeard,2600);setTimeout(()=>{if(T&&!T.over&&my===T.seq&&!heardBuf.trim()&&Date.now()-lastVoiceAt>=1500)agent(event)},3000);return} // the other person is still talking: don't talk over them, answer everything together
- if(!d||d.error){T.fails=(T.fails||0)+1;if(T.fails===2)setHear(trH('لحظة من فضلك'),trH('لحظة واحدة من فضلك'),trH('النت ضعيف شوية.'));if(T.fails>6){setState('think',tr('النت فاصل. دوس هنا عشان تجرّب تاني'));$('tState').onclick=()=>{$('tState').onclick=null;T.fails=0;agent(event)};return}setState('think',tr('النت ضعيف، بجرّب تاني...'));setTimeout(()=>agent(event),1500+T.fails*700);return}
+ if(!d||d.error){T.fails=(T.fails||0)+1;if(T.fails===2)setHear(trH('لحظة من فضلك'),trH('لحظة واحدة من فضلك'),trH('النت ضعيف شوية.'));const ai=aiDown(d)||aiDown(T.lastErr);T.lastErr=null;if(T.fails>6){setState('think',tr(ai?'الخدمة الذكية واقفة دلوقتي. دوس هنا عشان تجرّب تاني':'النت فاصل. دوس هنا عشان تجرّب تاني'));$('tState').onclick=()=>{$('tState').onclick=null;T.fails=0;agent(event)};return}setState('think',tr(ai?'الخدمة الذكية واقفة دلوقتي، بجرّب تاني...':'النت ضعيف، بجرّب تاني...'));setTimeout(()=>agent(event),1500+T.fails*700);return}
  T.fails=0;
  if(event.type==='heard')drawCards('tCards',d.cards||[]);else drawCards('tCards',(d.cards||[]).filter(c=>c.k==='map'));
  if(d.task_title)$('tTitle').textContent=T.title=d.task_title;
@@ -2453,7 +2469,7 @@ function drawReplies(list,smart){$('fSug').innerHTML=list.map(t=>`<button>${optI
 function fSpeak(t){$('fSaid').textContent=tr('اتقال: ')+t;speak(t,()=>{if(freeOn)startListening()})}
 async function smartReplies(text){if(fNoSmart)return;const n=++fSeq;$('fState').textContent=tr('✨ بيجهّز ردود...');
  try{const d=await postJSON(REPLY_URL,{text,situation:'عام',lang:LANG,ui:UI},12000);
-  if(n!==fSeq)return;drawCards('fCards',d.cards||[]);if(d.replies&&d.replies.length){drawReplies(d.replies,true);$('fState').textContent=tr('✨ ردود على حسب الكلام')+(d.situation&&d.situation!=='عام'?' · '+tr(d.situation):'')}}catch(e){if(n===fSeq)$('fState').textContent=tr('بسمع...')}}
+  if(n!==fSeq)return;drawCards('fCards',d.cards||[]);if(d.replies&&d.replies.length){drawReplies(d.replies,true);$('fState').textContent=tr('✨ ردود على حسب الكلام')+(d.situation&&d.situation!=='عام'?' · '+tr(d.situation):'')}}catch(e){if(n===fSeq)$('fState').textContent=tr(aiDown(e)?'بسمع... الردود الذكية واقفة دلوقتي':'بسمع...')}}
 /* «ترجمة»: opened from the home tool (TOOLS), the quota box and ?go=free */
 let openFreeScreen=()=>{show('free');fSid=null;fNoSmart=false;drawReplies(defaultReplies(),false)};
 $('freeGo').onclick=async()=>{if(alOn){stopAlerts(true);drawAlChip()}if(freeOn){freeOn=false;haltListening();$('freeGo').textContent=tr('▶ ابدأ');$('fState').textContent=tr('متوقف');$('fDot').className='dot';return}
@@ -3169,7 +3185,8 @@ function oSetup(){OD=null;$('oSetup').classList.remove('hidden');$('oChat').clas
 $('oCam').onclick=()=>$('oCamIn').click();
 $('oCamIn').onchange=async()=>{const f=$('oCamIn').files[0];$('oCamIn').value='';if(!f)return;let data;try{data=await shrink(f)}catch(e){return}
  oBusy(tr('بقرا الروشتة...'));try{const d=await postJSON(VISION_URL,{image:data,hint:'روشتة عايز أطلبها من الصيدلية',lang:LANG,ui:UI},25000);oBusy('');
-  if(!d.goal||d.clear===false){alert(tr('الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.'));return}$('oGoal').value=d.goal}catch(e){oBusy('');alert(tr('النت ضعيف. جرّب تاني.'))}};
+  if(aiDown(d)){alert(tr(AI_DOWN));return}
+  if(!d.goal||d.clear===false){alert(tr('الصورة مش واضحة. صوّر تاني قريب ومن غير ضل.'));return}$('oGoal').value=d.goal}catch(e){oBusy('');alert(tr(aiDown(e)?AI_DOWN:'النت ضعيف. جرّب تاني.'))}};
 $('oStart').onclick=async()=>{const goal=$('oGoal').value.trim(),name=$('oPhName').value.trim()||tr('الصيدلية'),num=$('oPhNum').value.trim();
  if(!goal){$('oGoal').focus();$('oGoal').placeholder=tr('اكتب الدوا الأول، أو صوّر الروشتة');return}
  if(num&&waNum(num).length<10){alert(tr('رقم الصيدلية مش مظبوط. اكتبه زي 01xxxxxxxxx'));return}
@@ -3199,13 +3216,13 @@ function oDraw(){const o=oCur();if(!o){oSetup();return}
  $('oCancel').classList.toggle('hidden',o.state==='done');
  setTimeout(()=>{$('oBody').scrollTop=$('oBody').scrollHeight},30)}
 async function oStep(ev){const o=oCur();if(!o)return;oBusy(tr(ev.type==='reply'?'بقرا رد الصيدلية...':'بدالك بيكتب...'));
- let d=null;
+ let d=null,lastE=null;
  if(o.demo){await new Promise(r=>setTimeout(r,900));d=oDemoStep(ev,o)}
  else{const p=taskProfile();const body={k:API_K,ui:UI,lang:LANG,profile:p,order:{pharmacy:o.pharmacy,goal:o.goal,address:o.address,thread:o.thread.slice(-24).map(m=>({from:m.from,text:m.text}))},event:ev};
-  let qd=null;for(let i=0;i<2&&!d&&!qd;i++){try{const j=await postJSON(WA_URL,body,45000);if(j&&!j.error)d=j}catch(e){if(e&&e.why==='quota')qd=e.data||{}}}
+  let qd=null;for(let i=0;i<2&&!d&&!qd;i++){try{const j=await postJSON(WA_URL,body,45000);if(j&&!j.error)d=j;else lastE=j}catch(e){lastE=e;if(e&&e.why==='quota')qd=e.data||{}}}
   if(qd){oBusy('');o.state='cancel';oSave(o);OD=null;show('home');quotaShow(qd);return}}
  oBusy('');
- if(!d){alert(tr('النت ضعيف ومقدرتش أكمّل. جرّب تاني.'));oDraw();return}
+ if(!d){alert(tr(aiDown(lastE)?AI_DOWN:'النت ضعيف ومقدرتش أكمّل. جرّب تاني.'));oDraw();return}
  Object.assign(o,{state:d.state||'wait',draft:d.message||'',explain:d.explain||'',question:d.question||'',options:d.options||[],cards:d.cards||[]});
  if(d.title&&ev.type==='start')o.title=d.title;
  if(d.state==='done'){o.summary=d.summary||d.explain||'';o.med=d.med||'';oFinish(o)}
