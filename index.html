@@ -231,6 +231,7 @@ nav svg{width:24px;height:24px}
 #baText{font-size:clamp(34px,10vw,52px);font-weight:800;line-height:1.2}
 #baSub{font-size:18px;opacity:.9}
 #baOk{min-height:64px;min-width:240px;border:0;border-radius:18px;background:#fff;color:#13262F;font-size:22px;font-weight:800;margin-top:12px}
+.homeq{margin:0 0 10px;padding:8px 12px;border-radius:12px;background:#EFE9DD;color:#13262F;font:700 15px/1.5 Cairo,sans-serif;text-align:center}
 .cobadge{align-self:flex-start;display:inline-block;font-size:13px;font-weight:700;color:var(--mute);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px 10px;margin-bottom:8px}
 .qleft{margin:0 0 8px;text-align:center;font-size:15px;font-weight:700;color:var(--ord)}
 .sayfix{display:block;margin-top:4px;background:none;border:0;padding:4px 0;min-height:32px;font-size:13px;font-weight:700;color:var(--mute);text-decoration:underline;text-align:start}
@@ -483,6 +484,7 @@ try{var fz=JSON.parse(localStorage.getItem('wasl_fs'));if(fz==='l'||fz==='x')doc
 <div id="instBar" class="hidden" style="display:flex;align-items:center;gap:10px;background:#13262F;color:#fff;border-radius:16px;padding:10px 12px;margin-bottom:10px"><img src="icon-192.png" alt="" width="36" height="36" style="border-radius:9px"><span id="instTxt" style="flex:1;font-weight:700;font-size:15px;line-height:1.4">ثبّت بَدالَك على موبايلك، ويشتغل من غير نت</span><button id="instGo" style="background:#E4602A;color:#fff;border:0;border-radius:12px;padding:8px 14px;font:800 15px Cairo,sans-serif">ثبّت</button><button id="instX" aria-label="إخفاء" style="background:none;border:0;color:#BFD3D8;font-size:20px;padding:4px">✕</button></div>
 <button class="alchip" id="alChip"><span class="d"></span><span id="alChipT">تنبيهات الأصوات مقفولة · شغّلها</span></button>
 <div id="coBadge" class="cobadge hidden"></div>
+<p class="homeq" id="homeQ">🎁 30 مهمة مجانية في الشهر · 🆘 الطوارئ مش بتتحسب</p>
 <div class="stats hidden" id="stats"></div>
 <div id="refills"></div>
 <div id="orderChip"></div>
@@ -831,6 +833,7 @@ const EN={
 'مش في الصيدلية؟ اطلب دوا للبيت':'Not at the pharmacy? Order medicine to your home',
 'أكتب للصيدلية على واتساب، وأقرالك ردهم':'I write to the pharmacy on WhatsApp and read you their reply',
 '▶ ابدأ':'▶ Start',
+'🎁 30 مهمة مجانية في الشهر · 🆘 الطوارئ مش بتتحسب':'🎁 30 free tasks a month · 🆘 Emergency is not counted','🎁 فاضلك {n} من {l} مهمة الشهر ده · 🆘 الطوارئ مش بتتحسب':'🎁 {n} of {l} tasks left this month · 🆘 Emergency is not counted','ثبّت بَدالَك: دوس ⋮ فوق، وبعدين «تثبيت التطبيق»':'Install Badalak: tap ⋮ at the top, then "Install app"',
 'رجوع':'Back',
 'صيدلية':'Pharmacy','أصرف روشتة':'Fill a prescription','دوا معايا علبته':'I have the medicine box','مسكن للصداع':'Headache medicine','عايز مسكن للصداع':'I want something for a headache','دوا للبرد':'Cold medicine','عايز دوا للبرد والكحة':'I want medicine for a cold and cough',
 'دكتور':'Doctor','أحجز كشف':'Book a visit','عايز أحجز كشف':'I want to book a doctor visit','تعبان':'I feel sick','عايز أقول للدكتور إني تعبان وعايز أكشف':'I want to tell the doctor I feel sick and need a check-up','تحاليل':'Lab tests','عايز أعمل تحاليل':'I want to do lab tests','ورقة معايا':'I have a paper',
@@ -994,7 +997,7 @@ const EN={
 'اكتب العنوان اللي عايز توريه للي قدامك على الخريطة':'Type the address you want to show them on the map',
 'فتحت الخريطة على: ':'I opened the map at: ',
 'تنهي المهمة؟':'End the task?',
-'قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بدالك هيقولها بتتبعت لخدمة الصوت (Telnyx).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟':'Before your first task:\n\nTo do the task, what people say near you is turned into text by your browser\'s speech service (Google or Apple). Then it is sent, with your request, your name, allergies and insurance if you wrote them, to an AI service (Claude by Anthropic). The sentences Badalak says are sent to a voice service (Telnyx).\n\nWe don\'t keep any of this, and you can delete your data from the phone anytime.\n\nDo you agree?',
+'قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بدالك هيقولها بتتبعت لخدمة الصوت (Telnyx).\n\nلو المهمة نجحت، مفيش حاجة من دي بتتحفظ عندنا. لو حصل خطأ، بنحتفظ بالمحادثة 7 أيام عشان نصلّح التطبيق، وبعدها بتتمسح. وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟':'Before your first task:\n\nTo do the task, what people say near you is turned into text by your browser\'s speech service (Google or Apple). Then it is sent, with your request, your name, allergies and insurance if you wrote them, to an AI service (Claude by Anthropic). The sentences Badalak says are sent to a voice service (Telnyx).\n\nIf the task works, we keep none of this. If something goes wrong, we keep the conversation for 7 days so we can fix the app, then it is deleted. You can delete your data from the phone anytime.\n\nDo you agree?',
 'بدالك محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ({e})':'Badalak needs the microphone to hear the other person. Allow the microphone in the browser settings ({e})',
 'الموبايل ده مش بيحوّل الكلام لكتابة لوحده.\n\nعشان بدالك يسمع اللي قدامك، صوت كلامه هيتبعت لسيرفر بدالك وخدمة Telnyx تحوّله لكتابة. مفيش حاجة بتتحفظ، بس لازم يكون فيه نت.\n\nموافق؟':'This phone can\'t turn speech into text by itself.\n\nSo Badalak can hear the other person, the sound of their words will go to Badalak\'s server, and Telnyx will turn it into text. Nothing is kept, but you need internet.\n\nDo you agree?',
 'الموبايل ده مش بيسمع الكلام. استخدم Chrome على أندرويد، أو آخر نسخة على الآيفون. الكتابة شغالة عادي.':'This phone can\'t listen to speech. Use Chrome on Android, or the latest version on iPhone. Typing still works.',
@@ -1213,7 +1216,7 @@ const EN={
 'بقرا الروشتة...':'Reading the prescription...',
 'اكتب الدوا الأول، أو صوّر الروشتة':'Type the medicine first, or take a photo of the prescription',
 'رقم الصيدلية مش مظبوط. اكتبه زي 01xxxxxxxxx':'The pharmacy number is not right. Write it like 01xxxxxxxxx',
-'قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (Telnyx).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟':'Before your first order:\n\nSo Badalak can write the messages and understand the pharmacy, your order, your address and the pharmacy messages you paste or share are sent to an AI service (Claude by Anthropic). Voice messages are sent to a speech-to-text service (Telnyx).\n\nMessages to the pharmacy go from your own WhatsApp, and you tap Send. We don\'t keep anything.\n\nDo you agree?',
+'قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (Telnyx).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. لو المهمة نجحت، مفيش حاجة بتتحفظ عندنا. لو حصل خطأ، بنحتفظ بالمحادثة 7 أيام عشان نصلّح التطبيق، وبعدها بتتمسح.\n\nموافق؟':'Before your first order:\n\nSo Badalak can write the messages and understand the pharmacy, your order, your address and the pharmacy messages you paste or share are sent to an AI service (Claude by Anthropic). Voice messages are sent to a speech-to-text service (Telnyx).\n\nMessages to the pharmacy go from your own WhatsApp, and you tap Send. If the task works, we keep nothing. If something goes wrong, we keep the conversation for 7 days so we can fix the app, then it is deleted.\n\nDo you agree?',
 'صيدلية الشفاء (تجريبي)':'El Shefa Pharmacy (demo)',
 'علبة كونكور 5 مجم':'A box of Concor 5 mg',
 '15 شارع 9، المعادي، الدور التالت':'15 Street 9, Maadi, 3rd floor',
@@ -1536,7 +1539,7 @@ const GU={
 "اكتب وابعت، وبدالك هيقوله": "اكتب وأرسل، وبدالك بيقوله",
 "اكتب العنوان اللي عايز توريه للي قدامك على الخريطة": "اكتب العنوان اللي تبي توريه اللي قدامك على الخريطة",
 "فتحت الخريطة على: ": "فتحت الخريطة على:",
-"قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بدالك هيقولها بتتبعت لخدمة الصوت (Telnyx).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟": "قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي ينقال قدامك يتحوّل لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها يترسل هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بيقولها بدالك تترسل لخدمة الصوت (Telnyx).\n\nولا شي من هذا ينحفظ عندنا، وتقدر تمسح بياناتك من الجوال في أي وقت.\n\nموافق؟",
+"قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بدالك هيقولها بتتبعت لخدمة الصوت (Telnyx).\n\nلو المهمة نجحت، مفيش حاجة من دي بتتحفظ عندنا. لو حصل خطأ، بنحتفظ بالمحادثة 7 أيام عشان نصلّح التطبيق، وبعدها بتتمسح. وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟": "قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي ينقال قدامك يتحوّل لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها يترسل هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بيقولها بدالك تترسل لخدمة الصوت (Telnyx).\n\nلو المهمة نجحت، ما ينحفظ شي من هذا عندنا. ولو صار خطأ، نحتفظ بالمحادثة 7 أيام عشان نصلّح التطبيق، وبعدها تنمسح. وتقدر تمسح بياناتك من الجوال في أي وقت.\n\nموافق؟",
 "بدالك محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ({e})": "بدالك يحتاج المايك عشان يسمع اللي قدامك. اسمح للمايك من إعدادات المتصفح ({e})",
 "الموبايل ده مش بيحوّل الكلام لكتابة لوحده.\n\nعشان بدالك يسمع اللي قدامك، صوت كلامه هيتبعت لسيرفر بدالك وخدمة Telnyx تحوّله لكتابة. مفيش حاجة بتتحفظ، بس لازم يكون فيه نت.\n\nموافق؟": "هذا الجوال ما يحوّل الكلام لكتابة بروحه.\n\nعشان بدالك يسمع اللي قدامك، صوت كلامه يترسل لسيرفر بدالك وخدمة Telnyx تحوّله لكتابة. ولا شي ينحفظ، بس لازم يكون فيه نت.\n\nموافق؟",
 "الموبايل ده مش بيسمع الكلام. استخدم Chrome على أندرويد، أو آخر نسخة على الآيفون. الكتابة شغالة عادي.": "هذا الجوال ما يسمع الكلام. استخدم Chrome على أندرويد، أو آخر نسخة على الآيفون. الكتابة شغّالة عادي.",
@@ -1696,7 +1699,7 @@ const GU={
 "بقرا الروشتة...": "أقرا الوصفة...",
 "اكتب الدوا الأول، أو صوّر الروشتة": "اكتب الدواء أول، أو صوّر الوصفة",
 "رقم الصيدلية مش مظبوط. اكتبه زي 01xxxxxxxxx": "رقم الصيدلية مو صحيح. اكتبه مع رمز الدولة، مثل 9715xxxxxxxx",
-"قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (Telnyx).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟": "قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي تلصقها أو تشاركها تترسل لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية تترسل لخدمة تحويل الصوت لكلام (Telnyx).\n\nالرسايل للصيدلية تطلع من واتساب حقك، وأنت اللي تضغط إرسال. ولا شي ينحفظ عندنا.\n\nموافق؟",
+"قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (Telnyx).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. لو المهمة نجحت، مفيش حاجة بتتحفظ عندنا. لو حصل خطأ، بنحتفظ بالمحادثة 7 أيام عشان نصلّح التطبيق، وبعدها بتتمسح.\n\nموافق؟": "قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي تلصقها أو تشاركها تترسل لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية تترسل لخدمة تحويل الصوت لكلام (Telnyx).\n\nالرسايل للصيدلية تطلع من واتساب حقك، وأنت اللي تضغط إرسال. لو المهمة نجحت، ما ينحفظ شي عندنا. ولو صار خطأ، نحتفظ بالمحادثة 7 أيام عشان نصلّح التطبيق، وبعدها تنمسح.\n\nموافق؟",
 "إنت بعت": "أنت أرسلت",
 "ابعت (تجربة من غير واتساب)": "أرسل (تجربة بدون واتساب)",
 "بقرا رد الصيدلية...": "أقرا رد الصيدلية...",
@@ -1873,7 +1876,7 @@ const PICS=[
   {i:'🤕',l:'مسكن للصداع',g:'عايز مسكن للصداع',n:'مسكن للصداع',q:'bs'},{i:'🤧',l:'دوا للبرد',g:'عايز دوا للبرد والكحة',n:'دوا للبرد والكحة',q:'bsz'},
   {i:'🤒',l:'حاجة للسخونية',g:'عايز حاجة للسخونية',n:'دوا للسخونية',q:'bsz'},{i:'🤢',l:'حاجة للمعدة',g:'عايز حاجة لوجع المعدة',n:'دوا لوجع المعدة',q:'bsz'},
   {i:'🌼',l:'دوا للحساسية',g:'عايز دوا للحساسية',n:'دوا للحساسية',q:'bsz'},{i:'👁️',l:'قطرة للعين',g:'عايز قطرة للعين'},{i:'👃',l:'قطرة للمناخير',g:'عايز قطرة للمناخير'},
-  {i:'🩸',l:'دوا للسكر',g:'عايز دوا للسكر',n:'دوا للسكر',q:'bs'},{i:'💵',l:'الدوا بكام؟',g:'الدوا ده سعره كام؟'},{i:'🩺',l:'أقيس الضغط',g:'عايز أقيس الضغط'}]},
+  {i:'🩸',l:'دوا للسكر',g:'عايز دوا للسكر',n:'دوا للسكر',q:'bs'},{i:'💵❓',l:'الدوا بكام؟',g:'الدوا ده سعره كام؟'},{i:'🩺',l:'أقيس الضغط',g:'عايز أقيس الضغط'}]},
  {i:'🩺',l:'دكتور',sub:[{i:'📅',l:'أحجز كشف',g:'عايز أحجز كشف'},{i:'🤒',l:'تعبان',g:'عايز أقول للدكتور إني تعبان وعايز أكشف'},{i:'🧪',l:'تحاليل',g:'عايز أعمل تحاليل'},{i:'📄',l:'ورقة معايا',cam:'ورقة من الدكتور'}]},
  /* hospital and labs (#46): the errand only; the referral card reads a photo; insurance asks what to do so staff answer with the step */
  {i:'🏥',l:'مستشفى وتحاليل',sub:[{i:'🛎️',l:'أول مرة هنا',g:'أول مرة آجي هنا، أروح فين؟'},{i:'📅',l:'حجز',g:'عايز أحجز ميعاد'},{i:'🧪',l:'تحليل أو أشعة',g:'عايز أعمل تحليل أو أشعة'},
@@ -2172,6 +2175,7 @@ function quotaDraw(){const q=QS;if(q)store.set('wasl_company',q.company||'');con
  $('coBadge').textContent=co?tr('بَدالَك مقدَّم من {co}',{co}):'';$('coBadge').classList.toggle('hidden',!co);
  $('coLead').textContent=co?tr('الموبايل ده متفعّل مع {co}.',{co}):tr('لو شغلك أو جمعيتك إدّتك كود، اكتبه هنا.');
  if(!q)return;
+ $('homeQ').textContent=tr('🎁 فاضلك {n} من {l} مهمة الشهر ده · 🆘 الطوارئ مش بتتحسب',{n:q.left,l:q.limit});
  $('qLeft').textContent=q.left===0?tr('خلصت مهام الشهر ده'):tr('فاضلك {n} مهمة الشهر ده',{n:q.left,s:q.left===1?'':'s'});$('qLeft').classList.toggle('hidden',q.left>5);
  $('qLine').textContent=tr('مهامك الشهر ده: {u} من {l}. بتتجدد يوم {d}. الطوارئ مش بتتحسب، وكل مرة تفتح فيها الترجمة بتتحسب مهمة.',{u:q.used,l:q.limit,d:arDate(q.renews)})}
 function quotaShow(q){q=q||QS||{};const n=q.limit||30,co=q.company||'';
@@ -2303,7 +2307,7 @@ function saveTask(summary){if(DEMO){lastTid=null;return}const t=store.get('wasl_
 
 $('startTask').onclick=async()=>{const goal=$('goal').value.trim();if(!goal){$('goal').focus();return}
  if(!DEMO){const q=await quotaGet(4000);if(q&&q.left===0){quotaShow(q);return}}
- if(!DEMO&&!store.get('wasl_consent',false)){if(!confirm(tr('قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بدالك هيقولها بتتبعت لخدمة الصوت (Telnyx).\n\nمفيش حاجة من دي بتتحفظ عندنا، وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟')))return;store.set('wasl_consent',true)}
+ if(!DEMO&&!store.get('wasl_consent2',false)){if(!confirm(tr('قبل أول مهمة:\n\nعشان بدالك يخلّص المهمة، الكلام اللي بيتقال قدامك بيتحول لكتابة بخدمة المتصفح (Google أو Apple)، وبعدها بيتبعت هو وطلبك واسمك والحساسية والتأمين لو كتبتهم لخدمة ذكاء اصطناعي (Claude من Anthropic)، والجمل اللي بدالك هيقولها بتتبعت لخدمة الصوت (Telnyx).\n\nلو المهمة نجحت، مفيش حاجة من دي بتتحفظ عندنا. لو حصل خطأ، بنحتفظ بالمحادثة 7 أيام عشان نصلّح التطبيق، وبعدها بتتمسح. وتقدر تمسح بياناتك من الموبايل في أي وقت.\n\nموافق؟')))return;store.set('wasl_consent2',true)}
  if(alOn){stopAlerts(true);drawAlChip()}
  const ok=DEMO?true:await micOk();if(ok!==true){alert(tr('بدالك محتاج المايك عشان يسمع اللي قدامك. اسمح بالمايك من إعدادات المتصفح ({e})',{e:ok}));return}
  T={goal,history:[],seq:0,over:false,title:goal,lastSaid:'',tid:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)};lastTid=null;refillMed='';lastMap='';prefetchFillers();
@@ -2890,9 +2894,12 @@ if('serviceWorker' in navigator&&window.isSecureContext&&location.protocol!=='fi
 (function(){const bar=$('instBar'),standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;let ev=null;
  const hidden=()=>{try{return localStorage.getItem('wasl_inst_x')==='1'}catch(e){return false}};
  const showBar=()=>{if(!standalone&&!hidden())bar.classList.remove('hidden')};
- window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();ev=e;showBar()});
+ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();ev=e;$('instTxt').textContent=origTxt;$('instGo').classList.remove('hidden');showBar()});
+ const origTxt=$('instTxt').textContent;
  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;
  if(ios&&!standalone){$('instTxt').textContent=tr('ثبّت بَدالَك: دوس زرار المشاركة ⬆️ تحت، وبعدين «إضافة إلى الشاشة الرئيسية»');$('instGo').classList.add('hidden');showBar()}
+ /* Android browsers that never fire the install event (Samsung, Firefox…): after 5 s show the manual steps, like iPhone. */
+ if(/android/i.test(navigator.userAgent)&&!standalone)setTimeout(()=>{if(!ev&&!hidden()){$('instTxt').textContent=tr('ثبّت بَدالَك: دوس ⋮ فوق، وبعدين «تثبيت التطبيق»');$('instGo').classList.add('hidden');showBar()}},5000);
  $('instGo').onclick=async()=>{if(!ev)return;ev.prompt();try{await ev.userChoice}catch(e){}ev=null;bar.classList.add('hidden')};
  $('instX').onclick=()=>{bar.classList.add('hidden');try{localStorage.setItem('wasl_inst_x','1')}catch(e){}};
  window.addEventListener('appinstalled',()=>bar.classList.add('hidden'));
@@ -3174,7 +3181,7 @@ $('oStart').onclick=async()=>{const goal=$('oGoal').value.trim(),name=$('oPhName
  if(!goal){$('oGoal').focus();$('oGoal').placeholder=tr('اكتب الدوا الأول، أو صوّر الروشتة');return}
  if(num&&waNum(num).length<10){alert(tr('رقم الصيدلية مش مظبوط. اكتبه زي 01xxxxxxxxx'));return}
  {const q=await quotaGet(4000);if(q&&q.left===0){quotaShow(q);return}}
- if(!store.get('wasl_consent_order',false)){if(!confirm(tr('قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (Telnyx).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. مفيش حاجة بتتحفظ عندنا.\n\nموافق؟')))return;store.set('wasl_consent_order',true)}
+ if(!store.get('wasl_consent_order2',false)){if(!confirm(tr('قبل أول طلب:\n\nعشان بدالك يكتب الرسايل ويفهم رد الصيدلية، طلبك والعنوان ورسايل الصيدلية اللي بتلصقها أو بتشاركها بتتبعت لخدمة ذكاء اصطناعي (Claude من Anthropic)، والرسايل الصوتية بتتبعت لخدمة تحويل الصوت لكلام (Telnyx).\n\nالرسايل للصيدلية بتطلع من واتساب بتاعك، وإنت اللي بتدوس إرسال. لو المهمة نجحت، مفيش حاجة بتتحفظ عندنا. لو حصل خطأ، بنحتفظ بالمحادثة 7 أيام عشان نصلّح التطبيق، وبعدها بتتمسح.\n\nموافق؟')))return;store.set('wasl_consent_order2',true)}
  if(num){const ps=oPhones().filter(x=>waNum(x.num)!==waNum(num));ps.push({name,num});store.set('wasl_pharmacies',ps.slice(-8))}
  const o={id:Date.now(),pharmacy:name,num,goal,address:$('oAddr').value.trim(),thread:[],state:'setup',title:goal.slice(0,40),created:Date.now()};
  oSave(o);oDraw();oStep({type:'start',tid:'o'+o.id})};
