@@ -96,20 +96,20 @@ td.n,th.n{text-align:end}
 
 <section class="card hero" id="hero">
 <div class="ic" aria-hidden="true">✅</div>
-<div><div class="n" id="nDone">0</div><div class="l">مصلحة خلصت لعملاء صم</div><p class="note" id="period"></p></div>
+<div><div class="n" id="nDone">0</div><div class="l">مهمة خلصت لعملاء صم</div><p class="note" id="period"></p></div>
 </section>
 <section class="card hidden" id="few"><p class="note">🔒 لسه الزيارات أقل من 5 في الفترة دي. الأرقام بتظهر لما تبقى 5 أو أكتر، عشان محدش يقدر يعرف عميل بعينه.</p></section>
 
 <section class="card rate" id="rate">
 <b id="rateTxt"></b>
 <div class="bar" role="img" id="rateBar"><i id="rateFill"></i></div>
-<p class="note">من العملاء اللي جاوبوا على «مصلحتك خلصت؟» في آخر المحادثة.</p>
+<p class="note">من العملاء اللي جاوبوا على «مهمتك خلصت؟» في آخر المحادثة.</p>
 </section>
 
 <div class="kpis" id="kpis">
 <div><i aria-hidden="true">🔳</i><b id="kSes">0</b><small>مرة عميل أصم فتح الكود</small></div>
 <div><i aria-hidden="true">🧑‍💼</i><b id="kJoin">0</b><small>مرة الموظف ردّ عليه</small></div>
-<div><i aria-hidden="true">❌</i><b id="kNo">0</b><small>مصلحة ما خلصتش</small></div>
+<div><i aria-hidden="true">❌</i><b id="kNo">0</b><small>مهمة ما خلصتش</small></div>
 </div>
 
 <section class="card">
@@ -172,7 +172,7 @@ function draw(j){last=j;sel=-1;$('vMsg').classList.add('hidden');$('vData').clas
  const few=T.sessions==null;$('few').classList.toggle('hidden',!few);
  $('nDone').textContent=N(T.done);$('kSes').textContent=N(T.sessions);$('kJoin').textContent=N(T.staff_joined);$('kNo').textContent=N(T.not_done);
  const pct=T.asked?Math.round(100*T.done/T.asked):null;$('rate').classList.toggle('hidden',pct==null);
- if(pct!=null){$('rateTxt').innerHTML='<bdi>'+pct+'%</bdi> قالوا مصلحتهم خلصت';$('rateFill').style.width=pct+'%';$('rateBar').setAttribute('aria-label',pct+'%')}
+ if(pct!=null){$('rateTxt').innerHTML='<bdi>'+pct+'%</bdi> قالوا مهمتهم خلصت';$('rateFill').style.width=pct+'%';$('rateBar').setAttribute('aria-label',pct+'%')}
  const today=cairoToday();drawChart((j.by_day||[]).filter(d=>d.day<=today));drawPlaces(j.places||[]);
  $('upd').textContent=j.updated?'آخر تحديث: '+new Date(j.updated).toLocaleString(DLOC,{day:'numeric',month:'long',hour:'numeric',minute:'2-digit',timeZone:'Africa/Cairo'}):''}
 
