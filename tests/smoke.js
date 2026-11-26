@@ -502,6 +502,32 @@ async function pastWelcome(page) {
     await cam.close();
   }
 
+  // the smart service (Claude on the server) is down, e.g. its key expired: say so plainly, not «النت ضعيف» / «الصورة مش واضحة»
+  console.log('\n== smart service down');
+  {
+    const { ctx, page } = await newPage(browser, PHONES[0], base);
+    await page.unroute('**/*');
+    await page.route('**/*', r => {
+      const u = r.request().url(), H = { 'Access-Control-Allow-Origin': '*' };
+      if (u.startsWith(base)) return r.continue();
+      if (/wasl-vision/.test(u)) return r.fulfill({ status: 200, headers: H, contentType: 'application/json', body: JSON.stringify({ goal: '', items: [], name: '', clear: false, error: 'vision' }) });
+      if (/wasl-replies/.test(u)) return r.fulfill({ status: 503, headers: H, contentType: 'application/json', body: JSON.stringify({ ok: false, why: 'ai' }) });
+      if (/api\.nrg-egypt\.com/.test(u)) return r.fulfill({ status: 200, headers: H, contentType: 'application/json', body: JSON.stringify(MOCK) });
+      return r.abort();
+    });
+    await page.goto(base + 'index.html'); await page.waitForTimeout(800); await pastWelcome(page);
+    const k = await page.evaluate(() => [aiDown({ why: 'ai' }), aiDown({ status: 503 }), aiDown({ error: 'vision' }), aiDown({ error: 'empty' }), aiDown({ status: 429, why: 'daily' }), aiDown(null)]);
+    k.join() === 'true,true,true,false,false,false' ? pass('ai down', 'why:ai, 5xx and error:vision count as «down»; empty, 429 and nothing do not') : fail('ai down', 'aiDown: ' + k.join());
+    const r = await page.evaluate(async () => { await smartReplies('الدوا ده بخمسين جنيه'); const rep = $('fState').textContent;
+      const c = document.createElement('canvas'); c.width = c.height = 64; const b = await new Promise(ok => c.toBlob(ok, 'image/jpeg'));
+      await medRead(new File([b], 'box.jpg', { type: 'image/jpeg' })); await new Promise(ok => setTimeout(ok, 300));
+      const p = document.getElementById('medsPop'); return { rep, med: p ? p.textContent : '', meds: (store.get('wasl_meds', []) || []).length }; });
+    /الردود الذكية واقفة/.test(r.rep) ? pass('ai down', 'smart replies down: «الردود الذكية واقفة دلوقتي»') : fail('ai down', 'replies: ' + r.rep);
+    /الخدمة الذكية واقفة/.test(r.med) && !/مش واضحة/.test(r.med) && r.meds === 0 ? pass('ai down', 'medicine photo while down: «اكتب الاسم بإيدك», nothing saved') : fail('ai down', 'meds: ' + JSON.stringify(r));
+    if (page.errs.length) fail('ai down', 'console errors: ' + page.errs.join(' | ').slice(0, 300));
+    await ctx.close();
+  }
+
   await browser.close(); srv.close();
   console.log(failures ? `\n${failures} problem(s) found.` : '\nAll good.');
   process.exit(failures ? 1 : 0);
